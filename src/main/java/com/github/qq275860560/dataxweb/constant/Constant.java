@@ -10,7 +10,7 @@ public class Constant {
     // datax源码目录
     public static final String DATAX_SRC_HOME = System.getenv("DATAX_SRC_HOME");
     // datax作业文件保存目录
-    public static final String DATAX_JSON_HOME = DATAX_HOME+"/job/";
+    public static final String DATAX_JSON_HOME = DATAX_HOME+ File.separator+"job/";
 
     public static final String DATAX_PLUGIN_HOME = DATAX_HOME + File.separator + "plugin";
     public static final String DATAX_READER_HOME = DATAX_PLUGIN_HOME + File.separator + "reader";
