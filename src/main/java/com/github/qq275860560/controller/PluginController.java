@@ -1,0 +1,187 @@
+package com.github.qq275860560.controller;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.qq275860560.dao.PluginDao;
+
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * @author jiangyuanlin@163.com
+ *
+ */
+@RestController
+@Slf4j
+public class PluginController {
+
+
+
+	@Autowired
+	private RestTemplate restTemplate;
+	@Autowired
+	private PluginDao pluginDao;
+ 
+ 
+	@Autowired
+	private   ObjectMapper objectMapper ;
+
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/pagePlugin?pageNum=1&pageSize=10" 
+	*/
+	@RequestMapping(value = "/api/github/qq275860560/plugin/pagePlugin")
+	public Map<String, Object> pagePlugin(
+			@RequestParam Map<String, Object> requestMap
+			)  throws Exception{
+		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("当前登录用户=" + currentLoginUsername);	
+		
+		String name=(String)requestMap.get("name");
+		Integer type=(Integer)requestMap.get("type");
+	
+		String createUserName=(String)requestMap.get("createUserName");
+		String startCreateTime=(String)requestMap.get("startCreateTime");
+		String endCreateTime=(String)requestMap.get("endCreateTime");
+		Integer pageNum =requestMap.get("pageNum")==null?1:(Integer)requestMap.get("pageNum");
+		Integer pageSize =requestMap.get("pageSize")==null?10:(Integer)requestMap.get("pageSize");
+		 
+		Map<String, Object> data = pluginDao.pagePlugin(null, name, type, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		return new HashMap<String, Object>() {
+			{				 
+				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明
+				put("msg", "分页搜索成功");//此字段可以省略，这里仿照蚂蚁金服的接口返回字段msg，增加说明
+				put("data", data);								
+			}
+		};
+	}
+
+	 
+	
+
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPlugin?id=1" 
+	*/
+ 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPlugin")
+	public Map<String, Object> getPlugin(@RequestParam Map<String, Object> requestMap)  throws Exception{
+		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("当前登录用户=" + currentLoginUsername);
+		
+		String id=(String)requestMap.get("id");
+		Map<String, Object> data=pluginDao.getPlugin(id);
+		return new HashMap<String, Object>() {
+			{
+				put("code", HttpStatus.OK.value());
+				put("msg", "获取对象成功");
+				put("data", data);
+			}
+		};
+	}
+	
+	
+ 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin?name=pluginname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=plugin" 
+	*/
+	@RequestMapping(value = "/api/github/qq275860560/plugin/savePlugin")
+	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap)  throws Exception{
+		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("当前登录用户=" + currentLoginUsername);		
+	 
+		String id=UUID.randomUUID().toString().replace("-", "");
+		requestMap.put("id", id);	
+				
+		String createUserName=currentLoginUsername;
+		requestMap.put("createUserName", createUserName);
+		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		requestMap.put("createTime", createTime);
+		pluginDao.savePlugin(requestMap);
+		return new HashMap<String, Object>() {
+			{
+				put("code", HttpStatus.OK.value());
+				put("msg", "保存成功");
+				put("data", null);
+			}
+		};
+	}
+	
+
+
+	
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/updatePlugin?id=2&name=pluginname2" 
+	*/
+	@RequestMapping(value = "/api/github/qq275860560/plugin/updatePlugin")
+	public Map<String, Object> updatePlugin(
+			@RequestParam Map<String, Object> requestMap)  throws Exception{
+		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("当前登录用户=" + currentLoginUsername);
+		
+		String id=(String)requestMap.get("id");
+		Map<String, Object> map=pluginDao.getPlugin(id);
+		map.putAll(requestMap);
+		pluginDao.updatePlugin(map);		
+		return new HashMap<String, Object>() {
+			{
+				put("code", HttpStatus.OK.value());
+				put("msg", "更新成功");
+				put("data", null);
+			}
+		};
+	}
+	
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/deletePlugin?id=2" 
+	*/
+ 	@RequestMapping(value = "/api/github/qq275860560/plugin/deletePlugin")
+	public Map<String, Object> deletePlugin(
+			@RequestParam Map<String, Object> requestMap)  throws Exception{
+		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("当前登录用户=" + currentLoginUsername);
+		
+		String id=(String)requestMap.get("id");
+		pluginDao.deletePlugin(id);
+		return new HashMap<String, Object>() {
+			{
+				put("code", HttpStatus.OK.value());
+				put("msg", "删除成功");
+				put("data", null);
+			}
+		};
+	}
+	 
+ 	//下载插件源码接口
+ 	//下载插件发布包接口
+ 	//获取markdown使用说明
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginProgress?id=1" 
+	*/
+ 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginProgress")
+	public Map<String, Object> getPluginProgress(
+			@RequestParam Map<String, Object> requestMap)  throws Exception{
+		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+		log.info("当前登录用户=" + currentLoginUsername);
+		
+		String id=(String)requestMap.get("id");
+		//todo 改成解压源码，获取markdown使用说明
+		String name=(String)pluginDao.getPlugin(id).get("name");
+		
+		ResponseEntity<String> result=restTemplate.exchange("https://raw.githubusercontent.com/alibaba/DataX/master/"+name+"/doc/"+name+".md", HttpMethod.GET, null, String.class);
+    	String data=(String) result.getBody();   
+    	
+		return new HashMap<String, Object>() {
+			{
+				put("code", HttpStatus.OK.value());
+				put("msg", "获取markdown使用说明成功");
+				put("data", data);
+			}
+		};
+	}
+}
