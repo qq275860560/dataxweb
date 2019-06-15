@@ -65,7 +65,7 @@ public class PluginController {
 		Integer pageNum =requestMap.get("pageNum")==null?1:(Integer)requestMap.get("pageNum");
 		Integer pageSize =requestMap.get("pageSize")==null?10:(Integer)requestMap.get("pageSize");
 		 
-		Map<String, Object> data = pluginDao.pagePlugin(null, name, type, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		Map<String, Object> data = pluginDao.pagePlugin(null, name, type, null,null, null,null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
 			{				 
 				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明
@@ -99,17 +99,18 @@ public class PluginController {
 	
  
  	/* 
- 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin" -F 'file=@D:/soft/mysqlreader.zip;type=application/octet-stream' -F 'name=pluginName1' -F 'type=0' 
+ 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin"  -F 'name=pluginName1' -F 'type=0' -F 'readme=@D:/soft/mysqlreader-README.md;type=application/octet-stream' -F 'source=@D:/soft/mysqlreader-source.zip;type=application/octet-stream' -F 'distribute=@D:/soft/mysqlreader-distribute.zip;type=application/octet-stream'
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/plugin/savePlugin")
-	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap,@RequestParam("file") MultipartFile file)  throws Exception{
+	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap,@RequestParam("readme") MultipartFile readme,@RequestParam("source") MultipartFile source,@RequestParam("distribute") MultipartFile distribute)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
 	 
 		String id=UUID.randomUUID().toString().replace("-", "");
 		requestMap.put("id", id);	
-		requestMap.put("source",file.getBytes());
-		log.info(" "+file.getSize()+"  "+file.getBytes().length);;
+		requestMap.put("readme",new String(readme.getBytes(),"UTF-8"));
+		requestMap.put("source",source.getBytes());
+		requestMap.put("distribute",distribute.getBytes());
 		String createUserName=currentLoginUsername;
 		requestMap.put("createUserName", createUserName);
 		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -169,10 +170,10 @@ public class PluginController {
 		};
 	}
 	 
- 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginMarkdown?id=1" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginReadme?id=1" 
 	*/
- 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginMarkdown")
-	public Map<String, Object> getPluginMarkdown(
+ 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginReadme")
+	public Map<String, Object> getPluginReadme(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -187,7 +188,7 @@ public class PluginController {
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
-				put("msg", "获取markdown使用说明成功");
+				put("msg", "获取使用说明成功");
 				put("data", data);
 			}
 		};
@@ -195,7 +196,7 @@ public class PluginController {
  	
  	
  	    //下载插件源码接口 	 
- 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/test-sources.zip" 
+ 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/mysqlreader-source.zip" 
  		*/
  	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginSource")
  		public void getPluginSource(
@@ -206,34 +207,25 @@ public class PluginController {
  			String id=(String)requestMap.get("id");
  			Map<String, Object> map=pluginDao.getPlugin(id);
  			byte[] source = (byte[])map.get("source");
- 			String fileName=(String)map.get("name")+".zip";		
+ 			String fileName=(String)map.get("name")+"-source.zip";		
  			//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/ResponseUtil.java 
  			ResponseUtil.sendFileByteArray(response, source, fileName,"application/octet-stream;charset=UTF-8");
  	 	}
 
  	 
  	 	//下载插件发布包接口
- 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginCompile?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/test.zip" 
+ 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginDistribute?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/mysqlreader-source.zip" 
  		*/
- 	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginCompile")
- 		public void getPluginCompile(
+ 	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginDistribute")
+ 		public void getPluginDistribute(
  				@RequestParam Map<String, Object> requestMap,HttpServletResponse response)  throws Exception{
  			String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
  			log.info("当前登录用户=" + currentLoginUsername);
  			
  			String id=(String)requestMap.get("id");
  			Map<String, Object> map=pluginDao.getPlugin(id);
- 			byte[] source = (byte[])map.get("source");
- 			
- 			File sourceZipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources.zip");
- 			FileUtils.writeByteArrayToFile(sourceZipFile, source);
- 			CompressUtil.unZip(sourceZipFile);
- 			
- 			
- 			
- 			
- 			
- 			String fileName=(String)map.get("name")+".zip";		
+ 			byte[] source = (byte[])map.get("distribute");
+ 			String fileName=(String)map.get("name")+"-distribute.zip";	
  			//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/ResponseUtil.java 
  			ResponseUtil.sendFileByteArray(response, source, fileName,"application/octet-stream;charset=UTF-8");
  	 	}

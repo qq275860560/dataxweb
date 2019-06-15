@@ -56,13 +56,20 @@ public class PluginTest {
 
 		String name = "pluginname" + System.currentTimeMillis();
 		// savePlugin请求
-		File file = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader1.zip");
-		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader.zip?raw=true"), file);;
-		    // 文件必须封装成FileSystemResource这个类型后端才能收到附件
-        FileSystemResource resource = new FileSystemResource(file);
-        // 然后所有参数要封装到MultiValueMap里面
-        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
-        param.add("file", resource);
+		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+		File readme = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-README.md");
+		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-README.md?raw=true"), readme);;
+	    param.add("source", new FileSystemResource(readme));
+	    
+	    
+		File source = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-source.zip");
+		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-source.zip?raw=true"), source);;
+	    param.add("source", new FileSystemResource(source));
+	    
+		File distribute = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-distribute.zip");
+		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-distribute.zip?raw=true"), source);;
+	    param.add("distribute", new FileSystemResource(distribute));
+	    
         param.add("name", name);
         param.add("type", 0);
 		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/savePlugin",
@@ -87,8 +94,8 @@ public class PluginTest {
 		Assert.assertTrue(id.length() > 0);
 
 		
-		// getPluginMarkdown请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginMarkdown?id=" + 1, HttpMethod.GET,
+		// getPluginReadme请求
+		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginReadme?id=" + 1, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -98,20 +105,44 @@ public class PluginTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 		
 		
-		
-		// getPluginSource请求
-		ResponseEntity<byte[]> response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginSource?id="+ id, HttpMethod.GET,
+		// getPluginReadme请求
+		ResponseEntity<byte[]> response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginReadme?id="+ id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
 					}
 				}), byte[].class);
 		Assert.assertEquals(200, response2.getStatusCode().value());
-		File file2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader2.zip");
-		FileUtils.writeByteArrayToFile(file2, response2.getBody());
-		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(file)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(file2)));
+		File readme2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-README2.md");
+		FileUtils.writeByteArrayToFile(readme2, response2.getBody());
+		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(readme)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(readme2)));
 	
-				
+		
+		// getPluginSource请求
+		response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginSource?id="+ id, HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), byte[].class);
+		Assert.assertEquals(200, response2.getStatusCode().value());
+		File source2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-source2.zip");
+		FileUtils.writeByteArrayToFile(source2, response2.getBody());
+		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(source)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(source2)));
+	
+			
+		// getPluginDistribute请求
+		response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginDistribute?id="+ id, HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), byte[].class);
+		Assert.assertEquals(200, response2.getStatusCode().value());
+		File distribute2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-distribute2.zip");
+		FileUtils.writeByteArrayToFile(distribute2, response2.getBody());
+		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(distribute)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(distribute2)));
+	
 				
 		// updatePlugin请求
 		String name2 = "pluginName" + System.currentTimeMillis();
@@ -172,17 +203,21 @@ public class PluginTest {
 		byte[] source = (byte[]) map2.get("source");
  
 		Assert.assertEquals(binary.length, source.length);
-		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources.zip");
+		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader.zip");
 		FileUtils.writeByteArrayToFile(zipFile, source);
 		log.info(zipFile.getAbsolutePath());
-		CompressUtil.unZip(zipFile);
+		File destDir=CompressUtil.unZip(zipFile);
+		
 		
 		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
-		//CommandUtil.runComand("cd mysqlreader-master && mvn install");
+		String result = CommandUtil.runComand( "mvn install",destDir);
+		log.info(result);
 		//
 		pluginDao.deletePlugin(id);
 
 	}
+	
+	
 
 	 
 

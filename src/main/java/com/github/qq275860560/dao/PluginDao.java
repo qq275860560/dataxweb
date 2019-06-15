@@ -1,7 +1,6 @@
 package com.github.qq275860560.dao;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +31,8 @@ public class PluginDao {
 		sb.append(" and name = ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 	}
 
@@ -47,7 +47,8 @@ public class PluginDao {
 		sb.append(" and name= ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		int count = jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 		if (count > 0)
 			return false;
@@ -62,7 +63,8 @@ public class PluginDao {
 		sb.append(" and id = ? ");
 		condition.add(id);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
 
@@ -70,7 +72,7 @@ public class PluginDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,source,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
+				" SELECT id,name,type,readme,source,distribute,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -79,7 +81,8 @@ public class PluginDao {
 		condition.add(0);
 		condition.add(1);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		Map<String, Object> map = Collections.EMPTY_MAP;
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
@@ -92,14 +95,15 @@ public class PluginDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,source,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
+				" SELECT id,name,type,readme,source,distribute,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
 		condition.add(0);
 		condition.add(1);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		Map<String, Object> map = Collections.EMPTY_MAP;
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
@@ -124,9 +128,17 @@ public class PluginDao {
 		sb2.append("?,");
 		condition.add(map.get("type"));
 
+		sb1.append("readme").append(",");
+		sb2.append("?,");
+		condition.add(map.get("readme"));
+
 		sb1.append("source").append(",");
 		sb2.append("?,");
 		condition.add(map.get("source"));
+
+		sb1.append("distribute").append(",");
+		sb2.append("?,");
+		condition.add(map.get("distribute"));
 
 		sb1.append("createUserId").append(",");
 		sb2.append("?,");
@@ -146,7 +158,8 @@ public class PluginDao {
 			sb2.deleteCharAt(sb2.length() - 1);
 		String sql = "insert into plugin(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
-		// log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
@@ -160,8 +173,14 @@ public class PluginDao {
 		sb.append(" type = ? ,");
 		condition.add(map.get("type"));
 
+		sb.append(" readme = ? ,");
+		condition.add(map.get("readme"));
+
 		sb.append(" source = ? ,");
 		condition.add(map.get("source"));
+
+		sb.append(" distribute = ? ,");
+		condition.add(map.get("distribute"));
 
 		sb.append(" createUserId = ? ,");
 		condition.add(map.get("createUserId"));
@@ -177,16 +196,18 @@ public class PluginDao {
 		String sql = "update plugin set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
-		// log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 
-	public List<Map<String, Object>> listPlugin(String id, String name, Integer type, byte[] source,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
+	public List<Map<String, Object>> listPlugin(String id, String name, Integer type, String readme, byte[] source,
+			byte[] distribute, String createUserId, String createUserName, String startCreateTime, String endCreateTime)
+			throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,source,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
+				" SELECT id,name,type,readme,source,distribute,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -198,6 +219,10 @@ public class PluginDao {
 		if (type != null) {
 			sb.append(" and type = ? ");
 			condition.add(type);
+		}
+		if (!StringUtils.isEmpty(readme)) {
+			sb.append(" and readme like ? ");
+			condition.add("%" + readme + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -216,14 +241,15 @@ public class PluginDao {
 			condition.add(endCreateTime);
 		}
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.queryForList(sb.toString(), condition.toArray());
 
 	}
 
-	public Map<String, Object> pagePlugin(String id, String name, Integer type, byte[] source, String createUserId,
-			String createUserName, String startCreateTime, String endCreateTime, Integer pageNum, Integer pageSize)
-			throws Exception {
+	public Map<String, Object> pagePlugin(String id, String name, Integer type, String readme, byte[] source,
+			byte[] distribute, String createUserId, String createUserName, String startCreateTime, String endCreateTime,
+			Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
 		if (pageSize == null)
@@ -233,7 +259,7 @@ public class PluginDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,source,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
+				" SELECT id,name,type,readme,source,distribute,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from plugin where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -245,6 +271,10 @@ public class PluginDao {
 		if (type != null) {
 			sb.append(" and type = ? ");
 			condition.add(type);
+		}
+		if (!StringUtils.isEmpty(readme)) {
+			sb.append(" and readme like ? ");
+			condition.add("%" + readme + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -269,7 +299,8 @@ public class PluginDao {
 		condition.add(from);
 		condition.add(size);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" +
+		// Arrays.deepToString(condition.toArray()));//如果存在blog等字节数组类型的，请注释此行打印
 		List<Map<String, Object>> pageList = jdbcTemplate.queryForList(sb.toString(), condition.toArray());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", count);// 取名total为了兼容mybatis-pageHelper中的page对象的total,spring框架的PageImpl也使用total
