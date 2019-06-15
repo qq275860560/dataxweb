@@ -13,6 +13,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.qq275860560.common.util.CommandUtil;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.controller.JobController;
 
@@ -69,7 +70,8 @@ public class RunJobTest {
 
 		log.info(file.getAbsolutePath());
 
-		String execResult = JobController.runComand("python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator + "datax.py "
+		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
+		String execResult = CommandUtil.runComand("python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator + "datax.py "
 				+ file.getAbsolutePath());
 		log.info(execResult);
 	}

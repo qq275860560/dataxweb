@@ -146,7 +146,7 @@ public class PluginDao {
 			sb2.deleteCharAt(sb2.length() - 1);
 		String sql = "insert into plugin(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
-		//log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" + Arrays.deepToString(condition.toArray()));
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
@@ -177,7 +177,7 @@ public class PluginDao {
 		String sql = "update plugin set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
-		//log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		// log.info("condition=" + Arrays.deepToString(condition.toArray()));
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 

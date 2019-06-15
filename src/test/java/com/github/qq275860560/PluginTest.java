@@ -1,15 +1,12 @@
 package com.github.qq275860560;
 
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
@@ -18,12 +15,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
+import com.github.qq275860560.common.util.CommandUtil;
+import com.github.qq275860560.common.util.CompressUtil;
+import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.PluginDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -53,18 +56,22 @@ public class PluginTest {
 
 		String name = "pluginname" + System.currentTimeMillis();
 		// savePlugin请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/savePlugin?name={name}&type=0",
-				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+		//byte[] binary = IOUtils.toByteArray(new URL("https://codeload.github.com/apache/maven/zip/master"));
+		File file = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources1.zip");
+		FileUtils.copyURLToFile(new URL("https://codeload.github.com/apache/maven/zip/master"), file);;
+		    // 文件必须封装成FileSystemResource这个类型后端才能收到附件
+        FileSystemResource resource = new FileSystemResource(file);
+        // 然后所有参数要封装到MultiValueMap里面
+        MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
+        param.add("file", resource);
+        param.add("name", name);
+        param.add("type", 0);
+		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/savePlugin",
+				HttpMethod.POST, new HttpEntity<>(param,new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
 					}
-				}), Map.class, new HashMap<String, Object>() {
-					{
-						put("readerParameterConnectionJdbcUrl",
-								"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
-						put("name", name);
-					}
-				});
+				}), Map.class);
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 		// pagePlugin请求
@@ -80,6 +87,33 @@ public class PluginTest {
 				.get("pageList")).get(0)).get("id");
 		Assert.assertTrue(id.length() > 0);
 
+		
+		// getPluginMarkdown请求
+		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginMarkdown?id=" + 1, HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(200, response.getBody().get("code"));
+		
+		
+		
+		// getPluginSource请求
+		ResponseEntity<byte[]> response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginSource?id="+ id, HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), byte[].class);
+		Assert.assertEquals(200, response2.getStatusCode().value());
+		File file2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources2.zip");
+		FileUtils.writeByteArrayToFile(file2, response2.getBody());
+		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(file)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(file2)));
+	
+				
+				
 		// updatePlugin请求
 		String name2 = "pluginName" + System.currentTimeMillis();
 		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/updatePlugin?id=" + id + "&name=" + name2,
@@ -103,6 +137,10 @@ public class PluginTest {
 
 		String name3 = (String) ((Map<String, Object>) response.getBody().get("data")).get("name");
 		Assert.assertEquals(name2, name3);
+		
+		
+
+ 
 
 		// deletePlugin请求
 		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/deletePlugin?id=" + id, HttpMethod.GET,
@@ -120,7 +158,7 @@ public class PluginTest {
 	PluginDao pluginDao;
 
 	@Test
-	public void save() throws Exception {
+	public void saveBinaryArray() throws Exception {
 		String id = "" + System.currentTimeMillis();
 		byte[] binary = IOUtils.toByteArray(new URL("https://codeload.github.com/apache/maven/zip/master"));
 
@@ -133,32 +171,23 @@ public class PluginTest {
 
 		Map<String, Object> map2 = pluginDao.getPlugin(id);
 		byte[] source = (byte[]) map2.get("source");
-
+ 
 		Assert.assertEquals(binary.length, source.length);
-		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "maven.zip");
+		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources.zip");
 		FileUtils.writeByteArrayToFile(zipFile, source);
 		log.info(zipFile.getAbsolutePath());
-		unZip(zipFile);
+		CompressUtil.unZip(zipFile);
+		
+		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
+		//CommandUtil.runComand("cd mysqlreader-master && mvn install");
+		//
 		pluginDao.deletePlugin(id);
 
 	}
 
 	 
 
-	public static void unZip(File file) throws Exception {
-		try (ZipFile zipFile = new ZipFile(file);) {
-			Enumeration<?> entries = zipFile.getEntries();
-			while (entries.hasMoreElements()) {
-				ZipArchiveEntry entry = (ZipArchiveEntry) entries.nextElement();
-				if (entry.isDirectory()) {
-					new File(file.getParent(), entry.getName()).mkdirs();
-				} else {
-					File tmpFile = new File(file.getParent(), entry.getName());
-					InputStream is = zipFile.getInputStream(entry);
-					FileUtils.copyInputStreamToFile(is, tmpFile);
-				}
-			}
-		}
+	
 
-	}
+	
 }

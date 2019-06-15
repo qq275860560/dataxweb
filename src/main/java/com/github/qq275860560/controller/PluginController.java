@@ -1,11 +1,21 @@
 package com.github.qq275860560.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -15,8 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.qq275860560.common.util.CompressUtil;
+import com.github.qq275860560.common.util.ResponseUtil;
 import com.github.qq275860560.dao.PluginDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -91,16 +104,18 @@ public class PluginController {
 	
 	
  
- 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin?name=pluginname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=plugin" 
+ 	/* 
+ 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin" -F 'file=@D:/soft/maven-master.zip;type=application/octet-stream' -F 'name=pluginName1' -F 'type=0' 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/plugin/savePlugin")
-	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap)  throws Exception{
+	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap,@RequestParam("file") MultipartFile file)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
 	 
 		String id=UUID.randomUUID().toString().replace("-", "");
 		requestMap.put("id", id);	
-				
+		requestMap.put("source",file.getBytes());
+		log.info(" "+file.getSize()+"  "+file.getBytes().length);;
 		String createUserName=currentLoginUsername;
 		requestMap.put("createUserName", createUserName);
 		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -114,6 +129,8 @@ public class PluginController {
 			}
 		};
 	}
+	
+	 
 	
 
 
@@ -158,13 +175,10 @@ public class PluginController {
 		};
 	}
 	 
- 	//下载插件源码接口
- 	//下载插件发布包接口
- 	//获取markdown使用说明
- 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginProgress?id=1" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginMarkdown?id=1" 
 	*/
- 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginProgress")
-	public Map<String, Object> getPluginProgress(
+ 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginMarkdown")
+	public Map<String, Object> getPluginMarkdown(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -184,4 +198,52 @@ public class PluginController {
 			}
 		};
 	}
+ 	
+ 	
+ 	    //下载插件源码接口 	 
+ 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/test-sources.zip" 
+ 		*/
+ 	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginSource")
+ 		public void getPluginSource(
+ 				@RequestParam Map<String, Object> requestMap,HttpServletResponse response)  throws Exception{
+ 			String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+ 			log.info("当前登录用户=" + currentLoginUsername);
+ 			
+ 			String id=(String)requestMap.get("id");
+ 			Map<String, Object> map=pluginDao.getPlugin(id);
+ 			byte[] source = (byte[])map.get("source");
+ 			String fileName=(String)map.get("name")+"-sources.zip";		
+ 			//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/ResponseUtil.java 
+ 			ResponseUtil.sendFileByteArray(response, source, fileName,"application/octet-stream;charset=UTF-8");
+ 	 	}
+
+ 	 
+ 	 	//下载插件发布包接口
+ 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginCompile?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/test.zip" 
+ 		*/
+ 	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginCompile")
+ 		public void getPluginCompile(
+ 				@RequestParam Map<String, Object> requestMap,HttpServletResponse response)  throws Exception{
+ 			String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
+ 			log.info("当前登录用户=" + currentLoginUsername);
+ 			
+ 			String id=(String)requestMap.get("id");
+ 			Map<String, Object> map=pluginDao.getPlugin(id);
+ 			byte[] source = (byte[])map.get("source");
+ 			
+ 			File sourceZipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources.zip");
+ 			FileUtils.writeByteArrayToFile(sourceZipFile, source);
+ 			CompressUtil.unZip(sourceZipFile);
+ 			
+ 			
+ 			
+ 			
+ 			
+ 			String fileName=(String)map.get("name")+"-compile.zip";		
+ 			//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/ResponseUtil.java 
+ 			ResponseUtil.sendFileByteArray(response, source, fileName,"application/octet-stream;charset=UTF-8");
+ 	 	}
+
+
+ 
 }

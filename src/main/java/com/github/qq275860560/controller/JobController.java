@@ -1,9 +1,7 @@
 package com.github.qq275860560.controller;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.qq275860560.common.util.CommandUtil;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.JobDao;
@@ -373,28 +372,14 @@ public class JobController {
 		FileUtils.writeStringToFile(file, dataxJson, "UTF-8");
 
 		log.info(file.getAbsolutePath());
-
-		return runComand("python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator + "datax.py "
+		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
+		return CommandUtil.runComand("python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator + "datax.py "
 				+ file.getAbsolutePath());
 	 
 		
 		
 	}
-	public static String runComand(String command) throws Exception {
-		StringBuilder result = new StringBuilder();
-		Process pr = Runtime.getRuntime().exec(command);
-		log.info(command);
-		BufferedReader in = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-
-		String line = null;
-		while ((line = in.readLine()) != null) {
-			result.append(line).append("\r\n");
-		}
-		in.close();
-		pr.waitFor();
-		return result.toString();
-
-	}
+	
      
 	
 

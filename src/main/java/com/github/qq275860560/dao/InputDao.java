@@ -32,7 +32,7 @@ public class InputDao {
 		sb.append(" and name = ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 	}
 
@@ -47,7 +47,7 @@ public class InputDao {
 		sb.append(" and name= ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		int count = jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 		if (count > 0)
 			return false;
@@ -62,7 +62,7 @@ public class InputDao {
 		sb.append(" and id = ? ");
 		condition.add(id);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
 
@@ -79,7 +79,7 @@ public class InputDao {
 		condition.add(0);
 		condition.add(1);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		Map<String, Object> map = Collections.EMPTY_MAP;
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
@@ -99,7 +99,7 @@ public class InputDao {
 		condition.add(0);
 		condition.add(1);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		Map<String, Object> map = Collections.EMPTY_MAP;
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
@@ -170,7 +170,7 @@ public class InputDao {
 			sb2.deleteCharAt(sb2.length() - 1);
 		String sql = "insert into input(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
@@ -219,7 +219,7 @@ public class InputDao {
 		String sql = "update input set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 
@@ -288,7 +288,7 @@ public class InputDao {
 			condition.add(endCreateTime);
 		}
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.queryForList(sb.toString(), condition.toArray());
 
 	}
@@ -371,7 +371,7 @@ public class InputDao {
 		condition.add(from);
 		condition.add(size);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		List<Map<String, Object>> pageList = jdbcTemplate.queryForList(sb.toString(), condition.toArray());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", count);// 取名total为了兼容mybatis-pageHelper中的page对象的total,spring框架的PageImpl也使用total
