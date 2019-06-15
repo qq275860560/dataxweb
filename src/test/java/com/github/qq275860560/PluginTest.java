@@ -59,7 +59,7 @@ public class PluginTest {
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		File readme = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-README.md");
 		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-README.md?raw=true"), readme);;
-	    param.add("source", new FileSystemResource(readme));
+	    param.add("readme", new FileSystemResource(readme));
 	    
 	    
 		File source = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-source.zip");
@@ -67,7 +67,7 @@ public class PluginTest {
 	    param.add("source", new FileSystemResource(source));
 	    
 		File distribute = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-distribute.zip");
-		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-distribute.zip?raw=true"), source);;
+		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-distribute.zip?raw=true"), distribute);;
 	    param.add("distribute", new FileSystemResource(distribute));
 	    
         param.add("name", name);
@@ -102,24 +102,12 @@ public class PluginTest {
 					}
 				}), Map.class);
 		Assert.assertEquals(200, response.getStatusCode().value());
-		Assert.assertEquals(200, response.getBody().get("code"));
-		
-		
-		// getPluginReadme请求
-		ResponseEntity<byte[]> response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginReadme?id="+ id, HttpMethod.GET,
-				new HttpEntity<>(new HttpHeaders() {
-					{
-						setBearerAuth(access_token);
-					}
-				}), byte[].class);
-		Assert.assertEquals(200, response2.getStatusCode().value());
-		File readme2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-README2.md");
-		FileUtils.writeByteArrayToFile(readme2, response2.getBody());
-		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(readme)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(readme2)));
+		Assert.assertEquals(200, response.getBody().get("code"));		
+		Assert.assertEquals(FileUtils.readFileToString(readme,"UTF-8"), (String)response.getBody().get("data"));
 	
 		
 		// getPluginSource请求
-		response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginSource?id="+ id, HttpMethod.GET,
+		ResponseEntity<byte[]> response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginSource?id="+ id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
