@@ -64,25 +64,69 @@
  	
     <dependencies>   
         <dependency>
+        	<groupId>com.github.qq275860560</groupId>
+			<artifactId>github-qq275860560-common</artifactId>
+			<version>20190613</version>
+		</dependency>
+        <dependency>
+		 	<groupId>com.github.qq275860560</groupId>
+			<artifactId>github-qq275860560-security</artifactId>
+			<version>20190531</version>
+		</dependency>
+        <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.6</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-compress</artifactId>
+		    <version>1.18</version>
+		</dependency>		
+		<dependency>
+		    <groupId>com.googlecode.log4jdbc</groupId>
+		    <artifactId>log4jdbc</artifactId>
+		    <version>1.2</version>
+		    <optional>true</optional>
+		    <exclusions>
+				<exclusion>
+				   <groupId>org.slf4j</groupId>
+     				 <artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
         <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		<dependency>
-		    <groupId>org.freemarker</groupId>
-		    <artifactId>freemarker</artifactId>
-		</dependency>
-        <dependency>
+	    <dependency>
 		   <groupId>org.projectlombok</groupId>
 		   <artifactId>lombok</artifactId>
-		</dependency>		
+		</dependency>	
+		<dependency>
+	         <groupId>org.springframework.boot</groupId>
+	         <artifactId>spring-boot-starter-test</artifactId>
+	         <scope>test</scope>
+	     </dependency>
+	       <dependency>
+	        <groupId>org.apache.httpcomponents</groupId>
+	        <artifactId>httpclient</artifactId>
+	        <scope>test</scope>
+	    </dependency>	
 	</dependencies>
     <build>
 	    <finalName>${project.artifactId}</finalName>
