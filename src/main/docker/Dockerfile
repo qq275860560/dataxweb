@@ -6,7 +6,7 @@ MAINTAINER jiangyuanlin@163.com
 RUN wget http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm 
 RUN yum -y install mysql57-community-release-el7-11.noarch.rpm 
 RUN yum repolist enabled | grep mysql.* 
-RUN yum install mysql-community-server
+RUN yum -y install mysql-community-server
 
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git
 
