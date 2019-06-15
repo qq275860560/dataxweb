@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.qq275860560.common.util.CommandUtil;
 import com.github.qq275860560.common.util.CompressUtil;
 import com.github.qq275860560.common.util.ResponseUtil;
 import com.github.qq275860560.dao.PluginDao;
@@ -109,7 +110,13 @@ public class PluginController {
 		String id=UUID.randomUUID().toString().replace("-", "");
 		requestMap.put("id", id);	
 		requestMap.put("readme",new String(readme.getBytes(),"UTF-8"));
+		// 解压验证源码是否能够编译
+		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + requestMap.get("name")+"-source.zip");
+		FileUtils.writeByteArrayToFile(zipFile, source.getBytes());
+		File destDir=CompressUtil.unZip(zipFile);
+		CommandUtil.runComand("mvn install", destDir);		
 		requestMap.put("source",source.getBytes());
+		
 		requestMap.put("distribute",distribute.getBytes());
 		String createUserName=currentLoginUsername;
 		requestMap.put("createUserName", createUserName);
@@ -178,18 +185,14 @@ public class PluginController {
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
-		String id=(String)requestMap.get("id");
-		//todo 改成解压源码，获取markdown使用说明
-		String name=(String)pluginDao.getPlugin(id).get("name");
-		
-		ResponseEntity<String> result=restTemplate.exchange("https://raw.githubusercontent.com/alibaba/DataX/master/"+name+"/doc/"+name+".md", HttpMethod.GET, null, String.class);
-    	String data=(String) result.getBody();   
-    	
+		String id=(String)requestMap.get("id");		
+		String readme=(String)pluginDao.getPlugin(id).get("readme");
+				  	
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
 				put("msg", "获取使用说明成功");
-				put("data", data);
+				put("data", readme);
 			}
 		};
 	}

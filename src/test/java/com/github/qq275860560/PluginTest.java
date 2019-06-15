@@ -95,7 +95,7 @@ public class PluginTest {
 
 		
 		// getPluginReadme请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginReadme?id=" + 1, HttpMethod.GET,
+		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginReadme?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

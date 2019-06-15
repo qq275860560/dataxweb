@@ -126,7 +126,7 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
 
-insert into plugin values(1,'mysqlreader',0,null,null,null,null,"createUserName1","1970-01-01 00:00:00");
+insert into plugin values(1,'mysqlreader',0,null,LOAD_FILE('/d/soft/mysqlreader-source.zip'),null,null,"createUserName1","1970-01-01 00:00:00");
 insert into plugin values(2,'mysqlwriter',1,null,null,null,null,"createUserName1","1970-01-01 00:00:00"); 
 
 
