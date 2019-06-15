@@ -62,15 +62,16 @@ public class JobController {
 		String readerName=(String)requestMap.get("readerName");
 		String outputName=(String)requestMap.get("outputName");
 		String writerName=(String)requestMap.get("writerName");
-		Integer status=(Integer)requestMap.get("status");
-		Double progress=(Double)requestMap.get("progress");
+		Integer status=Integer.parseInt(requestMap.get("status").toString());
+		Double progress=Double.parseDouble(requestMap.get("progress").toString());
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
 		String endCreateTime=(String)requestMap.get("endCreateTime");
-		Integer pageNum =requestMap.get("pageNum")==null?1:(Integer)requestMap.get("pageNum");
-		Integer pageSize =requestMap.get("pageSize")==null?10:(Integer)requestMap.get("pageSize");
+		log.info(""+requestMap.get("pageNum"));
+		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
+		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
-		Map<String, Object> data = jobDao.pageJob(null, name, null, inputName, null, outputName, null, outputName, null, writerName, null, status, progress, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize);
+		Map<String, Object> data = jobDao.pageJob(null, name, null, inputName, null, outputName, null, readerName, null, writerName, null, status, progress, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize);
 		
 		return new HashMap<String, Object>() {
 			{				 

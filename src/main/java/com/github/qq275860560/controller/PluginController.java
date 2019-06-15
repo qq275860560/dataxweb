@@ -58,13 +58,13 @@ public class PluginController {
 		log.info("当前登录用户=" + currentLoginUsername);	
 		
 		String name=(String)requestMap.get("name");
-		Integer type=(Integer)requestMap.get("type");
+		Integer type=Integer.parseInt(requestMap.get("type").toString());
 	
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
 		String endCreateTime=(String)requestMap.get("endCreateTime");
-		Integer pageNum =requestMap.get("pageNum")==null?1:(Integer)requestMap.get("pageNum");
-		Integer pageSize =requestMap.get("pageSize")==null?10:(Integer)requestMap.get("pageSize");
+		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
+		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
 		Map<String, Object> data = pluginDao.pagePlugin(null, name, type, null,null, null,null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
@@ -116,7 +116,8 @@ public class PluginController {
 		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CompressUtil.java 
 		File destDir=CompressUtil.unZip(zipFile);
 		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
-		CommandUtil.runComand("mvn install", destDir);		
+		String result=CommandUtil.runComand("mvn install", destDir);
+		log.info(result);
 		requestMap.put("source",source.getBytes());
 		
 		requestMap.put("distribute",distribute.getBytes());

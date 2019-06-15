@@ -49,8 +49,8 @@ public class OutputController {
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
 		String endCreateTime=(String)requestMap.get("endCreateTime");
-		Integer pageNum =requestMap.get("pageNum")==null?1:(Integer)requestMap.get("pageNum");
-		Integer pageSize =requestMap.get("pageSize")==null?10:(Integer)requestMap.get("pageSize");
+		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
+		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
 		Map<String, Object> data = outputDao.pageOutput(null,name, null, null, null, null, null, null, null, null, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {

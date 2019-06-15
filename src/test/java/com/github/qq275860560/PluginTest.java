@@ -59,16 +59,19 @@ public class PluginTest {
 		MultiValueMap<String, Object> param = new LinkedMultiValueMap<>();
 		File readme = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-README.md");
 		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-README.md?raw=true"), readme);;
-	    param.add("readme", new FileSystemResource(readme));
+	    Assert.assertTrue(readme.exists() && readme.length()>0);
+		param.add("readme", new FileSystemResource(readme));
 	    
 	    
 		File source = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-source.zip");
 		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-source.zip?raw=true"), source);;
-	    param.add("source", new FileSystemResource(source));
+		Assert.assertTrue(source.exists() && source.length()>0);
+		param.add("source", new FileSystemResource(source));
 	    
 		File distribute = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader-distribute.zip");
 		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-distribute.zip?raw=true"), distribute);;
-	    param.add("distribute", new FileSystemResource(distribute));
+		Assert.assertTrue(distribute.exists() && distribute.length()>0);
+		param.add("distribute", new FileSystemResource(distribute));
 	    
         param.add("name", name);
         param.add("type", 0);
