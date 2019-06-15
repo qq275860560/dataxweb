@@ -202,7 +202,7 @@ public class PluginController {
  	
  	
  	    //下载插件源码接口 	 
- 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/mysqlreader-source.zip" 
+ 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=1" -o "/d/tmp/mysqlreader-source.zip" 
  		*/
 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginSource")
 	public void getPluginSource(@RequestParam Map<String, Object> requestMap, HttpServletResponse response)
@@ -219,7 +219,7 @@ public class PluginController {
 	}
  	 
  	 	//下载插件发布包接口
- 	 	/*  cd /d/tmp/ && curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginDistribute?id=9072b71feffc499e9aed739a8c074cda" -o "/d/tmp/mysqlreader-source.zip" 
+ 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginDistribute?id=1" -o "/d/tmp/mysqlreader-distribute.zip" 
  		*/
  	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginDistribute")
  		public void getPluginDistribute(

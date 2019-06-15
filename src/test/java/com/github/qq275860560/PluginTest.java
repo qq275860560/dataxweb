@@ -172,38 +172,9 @@ public class PluginTest {
 
 	}
 
-	@Autowired
-	PluginDao pluginDao;
 
-	@Test
-	public void saveBinaryArray() throws Exception {
-		String id = "" + System.currentTimeMillis();
-		byte[] binary = IOUtils.toByteArray(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader.zip?raw=true"));
 
-		log.info("" + binary.length);
-
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", id);
-		map.put("source", binary);
-		pluginDao.savePlugin(map);
-
-		Map<String, Object> map2 = pluginDao.getPlugin(id);
-		byte[] source = (byte[]) map2.get("source");
- 
-		Assert.assertEquals(binary.length, source.length);
-		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader.zip");
-		FileUtils.writeByteArrayToFile(zipFile, source);
-		log.info(zipFile.getAbsolutePath());
-		File destDir=CompressUtil.unZip(zipFile);
-		
-		
-		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
-		String result = CommandUtil.runComand( "mvn install",destDir);
-		log.info(result);
-		//
-		pluginDao.deletePlugin(id);
-
-	}
+	
 	
 	
 
