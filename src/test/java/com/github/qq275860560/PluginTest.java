@@ -56,9 +56,8 @@ public class PluginTest {
 
 		String name = "pluginname" + System.currentTimeMillis();
 		// savePlugin请求
-		//byte[] binary = IOUtils.toByteArray(new URL("https://codeload.github.com/apache/maven/zip/master"));
-		File file = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources1.zip");
-		FileUtils.copyURLToFile(new URL("https://codeload.github.com/apache/maven/zip/master"), file);;
+		File file = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader1.zip");
+		FileUtils.copyURLToFile(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader.zip?raw=true"), file);;
 		    // 文件必须封装成FileSystemResource这个类型后端才能收到附件
         FileSystemResource resource = new FileSystemResource(file);
         // 然后所有参数要封装到MultiValueMap里面
@@ -108,7 +107,7 @@ public class PluginTest {
 					}
 				}), byte[].class);
 		Assert.assertEquals(200, response2.getStatusCode().value());
-		File file2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "test-sources2.zip");
+		File file2 = new File(FileUtils.getTempDirectoryPath(), File.separator + "mysqlreader2.zip");
 		FileUtils.writeByteArrayToFile(file2, response2.getBody());
 		Assert.assertEquals(DigestUtils.md5Hex(FileUtils.readFileToByteArray(file)), DigestUtils.md5Hex(FileUtils.readFileToByteArray(file2)));
 	
@@ -160,7 +159,7 @@ public class PluginTest {
 	@Test
 	public void saveBinaryArray() throws Exception {
 		String id = "" + System.currentTimeMillis();
-		byte[] binary = IOUtils.toByteArray(new URL("https://codeload.github.com/apache/maven/zip/master"));
+		byte[] binary = IOUtils.toByteArray(new URL("https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader.zip?raw=true"));
 
 		log.info("" + binary.length);
 

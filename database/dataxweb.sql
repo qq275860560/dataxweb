@@ -117,7 +117,7 @@ CREATE TABLE plugin (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 type int DEFAULT NULL comment '{0:reader,1:writer}',
-source LongBlob   DEFAULT NULL  comment '源码的zip压缩包对应的二进制数组,压缩包名称不关注，但顶层目录必须有pom.xml,src,doc，参考https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/resources/static/mysqlreader.zip',
+source LongBlob   DEFAULT NULL  comment '源码的zip压缩包对应的二进制数组,压缩包名称不关注，但顶层目录必须有pom.xml,src,doc，参考https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader.zip?raw=true',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,

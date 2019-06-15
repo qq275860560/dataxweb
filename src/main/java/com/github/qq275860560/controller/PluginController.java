@@ -1,20 +1,14 @@
 package com.github.qq275860560.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
-import org.apache.commons.compress.archivers.zip.ZipFile;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -105,7 +99,7 @@ public class PluginController {
 	
  
  	/* 
- 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin" -F 'file=@D:/soft/maven-master.zip;type=application/octet-stream' -F 'name=pluginName1' -F 'type=0' 
+ 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin" -F 'file=@D:/soft/mysqlreader.zip;type=application/octet-stream' -F 'name=pluginName1' -F 'type=0' 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/plugin/savePlugin")
 	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap,@RequestParam("file") MultipartFile file)  throws Exception{
@@ -212,7 +206,7 @@ public class PluginController {
  			String id=(String)requestMap.get("id");
  			Map<String, Object> map=pluginDao.getPlugin(id);
  			byte[] source = (byte[])map.get("source");
- 			String fileName=(String)map.get("name")+"-sources.zip";		
+ 			String fileName=(String)map.get("name")+".zip";		
  			//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/ResponseUtil.java 
  			ResponseUtil.sendFileByteArray(response, source, fileName,"application/octet-stream;charset=UTF-8");
  	 	}
@@ -239,7 +233,7 @@ public class PluginController {
  			
  			
  			
- 			String fileName=(String)map.get("name")+"-compile.zip";		
+ 			String fileName=(String)map.get("name")+".zip";		
  			//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/ResponseUtil.java 
  			ResponseUtil.sendFileByteArray(response, source, fileName,"application/octet-stream;charset=UTF-8");
  	 	}
