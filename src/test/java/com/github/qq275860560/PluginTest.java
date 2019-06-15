@@ -1,9 +1,17 @@
 package com.github.qq275860560;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
+import org.apache.commons.compress.archivers.zip.ZipFile;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +23,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.github.qq275860560.dao.PluginDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,8 +53,7 @@ public class PluginTest {
 
 		String name = "pluginname" + System.currentTimeMillis();
 		// savePlugin请求
-		response = testRestTemplate.exchange(
-				"/api/github/qq275860560/plugin/savePlugin?name={name}&readerId=1&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
+		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/savePlugin?name={name}&type=0",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -107,4 +116,49 @@ public class PluginTest {
 
 	}
 
+	@Autowired
+	PluginDao pluginDao;
+
+	@Test
+	public void save() throws Exception {
+		String id = "" + System.currentTimeMillis();
+		byte[] binary = IOUtils.toByteArray(new URL("https://codeload.github.com/apache/maven/zip/master"));
+
+		log.info("" + binary.length);
+
+		Map<String, Object> map = new HashMap<>();
+		map.put("id", id);
+		map.put("source", binary);
+		pluginDao.savePlugin(map);
+
+		Map<String, Object> map2 = pluginDao.getPlugin(id);
+		byte[] source = (byte[]) map2.get("source");
+
+		Assert.assertEquals(binary.length, source.length);
+		File zipFile = new File(FileUtils.getTempDirectoryPath(), File.separator + "maven.zip");
+		FileUtils.writeByteArrayToFile(zipFile, source);
+		log.info(zipFile.getAbsolutePath());
+		unZip(zipFile);
+		pluginDao.deletePlugin(id);
+
+	}
+
+	 
+
+	public static void unZip(File file) throws Exception {
+		try (ZipFile zipFile = new ZipFile(file);) {
+			Enumeration<?> entries = zipFile.getEntries();
+			while (entries.hasMoreElements()) {
+				ZipArchiveEntry entry = (ZipArchiveEntry) entries.nextElement();
+				if (entry.isDirectory()) {
+					new File(file.getParent(), entry.getName()).mkdirs();
+				} else {
+					File tmpFile = new File(file.getParent(), entry.getName());
+					InputStream is = zipFile.getInputStream(entry);
+					FileUtils.copyInputStreamToFile(is, tmpFile);
+				}
+			}
+		}
+
+	}
 }
