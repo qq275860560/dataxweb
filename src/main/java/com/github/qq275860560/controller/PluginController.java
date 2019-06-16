@@ -58,7 +58,7 @@ public class PluginController {
 		log.info("当前登录用户=" + currentLoginUsername);	
 		
 		String name=(String)requestMap.get("name");
-		Integer type=Integer.parseInt(requestMap.get("type").toString());
+		Integer type=requestMap.get("type")==null?null:Integer.parseInt(requestMap.get("type").toString());
 	
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");

@@ -32,7 +32,7 @@ public class OutputTest {
 	private TestRestTemplate testRestTemplate;
 
 	@Test
-	public void output() throws Exception {
+	public void execute() throws Exception {
 
 		// 登录
 		ResponseEntity<Map> response = testRestTemplate.exchange("/login?username=username1&password=123456",

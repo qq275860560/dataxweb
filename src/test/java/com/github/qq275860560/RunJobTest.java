@@ -34,7 +34,7 @@ public class RunJobTest {
 	private TestRestTemplate testRestTemplate;
 
 	@Test
-	public void runJob() throws Exception {
+	public void execute() throws Exception {
 	
 
 	 

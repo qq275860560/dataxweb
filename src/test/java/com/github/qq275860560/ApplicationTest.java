@@ -1,7 +1,5 @@
 package com.github.qq275860560;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -32,7 +30,7 @@ public class ApplicationTest {
 	private TestRestTemplate testRestTemplate;
 
 	@Test
-	public void login() throws Exception {
+	public void execute() throws Exception {
 
 		// ROLE为普通客户端登录
 
@@ -100,10 +98,3 @@ public class ApplicationTest {
 	}
 
 }
-// curl "http://localhost:8080/index"
-// curl "http://localhost:8080/guide"
-// curl "http://localhost:8080/markdown?plugin=mysqlreader"
-// curl "http://localhost:8080/pluginTemplate?plugin=mysqlreader"
-// curl "http://localhost:8080/download?jobname=mysql-mysql"
-// curl "http://localhost:8080/save?"
-// curl "http://localhost:8080/build?"

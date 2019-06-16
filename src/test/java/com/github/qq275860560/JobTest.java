@@ -34,7 +34,7 @@ public class JobTest {
 
 	
 	@Test
-	public void job() throws Exception {
+	public void execute() throws Exception {
 
 		// 登录
 		ResponseEntity<Map> response = testRestTemplate.exchange("/login?username=username1&password=123456",
@@ -119,10 +119,3 @@ public class JobTest {
 	}
 
 }
-// curl "http://localhost:8080/index"
-// curl "http://localhost:8080/guide"
-// curl "http://localhost:8080/markdown?plugin=mysqlreader"
-// curl "http://localhost:8080/pluginTemplate?plugin=mysqlreader"
-// curl "http://localhost:8080/download?jobname=mysql-mysql"
-// curl "http://localhost:8080/save?"
-// curl "http://localhost:8080/build?"

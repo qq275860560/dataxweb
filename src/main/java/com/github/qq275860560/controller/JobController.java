@@ -62,8 +62,8 @@ public class JobController {
 		String readerName=(String)requestMap.get("readerName");
 		String outputName=(String)requestMap.get("outputName");
 		String writerName=(String)requestMap.get("writerName");
-		Integer status=Integer.parseInt(requestMap.get("status").toString());
-		Double progress=Double.parseDouble(requestMap.get("progress").toString());
+		Integer status=requestMap.get("status")==null?null:Integer.parseInt(requestMap.get("status").toString());
+		Double progress=requestMap.get("progress")==null?null:Double.parseDouble(requestMap.get("progress").toString());
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
 		String endCreateTime=(String)requestMap.get("endCreateTime");
