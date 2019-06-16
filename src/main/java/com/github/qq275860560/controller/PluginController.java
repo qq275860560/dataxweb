@@ -116,8 +116,8 @@ public class PluginController {
 		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CompressUtil.java 
 		File destDir=CompressUtil.unZip(zipFile);
 		//工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java 
-		//String result=CommandUtil.runComand("mvn install", destDir);
-		//log.info(result);
+		String result=CommandUtil.runComand("mvn install", destDir);
+		log.info(result);
 		requestMap.put("source",source.getBytes());
 		
 		requestMap.put("distribute",distribute.getBytes());
