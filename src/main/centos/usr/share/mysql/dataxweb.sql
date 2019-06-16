@@ -1,5 +1,8 @@
-show VARIABLES like '%max_allowed_packet%';
-set global max_allowed_packet = 4*100*1024*1024*10
+set global max_allowed_packet = 4*100*1024*1024*10;
+
+DROP DATABASE IF EXISTS dataxweb;
+CREATE DATABASE IF NOT EXISTS dataxweb default charset utf8 COLLATE utf8_general_ci;
+use dataxweb;
 
 DROP TABLE  IF EXISTS job;
 CREATE TABLE job (
@@ -41,7 +44,7 @@ id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 
 readerId  VARCHAR ( 32 ) DEFAULT NULL,
-readerName VARCHAR ( 64 ) DEFAULT NULL,
+readerName VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
 
 readerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
@@ -65,20 +68,12 @@ null,
 "job",
 null,"createUserName1","1970-01-01 00:00:00");
 
-
-
-
-
-
-
- 
-
 DROP TABLE  IF EXISTS output;
 CREATE TABLE output (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 writerId VARCHAR ( 32 ) DEFAULT NULL,
-writerName VARCHAR ( 64 ) DEFAULT NULL,
+writerName VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
 
 writerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
@@ -104,19 +99,11 @@ insert into output values(1,"outputName1",null,"mysqlwriter",
 "test",
 null,"createUserName1","1970-01-01 00:00:00");
 
-
-
-
-
-
-
-
-
 DROP TABLE  IF EXISTS plugin;
 CREATE TABLE plugin (
 id VARCHAR ( 32 ) NOT NULL,
-name VARCHAR ( 64 ) DEFAULT NULL,
-type int DEFAULT NULL comment '{0:reader,1:writer}',
+name VARCHAR ( 64 ) DEFAULT NULL comment '插件名称',
+type int DEFAULT NULL comment '{0:reader类型,1:writer类型}',
 readme LongBlob   DEFAULT NULL  comment 'markdown格式的使用说明',
 source LongBlob   DEFAULT NULL  comment '源码的zip压缩包对应的二进制数组,压缩包顶层目录必须有pom.xml,src,doc，参考https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-source.zip?raw=true,确保执行mvn install能正常编译',
 distribute LongBlob   DEFAULT NULL  comment '发布包的zip压缩包对应的二进制数组,发布包顶层目录必须有plugin.json,plugin_job_template.json和可执行jar，参考https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-distribute.zip?raw=true',
