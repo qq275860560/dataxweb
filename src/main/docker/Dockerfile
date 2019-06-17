@@ -8,12 +8,19 @@ RUN  yum -y install  http://dev.mysql.com/get/mysql57-community-release-el7-11.n
     yum -y install mysql-community-server  &&\
     rm -rf /var/cache/yum/*
     
-RUN curl -fsSL "https://raw.githubusercontent.com/qq275860560/mysql/master/src/main/centos/tmp/init.sh" | sh
+RUN   echo "201906171103,chmod,interact,expect eof"  && curl -fsSL "https://raw.githubusercontent.com/qq275860560/mysql/master/src/main/centos/tmp/init.sh" | sh
 
-RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git
+RUN cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
+     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
+     mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null 
+
+RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
+RUN cd /tmp/dataxweb && mvn test
+
 
 CMD source /etc/profile &&\
-     service sshd start &&\
-     cd /tmp/dataxweb && mvn spring-boot:run 	
+    service sshd start &&\
+    cd /tmp/dataxweb && mvn spring-boot:run 
+      	
 
  
