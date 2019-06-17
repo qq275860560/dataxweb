@@ -31,7 +31,37 @@ cd /tmp/dataxweb && mvn spring-boot:run
 ```
 
 
+```
+# 创建view
+java -jar jenkins-cli.jar -s http://localhost:8081/ create-view view1
+<?xml version="1.1" encoding="UTF-8"?>
+<hudson.model.ListView>
+  <name>view1</name>
+  <filterExecutors>false</filterExecutors>
+  <filterQueue>false</filterQueue>
+  <properties class="hudson.model.View$PropertyList"/>
+  <jobNames>
+    <comparator class="hudson.util.CaseInsensitiveComparator"/>
+  </jobNames>
+  <jobFilters/>
+  <columns>
+    <hudson.views.StatusColumn/>
+    <hudson.views.WeatherColumn/>
+    <hudson.views.JobColumn/>
+    <hudson.views.LastSuccessColumn/>
+    <hudson.views.LastFailureColumn/>
+    <hudson.views.LastDurationColumn/>
+    <hudson.views.BuildButtonColumn/>
+  </columns>
+  <recurse>false</recurse>
+</hudson.model.ListView>
 
+# 获取view
+java -jar jenkins-cli.jar -s http://localhost:8081/ get-view view1
+
+
+
+```
 
 
 # 温馨提醒

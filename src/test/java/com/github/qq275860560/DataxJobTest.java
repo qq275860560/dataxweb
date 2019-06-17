@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RunJobTest {
+public class DataxJobTest {
 	@Autowired
 	private  ObjectMapper objectMapper ;
 	@Autowired

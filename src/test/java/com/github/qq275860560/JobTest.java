@@ -105,6 +105,79 @@ public class JobTest {
 
 		String name3 = (String) ((Map<String, Object>) response.getBody().get("data")).get("name");
 		Assert.assertEquals(name2, name3);
+		
+		
+		// enableJob请求		
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/enableJob?id=" + id ,
+				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(200, response.getBody().get("code"));
+
+		// getJob请求
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/getJob?id=" + id, HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(200, response.getBody().get("code"));
+
+		Integer status = (Integer) ((Map<String, Object>) response.getBody().get("data")).get("status");
+		Assert.assertTrue(1==status);
+		
+		// runJob请求		
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/runJob?id=" + id ,
+				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(200, response.getBody().get("code"));
+		
+		
+		// disableJob请求		
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/disableJob?id=" + id ,
+				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(200, response.getBody().get("code"));
+		
+		
+		
+
+		// getJob请求
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/getJob?id=" + id, HttpMethod.GET,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(200, response.getBody().get("code"));
+
+		 status = (Integer) ((Map<String, Object>) response.getBody().get("data")).get("status");
+		Assert.assertTrue(0==status);
+				
+		
+		// runJob请求		
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/runJob?id=" + id ,
+				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+					{
+						setBearerAuth(access_token);
+					}
+				}), Map.class);
+		Assert.assertEquals(200, response.getStatusCode().value());
+		Assert.assertEquals(400, response.getBody().get("code"));
+		
 
 		// deleteJob请求
 		response = testRestTemplate.exchange("/api/github/qq275860560/job/deleteJob?id=" + id, HttpMethod.GET,

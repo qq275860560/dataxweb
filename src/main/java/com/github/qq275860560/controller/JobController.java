@@ -351,6 +351,17 @@ public class JobController {
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id=(String)requestMap.get("id");
+		
+		Integer status=(Integer)jobDao.getJob(id).get("status");	
+		if(status==0) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "构建失败,任务禁用中");
+					put("data", null);
+				}
+			};
+		}
 		String result=runJob(id);
 		return new HashMap<String, Object>() {
 			{
