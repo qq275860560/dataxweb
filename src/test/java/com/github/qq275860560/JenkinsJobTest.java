@@ -73,7 +73,7 @@ public class JenkinsJobTest {
 		//所有构建编号"%s/queue/api/json"
 		//某个job某次构建的日志"%s/job/%s/%s/consoleText";
 		// 更新
-		command = "curl https://baidu.com";
+		command = "curl https://www.baidu.com";
 		response = restTemplate.exchange(String.format("%s/job/%s/config.xml", url, jobName), HttpMethod.POST,
 				new HttpEntity<>(
 						"<?xml version='1.1' encoding='UTF-8'?><project>  <description></description>  <keepDependencies>false</keepDependencies>  <properties/>  <scm class=\"hudson.scm.NullSCM\"/>  <canRoam>true</canRoam>  <disabled>false</disabled>  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>  <triggers/>  <concurrentBuild>false</concurrentBuild>  <builders>    <hudson.tasks.Shell>      <command>"
