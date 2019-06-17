@@ -12,6 +12,7 @@ dataxweb镜像
 ```
 # docker build -t qq275860560/dataxweb .
 docker pull qq275860560/dataxweb
+(docker kill dataxweb || true) && (docker rm dataxweb || true) 
 docker run -it --name dataxweb qq275860560/dataxweb /bin/bash
 
 #本地仓库安装orai18n
