@@ -8,10 +8,11 @@ RUN  yum -y install  http://dev.mysql.com/get/mysql57-community-release-el7-11.n
     yum -y install mysql-community-server  &&\
     rm -rf /var/cache/yum/*
     
-RUN   echo "201906171125,chmod,interact,expect eof"  && curl -fsSL "https://raw.githubusercontent.com/qq275860560/mysql/master/src/main/centos/tmp/init.sh" | sh
+RUN   echo "201906171252,chmod,interact,expect eof"  && curl -fsSL "https://raw.githubusercontent.com/qq275860560/mysql/master/src/main/centos/tmp/init.sh" | sh
 
 RUN cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
     chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
     mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null 
 
