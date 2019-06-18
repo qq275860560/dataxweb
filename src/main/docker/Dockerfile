@@ -2,7 +2,7 @@ FROM qq275860560/datax
 
 MAINTAINER jiangyuanlin@163.com
 
-# 安装mysql
+# install mysql
 RUN  yum -y install  http://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm &&\
     yum repolist enabled | grep mysql.*   &&\
     yum -y install mysql-community-server  &&\
@@ -17,8 +17,19 @@ RUN cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dat
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
     mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null 
 
+# install jenkins
+RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo && \
+    rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key && \
+    yum -y  install  jenkins && yum -y update jenkins &&\
+    yum -y clean all && rm -rf /var/cache/yum/*  /tmp/* /var/tmp/*
+
+RUN mkdir -pv /var/lib/jenkins/ && cd /var/lib/jenkins/ && curl  -O https://raw.githubusercontent.com/qq275860560/jenkins-master/master/src/main/centos/var/lib/jenkins/config.xml &&\
+    cd /etc/sysconfig && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/sysconfig/jenkins" &&\
+    /etc/rc.d/init.d/jenkins start &
+
+# app test
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
-RUN cd /tmp/dataxweb && mvn test
+RUN source /etc/profile && cd /tmp/dataxweb && mvn test
 
 
 CMD source /etc/profile &&\
