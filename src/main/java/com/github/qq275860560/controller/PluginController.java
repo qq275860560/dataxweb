@@ -100,7 +100,7 @@ public class PluginController {
 	
  
  	/* 
- 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin"  -F 'name=pluginName1' -F 'type=0' -F 'readme=@D:/workspace_git/github-qq275860560-dataxweb/src/main/resources/static/mysqlreader-README.md;type=application/octet-stream' -F 'source=@D:/workspace_git/github-qq275860560-dataxweb/src/main/resources/static/mysqlreader-source.zip;type=application/octet-stream' -F 'distribute=@D:/workspace_git/github-qq275860560-dataxweb/src/main/resources/static/mysqlreader-distribute.zip;type=application/octet-stream'
+ 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/savePlugin"  -F 'name=pluginName1' -F 'type=0' -F 'readme=@D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-README.md;type=application/octet-stream' -F 'source=@D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-source.zip;type=application/octet-stream' -F 'distribute=@D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-distribute.zip;type=application/octet-stream'
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/plugin/savePlugin")
 	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap,@RequestParam("readme") MultipartFile readme,@RequestParam("source") MultipartFile source,@RequestParam("distribute") MultipartFile distribute)  throws Exception{
@@ -203,7 +203,7 @@ public class PluginController {
  	
  	
  	    //下载插件源码接口 	 
- 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=1" -o "/d/tmp/mysqlreader-source.zip" 
+ 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginSource?id=1" -o "/tmp/mysqlreader-source.zip" 
  		*/
 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginSource")
 	public void getPluginSource(@RequestParam Map<String, Object> requestMap, HttpServletResponse response)
@@ -220,7 +220,7 @@ public class PluginController {
 	}
  	 
  	 	//下载插件发布包接口
- 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginDistribute?id=1" -o "/d/tmp/mysqlreader-distribute.zip" 
+ 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/getPluginDistribute?id=1" -o "/tmp/mysqlreader-distribute.zip" 
  		*/
  	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginDistribute")
  		public void getPluginDistribute(

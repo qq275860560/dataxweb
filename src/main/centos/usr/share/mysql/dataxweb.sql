@@ -105,15 +105,15 @@ id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL comment '插件名称',
 type int DEFAULT NULL comment '{0:reader类型,1:writer类型}',
 readme LongBlob   DEFAULT NULL  comment 'markdown格式的使用说明',
-source LongBlob   DEFAULT NULL  comment '源码的zip压缩包对应的二进制数组,压缩包顶层目录必须有pom.xml,src,doc，参考https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-source.zip?raw=true,确保执行mvn install能正常编译',
-distribute LongBlob   DEFAULT NULL  comment '发布包的zip压缩包对应的二进制数组,发布包顶层目录必须有plugin.json,plugin_job_template.json和可执行jar，参考https://github.com/qq275860560/dataxweb/blob/master/src/main/resources/static/mysqlreader-distribute.zip?raw=true',
+source LongBlob   DEFAULT NULL  comment '源码的zip压缩包对应的二进制数组,压缩包顶层目录必须有pom.xml,src,doc，参考https://github.com/qq275860560/dataxweb/blob/master/src/test/resources/static/mysqlreader-source.zip?raw=true,确保执行mvn install能正常编译',
+distribute LongBlob   DEFAULT NULL  comment '发布包的zip压缩包对应的二进制数组,发布包顶层目录必须有plugin.json,plugin_job_template.json和可执行jar，参考https://github.com/qq275860560/dataxweb/blob/master/src/test/resources/static/mysqlreader-distribute.zip?raw=true',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
 
-insert into plugin values(1,'mysqlreader',0,LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/main/resources/static/mysqlreader-README.md'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/main/resources/static/mysqlreader-source.zip'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/main/resources/static/mysqlreader-distribute.zip'),null,"createUserName1","1970-01-01 00:00:00");
+insert into plugin values(1,'mysqlreader',0,LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-README.md'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-source.zip'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-distribute.zip'),null,"createUserName1","1970-01-01 00:00:00");
 
 
 

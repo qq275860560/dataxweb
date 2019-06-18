@@ -1,14 +1,11 @@
 package com.github.qq275860560;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,11 +20,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
-import com.github.qq275860560.common.util.CommandUtil;
-import com.github.qq275860560.common.util.CompressUtil;
-import com.github.qq275860560.constant.Constant;
-import com.github.qq275860560.dao.PluginDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -198,15 +190,6 @@ public class PluginTest {
 
 	}
 
-
-
-	
-	
-	
-
-	 
-
-	
 
 	
 }
