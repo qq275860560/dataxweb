@@ -37,6 +37,10 @@ RUN ps -aux | grep /bin/sh
 RUN netstat -anltp
 RUN echo DATAX_HOME=$DATAX_HOME
 
+# install maven
+RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo &&\
+    yum -y install apache-maven
+    
 # app test
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
 RUN source /etc/profile && cd /tmp/dataxweb && mvn test
