@@ -43,11 +43,11 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     
 # app test
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
-RUN source /etc/profile && cd /tmp/dataxweb && mvn test
+RUN source /etc/profile && cd /tmp/dataxweb && (mvn test || true) 
 
 
 CMD source /etc/profile &&\
-    service sshd start &&\
+    /usr/sbin/sshd &&\
     cd /tmp/dataxweb && mvn spring-boot:run 
       	
 
