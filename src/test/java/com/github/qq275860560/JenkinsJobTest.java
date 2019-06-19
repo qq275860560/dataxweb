@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.http.HttpEntity;
@@ -30,15 +31,17 @@ import lombok.extern.slf4j.Slf4j;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class JenkinsJobTest {
 
+	@Value("${jenkinsUrl}")
+	private String jenkinsUrl;
 	@Test
 	public void execute() throws Exception {
 
 		// saveJob请求
-		String url = "http://127.0.0.1:8081";
+		//String jenkinsUrl = "http://127.0.0.1:8081";
 		String jobName = "jobName"+System.currentTimeMillis();
 		String command = "curl https://github.com";
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/createItem?name=%s", url, jobName),
+		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/createItem?name=%s", jenkinsUrl, jobName),
 				HttpMethod.POST, new HttpEntity<>(JenkinsUtil.generateJenkinsJobXml(command), new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -47,7 +50,7 @@ public class JenkinsJobTest {
 				}), String.class);
 		log.info(response.getBody());
 		// runJob请求
-		response = restTemplate.exchange(String.format("%s/job/%s/build", url, jobName), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/build", jenkinsUrl, jobName), HttpMethod.POST,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -59,7 +62,7 @@ public class JenkinsJobTest {
 		
 	    
 	 // disableJob请求
- 		response = restTemplate.exchange(String.format("%s/job/%s/disable", url, jobName), HttpMethod.POST,
+ 		response = restTemplate.exchange(String.format("%s/job/%s/disable", jenkinsUrl, jobName), HttpMethod.POST,
  				new HttpEntity<>(new HttpHeaders() {
  					{
  						set("Content-Type", "text/xml; charset=UTF-8");
@@ -71,7 +74,7 @@ public class JenkinsJobTest {
  	 
 		
  	    // enableJob请求
-		response = restTemplate.exchange(String.format("%s/job/%s/enable", url, jobName), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/enable", jenkinsUrl, jobName), HttpMethod.POST,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -83,7 +86,7 @@ public class JenkinsJobTest {
  
  
  		// runJob请求
-		response = restTemplate.exchange(String.format("%s/job/%s/build", url, jobName), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/build", jenkinsUrl, jobName), HttpMethod.POST,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -94,7 +97,7 @@ public class JenkinsJobTest {
 		
 		Thread.sleep(10000);
 		// getJob请求
-		ResponseEntity<Map > response3 = restTemplate.exchange(String.format("%s/job/%s/api/json?pretty=true", url, jobName), HttpMethod.GET,
+		ResponseEntity<Map > response3 = restTemplate.exchange(String.format("%s/job/%s/api/json?pretty=true", jenkinsUrl, jobName), HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -113,7 +116,7 @@ public class JenkinsJobTest {
 		
 	
 		// getBuild-1请求
-		 response3 = restTemplate.exchange(String.format("%s/job/%s/%s/api/json?pretty=true", url, jobName,number), HttpMethod.GET,
+		 response3 = restTemplate.exchange(String.format("%s/job/%s/%s/api/json?pretty=true", jenkinsUrl, jobName,number), HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -127,7 +130,7 @@ public class JenkinsJobTest {
 		log.info("构建结果"+(String)responseMap.get("result"));
 		
 		// getBuild-2请求
-		 response = restTemplate.exchange(String.format("%s/job/%s/%s/consoleText", url, jobName,number), HttpMethod.GET,
+		 response = restTemplate.exchange(String.format("%s/job/%s/%s/consoleText", jenkinsUrl, jobName,number), HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -148,7 +151,7 @@ public class JenkinsJobTest {
 		}
 		
 		command = "ping " + parameterName +" 1000  www.baidu.com \r\n curl https://www.baidu.com";
-		response = restTemplate.exchange(String.format("%s/job/%s/config.xml", url, jobName), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/config.xml", jenkinsUrl, jobName), HttpMethod.POST,
 				new HttpEntity<>(JenkinsUtil.generateJenkinsJobXml(command), new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -163,7 +166,7 @@ public class JenkinsJobTest {
 		 
 		
 		// getJobConfig
-		response = restTemplate.exchange(String.format("%s/job/%s/config.xml", url, jobName), HttpMethod.GET,
+		response = restTemplate.exchange(String.format("%s/job/%s/config.xml", jenkinsUrl, jobName), HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -175,7 +178,7 @@ public class JenkinsJobTest {
 		
 		 
 		 // getJob请求
-		response3 = restTemplate.exchange(String.format("%s/job/%s/api/json?pretty=true", url, jobName), HttpMethod.GET,
+		response3 = restTemplate.exchange(String.format("%s/job/%s/api/json?pretty=true", jenkinsUrl, jobName), HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -190,7 +193,7 @@ public class JenkinsJobTest {
 		log.info("下一次构建编号"+nextBuildNumber);
 		
 		// runJob请求
-		response = restTemplate.exchange(String.format("%s/job/%s/build", url, jobName), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/build", jenkinsUrl, jobName), HttpMethod.POST,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
@@ -201,13 +204,13 @@ public class JenkinsJobTest {
 				
 		Thread.sleep(20000);
 		//stopBuild,只有building=true时才可以stop
-		response = restTemplate.exchange(String.format("%s/job/%s/%s/stop", url, jobName,nextBuildNumber), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/%s/stop", jenkinsUrl, jobName,nextBuildNumber), HttpMethod.POST,
 				null, String.class);
 		log.info(response.getBody());
  
 	
 		// deleteJob
-		response = restTemplate.exchange(String.format("%s/job/%s/doDelete", url, jobName), HttpMethod.POST,
+		response = restTemplate.exchange(String.format("%s/job/%s/doDelete", jenkinsUrl, jobName), HttpMethod.POST,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");

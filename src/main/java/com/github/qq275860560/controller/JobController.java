@@ -11,17 +11,24 @@ import java.util.UUID;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.qq275860560.common.util.CommandUtil;
+import com.github.qq275860560.common.util.JenkinsUtil;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.JobDao;
@@ -37,6 +44,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JobController {
 
+	@Value("${jenkinsUrl}")
+	private String jenkinsUrl;
 	@Autowired
 	private JobDao jobDao;
 	@Autowired
@@ -230,6 +239,25 @@ public class JobController {
 		String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		requestMap.put("createTime", createTime);
 		jobDao.saveJob(requestMap);
+		
+	    //
+		String name=(String)requestMap.get("name");
+		File file = new File(Constant.DATAX_HOME + File.separator + "job" + File.separator + name + ".json");
+		FileUtils.writeStringToFile(file, dataxJson, "UTF-8");
+
+		String command = "python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator + "datax.py "
+				+ file.getAbsolutePath() ;
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/createItem?name=%s", jenkinsUrl, name),
+				HttpMethod.POST, new HttpEntity<>(JenkinsUtil.generateJenkinsJobXml(command), new HttpHeaders() {
+					{
+						set("Content-Type", "text/xml; charset=UTF-8");
+
+					}
+				}), String.class);
+		log.info(response.getBody());
+		//
+		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
