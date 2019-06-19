@@ -33,7 +33,7 @@ RUN curl -fSL http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz 
     echo 'export PATH=$PATH:$DATAX_HOME/bin'   >> /etc/profile && source /etc/profile &&\
     chmod -R 755 /usr/local/datax
     
-RUN ps -aux | grep /bin/sh
+RUN ps -aux 
 RUN netstat -anltp
 RUN echo DATAX_HOME=$DATAX_HOME
 
@@ -42,7 +42,7 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     yum -y install apache-maven
     
 # app test
-RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
+RUN echo "201906200721"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
 RUN source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
 
