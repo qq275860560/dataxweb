@@ -43,7 +43,7 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     
 # app test
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
-RUN source /etc/profile && cd /tmp/dataxweb && (mvn test || true) 
+RUN source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
 
 CMD source /etc/profile &&\

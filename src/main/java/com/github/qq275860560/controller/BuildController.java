@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.qq275860560.dao.OutputDao;
+import com.github.qq275860560.dao.BuildDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,19 +23,20 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @Slf4j
-public class OutputController {
+public class BuildController {
 
 
   
 	@Autowired
-	private OutputDao outputDao;
+	private BuildDao buildDao;
+ 
  
  
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/pageOutput?pageNum=1&pageSize=10" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/build/pageBuild?pageNum=1&pageSize=10" 
 	*/
-	@RequestMapping(value = "/api/github/qq275860560/output/pageOutput")
-	public Map<String, Object> pageOutput(
+	@RequestMapping(value = "/api/github/qq275860560/build/pageBuild")
+	public Map<String, Object> pageBuild(
 			@RequestParam Map<String, Object> requestMap
 			)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
@@ -50,7 +50,7 @@ public class OutputController {
 		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
 		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
-		Map<String, Object> data = outputDao.pageOutput(null,name, null, null, null, null, null, null, null, null, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		Map<String, Object> data = buildDao.pageBuild(null, name, null, null, null, null, null, null, null, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
 			{				 
 				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明
@@ -63,15 +63,15 @@ public class OutputController {
 	 
 	
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/getOutput?id=1" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/build/getBuild?id=1" 
 	*/
- 	@RequestMapping(value = "/api/github/qq275860560/output/getOutput")
-	public Map<String, Object> getOutput(@RequestParam Map<String, Object> requestMap)  throws Exception{
+ 	@RequestMapping(value = "/api/github/qq275860560/build/getBuild")
+	public Map<String, Object> getBuild(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id=(String)requestMap.get("id");
-		Map<String, Object> data=outputDao.getOutput(id);
+		Map<String, Object> data=buildDao.getBuild(id);
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -83,11 +83,10 @@ public class OutputController {
 	
 	
  
- 	/*  
- 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/saveOutput?name=outputname1&writerId=&writerName=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl=&writerParameterConnectionTable=test" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/build/saveBuild?name=buildname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=job" 
 	*/
-	@RequestMapping(value = "/api/github/qq275860560/output/saveOutput")
-	public Map<String, Object> saveOutput(@RequestParam Map<String, Object> requestMap)  throws Exception{
+	@RequestMapping(value = "/api/github/qq275860560/build/saveBuild")
+	public Map<String, Object> saveBuild(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
 	 
@@ -98,7 +97,7 @@ public class OutputController {
 		requestMap.put("createUserName", createUserName);
 		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		requestMap.put("createTime", createTime);
-		outputDao.saveOutput(requestMap);
+		buildDao.saveBuild(requestMap);
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -111,18 +110,18 @@ public class OutputController {
 
 
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/updateOutput?id=2&name=outputname2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/build/updateBuild?id=2&name=buildname2" 
 	*/
-	@RequestMapping(value = "/api/github/qq275860560/output/updateOutput")
-	public Map<String, Object> updateOutput(
+	@RequestMapping(value = "/api/github/qq275860560/build/updateBuild")
+	public Map<String, Object> updateBuild(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id=(String)requestMap.get("id");
-		Map<String, Object> map=outputDao.getOutput(id);
+		Map<String, Object> map=buildDao.getBuild(id);
 		map.putAll(requestMap);
-		outputDao.updateOutput(map);		
+		buildDao.updateBuild(map);		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -132,16 +131,16 @@ public class OutputController {
 		};
 	}
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/deleteOutput?id=2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/build/deleteBuild?id=2" 
 	*/
- 	@RequestMapping(value = "/api/github/qq275860560/output/deleteOutput")
-	public Map<String, Object> deleteOutput(
+ 	@RequestMapping(value = "/api/github/qq275860560/build/deleteBuild")
+	public Map<String, Object> deleteBuild(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id=(String)requestMap.get("id");
-		outputDao.deleteOutput(id);
+		buildDao.deleteBuild(id);
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());

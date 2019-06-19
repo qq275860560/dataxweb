@@ -45,8 +45,7 @@ public class PluginController {
 	private PluginDao pluginDao;
  
  
-	@Autowired
-	private   ObjectMapper objectMapper ;
+ 
 
 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/plugin/pagePlugin?pageNum=1&pageSize=10" 
 	*/
