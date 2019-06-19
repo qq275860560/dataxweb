@@ -18,6 +18,10 @@ writerId VARCHAR ( 32 ) DEFAULT NULL,
 writerName VARCHAR ( 64 ) DEFAULT NULL,
 dataxJson  VARCHAR ( 1024 ) DEFAULT NULL,
 status int DEFAULT NULL comment '{1:启用，允许构建，2:禁用:不允许构建}',
+number VARCHAR(32) DEFAULT NULL COMMENT '最后一次构建编号',
+lastSuccessfulBuild VARCHAR(32) DEFAULT NULL COMMENT '最后一次成功构建编号',
+lastUnsuccessfulBuild VARCHAR(32) DEFAULT NULL COMMENT '最后一次失败构建编号',
+nextBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '下一次构建编号',
 progress double  DEFAULT NULL,
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
@@ -25,8 +29,31 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 ) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
 
-insert into job values(1,'jobName1',1,"inputName1",null,"mysqlreader",1,"outputName1",null,"mysqlwriter",1,1,0.0,null,"createUserName1","1970-01-01 00:00:00");
-insert into job values(2,'jobName2',2,"inputName2",null,"mysqlreader",2,"outputName2",null,"mysqlwriter",1,1,0.0,null,"createUserName2","1970-01-01 00:00:00");
+insert into job values(1,'jobName1',1,"inputName1",null,"mysqlreader",1,"outputName1",null,"mysqlwriter",1,1,null,null,null,1,0.0,null,"createUserName1","1970-01-01 00:00:00");
+insert into job values(2,'jobName2',2,"inputName2",null,"mysqlreader",2,"outputName2",null,"mysqlwriter",1,1,null,null,null,1,0.0,null,"createUserName2","1970-01-01 00:00:00");
+
+
+DROP TABLE  IF EXISTS build;
+CREATE TABLE build (
+id VARCHAR ( 32 ) NOT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL,
+jobId VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属项目id',
+jobName VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属项目名称',
+number VARCHAR(32)  DEFAULT NULL,
+building int   DEFAULT NULL COMMENT '{0:还未构建或已构建完毕,1:构建中}',
+estimatedDuration int  DEFAULT NULL COMMENT '预期构建时长（毫秒）',
+duration int  DEFAULT NULL COMMENT '实际构建时长(毫秒)',
+result int   DEFAULT NULL COMMENT '1:成功，2:失败,3:取消ABORTED',
+consoleText longtext  DEFAULT NULL COMMENT '控制台日志',
+createUserId VARCHAR ( 32 ) DEFAULT NULL,
+createUserName VARCHAR ( 64 ) DEFAULT NULL,
+createTime datetime DEFAULT NULL,
+PRIMARY KEY ( id ) 
+) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+
+insert into build values("1",'buildName1',1,"jobName1","1",0,100,101,null,"",null,"createUserName1","1970-01-01 00:00:00");
+
+
 
 
 DROP TABLE  IF EXISTS test;

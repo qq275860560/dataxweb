@@ -148,7 +148,7 @@ public class JobController {
 				: Integer.parseInt(requestMap.get("pageSize").toString());
 
 		Map<String, Object> data = jobDao.pageJob(null, name, null, inputName, null, outputName, null, readerName, null,
-				writerName, null, status, progress, null, createUserName, startCreateTime, endCreateTime, pageNum,
+				writerName, null, status,null,null,null,null, progress, null, createUserName, startCreateTime, endCreateTime, pageNum,
 				pageSize);
 
 		return new HashMap<String, Object>() {

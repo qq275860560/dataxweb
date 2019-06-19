@@ -32,7 +32,7 @@ public class JobDao {
 		sb.append(" and name = ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 	}
 
@@ -47,7 +47,7 @@ public class JobDao {
 		sb.append(" and name= ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		int count = jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 		if (count > 0)
 			return false;
@@ -62,7 +62,7 @@ public class JobDao {
 		sb.append(" and id = ? ");
 		condition.add(id);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
 
@@ -70,7 +70,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -79,7 +79,7 @@ public class JobDao {
 		condition.add(0);
 		condition.add(1);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		Map<String, Object> map = Collections.EMPTY_MAP;
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
@@ -92,14 +92,14 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
 		condition.add(0);
 		condition.add(1);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		Map<String, Object> map = Collections.EMPTY_MAP;
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
@@ -160,6 +160,22 @@ public class JobDao {
 		sb2.append("?,");
 		condition.add(map.get("status"));
 
+		sb1.append("number").append(",");
+		sb2.append("?,");
+		condition.add(map.get("number"));
+
+		sb1.append("lastSuccessfulBuild").append(",");
+		sb2.append("?,");
+		condition.add(map.get("lastSuccessfulBuild"));
+
+		sb1.append("lastUnsuccessfulBuild").append(",");
+		sb2.append("?,");
+		condition.add(map.get("lastUnsuccessfulBuild"));
+
+		sb1.append("nextBuildNumber").append(",");
+		sb2.append("?,");
+		condition.add(map.get("nextBuildNumber"));
+
 		sb1.append("progress").append(",");
 		sb2.append("?,");
 		condition.add(map.get("progress"));
@@ -182,7 +198,7 @@ public class JobDao {
 			sb2.deleteCharAt(sb2.length() - 1);
 		String sql = "insert into job(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
@@ -223,6 +239,18 @@ public class JobDao {
 		sb.append(" status = ? ,");
 		condition.add(map.get("status"));
 
+		sb.append(" number = ? ,");
+		condition.add(map.get("number"));
+
+		sb.append(" lastSuccessfulBuild = ? ,");
+		condition.add(map.get("lastSuccessfulBuild"));
+
+		sb.append(" lastUnsuccessfulBuild = ? ,");
+		condition.add(map.get("lastUnsuccessfulBuild"));
+
+		sb.append(" nextBuildNumber = ? ,");
+		condition.add(map.get("nextBuildNumber"));
+
 		sb.append(" progress = ? ,");
 		condition.add(map.get("progress"));
 
@@ -240,18 +268,19 @@ public class JobDao {
 		String sql = "update job set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 
 	public List<Map<String, Object>> listJob(String id, String name, String inputId, String inputName, String readerId,
 			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, Double progress, String createUserId, String createUserName, String startCreateTime,
+			Integer status, String number, String lastSuccessfulBuild, String lastUnsuccessfulBuild,
+			String nextBuildNumber, Double progress, String createUserId, String createUserName, String startCreateTime,
 			String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -299,6 +328,22 @@ public class JobDao {
 		if (status != null) {
 			sb.append(" and status = ? ");
 			condition.add(status);
+		}
+		if (!StringUtils.isEmpty(number)) {
+			sb.append(" and number like ? ");
+			condition.add("%" + number + "%");
+		}
+		if (!StringUtils.isEmpty(lastSuccessfulBuild)) {
+			sb.append(" and lastSuccessfulBuild like ? ");
+			condition.add("%" + lastSuccessfulBuild + "%");
+		}
+		if (!StringUtils.isEmpty(lastUnsuccessfulBuild)) {
+			sb.append(" and lastUnsuccessfulBuild like ? ");
+			condition.add("%" + lastUnsuccessfulBuild + "%");
+		}
+		if (!StringUtils.isEmpty(nextBuildNumber)) {
+			sb.append(" and nextBuildNumber like ? ");
+			condition.add("%" + nextBuildNumber + "%");
 		}
 		if (progress != null) {
 			sb.append(" and progress = ? ");
@@ -321,14 +366,15 @@ public class JobDao {
 			condition.add(endCreateTime);
 		}
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.queryForList(sb.toString(), condition.toArray());
 
 	}
 
 	public Map<String, Object> pageJob(String id, String name, String inputId, String inputName, String readerId,
 			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, Double progress, String createUserId, String createUserName, String startCreateTime,
+			Integer status, String number, String lastSuccessfulBuild, String lastUnsuccessfulBuild,
+			String nextBuildNumber, Double progress, String createUserId, String createUserName, String startCreateTime,
 			String endCreateTime, Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
@@ -339,7 +385,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -387,6 +433,22 @@ public class JobDao {
 		if (status != null) {
 			sb.append(" and status = ? ");
 			condition.add(status);
+		}
+		if (!StringUtils.isEmpty(number)) {
+			sb.append(" and number like ? ");
+			condition.add("%" + number + "%");
+		}
+		if (!StringUtils.isEmpty(lastSuccessfulBuild)) {
+			sb.append(" and lastSuccessfulBuild like ? ");
+			condition.add("%" + lastSuccessfulBuild + "%");
+		}
+		if (!StringUtils.isEmpty(lastUnsuccessfulBuild)) {
+			sb.append(" and lastUnsuccessfulBuild like ? ");
+			condition.add("%" + lastUnsuccessfulBuild + "%");
+		}
+		if (!StringUtils.isEmpty(nextBuildNumber)) {
+			sb.append(" and nextBuildNumber like ? ");
+			condition.add("%" + nextBuildNumber + "%");
 		}
 		if (progress != null) {
 			sb.append(" and progress = ? ");
@@ -415,7 +477,7 @@ public class JobDao {
 		condition.add(from);
 		condition.add(size);
 		log.info("sql=" + sb.toString());
-		log.info("condition=" + Arrays.deepToString(condition.toArray()));
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		List<Map<String, Object>> pageList = jdbcTemplate.queryForList(sb.toString(), condition.toArray());
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", count);// 取名total为了兼容mybatis-pageHelper中的page对象的total,spring框架的PageImpl也使用total
