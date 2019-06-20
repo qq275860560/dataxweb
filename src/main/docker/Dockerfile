@@ -25,7 +25,7 @@ RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenki
 
 RUN mkdir -pv /var/lib/jenkins/ && cd /var/lib/jenkins/ && curl  -O https://raw.githubusercontent.com/qq275860560/jenkins-master/master/src/main/centos/var/lib/jenkins/config.xml &&\
     cd /etc/sysconfig && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/sysconfig/jenkins" &&\
-    /etc/rc.d/init.d/jenkins start &
+    /etc/rc.d/init.d/jenkins start
 
 # install datax
 RUN curl -fSL http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz | tar xzf - -C /usr/local &&\
@@ -42,13 +42,16 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     yum -y install apache-maven
     
 # app test
-RUN echo "201906200721"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
-RUN source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
-
+RUN echo "201906200940"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
+    source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
-    cd /tmp/dataxweb && mvn spring-boot:run 
+    chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
+     /etc/rc.d/init.d/jenkins start &&\
+     cd /tmp/dataxweb && git pull && mvn test
       	
 
  
