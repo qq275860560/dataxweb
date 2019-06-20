@@ -6,8 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.MapLikeType;
 import com.github.qq275860560.common.util.CommandUtil;
 import com.github.qq275860560.common.util.JenkinsUtil;
 import com.github.qq275860560.constant.Constant;
@@ -233,6 +236,7 @@ public class JobController {
 
 		Integer status = 1;
 		requestMap.put("status", status);
+		requestMap.put("nextBuildNumber", "1");
 		Double progress = 0.0;
 		requestMap.put("progress", progress);
 
@@ -528,6 +532,37 @@ public class JobController {
 					}
 				}), String.class);
 		//启动线程不断的更新mysql
+		 //获取job的最后一次构建状态
+		 ResponseEntity<Map > response3 = restTemplate.exchange(String.format("%s/job/%s/api/json?pretty=true", jenkinsUrl, name), HttpMethod.GET,
+					new HttpEntity<>(new HttpHeaders() {
+						{
+							set("Content-Type", "text/xml; charset=UTF-8");
+
+						}
+					}), Map.class);
+		 
+			
+			 Map<String, Object>  responseMap=( Map<String, Object> )response3.getBody() ;
+			Integer number = (Integer)((Map<String, Object>)responseMap.get("lastBuild")).get("number");
+			log.info("最后一次构建编号"+number);
+			log.info("最后一次成功构建编号"+responseMap.get("lastSuccessfulBuild"));
+			log.info("最后一次失败构建编号"+responseMap.get("lastUnsuccessfulBuild"));
+			map = jobDao.getJob(id);
+			map.put("number", number);
+			map.put("lastSuccessfulBuild", responseMap.get("lastSuccessfulBuild"));
+			map.put("lastUnsuccessfulBuild", responseMap.get("lastUnsuccessfulBuild"));
+			jobDao.updateJob(map);
+			
+			Thread.sleep(50000);
+			
+		 new Thread(()-> {
+			
+			 	//如果是building，获取预期时间和持续时间
+				
+			}
+			
+		 ).start();
+		
 		
 		return new HashMap<String, Object>() {
 			{
