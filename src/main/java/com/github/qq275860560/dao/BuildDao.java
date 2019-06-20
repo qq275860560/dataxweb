@@ -80,7 +80,7 @@ public class BuildDao {
 		condition.add(1);
 		log.info("sql=" + sb.toString());
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
-		Map<String, Object> map = Collections.EMPTY_MAP;
+		Map<String, Object> map = new HashMap<>();
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
 		} catch (Exception e) {
@@ -100,7 +100,7 @@ public class BuildDao {
 		condition.add(1);
 		log.info("sql=" + sb.toString());
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
-		Map<String, Object> map = Collections.EMPTY_MAP;
+		Map<String, Object> map = new HashMap<>();
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
 		} catch (Exception e) {
@@ -108,6 +108,28 @@ public class BuildDao {
 		return map;
 	}
 
+	public Map<String, Object> getBuildByJobNameAndNumber(String name, Object number) throws Exception {
+		StringBuilder sb = new StringBuilder();
+		List<Object> condition = new ArrayList<Object>();
+		sb.append(
+				" SELECT id,name,jobId,jobName,number,building,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+		sb.append(" and jobName = ? ");
+		condition.add(name);
+		sb.append(" and number = ? ");
+		condition.add(number);
+		sb.append(" limit ? ,?  ");
+		condition.add(0);
+		condition.add(1);
+		log.info("sql=" + sb.toString());
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
+		Map<String, Object> map = new HashMap<>();
+		try {
+			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
+		} catch (Exception e) {
+		}
+		return map;
+	}
+	
 	public int saveBuild(Map<String, Object> map) throws Exception {
 		StringBuilder sb1 = new StringBuilder();
 		StringBuilder sb2 = new StringBuilder();

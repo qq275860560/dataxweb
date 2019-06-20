@@ -80,11 +80,12 @@ public class JobTest {
 				}), Map.class);
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
+		
 		////////////////////////////////
 		
 		// updateJob请求
 		String nextBuildNumber = "" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/updateJob?id=" + id + "&nextBuildNumber=" + nextBuildNumber,
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/updateJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -138,7 +139,7 @@ public class JobTest {
 				}), Map.class);
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
-		
+		 
 		
 		// disableJob请求		
 		response = testRestTemplate.exchange("/api/github/qq275860560/job/disableJob?id=" + id ,
@@ -176,8 +177,9 @@ public class JobTest {
 				}), Map.class);
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(400, response.getBody().get("code"));
-		
+		 
 
+		
 		// deleteJob请求
 		response = testRestTemplate.exchange("/api/github/qq275860560/job/deleteJob?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
