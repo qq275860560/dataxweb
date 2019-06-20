@@ -531,6 +531,8 @@ public class JobController {
 
 					}
 				}), String.class);
+	 
+		Thread.sleep(10000);
 		//启动线程不断的更新mysql
 		 //获取job的最后一次构建状态
 		 ResponseEntity<Map > response3 = restTemplate.exchange(String.format("%s/job/%s/api/json?pretty=true", jenkinsUrl, name), HttpMethod.GET,
@@ -543,17 +545,21 @@ public class JobController {
 		 
 			
 			 Map<String, Object>  responseMap=( Map<String, Object> )response3.getBody() ;
+			 if(responseMap.get("lastBuild")!=null) {
 			Integer number = (Integer)((Map<String, Object>)responseMap.get("lastBuild")).get("number");
+			
 			log.info("最后一次构建编号"+number);
-			log.info("最后一次成功构建编号"+responseMap.get("lastSuccessfulBuild"));
-			log.info("最后一次失败构建编号"+responseMap.get("lastUnsuccessfulBuild"));
+			log.info("最后一次成功构建编号",responseMap.get("lastSuccessfulBuild")==null?null:((Map<String, Object>)responseMap.get("lastSuccessfulBuild")).get("number"));
+			log.info("最后一次失败构建编号",responseMap.get("lastUnsuccessfulBuild")==null?null:((Map<String, Object>)responseMap.get("lastUnsuccessfulBuild")).get("number") );
 			map = jobDao.getJob(id);
 			map.put("number", number);
-			map.put("lastSuccessfulBuild", responseMap.get("lastSuccessfulBuild"));
-			map.put("lastUnsuccessfulBuild", responseMap.get("lastUnsuccessfulBuild"));
+			map.put("lastSuccessfulBuild", responseMap.get("lastSuccessfulBuild")==null?null:((Map<String, Object>)responseMap.get("lastSuccessfulBuild")).get("number"));
+			map.put("lastUnsuccessfulBuild", responseMap.get("lastUnsuccessfulBuild")==null?null:((Map<String, Object>)responseMap.get("lastUnsuccessfulBuild")).get("number"));
+			map.put("nextBuildNumber", responseMap.get("nextBuildNumber"));
 			jobDao.updateJob(map);
 			
-			Thread.sleep(50000);
+			Thread.sleep(30000);
+			}
 			
 		 new Thread(()-> {
 			
