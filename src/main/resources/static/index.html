@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo.png" media="screen" />
+    <title>数据交换平台</title>
+	<link href="scripts/element-ui/index.css" rel="stylesheet" />
+	<link href="css/iconfont/iconfont.css" rel="stylesheet" />
+	<link href="css/main.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app" v-cloak>
+		<el-container v-bind:class="{ 'lay-aside-collapsed': isCollapse }">
+		  <el-header class="lay-header" height="64px">
+			<div class="logo">数据交换平台</div>
+			<div class="top-nav-wrap">
+				<ul class="top-nav">
+					<li><div class="item" v-on:click="toggleCallapse()"><i v-bind:class="{ 'el-icon-d-arrow-left': !isCollapse,'el-icon-d-arrow-right':isCollapse }"></i></div></li>
+					<li><a class="item" href="https://www.github.com/qq275860560/dataxweb" target="_blank"><i class="el-icon-date"></i></a></li>
+				</ul>
+				 
+				<ul class="top-nav"> 
+					<li class="hidden-xs">
+						<div class="item header" tabindex="0">
+							<el-dropdown trigger="click" menu-align="start">
+								<img src="images/b_header.jpg" width="50px" />
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item >
+										<div class="setting-div">
+											<span class="setting-icon"><i class="el-icon-custom-user"></i></span> 
+											<span class="setting-string"> Profile  个人</span>
+										</div>
+									</el-dropdown-item>
+									<el-dropdown-item divided>
+										<div class="setting-div">
+											<span class="setting-icon"><i class="el-icon-setting"></i></span> 
+											<span class="setting-string"> Settings  设置</span>
+										</div>
+									 
+									</el-dropdown-item>
+									<el-dropdown-item divided>
+										<div class="setting-div" @click="logout">
+											<span class="setting-icon"><i class="el-icon-logout"></i></span> 
+											<span class="setting-string"> Sign out  退出</span>
+										</div>
+										
+									</el-dropdown-item>
+									
+								</el-dropdown-menu>
+							</el-dropdown>
+						</div>
+					</li>
+				</ul>
+			</div>			
+		  </el-header>
+		  <el-container>
+			<!-- 左侧菜单 -->
+			<el-aside :width="isCollapse?'65px':'220px'" class="lay-aside">
+				<el-menu class="el-menu-vertical-demo" :default-active="currentMenu" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+					<el-menu-item index="tabmain">
+						<i class="el-icon-document"></i>
+						<span slot="title">首页</span>
+					</el-menu-item>
+					<el-submenu index="1">
+						<template slot="title">
+							<i class="el-icon-location"></i>
+							<span slot="title">插件定义</span>
+						</template>
+						<el-menu-item index="tabuser" @click="addTab('tabuser','插件管理','user.html')">插件管理</el-menu-item>
+						<el-menu-item index="tabuser" @click="addTab('tabuser','mysql输入流管理','user.html')">mysql输入流管理</el-menu-item>
+						<el-menu-item index="tabrole" @click="addTab('tabrole','mysql输出流管理','role.html')">mysql输出流管理</el-menu-item>
+					</el-submenu>
+					
+					
+					
+				    <el-menu-item index="2">
+						<i class="el-icon-menu"></i>
+						<span slot="title">导航二</span>
+				    </el-menu-item>				  
+				    <el-menu-item index="4">
+						<i class="el-icon-setting"></i>
+						<span slot="title">导航四</span>
+				    </el-menu-item>
+				</el-menu>
+			</el-aside>
+			<el-main class="lay-main"><!-- 主内容区域 -->
+				<div class="content-wrap">
+					<el-tabs v-model="currentTab" type="card" closable @tab-remove="removeTab" @tab-click="clickTab">
+						<el-tab-pane
+							v-for="(item, index) in mainTabs"
+							:key="item.id"
+							:label="item.name"
+							:name="item.name"
+						>
+						<!-- <iframe src="home.html" class="tab-iframe" frameborder="0"></iframe> -->
+							<iframe v-bind:src="item.url" class="tab-iframe" frameborder="0"></iframe>
+						</el-tab-pane>
+					</el-tabs>
+				</div>
+			</el-main>
+		  </el-container>
+		</el-container>
+	</div>
+	<script src="scripts/vue.min.js"></script>
+	<script src="scripts/element-ui/index.js"></script>
+	<script src="scripts/axios.min.js"></script>
+	<script src="scripts/main.js"></script>
+  </body>
+</html>
