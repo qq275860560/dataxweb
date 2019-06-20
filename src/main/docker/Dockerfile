@@ -32,25 +32,25 @@ RUN curl -fSL http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz 
     echo 'export PATH=$PATH:$DATAX_HOME/bin'   >> /etc/profile && source /etc/profile &&\
     chmod -R 755 /usr/local/datax
     
-RUN ps -aux 
-RUN netstat -anltp
-RUN echo DATAX_HOME=$DATAX_HOME
 
 # install maven
 RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo -O /etc/yum.repos.d/epel-apache-maven.repo &&\
     yum -y install apache-maven
     
 # app test
-RUN echo "201906201142"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
+RUN echo "201906201239"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
     source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
+
+RUN source /etc/profile &&\    
+    cd /tmp/dataxweb && git pull && mvn test
 
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
     chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
-     /etc/rc.d/init.d/jenkins start &&\
-     cd /tmp/dataxweb && git pull && mvn test
+    /etc/rc.d/init.d/jenkins start &&\
+    cd /tmp/dataxweb && git pull && mvn test
       	
 
  
