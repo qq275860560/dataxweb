@@ -83,8 +83,8 @@ public class JobTest {
 		////////////////////////////////
 		
 		// updateJob请求
-		String name2 = "jobName" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/updateJob?id=" + id + "&name=" + name2,
+		String nextBuildNumber = "" + System.currentTimeMillis();
+		response = testRestTemplate.exchange("/api/github/qq275860560/job/updateJob?id=" + id + "&nextBuildNumber=" + nextBuildNumber,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -103,8 +103,7 @@ public class JobTest {
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 
-		String name3 = (String) ((Map<String, Object>) response.getBody().get("data")).get("name");
-		Assert.assertEquals(name2, name3);
+	 
 		
 		
 		// enableJob请求		

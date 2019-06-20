@@ -47,6 +47,8 @@ public class JobController {
 	@Value("${jenkinsUrl}")
 	private String jenkinsUrl;
 	@Autowired
+	private RestTemplate restTemplate  ;
+	@Autowired
 	private JobDao jobDao;
 	@Autowired
 	private InputDao inputDao;
@@ -246,8 +248,7 @@ public class JobController {
 		FileUtils.writeStringToFile(file, dataxJson, "UTF-8");
 
 		String command = "python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator + "datax.py "
-				+ file.getAbsolutePath() ;
-		RestTemplate restTemplate = new RestTemplate();
+				+ file.getAbsolutePath() ;		
 		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/createItem?name=%s", jenkinsUrl, name),
 				HttpMethod.POST, new HttpEntity<>(JenkinsUtil.generateJenkinsJobXml(command), new HttpHeaders() {
 					{
@@ -256,8 +257,7 @@ public class JobController {
 					}
 				}), String.class);
 		log.info(response.getBody());
-		//
-		
+		//		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -414,10 +414,47 @@ public class JobController {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 
+		
 		String id = (String) requestMap.get("id");
 		Map<String, Object> map = jobDao.getJob(id);
 		map.putAll(requestMap);
+		
+		String inputId = (String) map.get("inputId");
+		Map<String, Object> inputMap = inputDao.getInput(inputId);
+		map.put("inputName", inputMap.get("name"));
+		map.put("readerId", inputMap.get("readerId"));
+		map.put("readerName", inputMap.get("readerName"));
+		map.put("readerParameterUsername", inputMap.get("readerParameterUsername"));
+		map.put("readerParameterPassword", inputMap.get("readerParameterPassword"));
+		map.put("readerParameterColumn", inputMap.get("readerParameterColumn"));
+		map.put("readerParameterWhere", inputMap.get("readerParameterWhere"));
+		map.put("readerParameterConnectionJdbcUrl", inputMap.get("readerParameterConnectionJdbcUrl"));
+		map.put("readerParameterConnectionTable", inputMap.get("readerParameterConnectionTable"));
+
+		String outputId = (String) map.get("outputId");
+		Map<String, Object> outputMap = outputDao.getOutput(outputId);
+		map.put("outputName", outputMap.get("name"));
+		map.put("writerId", outputMap.get("writerId"));
+		map.put("writerName", outputMap.get("writerName"));
+		map.put("writerParameterUsername", outputMap.get("writerParameterUsername"));
+		map.put("writerParameterPassword", outputMap.get("writerParameterPassword"));
+		map.put("writerParameterWriteMode", outputMap.get("writerParameterWriteMode"));
+		map.put("writerParameterColumn", outputMap.get("writerParameterColumn"));
+		map.put("writerParameterPreSql", outputMap.get("writerParameterPreSql"));
+		map.put("writerParameterConnectionJdbcUrl", outputMap.get("writerParameterConnectionJdbcUrl"));
+		map.put("writerParameterConnectionTable", outputMap.get("writerParameterConnectionTable"));
+
+		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(map));
+		map.put("dataxJson", dataxJson);
+ 
 		jobDao.updateJob(map);
+		
+		 //不能对任务名称继续更新		
+		String name=(String)map.get("name");
+		File file = new File(Constant.DATAX_HOME + File.separator + "job" + File.separator + name + ".json");
+		FileUtils.writeStringToFile(file, dataxJson, "UTF-8");
+		//
+		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -437,6 +474,18 @@ public class JobController {
 		log.info("当前登录用户=" + currentLoginUsername);
 
 		String id = (String) requestMap.get("id");
+		//
+		Map<String, Object> map = jobDao.getJob(id);
+		String name=(String)map.get("name");
+		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/job/%s/doDelete", jenkinsUrl, name), HttpMethod.POST,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						set("Content-Type", "text/xml; charset=UTF-8");
+
+					}
+				}), String.class);
+		log.info(response.getBody());
+		//
 		jobDao.deleteJob(id);
 		return new HashMap<String, Object>() {
 			{
@@ -457,8 +506,10 @@ public class JobController {
 		log.info("当前登录用户=" + currentLoginUsername);
 
 		String id = (String) requestMap.get("id");
-
-		Integer status = (Integer) jobDao.getJob(id).get("status");
+		Map<String, Object> map = jobDao.getJob(id);
+		String name=(String)map.get("name");
+		
+		Integer status = (Integer) map.get("status");
 		if (status == 0) {
 			return new HashMap<String, Object>() {
 				{
@@ -468,12 +519,21 @@ public class JobController {
 				}
 			};
 		}
-		String result = runJob(id);
+		//String result = runJob(id);
+		ResponseEntity<String>  response = restTemplate.exchange(String.format("%s/job/%s/build", jenkinsUrl, name), HttpMethod.POST,
+				new HttpEntity<>(new HttpHeaders() {
+					{
+						set("Content-Type", "text/xml; charset=UTF-8");
+
+					}
+				}), String.class);
+		//启动线程不断的更新mysql
+		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
 				put("msg", "构建成功");
-				put("data", result);
+				put("data", null);
 			}
 		};
 	}
