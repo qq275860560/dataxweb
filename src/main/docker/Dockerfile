@@ -41,8 +41,7 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
 RUN echo "201906201239"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
     source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
-RUN source /etc/profile &&\    
-    cd /tmp/dataxweb && git pull && mvn test
+#RUN source /etc/profile && cd /tmp/dataxweb && git pull && mvn test
 
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
