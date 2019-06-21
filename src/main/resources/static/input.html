@@ -1,20 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="shortcut icon" type="image/x-icon" href="images/logo.png" media="screen" />
-        <title>输入流管理</title>
-        <link href="scripts/element-ui/index.css" rel="stylesheet" />
-        <link href="css/iconfont/iconfont.css" rel="stylesheet" />
-        <link href="css/main.css" rel="stylesheet" />
+<head>
+<meta charset="utf-8">
+<style>
+html {
+    display: block;
+    color: -internal-root-color;
+}
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+.table-default {
+    font-size: 12px;
+    text-align: center;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+body {
+    font-family: menlo, "Courier New", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    color: #303642;
+    font-size: 12px;
+}
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+.table-default th {
+    text-align: inherit;
+    background: #F8F8F8;
+    padding: 8px 10px;
+    border-top: 1px solid #EEEEEE;
+    border-bottom: 1px solid #EEEEEE;
+    color: #D77558;
+}
+td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+
+.page {
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+}
+.page a {
+    height: 24px;
+    line-height: 24px;
+    display: inline-block;
+    padding: 0 10px;
+    text-align: center;
+    background: #fff;
+    color: #3b3b3b;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 1px;
+}
+.page input {
+    width: 30px;
+    padding: 0 2px;
+    text-align: center;
+}
+</style>
 </head>
 <body>
-    
-     输入流管理
+	<div id="vm"  >
+        
+	    <table class="table-default" >
+            <tbody>
+            <tr>
+                <th>输入流名称</th>
+                <th>用户名</th>
+                <th>列</th>
+                <th>表</th> 
+                <th>创建人</th>
+                <th>创建时间</th>             
+            </tr>
+            
+            <tr v-for="item of pageList" >
+                <td>{{item.readerName}}{{item.id}}</td>
+                <td>{{item.readerParameterUsername}}</td>
+                <td>{{item.readerParameterColumn}}</td>
+                <td>{{item.readerParameterConnectionTable}}</td> 
+                <td>{{item.createUserName}}</td>
+                <td>{{item.createTime}}</td>            
+            </tr>
+             
+            
+        </tbody></table>
+        <div class="page">
+		        共{{Math.ceil((total+1)/pageSize)}}页{{total}}条记录		
+		    <a href="#" @click="page(1,pageSize)">首页</a> 
+		    <a href="#" @click="page(pageNum>1?pageNum-1:pageNum,pageSize)">&laquo;上一页</a> 
+			<a :style="item.style" v-for="item of array" href='javascript:void(0)' @click="page( item.pageNum,pageSize )">{{item.pageNum}}&nbsp;</a>
+			<a href="#" @click="page(pageNum<Math.ceil((total+1)/pageSize)?pageNum+1:pageNum,pageSize)">下一页&raquo;</a> 
+			<a href="#" @click="page(Math.ceil((total+1)/pageSize),pageSize)">尾页</a> 
+			跳转至<input style="width: 45px;" type="text" v-model="pageNum"  />页	 
+			每页<input style="width: 45px;" type="text" v-model="pageSize"/>条		 
+			<a href='javascript:void(0)' @click="page(pageNum,pageSize)">确定</a>
+		</div>
+	</div>
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+	<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
+	<script>
+	 var vm = new Vue({
+		el: '#vm',
+		data: {	
+			pageNum:1,
+			pageSize:10,
+			total:null,
+			pageList:null,				
+			array:[]			
+		},
+		methods:{
+			page:function(pageNum,pageSize){
+				console.log("send="+pageNum+" "+pageSize);
+				axios.get("http://admin:123456@localhost:8080/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize).then(function (response) {
+					console.log("receive=",response.data.data );
+					vm.pageNum=pageNum;
+					vm.pageSize=pageSize;
+					vm.total=response.data.data.total;
+					vm.pageList = response.data.data.pageList;	
+					vm.repaint();
+				});
+				
+			},
+			repaint:function(){
+				this.array=[];			 
+				let pageCount = Math.ceil((this.total+1)/this.pageSize);
+				for(let i=0;i<pageCount;i++){		
+					let pageNum=i+1;
+					let background;
+					if(pageNum==this.pageNum){
+						background="yellow";
+					}else{
+						background="";
+					}
+					this.array.push(
+							{
+								pageNum:pageNum,
+								style:{background:background}
+							}						
+					);				 
+				}			
+			}
+		
+		},		
+		created: function () {
+	        this.page(this.pageNum,this.pageSize);
+	    }
 
-    <script src="scripts/vue.min.js"></script>
-	<script src="scripts/element-ui/index.js"></script>
-	<script src="scripts/axios.min.js"></script>
+	});
+ 	</script>
 </body>
 </html>
