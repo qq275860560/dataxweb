@@ -57,43 +57,47 @@
 		  <el-container>
 			<!-- 左侧菜单 -->
 			<el-aside :width="isCollapse?'65px':'220px'" class="lay-aside">
-				<el-menu class="el-menu-vertical-demo" :default-active="currentMenu" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-					<el-menu-item index="tabmain">
-						<i class="el-icon-document"></i>
+				<el-menu class="el-menu-vertical-demo" :default-active="tabId" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
+					<el-menu-item index="home"  @click="addTab('home','首页','home.html')">
+						<i class="el-icon-menu"></i>
 						<span slot="title">首页</span>
 					</el-menu-item>
-					<el-submenu index="1">
-						<template slot="title">
-							<i class="el-icon-location"></i>
-							<span slot="title">插件定义</span>
-						</template>
-						<el-menu-item index="tabuser" @click="addTab('tabuser','插件管理','user.html')">插件管理</el-menu-item>
-						<el-menu-item index="tabuser" @click="addTab('tabuser','mysql输入流管理','user.html')">mysql输入流管理</el-menu-item>
-						<el-menu-item index="tabrole" @click="addTab('tabrole','mysql输出流管理','role.html')">mysql输出流管理</el-menu-item>
-					</el-submenu>
+				 
 					
-					
-					
-				    <el-menu-item index="2">
+					 <el-menu-item index="plugin"  @click="addTab('plugin','插件管理','plugin.html')">
 						<i class="el-icon-menu"></i>
-						<span slot="title">导航二</span>
+						<span slot="title">插件管理</span>
+				    </el-menu-item>	
+				    <el-menu-item index="input" @click="addTab('input','输入流管理','input.html')">
+						<i class="el-icon-menu"></i>
+						<span slot="title">输入流管理</span>
+				    </el-menu-item>	
+				     <el-menu-item index="output" @click="addTab('output','输出流管理','output.html')">
+						<i class="el-icon-menu"></i>
+						<span slot="title">输出流管理</span>
+				    </el-menu-item>	
+				    <el-menu-item index="job" @click="addTab('job','任务管理','job.html')">
+						<i class="el-icon-menu"></i>
+						<span slot="title">任务管理</span>
 				    </el-menu-item>				  
-				    <el-menu-item index="4">
+				    <el-menu-item index="build" @click="addTab('build','执行日志管理','build.html')">
 						<i class="el-icon-setting"></i>
-						<span slot="title">导航四</span>
+						<span slot="title">执行日志管理</span>
 				    </el-menu-item>
+				    
+				    
+				    
 				</el-menu>
 			</el-aside>
 			<el-main class="lay-main"><!-- 主内容区域 -->
 				<div class="content-wrap">
-					<el-tabs v-model="currentTab" type="card" closable @tab-remove="removeTab" @tab-click="clickTab">
+					<el-tabs v-model="tabName" type="card" closable @tab-remove="removeTab" @tab-click="clickTab">
 						<el-tab-pane
-							v-for="(item, index) in mainTabs"
+							v-for="(item, index) in tabs"
 							:key="item.id"
 							:label="item.name"
 							:name="item.name"
 						>
-						<!-- <iframe src="home.html" class="tab-iframe" frameborder="0"></iframe> -->
 							<iframe v-bind:src="item.url" class="tab-iframe" frameborder="0"></iframe>
 						</el-tab-pane>
 					</el-tabs>
