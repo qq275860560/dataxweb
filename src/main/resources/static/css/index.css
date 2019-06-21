@@ -16,14 +16,14 @@ html,body{height:100%; width:100%;}
 .lay-header i{font-size:18px;}
 .lay-header .el-dropdown{color:#fff;}
 .logo{
-    width:250px; 
-    padding-left:80px;
+    width:180px; 
+  
     height: 64px;
 	color:#fff;
     font-size:26px;
     line-height: 64px;
     transition: width .2s cubic-bezier(.25,0,.15,1);
-    background:url(../images/logo.png) no-repeat;
+
     background-size: contain;
     box-sizing: border-box;
 }

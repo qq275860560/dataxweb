@@ -10,105 +10,31 @@
 	<link href="css/index.css" rel="stylesheet" />
   </head>
   <body>
-    <div id="app" v-cloak>
-		<el-container v-bind:class="{ 'lay-aside-collapsed': isCollapse }">
-		  <el-header class="lay-header" height="64px">
-			<div class="logo">数据交换平台</div>
-			<div class="top-nav-wrap">
-				<ul class="top-nav">
-					<li><div class="item" v-on:click="toggleCallapse()"><i v-bind:class="{ 'el-icon-d-arrow-left': !isCollapse,'el-icon-d-arrow-right':isCollapse }"></i></div></li>
-					<li><a class="item" href="https://www.github.com/qq275860560/dataxweb" target="_blank"><i class="el-icon-date"></i></a></li>
-				</ul>
-				 
-				<ul class="top-nav"> 
-					<li class="hidden-xs">
-						<div class="item header" tabindex="0">
-							<el-dropdown trigger="click" menu-align="start">
-								<img src="images/b_header.jpg" width="50px" />
-								<el-dropdown-menu slot="dropdown">
-									<el-dropdown-item >
-										<div class="setting-div">
-											<span class="setting-icon"><i class="el-icon-custom-user"></i></span> 
-											<span class="setting-string"> Profile  个人</span>
-										</div>
-									</el-dropdown-item>
-									<el-dropdown-item divided>
-										<div class="setting-div">
-											<span class="setting-icon"><i class="el-icon-setting"></i></span> 
-											<span class="setting-string"> Settings  设置</span>
-										</div>
-									 
-									</el-dropdown-item>
-									<el-dropdown-item divided>
-										<div class="setting-div" @click="logout">
-											<span class="setting-icon"><i class="el-icon-logout"></i></span> 
-											<span class="setting-string"> Sign out  退出</span>
-										</div>
-										
-									</el-dropdown-item>
-									
-								</el-dropdown-menu>
-							</el-dropdown>
-						</div>
-					</li>
-				</ul>
-			</div>			
+    <div id="app"  >
+		<el-container >
+		  <el-header class="lay-header">
+				<div class="logo">数据交换平台</div>
+				<div class="top-nav-wrap">				 
+					<ul class="top-nav"> 
+						<img src="images/header.jpg" width="50px" @click="logout" alt="点击头像退出" />			  
+					</ul>
+				</div>			
 		  </el-header>
-		  <el-container>
-			<!-- 左侧菜单 -->
-			<el-aside :width="isCollapse?'65px':'220px'" class="lay-aside">
-				<el-menu class="el-menu-vertical-demo" :default-active="tabId" @open="handleOpen" @close="handleClose" :collapse="isCollapse">
-					<el-menu-item index="home"  @click="addTab('home','首页','home.html')">
+		  <el-container>		 
+				<el-menu>					
+					<el-menu-item v-for="item of menuArray" :index="item.id"  @click="clickMenu(item.url)">
 						<i class="el-icon-menu"></i>
-						<span slot="title">首页</span>
-					</el-menu-item>
-				 
-					
-					 <el-menu-item index="plugin"  @click="addTab('plugin','插件管理','plugin.html')">
-						<i class="el-icon-menu"></i>
-						<span slot="title">插件管理</span>
-				    </el-menu-item>	
-				    <el-menu-item index="input" @click="addTab('input','输入流管理','input.html')">
-						<i class="el-icon-menu"></i>
-						<span slot="title">输入流管理</span>
-				    </el-menu-item>	
-				     <el-menu-item index="output" @click="addTab('output','输出流管理','output.html')">
-						<i class="el-icon-menu"></i>
-						<span slot="title">输出流管理</span>
-				    </el-menu-item>	
-				    <el-menu-item index="job" @click="addTab('job','任务管理','job.html')">
-						<i class="el-icon-menu"></i>
-						<span slot="title">任务管理</span>
-				    </el-menu-item>				  
-				    <el-menu-item index="build" @click="addTab('build','执行日志管理','build.html')">
-						<i class="el-icon-setting"></i>
-						<span slot="title">执行日志管理</span>
-				    </el-menu-item>
-				    
-				    
-				    
-				</el-menu>
-			</el-aside>
-			<el-main class="lay-main"><!-- 主内容区域 -->
-				<div class="content-wrap">
-					<el-tabs v-model="tabName" type="card" closable @tab-remove="removeTab" @tab-click="clickTab">
-						<el-tab-pane
-							v-for="(item, index) in tabs"
-							:key="item.id"
-							:label="item.name"
-							:name="item.name"
-						>
-							<iframe v-bind:src="item.url" class="tab-iframe" frameborder="0"></iframe>
-						</el-tab-pane>
-					</el-tabs>
-				</div>
-			</el-main>
+						<span >{{item.name}}</span>
+					</el-menu-item>				    
+				</el-menu>	  
+			    <div id="content"></div>		
 		  </el-container>
 		</el-container>
 	</div>
 	<script src="scripts/vue.min.js"></script>
 	<script src="scripts/element-ui/index.js"></script>
 	<script src="scripts/axios.min.js"></script>
-	<script src="scripts/index.js"></script>
+	<script src="scripts/index.js"></script>	
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
   </body>
 </html>
