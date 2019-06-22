@@ -4,7 +4,7 @@
 
     <groupId>com.github.qq275860560</groupId>
 	<artifactId>github-qq275860560-dataxweb</artifactId>
-	<version>20190621</version>
+	<version>20190623</version>
 	<packaging>jar</packaging>
 	<name>github-qq275860560-dataxweb</name>
 	<description>github-qq275860560-dataxweb</description>	
@@ -71,7 +71,7 @@
         <dependency>
 		 	<groupId>com.github.qq275860560</groupId>
 			<artifactId>github-qq275860560-security</artifactId>
-			<version>20190531</version>
+			<version>20190624</version>
 		</dependency>
         <dependency>
 			<groupId>org.springframework.boot</groupId>

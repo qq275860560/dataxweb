@@ -2,44 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<link href="css/input.css" rel="stylesheet" />
+ <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div id="vm"  >        
-	    <table class="table-default" >
-            <tbody>
-	            <tr>
-	                <th>输入流名称</th>
-	                <th>用户名</th>
-	                <th>列</th>
-	                <th>表</th> 
-	                <th>创建人</th>
-	                <th>创建时间</th>             
-	            </tr>	            
-	            <tr v-for="item of pageList" >
+	<div id="vm" class="container" > 	    
+	    <table   class="table  table-bordered  table-hover  table-striped table-responsive " >             
+	           <tr >
+	                <th class="text-center" >输入流名称</th>
+	                <th class="text-center">用户名</th>
+	                <th class="text-center">列</th>
+	                <th class="text-center">表</th>
+	                <th class="text-center">创建人</th>
+	                <th class="text-center">创建时间</th>             
+	           	</tr>            
+	            <tr v-for="item of pageList" class="text-center success"  >
 	                <td>{{item.readerName}}{{item.id}}</td>
 	                <td>{{item.readerParameterUsername}}</td>
 	                <td>{{item.readerParameterColumn}}</td>
-	                <td>{{item.readerParameterConnectionTable}}</td> 
+	                <td>{{item.readerParameterConnectionTable}}</td>
 	                <td>{{item.createUserName}}</td>
 	                <td>{{item.createTime}}</td>            
-	            </tr>            
-       		 </tbody>
+	            </tr>                 		 
         </table>
-        <div class="page">
-		        共{{Math.ceil((total+1)/pageSize)}}页{{total}}条记录		
-		    <a href="#" @click="page(1,pageSize)">首页</a> 
-		    <a href="#" @click="page(pageNum>1?pageNum-1:pageNum,pageSize)">&laquo;上一页</a> 
-			<a :style="item.style" v-for="item of array" href='javascript:void(0)' @click="page( item.pageNum,pageSize )">{{item.pageNum}}&nbsp;</a>
-			<a href="#" @click="page(pageNum<Math.ceil((total+1)/pageSize)?pageNum+1:pageNum,pageSize)">下一页&raquo;</a> 
-			<a href="#" @click="page(Math.ceil((total+1)/pageSize),pageSize)">尾页</a> 
-			跳转至<input style="width: 45px;" type="text" v-model="pageNum"  />页	 
-			每页<input style="width: 45px;" type="text" v-model="pageSize"/>条		 
-			<a href='javascript:void(0)' @click="page(pageNum,pageSize)">确定</a>
-		</div>
+        
+        
+     
+		
+        <ul class="pagination">
+		    <li> <span>共{{Math.ceil((total+1)/pageSize)}}页{{total}}条记录</span>	</li>
+		    <li> <a href="#" @click="page(1,pageSize)">首页</a> </li>
+		    <li><a href="#" @click="page(pageNum>1?pageNum-1:pageNum,pageSize)"  class="previous disabled">&laquo;上一页</a> </li>
+			<li><a :style="item.style" v-for="item of array" href='javascript:void(0)' @click="page( item.pageNum,pageSize )">{{item.pageNum}}&nbsp;</a></li>
+			<li><a href="#" @click="page(pageNum<Math.ceil((total+1)/pageSize)?pageNum+1:pageNum,pageSize)" class="next">下一页&raquo;</a> </li>
+			<li><a href="#" @click="page(Math.ceil((total+1)/pageSize),pageSize)">尾页</a> </li>
+			<li><span >跳转至<input style="width: 45px;height:100%" type="text" v-model="pageNum"  />页</span>	</li> 
+			<li><span >每页<input style="width: 45px;height:100%" type="text" v-model="pageSize"/>条</span>	</li>	 
+			<li><a href='javascript:void(0)' @click="page(pageNum,pageSize)">确定</a></li>
+		</ul>
 	</div>
 	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
-	<script src="https://cdn.bootcss.com/axios/0.19.0-beta.1/axios.js"></script>
 	<script src="scripts/input.js"></script>	 
  	
  

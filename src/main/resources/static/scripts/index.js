@@ -24,10 +24,10 @@ var app = new Vue({
 			var _this = this;		
 			this.$confirm('确认退出吗?', '提示', {
 				//type: 'warning'
-			}).then(() => {
-				axios.get('/logout?t=' + (+new Date)).then(function (data) {
-					window.top.location.replace("login.html");  
-				});
+			}).then(() => {		
+				localStorage.clear();
+				window.top.location.replace("login.html"); 
+				//告知服务器
 			}).catch(() => {
 			});
 		},

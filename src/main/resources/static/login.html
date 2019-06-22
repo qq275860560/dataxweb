@@ -71,7 +71,6 @@
     </div>
     <script src="scripts/vue.min.js"></script>
     <script src="scripts/element-ui/index.js"></script>
-    <script src="scripts/axios.min.js"></script>
     <script type="text/javascript">
         var login = new Vue({
             el: '.login-container',
@@ -97,16 +96,19 @@
                     this.$refs[formName].validate((valid) => {
                         if (valid) {
                             let username=this.loginForm.username;
-                            let password=this.loginForm.password;
-                            axios.post("/login?username="+username+"&password="+password )
-                                .then(function (res) {
-                                 
-                                    if (res.data.code == 200) {
-                                        window.location.href = "/index.html";
-                                    } else {
-                                        _that.$message.error(res.data.msg);
-                                    }
-                            });
+                            let password=this.loginForm.password;                            
+                            let url = "/login?username="+username+"&password="+password;                             
+                            fetch(url).then(function(response) {return response.json();}).then(function(result){
+         					   if(result.code==200){
+         					   		console.log(result);
+         						    localStorage.setItem("access_token",result.access_token );
+         						    localStorage.setItem("token_type",result.token_type );		  
+         					        window.location.href = "/index.html";
+         					   }else{
+         						    _that.$message.error(result.msg);
+         					   }
+         				   });
+                            
                         } else {
                             console.log('表单验证失败！');
                             return false;

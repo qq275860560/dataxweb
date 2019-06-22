@@ -70,6 +70,12 @@ public class SecurityServiceImpl extends SecurityService {
 	private Map<String, Map<String, Object>> url_cache = new HashMap<String, Map<String, Object>>() {
 		{
 
+			put("/api/github/qq275860560/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_ADMIN,ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			
 			put("/api/github/qq275860560/user/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_ADMIN");// 只需此角色即可访问
