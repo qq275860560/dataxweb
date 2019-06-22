@@ -38,9 +38,10 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     yum -y install apache-maven
     
 # app test
-RUN echo "201906201239"  && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
+RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
     source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
+RUN echo "201906201239"
 RUN ps -aux
 RUN netstat -anltp
  

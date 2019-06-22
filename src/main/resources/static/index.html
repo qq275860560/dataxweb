@@ -2,12 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" type="image/x-icon" href="images/logo.png" media="screen" />
     <title>数据交换平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.staticfile.org/jquery/2.0.0/jquery.min.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     
 	<link href="scripts/element-ui/index.css" rel="stylesheet" />
 	<link href="css/iconfont/iconfont.css" rel="stylesheet" />
@@ -31,13 +29,15 @@
 						<span >{{item.name}}</span>
 					</el-menu-item>				    
 				</el-menu>	  
-			    <div id="content"></div>		
+			    <iframe :src="url" style="width:100%"  frameborder="0"></iframe>	
 		  </el-container>
 		</el-container>
 	</div>
-	<script src="scripts/vue.min.js"></script>
+	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
 	<script src="scripts/element-ui/index.js"></script>
 	<script src="scripts/index.js"></script>	
-	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+	
+	
   </body>
 </html>
