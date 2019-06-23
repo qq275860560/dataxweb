@@ -36,6 +36,6 @@ var app = new Vue({
 		
 	}
 });
-alert(0);
+
 
 
