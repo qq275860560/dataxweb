@@ -4,9 +4,9 @@ var app = new Vue({
 	data: {			
 		tabId:'home',
 		tabName: '首页',				
-		url:'/home.html',
+		url:'/pages/home/index.html',
 		menuArray:[
-			{id:"home",name:"首页",url:"/home.html"},
+			{id:"home",name:"首页",url:"/pages/home/index.html"},
 			{id:"plugin",name:"插件管理",url:"/plugin.html"},
 			{id:"input",name:"输入流管理",url:"/pages/input/index.html"},
 			{id:"output",name:"输出流管理",url:"/output.html"},
@@ -36,5 +36,6 @@ var app = new Vue({
 		
 	}
 });
+alert(0);
 
 
