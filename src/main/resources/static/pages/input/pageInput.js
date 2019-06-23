@@ -1,6 +1,7 @@
- var vm = new Vue({
-		el: '#vm',
-		data: {											
+ var pageInput = new Vue({
+		el: '#pageInput',
+		data: {		
+			name:"",
 			array:[],				
 			code:null,
 			msg:null,
@@ -12,8 +13,8 @@
 			}
 		},
 		methods:{
-			page:function(pageNum,pageSize){
-				let url="http://localhost:8080/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize;
+			pageInput:function(pageNum,pageSize){
+				let url="http://localhost:8080/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name;
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){				
@@ -23,29 +24,30 @@
 				}).then(function(response) {return response.json();}).then(function(result){
 					 if(result.code==200){
 						    console.log("receive=",result );	
-						    vm.data.pageNum=pageNum;
-						    vm.data.pageSize=pageSize;
-							vm.data.total=result.data.total;	
-							vm.data.pageList=result.data.pageList;					
-							vm.repaint();						
-					   }if(result.code==401){						
+						    pageInput.data.pageNum=pageNum;
+						    pageInput.data.pageSize=pageSize;
+							pageInput.data.total=result.data.total;	
+							pageInput.data.pageList=result.data.pageList;					
+							pageInput.repaint();						
+					   }else if(result.code==401){						
 						   window.location.href = "/login.html";
-					   }if(result.code==403){
-						   vm.msg="用户未授权";					
+					   }else if(result.code==403){
+						   pageInput.msg="授权失败";					
 					   }else{
-						   vm.msg=result.msg;
-					   }
-					
-				});			
+						   pageInput.msg=result.msg;
+					   }					
+				}).catch(function(e) {  				
+					pageInput.msg=result.msg;  					 
+				 });			
 				
 			},
 			repaint:function(){
-				vm.array=[];			 
-				let pageCount = Math.ceil((vm.data.total+1)/vm.data.pageSize);
+				pageInput.array=[];			 
+				let pageCount = Math.ceil((pageInput.data.total+1)/pageInput.data.pageSize);
 				for(let i=0;i<pageCount;i++){		
 					let pageNum=i+1;
 					let background;
-					if(pageNum==vm.data.pageNum){
+					if(pageNum==pageInput.data.pageNum){
 						background="yellow";
 					}else{
 						background="";
@@ -58,13 +60,12 @@
 					);				 
 				}			
 			},
-			add(){		
-				window.location.href = "/pages/input/add.html";
-			}
-		
+			saveInput(){		
+				$("#content").load( "/pages/input/saveInput.html");
+			}		
 		},		
 		created: function () {
-	        this.page(this.data.pageNum,this.data.pageSize);
+	        this.pageInput(this.data.pageNum,this.data.pageSize);
 	    }
 
 	});

@@ -1,121 +1,89 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width" />
-    <title>登录</title>
-    <link href="scripts/element-ui/index.css" rel="stylesheet" />
-    <link href="css/iconfont/iconfont.css" rel="stylesheet" />
-    <style type="text/css">
-        *{margin:0; padding:0}
-        html,body{height:100%; width:100%;}
-        body {
-            background: url(images/login-bg.jpg) no-repeat;
-            background-size:cover;
-        }
-        .login-inner {
-            max-width: 1200px;
-            position: relative;
-            margin: 0 auto;
-        }
-        .lg-box {
-            position: absolute;
-            right: 80px;
-            top: 50%;
-            margin-top: -150px;
-            width: 310px;
-            height: 300px;
-            background: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .lg-box>h2{text-align:center; margin-bottom:10px; font-size:20px;}
-        .lg-footer {
-            position: absolute;
-            bottom: 5px;
-            height: 30px;
-            line-height: 30px;
-            width: 100%;
-            left:0;
-            border-top: rgba(255,255,255,.15) 1px solid;
-            text-align:center; color:#fff;
-        }
-    </style>
+    <title>数据交换平台-登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/login.css" rel="stylesheet">
 </head>
-<body>
-    <div class="login-container">
-        <div class="lg-aside">
-            <a href="/"></a>
+<body   style="padding-left:10%;padding-right:10%;padding-top: 40px;padding-bottom: 40px;" >
+<div id="container" class="container" > 
+ <form class="form-signin required-validate" >
+		<h2 class="form-signin-heading">密码登录</h2>
+		<div>
+			<input type="text" v-model="username" class="form-control" placeholder="用户名" required autofocus>
+		</div>
+		<div>
+			<input type="password" v-model="password" class="form-control" placeholder="密码" required>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" value="remember-me"> 记住登录
+			</label>
+		</div>
+ 
+		<button type="button" class="btn btn-primary" @click="login()">登录</button>
+		  
+		<div v-if="code && code!=200" class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert"
+                    aria-hidden="true" @click="code=null;msg=null">
+                &times;
+            </button>
+            	{{msg}}
         </div>
-        <div class="lg-box">
-            <h2>用户登录</h2>
-            <el-form ref="loginForm" :model="loginForm" :rules="rules">
-                <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" placeholder="用户名" clearable>
-                        <i slot="prefix" class="el-icon-custom-user el-icon--right"></i>
-                    </el-input>
-                </el-form-item>
-                <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" type="password" placeholder="密码" 
-                              prefix-icon="el-icon-lock" v-on:keyup.enter.native="submitForm('loginForm')" clearable></el-input>
-                </el-form-item>
-                <el-form-item>
-                    <el-button type="success" style="width:100%; font-weight:bold; font-size:16px;" v-on:click="submitForm('loginForm')">登录</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
-        <div class="lg-footer">
-            版权所有 qq275860560 &copy; 2019
-        </div>
-    </div>
-    <script src="scripts/vue.min.js"></script>
-    <script src="scripts/element-ui/index.js"></script>
-    <script type="text/javascript">
-        var login = new Vue({
-            el: '.login-container',
-            data: {
-                loginForm: {
-                    username: 'admin',
-                    password: '123456'
-                },
-                rules: {
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 3, max:16, message: '长度在3-16个字符', trigger: 'blur' }
-                    ],
-                    password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' },
-                        { min: 3, max: 16, message: '长度在3-16个字符', trigger: 'blur' }
-                    ]
-                }
-            },
+	</form>	
+	
+</div>
+
+ 
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+
+      <script type="text/javascript">
+        let container = new Vue({
+            el: '#container',
+            data: {											
+            	username:"admin",
+            	password:"123456",
+    			code:null,
+    			msg:null,
+    			data:{
+    				pageNum:1,
+    				pageSize:10,
+    				total:null,
+    				pageList:null,
+    			}
+    		},
             methods: {
-                submitForm(formName) {
-                    var _that = this;
-                    this.$refs[formName].validate((valid) => {
-                        if (valid) {
-                            let username=this.loginForm.username;
-                            let password=this.loginForm.password;                            
-                            let url = "/login?username="+username+"&password="+password;                             
-                            fetch(url).then(function(response) {return response.json();}).then(function(result){
-         					   if(result.code==200){
-         					   		console.log(result);
-         						    localStorage.setItem("access_token",result.access_token );
-         						    localStorage.setItem("token_type",result.token_type );		  
-         					        window.location.href = "/index.html";
-         					   }else{
-         						    _that.$message.error(result.msg);
-         					   }
-         				   });
-                            
-                        } else {
-                            console.log('表单验证失败！');
-                            return false;
-                        }
-                    });
+                login:function() {
+                	let username=this.username;
+                    let password=this.password;                            
+                    let url = "/login?username="+username+"&password="+password;                             
+                    fetch(url).then(function(response) {return response.json();}).then(function(result){
+                       container.code=result.code;	
+  					   if(result.code==200){
+  					   		console.log(result);
+  						    localStorage.setItem("access_token",result.access_token );
+  						    localStorage.setItem("token_type",result.token_type );		  
+  						    window.top.location.href = "/index.html";
+  					   }else if(result.code==400){						
+  						   container.msg="登录失败";
+					   }else if(result.code==401){						
+  						   container.msg="认证失败";
+					   }else if(result.code==403){
+						   container.msg="授权失败";					
+					   }else{
+						   container.msg=result.msg;
+					   }  				
+  				   }).catch(function(e) {  				
+  					 container.msg=result.msg;  					 
+  				   });
+                        
                 }
-            }
+            },		
+    		created: function () {
+    	        //取出token，如果不为空，校验token，如果校验成功，重定向到/index.html,
+    	    }
         });
     </script>
 </body>

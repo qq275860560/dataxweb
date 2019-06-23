@@ -1,5 +1,5 @@
- var vm = new Vue({
-		el: '#vm',
+ var saveInput = new Vue({
+		el: '#saveInput',
 		data: {	
 			name:"inputName",
 			readerId:"mysqlreaderId",
@@ -16,8 +16,8 @@
 			
 		},
 		methods:{
-			save:function(){			
-				let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+vm.name+"&readerId="+vm.readerId+"&readerName="+vm.readerName+"&readerParameterUsername="+vm.readerParameterUsername+"&readerParameterPassword="+vm.readerParameterPassword+"&readerParameterColumn="+vm.readerParameterColumn+"&readerParameterWhere="+vm.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+vm.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+vm.readerParameterConnectionTable;
+			saveInput:function(){			
+				let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+saveInput.name+"&readerId="+saveInput.readerId+"&readerName="+saveInput.readerName+"&readerParameterUsername="+saveInput.readerParameterUsername+"&readerParameterPassword="+saveInput.readerParameterPassword+"&readerParameterColumn="+saveInput.readerParameterColumn+"&readerParameterWhere="+saveInput.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+saveInput.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+saveInput.readerParameterConnectionTable;
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){
@@ -27,20 +27,24 @@
 				}).then(function(response) {return response.json();}).then(function(result){
 					 if(result.code==200){
 						   console.log("receive=",result );			
-						   window.location.href = "/pages/input/index.html";
-					   }if(result.code==401){						
+						   $("#content").load( "/pages/input/pageInput.html");
+					   }else if(result.code==401){						
 						   window.location.href = "/login.html";
-					   }if(result.code==403){
-						   vm.msg="用户未授权";					
+					   }else if(result.code==403){
+						   saveInput.msg="授权失败";					
 					   }else{
-						   vm.msg=result.msg;
-					   }
-					
+						   saveInput.msg=result.msg;
+					   }					
+				}).catch(function(e) {  				
+					saveInput.msg=result.msg;  					 
 				});			
 				
 			},
 			check:function(){
 				 return true;
+			},
+			back:function(){
+				 $("#content").load("/pages/input/pageInput.html");
 			}
 		
 		},		

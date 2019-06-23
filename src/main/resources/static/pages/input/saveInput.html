@@ -7,8 +7,13 @@
   <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-	<div id="vm" class="container " > 	
-	    <span v-if="code!=null && code!=200">{{msg}}</span>	     
+	<div id="saveInput"  > 	
+	    	
+	    <div class="modal-header">			
+			<h4 class="modal-title">当前位置&raquo;输入流&raquo;新建</h4>
+		</div> 
+		
+		<div class="modal-body">    
 	    <form class="form-horizontal" role="form">
 	      
 	      <div class="form-group">
@@ -75,12 +80,18 @@
 		    </div>
 		  </div>
 		  
-		   <button type="button" class="btn btn-primary" @click="save()">确定</button>
+		   
 		  
+		  <div class="modal-footer">
+		   
+		   <button type="button" class="btn btn-primary" @click="back()">返回</button>
+		   <button type="button" class="btn btn-primary" @click="saveInput()">确定</button>
+		   </div>
 		   
 		</form>
+		<span v-if="code && code!=200">{{msg}}</span>
 	</div>
 	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
-	<script src="/pages/input/add.js"></script>	 
+	<script src="/pages/input/saveInput.js"></script>	 
 </body>
 </html>
