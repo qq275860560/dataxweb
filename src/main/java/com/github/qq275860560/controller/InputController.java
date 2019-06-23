@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -93,7 +94,18 @@ public class InputController {
 	 
 		String id=UUID.randomUUID().toString().replace("-", "");
 		requestMap.put("id", id);	
-				
+		
+		String name = (String) requestMap.get("name");
+		if (StringUtils.isEmpty(name)) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "名称不能为空");
+					put("data", null);
+				}
+			};
+		}
+		
 		String createUserName=currentLoginUsername;
 		requestMap.put("createUserName", createUserName);
 		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());

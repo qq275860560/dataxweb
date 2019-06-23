@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">    
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
-
-<body  style="padding-left:10%;padding-right:10%;padding-top: 40px;padding-bottom: 40px;" >
-<div id="app" > 
+<body>
+<div id="index" style="margin: 0 auto;padding-left:10%;padding-right:10%;padding-top: 40px;padding-bottom: 40px;" > 
 	<div class="navbar navbar-default " >
 	    <div class="container-fluid">	 
 			<div class="navbar-header">			 
@@ -23,7 +22,7 @@
 				    <img src="images/head.jpg" style="height:40px"  class="img-circle img-thumbnail img-responsive" />
 				     <span class="caret"></span></a>
 				     <ul class="dropdown-menu">						
-						<li><a href="#" @click="clickMenu('/pages/user/updateUserPassword.html')" >修改密码</a></li>
+						<li><a href="#" @click="clickMenu(updateUserPassword.url)" >修改密码</a></li>
 						<li><a href="#" data-toggle="modal" data-target="#myModal">退出</a></li>
 					</ul>
 				</ul>

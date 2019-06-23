@@ -1,6 +1,5 @@
-//Vue实例
-var app = new Vue({
-	el: '#app',
+var index = new Vue({
+	el: '#index',
 	data: {	
 		home:{name:"数据交换平台",url:"/pages/home/index.html"},
 		menuArray:[	
@@ -9,7 +8,8 @@ var app = new Vue({
 			{name:"输出流管理",url:"/output.html"},
 			{name:"任务管理",url:"/job.html"},
 			{name:"执行日志管理",url:"/build.html"},
-		]
+		],
+		updateUserPassword:{name:"修改密码",url:"/pages/user/updateUserPassword.html"},
 	},
 	
 	methods: {		
@@ -26,7 +26,7 @@ var app = new Vue({
 		
     }
 });
-app.clickMenu(app.home.url);
+index.clickMenu(index.home.url);
 
 
 
