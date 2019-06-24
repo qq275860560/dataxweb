@@ -1,101 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>数据交换平台-输入流管理-新建</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="utf-8">
+<title>数据交换平台-输入流管理-新建</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
 </head>
 <body>
-	<div id="saveInput"  > 	
-	    	
-	    <div class="modal-header">			
+	<div id="saveInput" class="container">
+
+		<div class="modal-header">
 			<h4 class="modal-title">当前位置&raquo;输入流&raquo;新建</h4>
-		</div> 
-		
-		<div class="modal-body">    
-	    <form class="form-horizontal "  style="width: 80%; margin: 0 auto;">
-	      
-	      <div class="form-group">
-		    <label class="col-sm-2 control-label">插件名称</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="name" type="text"  >
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label class="col-sm-2 control-label">输入流ID</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerId" type="text"  >
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label class="col-sm-2 control-label">输入流名称</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerName" type="text"  >
-		    </div>
-		  </div>
-		  
-		   <div class="form-group">
-		    <label class="col-sm-2 control-label">用户名</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerParameterUsername" type="text"  >
-		    </div>
-		  </div>
-		  
-		   <div class="form-group">
-		    <label class="col-sm-2 control-label">密码</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerParameterPassword" type="text"  >
-		    </div>
-		  </div>
-		  
-		   <div class="form-group">
-		    <label class="col-sm-2 control-label">列</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerParameterColumn" type="text"  >
-		    </div>
-		  </div>
-		  
-		   <div class="form-group">
-		    <label class="col-sm-2 control-label">where条件</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerParameterWhere" type="text" >
-		    </div>
-		  </div>
-		  
-		  
-		    <div class="form-group">
-		    <label class="col-sm-2 control-label">url</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerParameterConnectionJdbcUrl" type="text"  >
-		    </div>
-		  </div>
-		  
-		    <div class="form-group">
-		    <label class="col-sm-2 control-label">表</label>
-		    <div class="col-sm-6">
-		      <input class="form-control"  v-model="readerParameterConnectionTable" type="text"  >
-		    </div>
-		  </div>
-		  
-		   
-		  
-		   
-		    <div class="form-group">
-		   <button type="button" class="col-sm-1 col-sm-push-3 btn btn-primary" @click="back()">返回</button>
-		   <button type="button" class="col-sm-1 col-sm-push-4 btn btn-primary" @click="saveInput()">确定</button>
-		   <span v-if="code && code!=200">{{msg}}</span>
-		   </div>
-		   
-		</form>
-		
-	</div>
+		</div>
+
+		<div class="modal-body">
+			<form class="form-horizontal " style="width: 80%; margin: 0 auto;">
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">插件名称</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="name" type="text">
+					</div>
+
+					<label class="col-sm-2 control-label">输入流ID</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="readerId" type="text">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">输入流名称</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="readerName" type="text">
+					</div>
+
+					<label class="col-sm-2 control-label">用户名</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="readerParameterUsername"
+							type="text">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">密码</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="readerParameterPassword"
+							type="text">
+					</div>
+
+					<label class="col-sm-2 control-label">列</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="readerParameterColumn"
+							type="text">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">where条件</label>
+					<div class="col-sm-4">
+						<input class="form-control" v-model="readerParameterWhere"
+							type="text">
+					</div>
+
+					<label class="col-sm-2 control-label">url</label>
+					<div class="col-sm-4">
+						<input class="form-control"
+							v-model="readerParameterConnectionJdbcUrl" type="text">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-sm-2 control-label">表</label>
+					<div class="col-sm-4">
+						<input class="form-control"
+							v-model="readerParameterConnectionTable" type="text">
+					</div>
+				</div>
+
+
+
+
+				<div class="form-group">
+					<button type="button"
+						class="col-sm-1 col-sm-push-5 btn btn-primary" @click="back()">返回</button>
+					<button type="button"
+						class="col-sm-1 col-sm-push-6 btn btn-primary"
+						@click="saveInput()">确定</button>
+					<span v-if="code && code!=200">{{msg}}</span>
+				</div>
+
+			</form>
+
+		</div>
 	</div>
 	<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
-	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script
+		src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
-	<script src="/pages/input/saveInput.js"></script>	 
+	<script src="/pages/input/saveInput.js"></script>
 </body>
 </html>

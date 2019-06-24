@@ -48,7 +48,7 @@
 					let pageNum=i+1;
 					let background;
 					if(pageNum==pageInput.data.pageNum){
-						background="yellow";
+						background="#ddd";
 					}else{
 						background="";
 					}
