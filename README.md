@@ -63,6 +63,14 @@ java -jar jenkins-cli.jar -s http://localhost:8081/ get-view view1
 
 ```
 
+# 前端
+
+```
+切换到frontend目录下
+npm install -g
+npm run dev
+```
+
 
 # 温馨提醒
 

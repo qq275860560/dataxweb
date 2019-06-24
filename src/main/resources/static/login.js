@@ -34,7 +34,7 @@ let login = new Vue({
 						   login.msg=result.msg;
 					   }  				
   				   }).catch(function(e) {  				
-  					 login.msg=result.msg;  					 
+  					 login.msg=e;  					 
   				   });
                         
                 }

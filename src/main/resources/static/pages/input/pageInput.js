@@ -37,7 +37,7 @@
 						   pageInput.msg=result.msg;
 					   }					
 				}).catch(function(e) {  				
-					pageInput.msg=result.msg;  					 
+					pageInput.msg=e;  					 
 				 });			
 				
 			},

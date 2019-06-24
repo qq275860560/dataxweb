@@ -36,7 +36,7 @@
 						   saveInput.msg=result.msg;
 					   }					
 				}).catch(function(e) {  				
-					saveInput.msg=result.msg;  					 
+					saveInput.msg=e;  					 
 				});			
 				
 			},

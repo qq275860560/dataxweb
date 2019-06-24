@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html  lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>数据交换平台-登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div id="index" class="container"> 
+	<div class="navbar navbar-default " >
+	    <div class="container-fluid">	 
+			<div class="navbar-header">			 
+				<a class="navbar-brand" href="#" @click="clickMenu(home.url)" >{{home.name}}</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">			
+					<li  v-for="item of menuArray"><a href="#" @click="clickMenu(item.url)" >{{item.name}}</a></li>				
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				    <img src="images/head.jpg" style="height:40px"  class="img-circle img-thumbnail img-responsive" />
+				     <span class="caret"></span></a>
+				     <ul class="dropdown-menu">						
+						<li><a href="#" @click="clickMenu(updateUserPassword.url)" >修改密码</a></li>
+						<li><a href="#" data-toggle="modal" data-target="#myModal">退出</a></li>
+					</ul>
+				</ul>
+			</div>
+			</div>	
+	</div>
+
+	<div id="content"> 
+	</div>
+	
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">提示</h4>
+	            </div>
+	            <div class="modal-body">确认退出吗?</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+	                <button type="button" class="btn btn-primary" @click="logout">退出</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+	
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+<script src="/index.js"></script>
+ 
+ 
+
+</body>
+</html>
