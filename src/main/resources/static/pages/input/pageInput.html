@@ -23,9 +23,9 @@
 					<div class="col-sm-2">
 						<input class="form-control" v-model="name" type="text">
 					</div>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-default"
 						@click="pageInput(1,data.pageSize)">搜索</button>
-					<button type="button" class="btn btn-primary" @click="saveInput()">新建</button>
+					<button type="button" class="btn btn-default" @click="saveInput()">新建</button>
 				</div>
 			</form>
 
@@ -61,7 +61,7 @@
 					@click="pageInput( item.pageNum,data.pageSize )">{{item.pageNum}}&nbsp;</a></li>
 				<li><a href="#"
 					@click="pageInput(data.pageNum<Math.ceil((data.total+1)/data.pageSize)?data.pageNum+1:data.pageNum,data.pageSize)"
-					class="next">下一页&raquo;</a></li>
+					class="next ">下一页&raquo;</a></li>
 				<li><a href="#"
 					@click="pageInput(Math.ceil((data.total+1)/data.pageSize),data.pageSize)">尾页</a>
 				</li>
