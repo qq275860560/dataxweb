@@ -102,7 +102,7 @@
 <script>
 export default {
   name:'saveInput',
-  data() {		
+  data:function() {		
 			return {
 				name:"inputName",
 				readerId:"mysqlreaderId",

@@ -1,6 +1,5 @@
 <template>
-	<div id="container" >
-	   <div >
+	<div id="container" >	 
           <div class="col-sm-10 col-sm-offset-1">
             <ol class="breadcrumb">
               <li><a href="#" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
@@ -12,9 +11,9 @@
              {{msg}}
             </div>
           </div>
-        </div><!-- /.row -->
+      
 
-        <div >
+     
           <div class="col-sm-10 col-sm-offset-1">
             <form>
 				<div class="form-group ">
@@ -82,7 +81,7 @@
 			</ul>
           </div>
           
-        </div><!-- /.row -->      
+      
         
         
        
@@ -92,7 +91,7 @@
 <script>
 export default {
   name:'pageInput',
-  data() {		
+  data:function() {		
 			return {
 				name:"",
 				array:[],				

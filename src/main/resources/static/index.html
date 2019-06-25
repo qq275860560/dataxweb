@@ -1,94 +1,98 @@
 <!DOCTYPE html>
-<html  lang="en">
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>数据交换平台-登录</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>数据交换平台</title>
+
+    <!-- Bootstrap core CSS -->
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div id="app" class="container"> 
-	<div class="navbar navbar-default " >
-	    <div class="container-fluid">	 
-			<div class="navbar-header">			 
-				<a class="navbar-brand" href="#" @click="updateContainer(home.url)" >{{home.name}}</a>
-			</div>
-			<div>
-				<ul class="nav navbar-nav">			
-					<li  v-for="item of menuArray"><a href="#" @click="updateContainer(item.url)" >{{item.name}}</a></li>				
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-				    <img src="images/head.jpg" style="height:40px"  class="img-circle img-thumbnail img-responsive" />
-				     <span class="caret"></span></a>
-				     <ul class="dropdown-menu">						
-						<li><a href="#" @click="updateContainer(updateUserPassword.url)" >修改密码</a></li>
-						<li><a href="#" data-toggle="modal" data-target="#myModal">退出</a></li>
-					</ul>
-				</ul>
-			</div>
-			</div>	
-	</div>
 
-	<div id="container"> </div>
-	
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="myModalLabel">提示</h4>
-	            </div>
-	            <div class="modal-body">确认退出吗?</div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-	                <button type="button" class="btn btn-primary" @click="logout">退出</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal -->
-	</div>
-	
-</div>
-<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
-<script>
-var app = new Vue({
-	el: '#app',
-	data: {	
-		home:{name:"数据交换平台",url:"/components/home.html"},
-		menuArray:[	
-			{name:"插件管理",url:"/components/plugin.html"},
-			{name:"输入流管理",url:"/components/pageInput.html"},
-			{name:"输出流管理",url:"/components/output.html"},
-			{name:"任务管理",url:"/components/job.html"},
-			{name:"执行日志管理",url:"/components/build.html"},
-		],
-		updateUserPassword:{name:"修改密码",url:"/components/updateUserPassword.html"},
-	},
-	
-	methods: {		
-		updateContainer:function(path) {
-      		console.log("path",path);      		 
-      		$.get(path, function(data) {
-      		  $("#container").replaceWith(data);
-      		});     	 
-    	},
-		logout: function () {	
-			localStorage.clear();
-			window.top.location.replace("/components/login.html"); 
-			//发送请求告知服务器			
-		}		
-	},
-	created: function () {			
-		
-    }
-});
-app.updateContainer(app.home.url);
+    <!-- Add custom CSS here -->
+    <link href="index.css" rel="stylesheet">
 
-</script>
+   </head>
+
+  <body>
+
+    <div id="app">
+
+      <!-- Sidebar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" @click="updateContainer('/components/index.html')" >数据交换平台</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav side-nav">
+            <li class="active"><a href="#" @click="updateContainer('/components/index.html')">主页</a></li>
+            <li><a href="#" @click="updateContainer('/components/pageInput.html')" >输入流管理</a>></li>             
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right navbar-user">
+             
+         
+            <li class="dropdown user-dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 管理员 <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                 <li><a href="#"><i class="fa fa-gear"></i> 设置</a></li>
+                <li class="divider"></li>
+                <li><a href="#" @click="logout()"><i class="fa fa-power-off"></i> 退出</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </nav>
  
- 
+    
+    <div id="container">
+     <router-view></router-view>	
+     <logout  ref="logout"></logout>
+   </div>
+    </div><!-- /#index -->
 
-</body>
+    <!-- JavaScript -->
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js"></script>
+    <script>
+    	const router = new VueRouter() ;
+    </script>
+    <script src="/components/index.js"></script>
+    <script src="/components/login.js"></script>
+ 	<script src="/components/logout.js"></script><!-- 子组件一定要先加载 -->
+    <script src="/components/pageInput.js"></script> <!-- 非子组件可以放到最后加载，也可以延迟加载，注意不要重复加载（使用全局变量保存加载过的路径，请求前进行判断)-->
+    <script src="/components/saveInput.js"></script>
+    
+ 	<script> 	
+ 	const app = new Vue({
+ 		el: '#app', 		
+ 		methods: {	
+ 			  updateContainer:function(path) {
+	         		console.log("path",path);
+	         		this.$router.push({path:path});	     
+				},
+ 				logout:function(){
+ 					this.$refs.logout.show();
+ 				}
+ 		},
+		created:function(){
+			//this.updateContainer({path:"/components/pageInput.html"});		
+		},
+ 	    router
+ 	});
+  	</script>
+   </body>
 </html>

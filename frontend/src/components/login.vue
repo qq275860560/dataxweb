@@ -30,7 +30,7 @@
 <script>
 export default {
 	name:'login',
-  	data() {			
+  	data:function() {			
             return {											
             	username:"admin",
             	password:"123456",
@@ -60,7 +60,7 @@ export default {
 				   		console.log(result);
 					    localStorage.setItem("access_token",result.access_token );
 					    localStorage.setItem("token_type",result.token_type );		  
-					    login.updateContainer("/components/home.html");
+					    login.updateContainer("/components/index.html");
 				   }else if(result.code==400){						
 					   login.msg="登录失败";
 				   }else if(result.code==401){						
