@@ -17,27 +17,27 @@ export default new Router({
 		    component: home
 		},	
 	      {
-	          path: '/home.html',
+	          path: '/components/home.html',
 	          name: 'home',
 	          component: home
 	      },
 	      {
-	          path: '/login.html',
+	          path: '/components/login.html',
 	          name: 'login',
 	          component: login
 	      },
 	      {
-	          path: '/logout.html',
+	          path: '/components/logout.html',
 	          name: 'logout',
 	          component: logout
 	      },
 	      {
-	    	  path: '/pageInput.html',
+	    	  path: '/components/pageInput.html',
 	          name: 'pageInput',
 	          component: pageInput
 	      },
 	      {
-	    	  path: '/saveInput.html',
+	    	  path: '/components/saveInput.html',
 	    	  name: 'saveInput',
 	    	  component: saveInput
 	      },    

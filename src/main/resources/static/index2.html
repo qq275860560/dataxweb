@@ -7,22 +7,22 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="index" class="container"> 
+<div id="app"> 
 	<div class="navbar navbar-default " >
 	    <div class="container-fluid">	 
 			<div class="navbar-header">			 
-				<a class="navbar-brand" href="#" @click="clickMenu(home.url)" >{{home.name}}</a>
+				<a class="navbar-brand" href="#" @click="updateContainer(home.url)" >{{home.name}}</a>
 			</div>
 			<div>
 				<ul class="nav navbar-nav">			
-					<li  v-for="item of menuArray"><a href="#" @click="clickMenu(item.url)" >{{item.name}}</a></li>				
+					<li  v-for="item of menuArray"><a href="#" @click="updateContainer(item.url)" >{{item.name}}</a></li>				
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 				    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 				    <img src="images/head.jpg" style="height:40px"  class="img-circle img-thumbnail img-responsive" />
 				     <span class="caret"></span></a>
 				     <ul class="dropdown-menu">						
-						<li><a href="#" @click="clickMenu(updateUserPassword.url)" >修改密码</a></li>
+						<li><a href="#" @click="updateContainer(updateUserPassword.url)" >修改密码</a></li>
 						<li><a href="#" data-toggle="modal" data-target="#myModal">退出</a></li>
 					</ul>
 				</ul>
@@ -30,8 +30,7 @@
 			</div>	
 	</div>
 
-	<div id="content"> 
-	</div>
+	<div id="container"> </div>
 	
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	    <div class="modal-dialog">

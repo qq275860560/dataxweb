@@ -1,5 +1,6 @@
 <template>
-	<form class="form-signin" style="max-width: 250px; margin: 0 auto;">
+    <div id="container">
+	<form id="login" class="form-signin" style="max-width: 250px; margin: 0 auto;">
 		<h2 class="form-signin-heading">密码登录</h2>
 		<div>
 			<input type="text" v-model="username" class="form-control" placeholder="用户名" required autofocus>
@@ -23,6 +24,7 @@
             	{{msg}}
         </div>
 	</form>	
+	</div>
 </template>
 
 <script>
@@ -43,7 +45,7 @@ export default {
     		}
     	},
         methods: {
-        	clickMenu:function(path) {
+        	updateContainer:function(path) {
           		console.log("path",path);
           		this.$router.push({path:path});
         	},
@@ -58,7 +60,7 @@ export default {
 				   		console.log(result);
 					    localStorage.setItem("access_token",result.access_token );
 					    localStorage.setItem("token_type",result.token_type );		  
-					    login.clickMenu("/home.html");
+					    login.updateContainer("/components/home.html");
 				   }else if(result.code==400){						
 					   login.msg="登录失败";
 				   }else if(result.code==401){						

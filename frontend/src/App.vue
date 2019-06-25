@@ -1,10 +1,7 @@
 <template>
   <div id="app"> 
     <top></top>
-    <div class="container">
-        <router-view></router-view>
-    </div>
-    <bottom></bottom>
+     <router-view></router-view>
   </div>
 </template>
 

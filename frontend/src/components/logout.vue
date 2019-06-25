@@ -1,6 +1,6 @@
 <template>
-   <div>
-   <div class="row">         
+   <div id="container">
+   <div >         
  
 			<div class="col-lg-10">			
 			    <a href="#" data-toggle="modal" data-target="#myModal">退出</a>
@@ -40,14 +40,14 @@ export default {
     		}
     	},
         methods: {
-        	clickMenu:function(path) {
+        	updateContainer:function(path) {
           		console.log("path",path);
           		this.$router.push({path:path});
         	},	 
         	logout: function () {	
         		//发送请求告知服务器
         		localStorage.clear();
-        		this.clickMenu("/login.html");		
+        		this.updateContainer("/components/login.html");		
         					
         	},           
         },		

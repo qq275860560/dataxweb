@@ -1,8 +1,12 @@
-<template>
-	<div id="container">
+<meta charset="utf-8">
+<link
+	href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<div id="container">
 
 		<div >
-          <div class="col-sm-10 col-sm-offset-1">
+          <div >
             <ol class="breadcrumb">
               <li><a href="#" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
               <li><a href="#" @click="updateContainer('/components/pageInput.html')"><i class="fa fa-dashboard"></i> 输入流</a></li>
@@ -16,7 +20,7 @@
         </div>
 
 		<div  >
-		<div class="col-sm-10 col-sm-offset-1">
+		<div >
 			<form class="form-horizontal " role="form" >
 
 				<div class="form-group form-group-lg">
@@ -97,13 +101,16 @@
 </div>
 		</div>
 	</div>
-</template>
 
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script
+	src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 <script>
-export default {
-  name:'saveInput',
-  data() {		
-			return {
+	 var saveInput = new Vue({
+			el: '#container',
+			data: {	
 				name:"inputName",
 				readerId:"mysqlreaderId",
 				readerName:"mysqlreaderName",
@@ -116,52 +123,50 @@ export default {
 				code:null,
 				msg:null,
 				data:null,
-			}
-		},
-		methods:{
-			updateContainer:function(path) {
-          		console.log("path",path);
-          		this.$router.push({path:path});
-        	},
-			saveInput:function(){	
-				let saveInput = this;
-				let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+saveInput.name+"&readerId="+saveInput.readerId+"&readerName="+saveInput.readerName+"&readerParameterUsername="+saveInput.readerParameterUsername+"&readerParameterPassword="+saveInput.readerParameterPassword+"&readerParameterColumn="+saveInput.readerParameterColumn+"&readerParameterWhere="+saveInput.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+saveInput.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+saveInput.readerParameterConnectionTable;
-				let token_type=localStorage.getItem('token_type'); 
-				let access_token=localStorage.getItem('access_token');
-				if(token_type==null || access_token==null){
-					this.updateContainer("/components/login.html");									
-				}
-				fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
-				}).then(function(response) {return response.json();}).then(function(result){
-					 if(result.code==200){
-						   console.log("receive=",result );			
-						   saveInput.updateContainer("/components/pageInput.html");
-					   }else if(result.code==401){						
-						   saveInput.updateContainer("/components/login.html");
-					   }else if(result.code==403){
-						   saveInput.msg="授权失败";					
-					   }else{
-						   saveInput.msg=result.msg;
-					   }					
-				}).catch(function(e) {  				
-					saveInput.msg=e;  					 
-				});			
 				
 			},
-			check:function(){
-				 return true;
-			},
-			back:function(){
-				 this.updateContainer("/components/pageInput.html");
-			}
-		
-		},		
-		created: function () {
-	        
-	    }
-}
-</script>
+			methods:{
+				updateContainer:function(path) {
+		      		console.log("path",path);      		 
+		      		$.get(path, function(data) {
+		      		  $("#container").replaceWith(data);
+		      		});     	 
+		    	},
+				saveInput:function(){			
+					let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+saveInput.name+"&readerId="+saveInput.readerId+"&readerName="+saveInput.readerName+"&readerParameterUsername="+saveInput.readerParameterUsername+"&readerParameterPassword="+saveInput.readerParameterPassword+"&readerParameterColumn="+saveInput.readerParameterColumn+"&readerParameterWhere="+saveInput.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+saveInput.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+saveInput.readerParameterConnectionTable;
+					let token_type=localStorage.getItem('token_type'); 
+					let access_token=localStorage.getItem('access_token');
+					if(token_type==null || access_token==null){
+						window.location.href = "/components/login.html";					
+					}
+					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
+					}).then(function(response) {return response.json();}).then(function(result){
+						 if(result.code==200){
+							   console.log("receive=",result );			
+							   $("#container").load( "/components/pageInput.html");
+						   }else if(result.code==401){						
+							   window.location.href = "/components/login.html";
+						   }else if(result.code==403){
+							   saveInput.msg="授权失败";					
+						   }else{
+							   saveInput.msg=result.msg;
+						   }					
+					}).catch(function(e) {  				
+						saveInput.msg=e;  					 
+					});			
+					
+				},
+				check:function(){
+					 return true;
+				},
+				back:function(){
+					 $("#container").load("/components/pageInput.html");
+				}
+			
+			},		
+			created: function () {
+		        
+		    }
 
-<style>
-
-</style>
+		});
+	</script>

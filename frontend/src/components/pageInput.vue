@@ -1,9 +1,9 @@
 <template>
-	<div>
-	   <div class="row">
-          <div class="col-lg-10">
+	<div id="container" >
+	   <div >
+          <div class="col-sm-10 col-sm-offset-1">
             <ol class="breadcrumb">
-              <li><a href="#" @click="clickMenu('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
+              <li><a href="#" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
               <li class="active"><i class="fa fa-edit"></i> 输入流</li>
             </ol>
             
@@ -14,8 +14,8 @@
           </div>
         </div><!-- /.row -->
 
-        <div class="row">
-          <div class="col-lg-10">
+        <div >
+          <div class="col-sm-10 col-sm-offset-1">
             <form>
 				<div class="form-group ">
 					<label class="col-sm-2 control-label">插件名称</label>
@@ -24,7 +24,7 @@
 					</div>
 					<button type="button" class="btn btn-default"
 						@click="pageInput(1,data.pageSize)">搜索</button>
-					<button type="button" class="btn btn-default" @click="clickMenu('/saveInput.html')">新建</button>
+					<button type="button" class="btn btn-default" @click="updateContainer('/components/saveInput.html')">新建</button>
 				</div>
 			</form>
             <h2>分页搜索结果</h2>
@@ -70,11 +70,11 @@
 					@click="pageInput(Math.ceil((data.total+1)/data.pageSize),data.pageSize)">尾页</a>
 				</li>
 				<li><span>跳转至<input
-						style="width: 24px; height: 100%; padding-top: 0px; padding-bottom: 0px"
+						style="width: 24px; padding-top: 0px; padding-bottom: 0px"
 						type="text" v-model="data.pageNum" />页
 				</span></li>
 				<li><span>每页<input
-						style="width: 24px; height: 100%; padding-top: 0px; padding-bottom: 0px"
+						style="width: 24px; padding-top: 0px; padding-bottom: 0px"
 						type="text" v-model="data.pageSize" />条
 				</span></li>
 				<li><a href='javascript:void(0)'
@@ -107,7 +107,7 @@ export default {
 			}
 		},
 		methods:{
-			clickMenu:function(path) {
+			updateContainer:function(path) {
           		console.log("path",path);
           		this.$router.push({path:path});
         	},
@@ -117,7 +117,7 @@ export default {
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){				
-					this.clickMenu("/login.html");
+					this.updateContainer("/components/login.html");
 				}
 				fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
 				}).then(function(response) {return response.json();}).then(function(result){
@@ -129,7 +129,7 @@ export default {
 							pageInput.data.pageList=result.data.pageList;					
 							pageInput.repaint();						
 					   }else if(result.code==401){						
-						   pageInput.clickMenu("/login.html");
+						   pageInput.updateContainer("/components/login.html");
 					   }else if(result.code==403){
 						   pageInput.msg="授权失败";					
 					   }else{
