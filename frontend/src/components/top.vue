@@ -3,14 +3,14 @@
     <nav id="top" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">          
-          <a class="navbar-brand" href="#" @click="updateContainer('/components/home.html')" >数据交换平台</a>
+          <a class="navbar-brand" href="javascript:void(0)" @click="updateContainer('/components/home.html')" >数据交换平台</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="active">
-              <a class="navbar-brand" href="#" @click="updateContainer('/components/pageInput.html')" >输入流管理</a>
+              <a class="navbar-brand" href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" >输入流管理</a>
             </li>          
           </ul>
 
@@ -19,7 +19,7 @@
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 管理员 <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" @click="updateContainer('/components/logout.html')">退出</a></li>            
+                <li><a href="javascript:void(0)" @click="updateContainer('/components/logout.html')">退出</a></li>            
               </ul>
             </li>
           </ul>

@@ -30,14 +30,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" @click="updateContainer('/components/index.html')" >数据交换平台</a>
+          <a class="navbar-brand" href="javascript:void(0)" @click="updateContainer('/components/index.html')" >数据交换平台</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li class="active"><a href="#" @click="updateContainer('/components/index.html')">主页</a></li>
-            <li><a href="#" @click="updateContainer('/components/pageInput.html')" >输入流管理</a>></li>             
+            <li class="active"><a href="javascript:void(0)" @click="updateContainer('/components/index.html')">主页</a></li>
+            <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" >输入流管理</a>></li>             
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -46,9 +46,9 @@
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 管理员 <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                 <li><a href="#"><i class="fa fa-gear"></i> 设置</a></li>
+                 <li><a href="javascript:void(0)"><i class="fa fa-gear"></i> 设置</a></li>
                 <li class="divider"></li>
-                <li><a href="#" @click="logout()"><i class="fa fa-power-off"></i> 退出</a></li>
+                <li><a href="javascript:void(0)" @click="logout()"><i class="fa fa-power-off"></i> 退出</a></li>
               </ul>
             </li>
           </ul>
@@ -58,7 +58,7 @@
     
     <div id="container">
      <router-view></router-view>	
-     <logout  ref="logout"></logout>
+  
    </div>
     </div><!-- /#index -->
 
@@ -85,7 +85,8 @@
 	         		this.$router.push({path:path});	     
 				},
  				logout:function(){
- 					this.$refs.logout.show();
+ 					//this.$refs.logout.show();    //如果使用此方式，主页面先引入 <logout  ref="logout"></logout>，之后去除退出组件cancel中的this.$router.go(-1);和created 
+ 					this.updateContainer("/components/logout.html");
  				}
  		},
 		created:function(){

@@ -4,8 +4,8 @@
 		<div >
           <div class="col-sm-10 col-sm-offset-1">
             <ol class="breadcrumb">
-              <li><a href="#" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
-              <li><a href="#" @click="updateContainer('/components/pageInput.html')"><i class="fa fa-dashboard"></i> 输入流</a></li>
+              <li><a href="javascript:void(0)" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
+              <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')"><i class="fa fa-dashboard"></i> 输入流</a></li>
               <li class="active"><i class="fa fa-edit"></i> 新建</li>
             </ol>
             <div  v-if="code && code!=200" class="alert alert-info alert-dismissable">

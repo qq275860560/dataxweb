@@ -34,7 +34,7 @@ $.ajax({url:"/components/logout.html", type: "GET", async: false}).done(function
 				  			
 		    },
 		    mounted: function () {			
-				 //this.show();				
+				 this.show();				
 		    },
 		};
   		
