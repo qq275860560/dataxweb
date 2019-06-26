@@ -96,7 +96,7 @@ public class InputController {
 		requestMap.put("id", id);	
 		
 		String name = (String) requestMap.get("name");
-		if (StringUtils.isEmpty(name)) {
+		if (true) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());

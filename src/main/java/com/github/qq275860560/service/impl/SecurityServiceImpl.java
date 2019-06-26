@@ -76,6 +76,35 @@ public class SecurityServiceImpl extends SecurityService {
 				}
 			});
 			
+			put("/api/github/qq275860560/input/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			put("/api/github/qq275860560/output/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			put("/api/github/qq275860560/plugin/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			
+			put("/api/github/qq275860560/job/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			put("/api/github/qq275860560/build/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			
+			
+			
 			put("/api/github/qq275860560/user/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_ADMIN");// 只需此角色即可访问

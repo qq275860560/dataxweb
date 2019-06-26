@@ -28,17 +28,17 @@ $.ajax({url:"/components/login.html", type: "GET", async: false}).done(function(
 		            let url = "/login?username="+username+"&password="+password;                             
 		            fetch(url).then(function(response) {return response.json();}).then(function(result){
 		            	tmpVue.code=result.code;	
-						   if(result.code==200){
-						   		console.log(result);
-							    localStorage.setItem("access_token",result.access_token );
-							    localStorage.setItem("token_type",result.token_type );						
-							    tmpVue.hide();								
-					       		if(tmpVue.fromPath=="/components/logout.html"){					       			
-					       			tmpVue.updateContainer("/");
-					       		}else{					       	
-					       			//tmpVue.updateContainer(tmpVue.fromPath);
-					       			tmpVue.$router.go(-1);
-					       		}						    
+					   if(result.code==200){
+					   		console.log(result);
+						    localStorage.setItem("access_token",result.access_token );
+						    localStorage.setItem("token_type",result.token_type );						
+						    tmpVue.hide();								
+				       		if(tmpVue.fromPath=="/components/logout.html"){					       			
+				       			tmpVue.updateContainer("/");
+				       		}else{					       	
+				       			//tmpVue.updateContainer(tmpVue.fromPath);
+				       			tmpVue.$router.go(-1);
+				       		}						    
 					   }else if(result.code==400){						
 							   tmpVue.msg="登录失败";
 					   }else if(result.code==401){						

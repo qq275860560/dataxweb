@@ -23,6 +23,7 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 	         		this.$router.push({path:path});	     
 				},
 				saveInput:function(){
+					if(this.check()==false) return false;
 					let tmpVue=this;
 					let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+this.name+"&readerId="+this.readerId+"&readerName="+this.readerName+"&readerParameterUsername="+this.readerParameterUsername+"&readerParameterPassword="+this.readerParameterPassword+"&readerParameterColumn="+this.readerParameterColumn+"&readerParameterWhere="+this.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+this.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+this.readerParameterConnectionTable;
 					let token_type=localStorage.getItem('token_type'); 
@@ -32,6 +33,7 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 					}
 					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
 					}).then(function(response) {return response.json();}).then(function(result){
+						tmpVue.code=result.code;
 						 if(result.code==200){
 							   console.log("receive=",result );			
 							   tmpVue.updateContainer( "/components/pageInput.html");
@@ -39,7 +41,7 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 							   tmpVue.updateContainer( "/components/login.html");
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
-						   }else{
+						   }else{							   
 							   tmpVue.msg=result.msg;
 						   }					
 					}).catch(function(e) {  				
@@ -47,8 +49,10 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 					});			
 					
 				},
-				check:function(){
-					 return true;
+				check:function(){					
+					//$("#form").bootstrapValidator("validate");
+					$("#form").data("bootstrapValidator").validate();
+					return $("#form").data("bootstrapValidator").isValid();		
 				},
 				back:function(){
 					 this.updateContainer("/components/pageInput.html");
@@ -58,7 +62,82 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 		         		    
 		    },
 			mounted:function(){
-			
+				$('#form').bootstrapValidator({
+		            message: 'This value is not valid',
+		            feedbackIcons: {
+		                valid: 'glyphicon glyphicon-ok',
+		                invalid: 'glyphicon glyphicon-remove',
+		                validating: 'glyphicon glyphicon-refresh'
+		            },
+		            fields: {
+		                name: {
+		                    message: '插件名称验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '插件名称不能为空'
+		                        }
+		                    }
+		                },	
+		                readerName: {
+		                    message: '输入流名称验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '输入流名称不能为空'
+		                        },
+		                        stringLength: {
+		                            min: 6,
+		                            max: 18,
+		                            message: '输入流名称长度必须在6到18位之间'
+		                        },
+		                        regexp: {
+		                            regexp: /^[a-zA-Z0-9_]+$/,
+		                            message: '输入流名称只能包含大写、小写、数字和下划线'
+		                        }
+		                    }
+		                },
+		                readerParameterUsername: {
+		                    message: '用户名验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '用户名不能为空'
+		                        }
+		                    }
+		                },
+		                readerParameterPassword: {
+		                    message: '密码验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '密码不能为空'
+		                        }
+		                    }
+		                },
+		                readerParameterColumn: {
+		                    message: '列验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '列不能为空'
+		                        }
+		                    }
+		                },
+		                readerParameterConnectionJdbcUrl: {
+		                    message: 'url验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: 'url不能为空'
+		                        }
+		                    }
+		                },
+		                readerParameterConnectionTable: {
+		                    message: '表验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '表不能为空'
+		                        }
+		                    }
+		                },
+		                
+		            }
+		        });			
 			}			
 	 	};
 	 	

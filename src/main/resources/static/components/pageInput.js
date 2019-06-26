@@ -30,7 +30,8 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 					}
 					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
 					}).then(function(response) {return response.json();}).then(function(result){
-						 if(result.code==200){
+						tmpVue.code=result.code; 
+						if(result.code==200){
 							    console.log("receive=",result );	
 							    tmpVue.data.pageNum=pageNum;
 							    tmpVue.data.pageSize=pageSize;

@@ -7,13 +7,11 @@
     <meta name="author" content="">
 
     <title>数据交换平台</title>
-
-    <!-- Bootstrap core CSS -->
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
 
     <!-- Add custom CSS here -->
-    <link href="index.css" rel="stylesheet">
-
+    <link href="/index.css" rel="stylesheet">
    </head>
 
   <body>
@@ -37,7 +35,7 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
             <li class="active"><a href="javascript:void(0)" @click="updateContainer('/components/index.html')">主页</a></li>
-            <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" >输入流管理</a>></li>             
+            <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" ><i class="fa fa-table"></i>输入流管理</a>></li>             
           </ul>
 
           <ul class="nav navbar-nav navbar-right navbar-user">
@@ -65,6 +63,8 @@
     <!-- JavaScript -->
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+
     <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js"></script>
     <script>

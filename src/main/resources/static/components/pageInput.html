@@ -6,10 +6,11 @@
              <li class="active"><i class="fa fa-edit"></i> 输入流</li>
            </ol>
            
-           <div v-if="code && code!=200" class="alert alert-info alert-dismissable">
-             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            {{msg}}
-           </div>
+           <div v-if="code && code!=200" 
+			class="alert alert-warning ">
+			<button type="button" class="close" @click="code=null"	 >×</button>
+			{{msg}}
+			</div>
          </div>
 
 
@@ -17,8 +18,8 @@
          <div >
            <form>
 			<div class="form-group ">
-				<label class="col-sm-2 control-label">插件名称</label>
-				<div class="col-sm-2">
+				<label class="col-md-2 control-label">插件名称</label>
+				<div class="col-md-2">
 					<input class="form-control" v-model="name" type="text">
 				</div>
 				<button type="button" class="btn btn-default"
