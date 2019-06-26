@@ -2,8 +2,9 @@ $.ajax({url:"/components/login.html", type: "GET", async: false}).done(function(
   		 let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			
-		           return {            	
-		        	   username:"admin",
+		           return {
+		        	    fromPath:null,
+		        	    username:"admin",
 			           	password:"123456",
 			       		code:null,
 			       		msg:null,
@@ -31,8 +32,14 @@ $.ajax({url:"/components/login.html", type: "GET", async: false}).done(function(
 						   		console.log(result);
 							    localStorage.setItem("access_token",result.access_token );
 							    localStorage.setItem("token_type",result.token_type );						
-							    tmpVue.updateContainer("/");
-						   }else if(result.code==400){						
+							    tmpVue.hide();								
+					       		if(tmpVue.fromPath=="/components/logout.html"){					       			
+					       			tmpVue.updateContainer("/");
+					       		}else{					       	
+					       			//tmpVue.updateContainer(tmpVue.fromPath);
+					       			tmpVue.$router.go(-1);
+					       		}						    
+					   }else if(result.code==400){						
 							   tmpVue.msg="登录失败";
 					   }else if(result.code==401){						
 						   tmpVue.msg="认证失败";
@@ -45,14 +52,27 @@ $.ajax({url:"/components/login.html", type: "GET", async: false}).done(function(
 						   tmpVue.msg=e;  					 
 					   });
 		                
-		        }
+		        },
+		        hide:function (){
+			    	   $('#myModal').modal('hide');
+			    },
+		        show:function (){
+			    	$('#myModal').modal('show');
+			    }
 		    },		
 			created: function () {				 
 				  			
 		    },
 		    mounted: function () {			
 		    	 //取出token，如果不为空，校验token，如果校验成功，重定向到/index.html,				
+		    	 this.show();
 		    },
+		    beforeRouteEnter(to, from, next) {		    					
+			    next(vm=>{
+			    	vm.fromPath=from.path;
+			    	console.log("login beforeRouteEnter fromPath",vm.fromPath);	
+			    });
+			}
 		};
   		
 		let component = Vue.component('login', componentProperties);

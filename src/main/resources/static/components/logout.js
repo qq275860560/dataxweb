@@ -19,7 +19,7 @@ $.ajax({url:"/components/logout.html", type: "GET", async: false}).done(function
 		       	},
 		       	logout: function () {			       		
 		       		//发送请求告知服务器
-		       		$('#myModal').modal('hide');
+		       		this.hide();
 		       		localStorage.clear();	
 		       		this.updateContainer("/components/login.html");			       					
 		       	},  

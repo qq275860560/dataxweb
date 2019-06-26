@@ -72,8 +72,11 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 				},				
 			},	
 			created: function () {			
-		        this.pageInput(this.data.pageNum,this.data.pageSize);			    
-		    }
+		        			    
+		    },
+			mounted:function(){
+				this.pageInput(this.data.pageNum,this.data.pageSize);
+			}
 	 	};
 	 	
 	 	let component = Vue.component('pageInput',  componentProperties);

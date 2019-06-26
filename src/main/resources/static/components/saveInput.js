@@ -56,7 +56,10 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 			},	
 			created: function () {			
 		         		    
-		    }
+		    },
+			mounted:function(){
+			
+			}			
 	 	};
 	 	
 	 	let component = Vue.component('saveInput',  componentProperties);

@@ -1,7 +1,6 @@
+<div id="container">
 
-<div id="container"> 
-
-   <div >
+<div >
            <ol class="breadcrumb">
              <li><a href="javascript:void(0)" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
              <li class="active"><i class="fa fa-edit"></i> 登录</li>
@@ -13,24 +12,37 @@
            </div>
          </div>
          
- <div>        
- <form class="form-signin" style="max-width: 250px; margin: 0 auto;">
-		<h2 class="form-signin-heading">密码登录</h2>
-		<div>
-			<input type="text" v-model="username" class="form-control" placeholder="用户名" required autofocus>
-		</div>
-		<div>
-			<input type="password" v-model="password" class="form-control" placeholder="密码" required>
-		</div>
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" value="remember-me"> 记住登录
-			</label>
-		</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+				<form class="form-signin" style="max-width: 250px; margin: 0 auto;">
+					<h2 class="form-signin-heading">密码登录</h2>
+					<div>
+						<input type="text" v-model="username" class="form-control"
+							placeholder="用户名" required autofocus>
+					</div>
+					<div>
+						<input type="password" v-model="password" class="form-control"
+							placeholder="密码" required>
+					</div>
+					<div class="checkbox">
+						<label> <input type="checkbox" value="remember-me">
+							记住登录
+						</label>
+					</div>
+
+					<button type="button" class="btn btn-primary" @click="login()">登录</button>
+
+				</form>
+
+
+			</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
+
+</div><!-- /#container -->
+
+
  
-		<button type="button" class="btn btn-primary" @click="login()">登录</button>
-		 
-	</form>	
-	</div>
-</div>
-  

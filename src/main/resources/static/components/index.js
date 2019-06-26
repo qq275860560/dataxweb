@@ -14,6 +14,7 @@ $.get("/components/index.html", function(componentTemplate) {
 		};
         let component = Vue.component('home',componentProperties);
 		router.addRoutes([				
-			{ path: '/components/index.html', component: component }
+			{ path: '/components/index.html', component: component },
+			{ path: '/', component: component }
 		])
 }); 
