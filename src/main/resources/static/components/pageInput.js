@@ -18,9 +18,9 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 				}
 			},
 			methods:{
-				updateContainer:function(path) {
+				updateContainer:function(path,query) {
 	         		console.log("path",path);
-	         		this.$router.push({path:path});	     
+	         		this.$router.push({path:path,query:query});	     
 				},
 				pageInput:function(pageNum,pageSize){
 					let tmpVue=this;
