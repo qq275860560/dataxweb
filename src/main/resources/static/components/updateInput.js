@@ -1,17 +1,9 @@
-$.get("/components/saveInput.html", function(componentTemplate) {		
+$.get("/components/updateInput.html", function(componentTemplate) {		
 	 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
-					name:"inputName",
-					readerId:"mysqlreaderId",
-					readerName:"mysqlreaderName",
-					readerParameterUsername:"root",
-					readerParameterPassword:"123456",
-					readerParameterColumn:"id,name",
-					readerParameterWhere:"name !=null",
-					readerParameterConnectionJdbcUrl:"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
-					readerParameterConnectionTable:"job",	
+					query:null,
 					code:null,
 					msg:null,
 					data:null,
@@ -22,10 +14,10 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				saveInput:function(){
+				updateInput:function(){
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+this.name+"&readerId="+this.readerId+"&readerName="+this.readerName+"&readerParameterUsername="+this.readerParameterUsername+"&readerParameterPassword="+this.readerParameterPassword+"&readerParameterColumn="+this.readerParameterColumn+"&readerParameterWhere="+this.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+this.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+this.readerParameterConnectionTable;
+					let url="http://localhost:8080/api/github/qq275860560/input/updateInput?id="+this.query.id+"&name="+this.query.name+"&readerId="+this.query.readerId+"&readerName="+this.query.readerName+"&readerParameterUsername="+this.query.readerParameterUsername+"&readerParameterPassword="+this.query.readerParameterPassword+"&readerParameterColumn="+this.query.readerParameterColumn+"&readerParameterWhere="+this.query.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+this.query.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+this.query.readerParameterConnectionTable;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -58,7 +50,32 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 					 this.updateContainer("/components/pageInput.html");
 				},				
 			},	
-			created: function () {			
+			created: function () {	
+				let tmpVue=this;
+				this.query=this.$route.query;					
+				
+				let url="http://localhost:8080/api/github/qq275860560/input/getInput?id="+this.query.id;
+				let token_type=localStorage.getItem('token_type'); 
+				let access_token=localStorage.getItem('access_token');
+				if(token_type==null || access_token==null){
+					this.updateContainer("/components/login.html");					
+				}
+				fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
+				}).then(function(response) {return response.json();}).then(function(result){
+					tmpVue.code=result.code;
+					 if(result.code==200){
+						   console.log("receive=",result );			
+						   tmpVue.query=result.data;
+					   }else if(result.code==401){						
+						   tmpVue.updateContainer( "/components/login.html");
+					   }else if(result.code==403){
+						   tmpVue.msg="授权失败";					
+					   }else{							   
+						   tmpVue.msg=result.msg;
+					   }					
+				}).catch(function(e) {  				
+					tmpVue.msg=e;  					 
+				});			
 		         		    
 		    },
 			mounted:function(){
@@ -142,10 +159,10 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 			}			
 	 	};
 	 	
-	 	let component = Vue.component('saveInput',  componentProperties);
+	 	let component = Vue.component('updateInput',  componentProperties);
 	 	
 		router.addRoutes([
-			{ path: '/components/saveInput.html', component: component }
+			{ path: '/components/updateInput.html', component: component }
 		])
 }); 
 

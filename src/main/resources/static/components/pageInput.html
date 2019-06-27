@@ -3,7 +3,7 @@
          <div class="row">
            <ol class="breadcrumb">
              <li><a href="javascript:void(0)" @click="updateContainer('/')"><i class="fa fa-dashboard"></i> 主页</a></li>
-             <li class="active"><i class="fa fa-edit"></i> 输入流</li>
+             <li class="active"><i class="fa fa-edit"></i>输入流</li>
            </ol>
            
            <div v-if="code && code!=200" 
@@ -97,7 +97,9 @@
 					<button type="button"
 						class="btn btn-default"
 						@click="updateContainer('/components/deleteInput.html',{id:item.id,name:item.name})">删除</button>
-
+					<button type="button"
+						class="btn btn-default"
+						@click="updateContainer('/components/updateInput.html',{id:item.id,name:item.name})">编辑</button>
 				</td>
 			</tr>
                </tbody>
