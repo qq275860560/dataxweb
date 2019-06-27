@@ -4,6 +4,8 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 			data:function() {
 				return {
 					name:"",
+					startCreateTime:"",
+					endCreateTime:"",
 					array:[],				
 					code:null,
 					msg:null,
@@ -22,7 +24,7 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 				},
 				pageInput:function(pageNum,pageSize){
 					let tmpVue=this;
-					let url="http://localhost:8080/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name;
+					let url="http://localhost:8080/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				
@@ -70,29 +72,46 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 				},
 				saveInput:function(){		
 					updateContainer("/components/saveInput.html");
-				},				
+				},			 		 
 			},	
 			created: function () {			
 				this.pageInput(this.data.pageNum,this.data.pageSize);			    
 		    },
-			mounted:function(){				
+			mounted:function(){		
+				 let tmpVue=this;
 				 var startCreateTimePicker = $('#startCreateTime').datetimepicker({
-				        format: 'YYYY-MM-DD hh:mm:ss',
-				        locale: moment.locale('zh-cn'),				  
+				        format: 'YYYY-MM-DD HH:mm:ss',
+				        viewMode: 'days',
+				        locale: moment.locale('zh-cn'),				   
+				        sideBySide: true,
+				        toolbarPlacement: "bottom",
+				        showClose:true	,
+				        showTodayButton:true,
+				        showClear:true, 
 				        //minDate: '1970-01-01 00:00:00'
 				    });
 				    var endCreateTimePicker = $('#endCreateTime').datetimepicker({
-				        format: 'YYYY-MM-DD hh:mm:ss',
-				        locale: moment.locale('zh-cn'),				
+				        format: 'YYYY-MM-DD HH:mm:ss',
+				        viewMode: 'days',
+				        locale: moment.locale('zh-cn'),				        
+				        sideBySide: true,
+				        toolbarPlacement: "bottom",
+				        showClose:true	,
+				        showTodayButton:true,
+				        showClear:true, 				        
 				    });
-				    //动态设置最小值
+				  
 				    startCreateTimePicker.on('dp.change', function (e) {
-				        endCreateTimePicker.data('DateTimePicker').minDate(e.date);
+				    	tmpVue.startCreateTime = $("#startCreateTime").find("input").val();
+				        endCreateTimePicker.data('DateTimePicker').minDate(e.date);			 
 				    });
-				    //动态设置最大值
-				    endCreateTimePicker.on('dp.change', function (e) {
-				        startCreateTimePicker.data('DateTimePicker').maxDate(e.date);
-				    }); 
+				      endCreateTimePicker.on('dp.change', function (e) {
+				        startCreateTimePicker.data('DateTimePicker').maxDate(e.date);	
+				        tmpVue.endCreateTime = $("#endCreateTime").find("input").val();
+				    });
+			        
+					      
+				      
 			}
 	 	};
 	 	
