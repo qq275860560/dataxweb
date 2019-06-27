@@ -10,9 +10,9 @@ $.ajax({url:"/components/deleteInput.html", type: "GET", async: false}).done(fun
 		   		}
 		   	},
 		    methods: {
-		    	updateContainer:function(path) {
+		    	updateContainer:function(path,query) {
 	         		console.log("path",path);
-	         		this.$router.push({path:path});	     
+	         		this.$router.push({path:path,query:query});	     
 				},	 
 		       	cancel: function () {	
 		       		$('#myModal').modal('hide');		       	

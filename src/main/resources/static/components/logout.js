@@ -9,9 +9,9 @@ $.ajax({url:"/components/logout.html", type: "GET", async: false}).done(function
 		   		}
 		   	},
 		    methods: {
-		    	updateContainer:function(path) {
+		    	updateContainer:function(path,query) {
 	         		console.log("path",path);
-	         		this.$router.push({path:path});	     
+	         		this.$router.push({path:path,query:query});	     
 				},	 
 		       	cancel: function () {	
 		       		$('#myModal').modal('hide');		       	

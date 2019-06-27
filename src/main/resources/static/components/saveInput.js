@@ -18,9 +18,9 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 				}
 			},
 			methods:{
-				updateContainer:function(path) {
+				updateContainer:function(path,query) {
 	         		console.log("path",path);
-	         		this.$router.push({path:path});	     
+	         		this.$router.push({path:path,query:query});	     
 				},
 				saveInput:function(){
 					if(this.check()==false) return false;

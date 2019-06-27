@@ -17,10 +17,10 @@ $.ajax({url:"/components/login.html", type: "GET", async: false}).done(function(
 		   		}
 		   	},
 		    methods: {
-		    	updateContainer:function(path) {
+		    	updateContainer:function(path,query) {
 	         		console.log("path",path);
-	         		this.$router.push({path:path});	     
-				},	 
+	         		this.$router.push({path:path,query:query});	     
+				}, 
 		       	login:function() {
 		       		let tmpVue=this;
 		        	let username=this.username;
