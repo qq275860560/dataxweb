@@ -73,10 +73,26 @@ $.get("/components/pageInput.html", function(componentTemplate) {
 				},				
 			},	
 			created: function () {			
-		        			    
+				this.pageInput(this.data.pageNum,this.data.pageSize);			    
 		    },
-			mounted:function(){
-				this.pageInput(this.data.pageNum,this.data.pageSize);
+			mounted:function(){				
+				 var startCreateTimePicker = $('#startCreateTime').datetimepicker({
+				        format: 'YYYY-MM-DD hh:mm:ss',
+				        locale: moment.locale('zh-cn'),				  
+				        //minDate: '1970-01-01 00:00:00'
+				    });
+				    var endCreateTimePicker = $('#endCreateTime').datetimepicker({
+				        format: 'YYYY-MM-DD hh:mm:ss',
+				        locale: moment.locale('zh-cn'),				
+				    });
+				    //动态设置最小值
+				    startCreateTimePicker.on('dp.change', function (e) {
+				        endCreateTimePicker.data('DateTimePicker').minDate(e.date);
+				    });
+				    //动态设置最大值
+				    endCreateTimePicker.on('dp.change', function (e) {
+				        startCreateTimePicker.data('DateTimePicker').maxDate(e.date);
+				    }); 
 			}
 	 	};
 	 	
