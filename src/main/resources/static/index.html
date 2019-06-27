@@ -44,7 +44,7 @@
             <li class="dropdown user-dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 管理员 <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                 <li><a href="javascript:void(0)"><i class="fa fa-gear"></i> 设置</a></li>
+                 <li><a href="javascript:void(0)" @click="updateUserPassword()"><i class="fa fa-gear"></i>修改密码</a></li>
                 <li class="divider"></li>
                 <li><a href="javascript:void(0)" @click="logout()"><i class="fa fa-power-off"></i> 退出</a></li>
               </ul>
@@ -80,6 +80,7 @@
     <script src="/components/saveInput.js"></script>
     <script src="/components/deleteInput.js"></script>
     <script src="/components/updateInput.js"></script>
+    <script src="/components/updateUserPassword.js"></script>
     
  	<script> 	
  	const app = new Vue({
@@ -89,8 +90,11 @@
 	         		console.log("path",path);
 	         		this.$router.push({path:path});	     
 				},
+				updateUserPassword:function(){
+ 					this.updateContainer("/components/updateUserPassword.html");
+ 				},
  				logout:function(){
- 					//this.$refs.logout.show();    //如果使用此方式，主页面先引入 <logout  ref="logout"></logout>，之后去除退出组件cancel中的this.$router.go(-1);和created 
+ 					//this.$refs.logout.show();    //如果使用此方式，主页面先引入 <logout  ref="logout"></logout>，之后去除退出组件back中的this.$router.go(-1);和created 
  					this.updateContainer("/components/logout.html");
  				}
  		},

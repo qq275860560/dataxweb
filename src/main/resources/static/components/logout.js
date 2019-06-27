@@ -13,7 +13,7 @@ $.ajax({url:"/components/logout.html", type: "GET", async: false}).done(function
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},	 
-		       	cancel: function () {	
+		       	back: function () {	
 		       		$('#myModal').modal('hide');		       	
 		       		this.$router.go(-1);
 		       	},

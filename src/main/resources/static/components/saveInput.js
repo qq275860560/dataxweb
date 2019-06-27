@@ -55,7 +55,8 @@ $.get("/components/saveInput.html", function(componentTemplate) {
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
 				back:function(){
-					 this.updateContainer("/components/pageInput.html");
+					//this.updateContainer("/components/pageInput.html");
+					this.$router.go(-1)	
 				},				
 			},	
 			created: function () {			

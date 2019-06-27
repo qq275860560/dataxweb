@@ -26,81 +26,81 @@
 		<form id="form" class="form-horizontal " role="form">
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">插件名称</label>
+				<label for="name" class="col-md-2 control-label">插件名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="name" name="name" type="text">
+					<input class="form-control" v-model="name" name="name" id="name"type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">输入流ID</label>
+				<label for="readerId" class="col-md-2 control-label">输入流ID</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerId" type="text">
+					<input class="form-control" v-model="readerId" name="readerId" id="readerId"  type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">输入流名称</label>
+				<label  for="readerName" class="col-md-2 control-label">输入流名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerName" name="readerName" type="text">
+					<input class="form-control" v-model="readerName" name="readerName" id="readerName" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">用户名</label>
+				<label  for="readerParameterUsername" class="col-md-2 control-label">用户名</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterUsername" name="readerParameterUsername"
+					<input class="form-control" v-model="readerParameterUsername" name="readerParameterUsername" id="readerParameterUsername"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">密码</label>
+				<label  for="readerParameterPassword" class="col-md-2 control-label">密码</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterPassword" name="readerParameterPassword"
+					<input class="form-control" v-model="readerParameterPassword" name="readerParameterPassword" id="readerParameterPassword"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">列</label>
+				<label  for="readerParameterColumn"  class="col-md-2 control-label">列</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterColumn" name="readerParameterColumn"
+					<input class="form-control" v-model="readerParameterColumn" name="readerParameterColumn" id="readerParameterColumn"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">where条件</label>
+				<label  for="readerParameterWhere" class="col-md-2 control-label">where条件</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterWhere" name="readerParameterWhere"
+					<input class="form-control" v-model="readerParameterWhere" name="readerParameterWhere" id="readerParameterWhere"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">url</label>
+				<label  for="readerParameterConnectionJdbcUrl" class="col-md-2 control-label">url</label>
 				<div class="col-md-9">
 					<input class="form-control"
-						v-model="readerParameterConnectionJdbcUrl" name="readerParameterConnectionJdbcUrl" type="text">
+						v-model="readerParameterConnectionJdbcUrl" name="readerParameterConnectionJdbcUrl" id="readerParameterConnectionJdbcUrl" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">表</label>
+				<label  for="readerParameterConnectionTable" class="col-md-2 control-label">表</label>
 				<div class="col-md-9">
 					<input class="form-control" 
-						v-model="readerParameterConnectionTable" name="readerParameterConnectionTable" type="text">
+						v-model="readerParameterConnectionTable" name="readerParameterConnectionTable" id="readerParameterConnectionTable" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 
@@ -118,5 +118,5 @@
 
 	</div>
 	</div><!-- /.row -->
-</div>
+</div><!-- /#container -->
 

@@ -26,81 +26,81 @@
 		<form id="form" class="form-horizontal " role="form">
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">插件名称</label>
+				<label for="name"  class="col-md-2 control-label">插件名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.name" name="name" type="text">
+					<input class="form-control" v-model="query.name" name="name" id="name" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">输入流ID</label>
+				<label for="readerId"  class="col-md-2 control-label">输入流ID</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.readerId" type="text">
+					<input class="form-control" v-model="query.readerId" name="readerId" id="readerId" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">输入流名称</label>
+				<label for="readerName"  class="col-md-2 control-label">输入流名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.readerName" name="readerName" type="text">
+					<input class="form-control" v-model="query.readerName" name="readerName" id="readerName" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">用户名</label>
+				<label for="readerParameterUsername"  class="col-md-2 control-label">用户名</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.readerParameterUsername" name="readerParameterUsername"
+					<input class="form-control" v-model="query.readerParameterUsername" name="readerParameterUsername" id="readerParameterUsername"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">密码</label>
+				<label for="readerParameterPassword"  class="col-md-2 control-label">密码</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.readerParameterPassword" name="readerParameterPassword"
+					<input class="form-control" v-model="query.readerParameterPassword" name="readerParameterPassword" id="readerParameterPassword"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">列</label>
+				<label for="readerParameterColumn"  class="col-md-2 control-label">列</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.readerParameterColumn" name="readerParameterColumn"
+					<input class="form-control" v-model="query.readerParameterColumn" name="readerParameterColumn" id="readerParameterColumn"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">where条件</label>
+				<label for="readerParameterWhere"  class="col-md-2 control-label">where条件</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.readerParameterWhere" name="readerParameterWhere"
+					<input class="form-control" v-model="query.readerParameterWhere" name="readerParameterWhere" id="readerParameterWhere"
 						type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
 				<label class="col-md-2 control-label">url</label>
-				<div class="col-md-9">
+				<div for="readerParameterConnectionJdbcUrl" class="col-md-9">
 					<input class="form-control"
-						v-model="query.readerParameterConnectionJdbcUrl" name="query.readerParameterConnectionJdbcUrl" type="text">
+						v-model="query.readerParameterConnectionJdbcUrl" name="readerParameterConnectionJdbcUrl" id="readerParameterConnectionJdbcUrl"  type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label class="col-md-2 control-label">表</label>
+				<label for="readerParameterConnectionTable" class="col-md-2 control-label">表</label>
 				<div class="col-md-9">
 					<input class="form-control" 
-						v-model="query.readerParameterConnectionTable" name="query.readerParameterConnectionTable" type="text">
+						v-model="query.readerParameterConnectionTable" name="readerParameterConnectionTable" id="readerParameterConnectionTable" type="text">
 				</div>
-				<p class="help-block"> </p>
+				<p class="help-block with-errors"> </p>
 			</div>
 
 
@@ -118,5 +118,5 @@
 
 	</div>
 	</div><!-- /.row -->
-</div>
+</div><!-- /#container -->
 

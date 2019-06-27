@@ -3,7 +3,7 @@ $.get("/components/updateInput.html", function(componentTemplate) {
 			template: componentTemplate,
 			data:function() {
 				return {
-					query:null,
+					query:{},
 					code:null,
 					msg:null,
 					data:null,
@@ -48,6 +48,7 @@ $.get("/components/updateInput.html", function(componentTemplate) {
 				},
 				back:function(){
 					 this.updateContainer("/components/pageInput.html");
+					//this.$router.go(-1)	
 				},				
 			},	
 			created: function () {	

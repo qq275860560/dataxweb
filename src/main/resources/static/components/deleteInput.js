@@ -14,8 +14,8 @@ $.ajax({url:"/components/deleteInput.html", type: "GET", async: false}).done(fun
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},	 
-		       	cancel: function () {	
-		       		$('#myModal').modal('hide');		       	
+		       	back: function () {	
+		       		this.hide();		       	
 		       		this.$router.go(-1);
 		       	},
 		       	deleteInput: function () {			       		

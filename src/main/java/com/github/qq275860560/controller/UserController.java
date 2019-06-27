@@ -138,7 +138,7 @@ public class UserController {
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/user/updateUser")
 	public Map<String, Object> updateUser(
-			@RequestParam(required=true) String username)  throws Exception{
+			@RequestParam(required=false) String username)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		//模拟数据库执行
