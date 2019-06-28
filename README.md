@@ -10,7 +10,6 @@ dataxweb镜像
 # 使用方式
 linux下执行
 ```
-yum -y install docker
 docker pull qq275860560/dataxweb
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
 docker run -d -p 8080:8080 --name dataxweb qq275860560/dataxweb 
