@@ -41,7 +41,7 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
     source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
-RUN echo "201906201239"
+RUN echo "20190628"
 RUN ps -aux
 RUN netstat -anltp
  
