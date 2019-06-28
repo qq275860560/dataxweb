@@ -1,5 +1,6 @@
-fetch("components/saveInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-  	 	let componentProperties = {
+$.get("components/saveInput.html", function(componentTemplate) {
+//fetch("components/saveInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+     	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
@@ -25,7 +26,7 @@ fetch("components/saveInput.html").then(function(response) {return response.text
 				saveInput:function(){
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url="http://localhost:8080/api/github/qq275860560/input/saveInput?name="+this.name+"&readerId="+this.readerId+"&readerName="+this.readerName+"&readerParameterUsername="+this.readerParameterUsername+"&readerParameterPassword="+this.readerParameterPassword+"&readerParameterColumn="+this.readerParameterColumn+"&readerParameterWhere="+this.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+this.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+this.readerParameterConnectionTable;
+					let url=API_DOMAIN+"/api/github/qq275860560/input/saveInput?name="+this.name+"&readerId="+this.readerId+"&readerName="+this.readerName+"&readerParameterUsername="+this.readerParameterUsername+"&readerParameterPassword="+this.readerParameterPassword+"&readerParameterColumn="+this.readerParameterColumn+"&readerParameterWhere="+this.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+this.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+this.readerParameterConnectionTable;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

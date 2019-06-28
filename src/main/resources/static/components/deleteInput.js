@@ -1,4 +1,5 @@
-fetch("components/deleteInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+$.ajax({url:"components/deleteInput.html", type: "GET", async: false}).done(function(componentTemplate) { 
+//fetch("components/deleteInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
   		 let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			
@@ -23,7 +24,7 @@ fetch("components/deleteInput.html").then(function(response) {return response.te
 		       		this.hide();		
 		       		
 		       		let tmpVue=this;
-					let url="http://localhost:8080/api/github/qq275860560/input/deleteInput?id="+this.query.id;
+					let url=API_DOMAIN+"/api/github/qq275860560/input/deleteInput?id="+this.query.id;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

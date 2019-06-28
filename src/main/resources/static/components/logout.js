@@ -1,4 +1,5 @@
-fetch("components/logout.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+$.ajax({url:"components/logout.html", type: "GET", async: false}).done(function(componentTemplate) { 
+//fetch("components/logout.html").then(function(response) {return response.text();}).then(function(componentTemplate){
   		 let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			

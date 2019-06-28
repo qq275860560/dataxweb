@@ -1,4 +1,5 @@
-fetch("components/login.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+$.ajax({url:"components/login.html", type: "GET", async: false}).done(function(componentTemplate) { 
+//fetch("components/login.html").then(function(response) {return response.text();}).then(function(componentTemplate){  		 
 	let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			
@@ -25,7 +26,7 @@ fetch("components/login.html").then(function(response) {return response.text();}
 		       		let tmpVue=this;
 		        	let username=this.username;
 		            let password=this.password;                            
-		            let url = "/login?username="+username+"&password="+password;                             
+		            let url = API_DOMAIN+"/login?username="+username+"&password="+password;                             
 		            fetch(url).then(function(response) {return response.json();}).then(function(result){
 		            	tmpVue.code=result.code;	
 					   if(result.code==200){

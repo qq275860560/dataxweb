@@ -1,4 +1,5 @@
-fetch("components/index.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+$.get("components/index.html", function(componentTemplate) {
+//fetch("components/index.html").then(function(response) {return response.text();}).then(function(componentTemplate){
 	 	let componentProperties = {
 			  template: componentTemplate,
 			  data: function () {

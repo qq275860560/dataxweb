@@ -1,5 +1,6 @@
-fetch("components/updateUserPassword.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-  	let componentProperties = {
+$.get("components/updateUserPassword.html", function(componentTemplate) {		
+//fetch("components/updateUserPassword.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+	 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
@@ -17,7 +18,7 @@ fetch("components/updateUserPassword.html").then(function(response) {return resp
 				updateUserPassword:function(){
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url="http://localhost:8080/api/github/qq275860560/user/updateUser?oldPassword="+this.query.oldPassword+"&password="+this.query.password;
+					let url=API_DOMAIN+"/api/github/qq275860560/user/updateUser?oldPassword="+this.query.oldPassword+"&password="+this.query.password;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

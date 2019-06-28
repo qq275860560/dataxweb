@@ -1,5 +1,6 @@
-fetch("components/pageInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-    	let componentProperties = {
+$.get("components/pageInput.html", function(componentTemplate) {
+//fetch("components/pageInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+ 	 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
@@ -24,7 +25,7 @@ fetch("components/pageInput.html").then(function(response) {return response.text
 				},
 				pageInput:function(pageNum,pageSize){
 					let tmpVue=this;
-					let url="http://localhost:8080/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
+					let url=API_DOMAIN+"/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				
