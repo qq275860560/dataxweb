@@ -1,4 +1,4 @@
-$.get("/components/updateInput.html", function(componentTemplate) {		
+$.get("components/updateInput.html", function(componentTemplate) {		
 	 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {

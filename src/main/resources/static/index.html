@@ -10,8 +10,8 @@
     <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css" rel="stylesheet">
 	<link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <!-- Add custom CSS here -->
-    <link href="/index.css" rel="stylesheet">
+    <!-- 此文件来自bootstrap官方黑色主题，可以换成官方的其他主题 -->
+    <link href="index.css" rel="stylesheet">
    </head>
 
   <body>
@@ -65,22 +65,22 @@
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment-with-locales.js"></script>
-    <!-- <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
-    <script src="/javascripts/bootstrap-datetimepicker.js"></script>
+    <!--内容同 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
+    <script src="javascripts/bootstrap-datetimepicker.js"></script>
 
     <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js"></script>
     <script>
     	const router = new VueRouter() ;
     </script>
-    <script src="/components/index.js"></script>
-    <script src="/components/login.js"></script>
- 	<script src="/components/logout.js"></script><!-- 子组件一定要先加载 -->
-    <script src="/components/pageInput.js"></script> <!-- 非子组件可以放到最后加载，也可以延迟加载，注意不要重复加载（使用全局变量保存加载过的路径，请求前进行判断)-->
-    <script src="/components/saveInput.js"></script>
-    <script src="/components/deleteInput.js"></script>
-    <script src="/components/updateInput.js"></script>
-    <script src="/components/updateUserPassword.js"></script>
+    <script src="components/index.js"></script>
+    <script src="components/login.js"></script>
+ 	<script src="components/logout.js"></script><!-- 子组件一定要先加载 -->
+    <script src="components/pageInput.js"></script> <!-- 非子组件可以放到最后加载，也可以延迟加载，注意不要重复加载（使用全局变量保存加载过的路径，请求前进行判断)-->
+    <script src="components/saveInput.js"></script>
+    <script src="components/deleteInput.js"></script>
+    <script src="components/updateInput.js"></script>
+    <script src="components/updateUserPassword.js"></script>
     
  	<script> 	
  	const app = new Vue({

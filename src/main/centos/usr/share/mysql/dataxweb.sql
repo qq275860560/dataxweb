@@ -27,10 +27,10 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+) ;
 
-insert into job values(1,'jobName1',1,"inputName1",null,"mysqlreader",1,"outputName1",null,"mysqlwriter",1,1,null,null,null,1,0.0,null,"createUserName1","1970-01-01 00:00:00");
-insert into job values(2,'jobName2',2,"inputName2",null,"mysqlreader",2,"outputName2",null,"mysqlwriter",1,1,null,null,null,1,0.0,null,"createUserName2","1970-01-01 00:00:00");
+insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,0.0,null,'createUserName1','1970-01-01 00:00:00');
+insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,0.0,null,'createUserName2','1970-01-01 00:00:00');
 
 
 DROP TABLE  IF EXISTS build;
@@ -49,9 +49,8 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
-
-insert into build values("1",'buildName1',1,"jobName1","1",0,100,101,null,"",null,"createUserName1","1970-01-01 00:00:00");
+) ;
+insert into build values('1','buildName1',1,'jobName1','1',0,100,101,null,'',null,'createUserName1','1970-01-01 00:00:00');
 
 
 
@@ -61,7 +60,7 @@ CREATE TABLE test (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+) ;
 
  
 
@@ -69,31 +68,28 @@ DROP TABLE  IF EXISTS input;
 CREATE TABLE input (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
-
 readerId  VARCHAR ( 32 ) DEFAULT NULL,
 readerName VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
-
 readerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterColumn VARCHAR ( 1024 ) DEFAULT NULL,
 readerParameterWhere VARCHAR ( 1024 ) DEFAULT NULL,
 readerParameterConnectionJdbcUrl VARCHAR ( 1024 ) DEFAULT NULL,
 readerParameterConnectionTable VARCHAR ( 32 ) DEFAULT NULL,
-
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+) ;
 
-insert into input values(1,"inputName1",null,"mysqlreader",
-"root",
-"123456",
-"id,name",
+insert into input values(1,'inputName1',null,'mysqlreader',
+'root',
+'123456',
+'id,name',
 null,
-"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
-"job",
-null,"createUserName1","1970-01-01 00:00:00");
+'jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false',
+'job',
+null,'createUserName1','1970-01-01 00:00:00');
 
 DROP TABLE  IF EXISTS output;
 CREATE TABLE output (
@@ -101,7 +97,6 @@ id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 writerId VARCHAR ( 32 ) DEFAULT NULL,
 writerName VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
-
 writerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterWriteMode VARCHAR ( 1024 ) DEFAULT NULL,
@@ -109,22 +104,21 @@ writerParameterColumn VARCHAR ( 1024 ) DEFAULT NULL,
 writerParameterPreSql VARCHAR ( 1024 ) DEFAULT NULL,
 writerParameterConnectionJdbcUrl VARCHAR ( 1024 ) DEFAULT NULL,
 writerParameterConnectionTable VARCHAR ( 32 ) DEFAULT NULL,
-
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+) ;
 
-insert into output values(1,"outputName1",null,"mysqlwriter",
-"root",
-"123456",
-"insert",
-"id,name",
-"delete from test",
-"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
-"test",
-null,"createUserName1","1970-01-01 00:00:00");
+insert into output values(1,'outputName1',null,'mysqlwriter',
+'root',
+'123456',
+'insert',
+'id,name',
+'delete from test',
+'jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false',
+'test',
+null,'createUserName1','1970-01-01 00:00:00');
 
 DROP TABLE  IF EXISTS plugin;
 CREATE TABLE plugin (
@@ -138,9 +132,9 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ENGINE = INNODB DEFAULT CHARSET = utf8 COLLATE = utf8_bin;
+) ;
 
-insert into plugin values(1,'mysqlreader',0,LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-README.md'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-source.zip'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-distribute.zip'),null,"createUserName1","1970-01-01 00:00:00");
+insert into plugin values(1,'mysqlreader',0,LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-README.md'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-source.zip'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-distribute.zip'),null,'createUserName1','1970-01-01 00:00:00');
 
 
 

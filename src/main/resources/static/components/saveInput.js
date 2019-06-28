@@ -1,4 +1,4 @@
-$.get("/components/saveInput.html", function(componentTemplate) {		
+$.get("components/saveInput.html", function(componentTemplate) {		
 	 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {

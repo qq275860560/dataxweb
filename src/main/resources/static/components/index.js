@@ -1,4 +1,4 @@
-$.get("/components/index.html", function(componentTemplate) {		
+$.get("components/index.html", function(componentTemplate) {		
 	 	let componentProperties = {
 			  template: componentTemplate,
 			  data: function () {
@@ -15,6 +15,6 @@ $.get("/components/index.html", function(componentTemplate) {
         let component = Vue.component('home',componentProperties);
 		router.addRoutes([				
 			{ path: '/components/index.html', component: component },
-			{ path: '/', component: component }
+			{ path: '', component: component }
 		])
 }); 

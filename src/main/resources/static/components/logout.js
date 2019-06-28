@@ -1,4 +1,4 @@
-$.ajax({url:"/components/logout.html", type: "GET", async: false}).done(function(componentTemplate) { 
+$.ajax({url:"components/logout.html", type: "GET", async: false}).done(function(componentTemplate) { 
   		 let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			

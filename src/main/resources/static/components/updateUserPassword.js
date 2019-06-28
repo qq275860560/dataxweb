@@ -1,4 +1,4 @@
-$.get("/components/updateUserPassword.html", function(componentTemplate) {		
+$.get("components/updateUserPassword.html", function(componentTemplate) {		
 	 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
