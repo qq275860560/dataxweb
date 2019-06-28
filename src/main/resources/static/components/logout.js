@@ -15,7 +15,7 @@ $.ajax({url:"components/logout.html", type: "GET", async: false}).done(function(
 	         		this.$router.push({path:path,query:query});	     
 				},	 
 		       	back: function () {	
-		       		$('#myModal').modal('hide');		       	
+		       		this.hide();		       	
 		       		this.$router.go(-1);
 		       	},
 		       	logout: function () {			       		
@@ -25,7 +25,7 @@ $.ajax({url:"components/logout.html", type: "GET", async: false}).done(function(
 		       		this.updateContainer("/components/login.html");			       					
 		       	},  
 		        hide:function (){
-		    	   $('#myModal').modal('hide');
+		    	    $('#myModal').modal('hide');
 		    	},
 		    	show:function (){
 			    	$('#myModal').modal('show');

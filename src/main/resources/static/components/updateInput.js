@@ -15,7 +15,7 @@ $.get("components/updateInput.html", function(componentTemplate) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				updateInput:function(){
+				updateInput:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
 					let url=API_DOMAIN+"/api/github/qq275860560/input/updateInput?id="+this.query.id+"&name="+this.query.name+"&readerId="+this.query.readerId+"&readerName="+this.query.readerName+"&readerParameterUsername="+this.query.readerParameterUsername+"&readerParameterPassword="+this.query.readerParameterPassword+"&readerParameterColumn="+this.query.readerParameterColumn+"&readerParameterWhere="+this.query.readerParameterWhere+"&readerParameterConnectionJdbcUrl="+this.query.readerParameterConnectionJdbcUrl+"&readerParameterConnectionTable="+this.query.readerParameterConnectionTable;

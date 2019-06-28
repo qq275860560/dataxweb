@@ -23,7 +23,7 @@ $.get("components/pageInput.html", function(componentTemplate) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				pageInput:function(pageNum,pageSize){
+				pageInput:function(pageNum,pageSize){					
 					let tmpVue=this;
 					let url=API_DOMAIN+"/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 

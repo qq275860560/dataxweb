@@ -34,7 +34,7 @@ $.ajax({url:"components/login.html", type: "GET", async: false}).done(function(c
 						    localStorage.setItem("access_token",result.access_token );
 						    localStorage.setItem("token_type",result.token_type );						
 						    tmpVue.hide();								
-				       		if(tmpVue.fromPath=="/components/logout.html"){					       			
+				       		if(tmpVue.fromPath && tmpVue.fromPath=="/components/logout.html"){					       			
 				       			tmpVue.updateContainer("/components/index.html");
 				       		}else{					       	
 				       			//tmpVue.updateContainer(tmpVue.fromPath);
@@ -55,7 +55,7 @@ $.ajax({url:"components/login.html", type: "GET", async: false}).done(function(c
 		                
 		        },
 		        hide:function (){
-			    	   $('#myModal').modal('hide');
+			    	$('#myModal').modal('hide');
 			    },
 		        show:function (){
 			    	$('#myModal').modal('show');

@@ -28,7 +28,7 @@
 			<div class="form-group ">
 				<label for="name" class="col-md-2 control-label">插件名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="name" name="name" id="name"type="text">
+					<input class="form-control" v-model="query.name" name="name" id="name" type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
@@ -36,7 +36,7 @@
 			<!-- <div class="form-group ">
 				<label for="readerId" class="col-md-2 control-label">输入流ID</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerId" name="readerId" id="readerId"  type="text">
+					<input class="form-control" v-model="query.readerId" name="readerId" id="readerId"  type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div> -->
@@ -44,7 +44,7 @@
 			<div class="form-group ">
 				<label  for="readerName" class="col-md-2 control-label">输入流名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerName" name="readerName" id="readerName" type="text">
+					<input class="form-control" v-model="query.readerName" name="readerName" id="readerName" type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
@@ -52,7 +52,7 @@
 			<div class="form-group ">
 				<label  for="readerParameterUsername" class="col-md-2 control-label">用户名</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterUsername" name="readerParameterUsername" id="readerParameterUsername"
+					<input class="form-control" v-model="query.readerParameterUsername" name="readerParameterUsername" id="readerParameterUsername"
 						type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
@@ -61,7 +61,7 @@
 			<div class="form-group ">
 				<label  for="readerParameterPassword" class="col-md-2 control-label">密码</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterPassword" name="readerParameterPassword" id="readerParameterPassword"
+					<input class="form-control" v-model="query.readerParameterPassword" name="readerParameterPassword" id="readerParameterPassword"
 						type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
@@ -70,7 +70,7 @@
 			<div class="form-group ">
 				<label  for="readerParameterColumn"  class="col-md-2 control-label">列</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterColumn" name="readerParameterColumn" id="readerParameterColumn"
+					<input class="form-control" v-model="query.readerParameterColumn" name="readerParameterColumn" id="readerParameterColumn"
 						type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
@@ -79,7 +79,7 @@
 			<div class="form-group ">
 				<label  for="readerParameterWhere" class="col-md-2 control-label">where条件</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="readerParameterWhere" name="readerParameterWhere" id="readerParameterWhere"
+					<input class="form-control" v-model="query.readerParameterWhere" name="readerParameterWhere" id="readerParameterWhere"
 						type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
@@ -89,7 +89,7 @@
 				<label  for="readerParameterConnectionJdbcUrl" class="col-md-2 control-label">url</label>
 				<div class="col-md-9">
 					<input class="form-control"
-						v-model="readerParameterConnectionJdbcUrl" name="readerParameterConnectionJdbcUrl" id="readerParameterConnectionJdbcUrl" type="text">
+						v-model="query.readerParameterConnectionJdbcUrl" name="readerParameterConnectionJdbcUrl" id="readerParameterConnectionJdbcUrl" type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
@@ -98,7 +98,7 @@
 				<label  for="readerParameterConnectionTable" class="col-md-2 control-label">表</label>
 				<div class="col-md-9">
 					<input class="form-control" 
-						v-model="readerParameterConnectionTable" name="readerParameterConnectionTable" id="readerParameterConnectionTable" type="text">
+						v-model="query.readerParameterConnectionTable" name="readerParameterConnectionTable" id="readerParameterConnectionTable" type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
