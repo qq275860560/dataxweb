@@ -7,7 +7,6 @@ dataxweb镜像
 # 功能
 ## 下载dataxweb
 
-
 # 使用方式
 linux下执行
 ```
