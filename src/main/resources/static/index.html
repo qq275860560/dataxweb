@@ -34,7 +34,7 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li class="active"><a href="javascript:void(0)" @click="updateContainer('/components/index.html')">主页</a></li>
+            <li><a href="javascript:void(0)" @click="updateContainer('/components/index.html')">主页</a></li>
             <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" ><i class="fa fa-table"></i>输入流管理</a>></li>
             <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" ><i class="fa fa-table"></i>输出流管理</a>></li>
    
@@ -56,11 +56,11 @@
       </nav>
  
     
-    <div id="container">
+  
      <router-view></router-view>	
   
-   </div>
-    </div><!-- /#index -->
+   
+    </div><!-- /#app -->
 
     <!-- JavaScript -->
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>

@@ -35,7 +35,7 @@ $.ajax({url:"components/login.html", type: "GET", async: false}).done(function(c
 						    localStorage.setItem("token_type",result.token_type );						
 						    tmpVue.hide();								
 				       		if(tmpVue.fromPath=="/components/logout.html"){					       			
-				       			tmpVue.updateContainer("/");
+				       			tmpVue.updateContainer("/components/index.html");
 				       		}else{					       	
 				       			//tmpVue.updateContainer(tmpVue.fromPath);
 				       			tmpVue.$router.go(-1);
