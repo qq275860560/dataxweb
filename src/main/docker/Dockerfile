@@ -53,7 +53,7 @@ CMD source /etc/profile &&\
     chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
     /etc/rc.d/init.d/jenkins start &&\
-    cd /tmp/dataxweb && git pull && mvn test
+    cd /tmp/dataxweb && git pull && mvn spring-boot:run
       	
 
  
