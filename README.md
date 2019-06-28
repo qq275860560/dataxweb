@@ -65,7 +65,7 @@ java -jar jenkins-cli.jar -s http://localhost:8081/ get-view view1
 
 # 前端
 
-前端本来是用node，但是为了更加轻便，并没有使用node，npm，webpack，直接使用传统方式，前端代码放到src/main/resources/static目录下,拷贝到任何地方双击index.html即可运行（后台服务要正常）
+前端本来是用node，但要另外启动端口，调试也比较麻烦，为了更加轻便，并没有使用node，npm，webpack，直接使用传统方式，前端代码放到src/main/resources/static目录下,拷贝到任何地方双击index.html即可运行（后台服务要正常）
 
 
 
