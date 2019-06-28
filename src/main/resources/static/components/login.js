@@ -1,5 +1,5 @@
-$.ajax({url:"components/login.html", type: "GET", async: false}).done(function(componentTemplate) { 
-  		 let componentProperties = {
+fetch("components/login.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+	let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			
 		           return {

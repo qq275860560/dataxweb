@@ -1,4 +1,4 @@
-$.ajax({url:"/components/deleteInput.html", type: "GET", async: false}).done(function(componentTemplate) { 
+fetch("components/deleteInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
   		 let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			

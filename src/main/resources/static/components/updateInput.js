@@ -1,5 +1,5 @@
-$.get("components/updateInput.html", function(componentTemplate) {		
-	 	let componentProperties = {
+fetch("components/updateInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
+ 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
