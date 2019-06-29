@@ -26,7 +26,7 @@ $.ajax({url:"components/login.html", type: "GET", async: false}).done(function(c
 		       		let tmpVue=this;
 		        	let username=this.username;
 		            let password=this.password;                            
-		            let url = API_DOMAIN+"/login?username="+username+"&password="+password;                             
+		            let url = BASE_PATH+"/login?username="+username+"&password="+password;                             
 		            fetch(url).then(function(response) {return response.json();}).then(function(result){
 		            	tmpVue.code=result.code;	
 					   if(result.code==200){

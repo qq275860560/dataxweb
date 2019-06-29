@@ -18,7 +18,7 @@ $.get("components/updateUserPassword.html", function(componentTemplate) {
 				updateUserPassword:function(){
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=API_DOMAIN+"/api/github/qq275860560/user/updateUser?oldPassword="+this.query.oldPassword+"&password="+this.query.password;
+					let url=BASE_PATH+"/api/github/qq275860560/user/updateUser?oldPassword="+this.query.oldPassword+"&password="+this.query.password;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

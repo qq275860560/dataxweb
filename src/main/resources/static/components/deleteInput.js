@@ -24,7 +24,7 @@ $.ajax({url:"components/deleteInput.html", type: "GET", async: false}).done(func
 		       		this.hide();		
 		       		
 		       		let tmpVue=this;
-					let url=API_DOMAIN+"/api/github/qq275860560/input/deleteInput?id="+this.query.id;
+					let url=BASE_PATH+"/api/github/qq275860560/input/deleteInput?id="+this.query.id;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
