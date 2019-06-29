@@ -41,9 +41,17 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
 RUN cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
     source /etc/profile && cd /tmp/dataxweb && (mvn compile || true) 
 
-RUN echo "20190628"
+RUN echo "20190629"
 RUN ps -aux
 RUN netstat -anltp
+
+CMD source /etc/profile &&\
+    /usr/sbin/sshd &&\
+    chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
+    /etc/rc.d/init.d/jenkins start &&\
+    cd /tmp/dataxweb && git pull && mvn spring-boot:test
  
 #RUN source /etc/profile && cd /tmp/dataxweb && git pull && mvn test
 
