@@ -28,13 +28,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="javascript:void(0)" @click="updateContainer('/components/index.html')" >数据交换平台</a>
+          <a class="navbar-brand" href="javascript:void(0)" @click="updateContainer('/components/home.html')" >数据交换平台</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav side-nav">
-            <li><a href="javascript:void(0)" @click="updateContainer('/components/index.html')">主页</a></li>
+            <li><a href="javascript:void(0)" @click="updateContainer('/components/home.html')">主页</a></li>
             <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" ><i class="fa fa-table"></i>输入流管理</a>></li>
             <li><a href="javascript:void(0)" @click="updateContainer('/components/pageInput.html')" ><i class="fa fa-table"></i>输出流管理</a>></li>
    
@@ -76,7 +76,7 @@
         const BASE_PATH ="http://localhost:8080";
     	const router = new VueRouter() ;
     </script>
-    <script src="components/index.js"></script>
+    <script src="components/home.js"></script>
     <script src="components/login.js"></script>
  	<script src="components/logout.js"></script><!-- 子组件一定要先加载 -->
     <script src="components/pageInput.js"></script> <!-- 非子组件可以放到最后加载，也可以延迟加载，注意不要重复加载（使用全局变量保存加载过的路径，请求前进行判断)-->

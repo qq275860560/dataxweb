@@ -29,7 +29,7 @@ $.get("components/updateUserPassword.html", function(componentTemplate) {
 						tmpVue.code=result.code;
 						 if(result.code==200){
 							   console.log("receive=",result );			
-							   tmpVue.updateContainer( "/components/index.html");
+							   tmpVue.updateContainer( "/components/home.html");
 						   }else if(result.code==401){						
 							   tmpVue.updateContainer( "/components/login.html");
 						   }else if(result.code==403){
@@ -48,8 +48,8 @@ $.get("components/updateUserPassword.html", function(componentTemplate) {
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
 				back:function(){
-					 this.updateContainer("/components/index.html");
-					 //this.$router.go(-1)				 
+					 //this.updateContainer("/components/home.html");
+					 this.$router.go(-1)				 
 				},				
 			},	
 			created: function () {	

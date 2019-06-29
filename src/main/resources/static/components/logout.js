@@ -15,7 +15,7 @@ $.ajax({url:"components/logout.html", type: "GET", async: false}).done(function(
 	         		this.$router.push({path:path,query:query});	     
 				},	 
 		       	back: function () {	
-		       		this.hide();		       	
+		       		this.hide();			       	
 		       		this.$router.go(-1);
 		       	},
 		       	logout: function () {			       		

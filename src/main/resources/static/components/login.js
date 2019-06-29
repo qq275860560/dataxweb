@@ -35,7 +35,7 @@ $.ajax({url:"components/login.html", type: "GET", async: false}).done(function(c
 						    localStorage.setItem("token_type",result.token_type );						
 						    tmpVue.hide();								
 				       		if(tmpVue.fromPath && tmpVue.fromPath=="/components/logout.html"){					       			
-				       			tmpVue.updateContainer("/components/index.html");
+				       			tmpVue.updateContainer("/components/home.html");
 				       		}else{					       	
 				       			//tmpVue.updateContainer(tmpVue.fromPath);
 				       			tmpVue.$router.go(-1);
@@ -65,7 +65,7 @@ $.ajax({url:"components/login.html", type: "GET", async: false}).done(function(c
 				  			
 		    },
 		    mounted: function () {			
-		    	 //取出token，如果不为空，校验token，如果校验成功，重定向到/index.html,				
+		    	 //取出token，如果不为空，校验token，如果校验成功，重定向到/components/home.html,				
 		    	 this.show();
 		    },
 		    beforeRouteEnter(to, from, next) {		    					
