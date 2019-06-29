@@ -67,45 +67,11 @@
 	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.24.0/moment-with-locales.js"></script>
-    <!--内容同 <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> -->
-    <script src="javascripts/bootstrap-datetimepicker.js"></script>
-
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script> 
     <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
     <script src="https://cdn.bootcss.com/vue-router/3.0.6/vue-router.js"></script>
-    <script>
-        const BASE_PATH ="http://localhost:8080";
-    	const router = new VueRouter() ;
-    </script>
-    <script src="components/home.js"></script>
-    <script src="components/login.js"></script>
- 	<script src="components/logout.js"></script><!-- 子组件一定要先加载 -->
-    <script src="components/pageInput.js"></script> <!-- 非子组件可以放到最后加载，也可以延迟加载，注意不要重复加载（使用全局变量保存加载过的路径，请求前进行判断)-->
-    <script src="components/saveInput.js"></script>
-    <script src="components/deleteInput.js"></script>
-    <script src="components/updateInput.js"></script>
-    <script src="components/updateUserPassword.js"></script>
-    
- 	<script> 	
- 	const app = new Vue({
- 		el: '#app', 		
- 		methods: {	
- 			  updateContainer:function(path) {
-	         		console.log("path",path);
-	         		this.$router.push({path:path});	     
-				},
-				updateUserPassword:function(){
- 					this.updateContainer("/components/updateUserPassword.html");
- 				},
- 				logout:function(){
- 					//this.$refs.logout.show();    //如果使用此方式，主页面先引入 <logout  ref="logout"></logout>，之后去除退出组件back中的this.$router.go(-1);和created 
- 					this.updateContainer("/components/logout.html");
- 				}
- 		},
-		created:function(){
-			//this.updateContainer({path:"/components/pageInput.html"});		
-		},
- 	    router
- 	});
-  	</script>
+ 
+   <script src="https://cdn.bootcss.com/require.js/2.3.6/require.js" data-main="index"></script>
+   
    </body>
 </html>

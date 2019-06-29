@@ -1,7 +1,9 @@
+const BASE_PATH ="http://localhost:8080";
+const router = new VueRouter() ;
+
 require.config({
     // baseUrl: '/',
-    paths: {
-    	
+    paths: {    	
     	home: 'components/home',
     	login: 'components/login',
     	logout: 'components/logout',
@@ -11,19 +13,17 @@ require.config({
     	updateInput: 'components/updateInput',    	
     	updateUserPassword: 'components/updateUserPassword',       
     }
-
 });
 
 require([
-	'index',
+	'home',
 	'login',
 	'logout',
 	'pageInput',
 	'saveInput',
 	'saveInput',
 	'deleteInput',
-	'updateInput',
-	
+	'updateInput',	
 	'updateUserPassword',
 	
 ]);  
@@ -34,7 +34,7 @@ require([
 const app = new Vue({
  		el: '#app', 		
  		methods: {	
- 			  updateContainer:function(path) {
+ 			    updateContainer:function(path) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path});	     
 				},
@@ -47,7 +47,7 @@ const app = new Vue({
  				}
  		},
 		created:function(){
-			//this.updateContainer({path:"/components/pageInput.html"});		
+			//获取用户名，头像，菜单及其权限等		
 		},
  	    router
  	});
