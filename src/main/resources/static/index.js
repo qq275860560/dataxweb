@@ -1,37 +1,32 @@
 const BASE_PATH ="http://localhost:8080";
-const router = new VueRouter() ;
+const router = return new vueRouter();
 
-require.config({
-    // baseUrl: '/',
-    paths: {    
-    	text: 'https://cdn.bootcss.com/require-text/2.0.12/text',
-    	home: 'components/home',
-    	login: 'components/login',
-    	logout: 'components/logout',
-    	pageInput: 'components/pageInput',
-    	saveInput: 'components/saveInput',
-    	deleteInput: 'components/deleteInput',
-    	updateInput: 'components/updateInput',    	
-    	updateUserPassword: 'components/updateUserPassword',       
-    }
-});
+require.config({paths: {text: 'https://cdn.bootcss.com/require-text/2.0.12/text',}});
 
-require([
-	'text',
-	'home',
-	'login',
-	'logout',
-	'pageInput',
-	'saveInput',
-	'saveInput',
-	'deleteInput',
-	'updateInput',	
-	'updateUserPassword',
-	
-]);  
+require.config({paths: {home: 'components/home'}});
+require(['home']); 
 
+require.config({paths: {login: 'components/login'}});
+require(['login']);
 
+require.config({paths: {logout: 'components/logout'}});
+require(['logout']);
 
+require.config({paths: {pageInput: 'components/pageInput'}});
+require(['pageInput']);
+
+require.config({paths: {saveInput: 'components/saveInput'}});
+require(['saveInput']);
+
+require.config({paths: {deleteInput: 'components/deleteInput'}});
+require(['deleteInput']);
+
+require.config({paths: {updateInput: 'components/updateInput'}});   
+require(['updateInput']);
+
+require.config({paths: {updateUserPassword: 'components/updateUserPassword'}});	
+require(['updateUserPassword']);	
+  
 
 const app = new Vue({
  		el: '#app', 		
