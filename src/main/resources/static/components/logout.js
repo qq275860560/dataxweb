@@ -11,7 +11,7 @@ define(['text!logout.html'], function (componentTemplate) {
 		   		}
 		   	},
 		    methods: {
-		    	updateContainer:function(path,query) {
+		    	updateRouterView:function(path,query) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},	 
@@ -23,7 +23,7 @@ define(['text!logout.html'], function (componentTemplate) {
 		       		//发送请求告知服务器
 		       		this.hide();
 		       		localStorage.clear();	
-		       		this.updateContainer("/components/login.html");			       					
+		       		this.updateRouterView("/components/login.html");			       					
 		       	},  
 		        hide:function (){
 		    	    $('#myModal').modal('hide');

@@ -19,7 +19,7 @@ define(['text!login.html'], function (componentTemplate) {
 		   		}
 		   	},
 		    methods: {
-		    	updateContainer:function(path,query) {
+		    	updateRouterView:function(path,query) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				}, 
@@ -36,9 +36,9 @@ define(['text!login.html'], function (componentTemplate) {
 						    localStorage.setItem("token_type",result.token_type );						
 						    tmpVue.hide();								
 				       		if(tmpVue.fromPath && tmpVue.fromPath=="/components/logout.html"){					       			
-				       			tmpVue.updateContainer("/components/home.html");
+				       			tmpVue.updateRouterView("/components/home.html");
 				       		}else{					       	
-				       			//tmpVue.updateContainer(tmpVue.fromPath);
+				       			//tmpVue.updateRouterView(tmpVue.fromPath);
 				       			tmpVue.$router.go(-1);
 				       		}						    
 					   }else if(result.code==400){						

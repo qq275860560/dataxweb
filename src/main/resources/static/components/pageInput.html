@@ -2,7 +2,7 @@
         
          <div class="row">
            <ol class="breadcrumb">
-             <li><a href="javascript:void(0)" @click="updateContainer('/components/home.html')"><i class="fa fa-dashboard"></i> 主页</a></li>
+             <li><a href="javascript:void(0)" @click="updateRouterView('/components/home.html')"><i class="fa fa-dashboard"></i> 主页</a></li>
              <li class="active"><i class="fa fa-edit"></i>输入流</li>
            </ol>
            
@@ -57,7 +57,7 @@
 						class="col-md-1 col-md-offset-4 btn btn-default" @click="pageInput(1,data.pageSize)">搜索</button>
 					<button type="button"
 						class="col-md-1 col-md-offset-1  btn btn-default"
-						@click="updateContainer('/components/saveInput.html')">新建</button>
+						@click="updateRouterView('/components/saveInput.html')">新建</button>
 				</div>
 				
 			
@@ -96,10 +96,10 @@
 				<td>
 					<button type="button"
 						class="btn btn-default"
-						@click="updateContainer('/components/deleteInput.html',{id:item.id,name:item.name})">删除</button>
+						@click="updateRouterView('/components/deleteInput.html',{id:item.id,name:item.name})">删除</button>
 					<button type="button"
 						class="btn btn-default"
-						@click="updateContainer('/components/updateInput.html',{id:item.id,name:item.name})">编辑</button>
+						@click="updateRouterView('/components/updateInput.html',{id:item.id,name:item.name})">编辑</button>
 				</td>
 			</tr>
                </tbody>

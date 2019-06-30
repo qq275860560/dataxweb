@@ -12,7 +12,7 @@ define(['text!deleteInput.html'], function (componentTemplate) {
 		   		}
 		   	},
 		    methods: {
-		    	updateContainer:function(path,query) {
+		    	updateRouterView:function(path,query) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},	 
@@ -29,16 +29,16 @@ define(['text!deleteInput.html'], function (componentTemplate) {
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
-						this.updateContainer("/components/login.html");					
+						this.updateRouterView("/components/login.html");					
 					}
 					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
 					}).then(function(response) {return response.json();}).then(function(result){
 						tmpVue.code=result.code;
 						 if(result.code==200){
 							   console.log("receive=",result );			
-							   tmpVue.updateContainer( "/components/pageInput.html");
+							   tmpVue.updateRouterView( "/components/pageInput.html");
 						   }else if(result.code==401){						
-							   tmpVue.updateContainer( "/components/login.html");
+							   tmpVue.updateRouterView( "/components/login.html");
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
 						   }else{							   
