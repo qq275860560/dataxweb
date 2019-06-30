@@ -3,7 +3,8 @@ const router = new VueRouter() ;
 
 require.config({
     // baseUrl: '/',
-    paths: {    	
+    paths: {    
+    	text: 'https://cdn.bootcss.com/require-text/2.0.12/text',
     	home: 'components/home',
     	login: 'components/login',
     	logout: 'components/logout',
@@ -16,6 +17,7 @@ require.config({
 });
 
 require([
+	'text',
 	'home',
 	'login',
 	'logout',

@@ -1,6 +1,7 @@
-$.get("components/saveInput.html", function(componentTemplate) {
+//$.get("components/saveInput.html", function(componentTemplate) {
 //fetch("components/saveInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-     	let componentProperties = {
+define(['text!saveInput.html'], function (componentTemplate) {
+	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {

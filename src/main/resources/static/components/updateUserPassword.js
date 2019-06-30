@@ -1,6 +1,7 @@
-$.get("components/updateUserPassword.html", function(componentTemplate) {		
+//$.get("components/updateUserPassword.html", function(componentTemplate) {		
 //fetch("components/updateUserPassword.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-	 	let componentProperties = {
+define(['text!updateUserPassword.html'], function (componentTemplate) {	 	
+	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {

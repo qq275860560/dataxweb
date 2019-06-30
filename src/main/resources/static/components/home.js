@@ -1,6 +1,7 @@
-$.get("components/home.html", function(componentTemplate) {
+//$.get("components/home.html", function(componentTemplate) {
 //fetch("components/home.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-	 	let componentProperties = {
+define(['text!home.html'], function (componentTemplate) {	 	
+let componentProperties = {
 			  template: componentTemplate,
 			  data: function () {
 			    return {
