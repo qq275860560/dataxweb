@@ -1,5 +1,5 @@
 const BASE_PATH ="http://localhost:8080";
-const router = return new vueRouter();
+const router = new VueRouter() ;
 
 require.config({paths: {text: 'https://cdn.bootcss.com/require-text/2.0.12/text',}});
 
