@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html> 
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>webapp</title>
+	<meta name="viewport" content="">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	</head>
+	<body>
+	<div id="footer">
+		<tq-footer></tq-footer>
+	</div>
+	
+	<div id="vue-profile">
+	{{name}}
+	<img v-bind:src="profile_img" v-bind:alt="name"><br/>
+	{{profile}}
+	</div>
+	<div id="cdata"><tq-category></tq-category></div>
+	<div id="app" v-html="html"></div>
+	
+	<div id="header">
+        <tq-header></tq-header>
+    </div>
+	</body>
+	<!--
+	//多文件引入的
+	<script src="lib/vue.js"></script>
+	<script src="/vue-module/tq-header.js"></script>
+	<script src="/vue-module/tq-footer.js"></script>
+	-->
+	<!--
+	//require 引入的，开发时使用
+	-->
+	<script src="lib/require.js" data-main="js/script.js?v=8"></script>
+	
+	<!--
+	//压缩文件后引入的，发布时使用,需要nodejs环境先压缩
+	<script src="lib/require.js" data-main="js/main.js"></script>
+	-->
+	
+</html>
+

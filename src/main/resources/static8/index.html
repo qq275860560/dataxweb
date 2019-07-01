@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Hello Vue!</title>
+</head>
+
+<body>
+    <div id="app">
+        <input @keyup.enter="createTodo()" v-model="message" placeholder="edit me" />
+        <button @click="createTodo()">Add</button>
+        <hr />
+        <ol>
+            <li v-for="(todo, index) in todos" v-if="shouldRender(todo)">
+                <todo-component :todo="todo" :index="index" v-on:remove="removeTodo(index)" />
+            </li>
+        </ol>
+        <div>Completed: {{completed.length}}</div>
+        <div>Remaining: {{remaining.length}}</div>
+        <button @click="currentView = 'all'">All</button>
+        <button @click="currentView = 'completed'">Completed</button>
+        <button @click="currentView = 'remaining'">Remaining</button>
+    </div>
+
+    <template id="todo-component-template">
+        <div>
+            <input type="checkbox" v-model="todo.completed"/>
+            <span>{{todo.description}}</span>
+            <button @click="$emit('remove')">X</button>
+        </div>
+    </template>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.2.0/require.js"></script>
+    <script src="./built/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "outFile": "./built/app.js",
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "noImplicitThis": true,
+        "module": "amd",
+        "moduleResolution": "node",
+        "lib": [
+            "dom", "es2015"
+        ],
+        "types": [
+            "requirejs"
+        ]
+    },
+    "include": [
+        "src"
+    ]
+}

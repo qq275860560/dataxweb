@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Require Demo 1</title>
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+</head>
+<body>
+    <div id="song">
+    	<div v-cloak>{{songs}}</div>
+        <button @click="onState">State</button>
+        <button @click="onMutation">Mutations</button>
+        <button @click="onGetter">Getters</button>
+        <button @click="onAction">Action</button>
+        <p v-cloak>State: {{state}}</p>
+        <p v-cloak>Mutations: {{mutation}}</p>
+        <p v-cloak>Getters: {{getter}}</p>
+        <p v-cloak>Action: {{action}}</p>
+    </div>
+    <script data-main="js/script/song" src="js/lib/require.js" type="text/javascript"></script>
+</body>
+</html>

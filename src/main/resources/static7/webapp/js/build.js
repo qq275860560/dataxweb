@@ -1,0 +1,12 @@
+({
+    baseUrl:'../vue-module/',
+    paths:{
+		'home':'index',
+        'header':'tq-header',
+        'footer':'tq-footer',
+        'imgview':'tq-img-view',
+        'vue':'../lib/vue',
+    },
+    name:'script',
+    out:'main.js'
+})

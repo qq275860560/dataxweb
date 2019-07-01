@@ -1,0 +1,10 @@
+{
+  "name": "vue-tutorial",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/requirejs": "^2.1.28",
+    "vue": "^2.1.4"
+  }
+}
