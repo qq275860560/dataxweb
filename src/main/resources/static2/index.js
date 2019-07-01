@@ -10,21 +10,15 @@ require.config(
 				vue: 'https://cdn.bootcss.com/vue/2.6.10/vue',
 				vueRouter: 'https://cdn.bootcss.com/vue-router/3.0.6/vue-router',
 				vuex: 'https://cdn.bootcss.com/vuex/3.1.1/vuex',
-				text: 'https://cdn.bootcss.com/require-text/2.0.12/text'
+				text: 'https://cdn.bootcss.com/require-text/2.0.12/text',
+				css: 'https://cdn.bootcss.com/require-css/0.1.10/css',
+	
 			},
             map: {
-                '*': {
-                    'css': 'https://cdn.bootcss.com/require-css/0.1.10/css'
-                }
+              
             },
             shim: {
-                bootstrap: {
-                    deps: [
-                        'css!https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css',
-						'css!https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css',
-						'css!https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css'
-                    ]
-                }
+                
             }
         }
     ); 
