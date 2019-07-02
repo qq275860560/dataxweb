@@ -1,4 +1,7 @@
-<div id="container">
+<div id="wrapper">
+	<navigation/>
+
+	<div id="page-wrapper">
 
 <div class="row">
 	<div class="col-md-11 col-md-offset-1">
@@ -6,10 +9,10 @@
 	    <h1>编辑输入流 <small>{{query.name}}</small>表单</h1>
 	    </div>
 		<ol class="breadcrumb">
-			<li><a href="javascript:void(0)" @click="updateRouterView('/components/home.html')"><i
+			<li><a href="javascript:void(0)" @click="updateRouterView('/components/home/home')"><i
 					class="fa fa-dashboard"></i>主页</a></li>
 			<li><a href="javascript:void(0)"
-				@click="updateRouterView('/components/pageInput.html')"><i
+				@click="updateRouterView('/components/input/pageInput')"><i
 					class="fa fa-dashboard"></i>输入流</a></li>
 			<li class="active"><i class="fa fa-edit"></i>编辑</li>
 		</ol>
@@ -118,5 +121,6 @@
 
 	</div>
 	</div><!-- /.row -->
-</div><!-- /#container -->
+</div><!-- /#page-wrapper -->      
+</div><!-- /#wrapper -->
 

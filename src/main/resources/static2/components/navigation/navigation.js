@@ -1,4 +1,4 @@
-define(['require','vue','router','text!components/navigation/navigation.html'], function (require,Vue,router,componentTemplate) {  		 
+define(['vue','components/user/logout','text!./navigation.html'], function (Vue,logout,componentTemplate) {	
 	let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			
@@ -9,23 +9,25 @@ define(['require','vue','router','text!components/navigation/navigation.html'], 
 		   			data:null,    			
 		   		}
 		   	},
+		   
 		    methods: {
 		    	updateRouterView:function(path,query) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},	
 				updateUserPassword:function(){
- 					this.updateRouterView("/components/updateUserPassword.html");
+ 					this.updateRouterView("/components/user/updateUserPassword");
  				},
- 				logout:function(){
- 					this.updateRouterView("/components/logout.html");
+ 				logout:function(){ 				
+ 					 this.$refs.logout.show();
  				}
 		       	
 		    },		
 			created: function () {				 
 				  			
 		    },
-		    mounted: function () {			
+		    mounted: function () {
+		    	
 								
 		    },
 		};

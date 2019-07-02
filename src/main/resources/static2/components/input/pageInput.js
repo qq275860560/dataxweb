@@ -1,8 +1,8 @@
-//$.get("components/pageInput.html", function(componentTemplate) {
-//fetch("components/pageInput.html").then(function(response) {return response.text();}).then(function(componentTemplate){
-define(['text!pageInput.html'], function (componentTemplate) { 	 	
+define(['vue','components/navigation/navigation','components/input/deleteInput','text!./pageInput.html'], function (Vue,navigation,deleteInput,componentTemplate) {	
+	
 	let componentProperties = {
 			template: componentTemplate,
+			
 			data:function() {
 				return {
 					name:"",
@@ -24,13 +24,13 @@ define(['text!pageInput.html'], function (componentTemplate) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				pageInput:function(pageNum,pageSize){					
+				pageInput:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=BASE_PATH+"/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				
-						this.updateRouterView("/components/login.html"); 
+						this.updateRouterView("/components/user/login");
 					}
 					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
 					}).then(function(response) {return response.json();}).then(function(result){
@@ -43,7 +43,7 @@ define(['text!pageInput.html'], function (componentTemplate) {
 							    tmpVue.data.pageList=result.data.pageList;					
 							    tmpVue.repaint();						
 						   }else if(result.code==401){						
-							   tmpVue.updateRouterView("/components/login.html");
+							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
 						   }else{
@@ -73,9 +73,12 @@ define(['text!pageInput.html'], function (componentTemplate) {
 					}			
 				},
 				saveInput:function(){		
-					updateRouterView("/components/saveInput.html");
-				},			 		 
-			},	
+					updateRouterView("/components/input/saveInput");
+				},	
+				deleteInput:function(query){
+					 this.$refs.deleteInput.show(query);
+				},
+			},				
 			created: function () {			
 				this.pageInput(this.data.pageNum,this.data.pageSize);			    
 		    },
@@ -117,11 +120,8 @@ define(['text!pageInput.html'], function (componentTemplate) {
 			}
 	 	};
 	 	
-	 	let component = Vue.component('pageInput',  componentProperties);
-	 	
-		router.addRoutes([
-			{ path: '/components/pageInput.html', component: component }
-		])
+	 	return Vue.component('pageInput',  componentProperties);
+	
 }); 
 
 

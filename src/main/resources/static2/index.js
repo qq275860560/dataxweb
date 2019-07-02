@@ -2,13 +2,8 @@
 require.config(
         {
         	baseUrl: "",
-            paths: {
-                jquery: 'https://cdn.bootcss.com/jquery/3.4.1/jquery',
-                bootstrap : 'https://cdn.bootcss.com/twitter-bootstrap/3.3.7/js/bootstrap',
-                bootstrapValidator:'https://cdn.bootcss.com/bootstrap-validator/0.5.3/js/bootstrapValidator.js',
-                moment:'https://cdn.bootcss.com/moment.js/2.24.0/moment-with-locales.js',
-                bootstrapDatetimepicker:'https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js',
-				vue: 'https://cdn.bootcss.com/vue/2.6.10/vue',
+            paths: {             
+            	vue: 'https://cdn.bootcss.com/vue/2.6.10/vue',
 				vueRouter: 'https://cdn.bootcss.com/vue-router/3.0.6/vue-router',
 				vuex: 'https://cdn.bootcss.com/vuex/3.1.1/vuex',
 				text: 'https://cdn.bootcss.com/require-text/2.0.12/text',
@@ -22,7 +17,10 @@ require.config(
                 	'css!https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css',
                 	'css!index.css',
                 	'css!https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css',
-                	'css!https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css'
+                	'css!https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css',
+                	
+                	                	
+                	
                 ]
             }
         }
@@ -37,7 +35,29 @@ define("router",function (require) {
 	Vue.use(VueRouter); 
 	
     var router = new VueRouter();
-	router.addRoutes([	{ path: '/components/home/home', component: resolve => require(['./components/home/home'],resolve) }	]);
+	router.addRoutes([	
+		{ 
+			path: '/components/home/home', 
+			component: resolve => require(['./components/home/home'],resolve) 
+		},
+		{ 
+			path: '/components/input/pageInput', 
+			component: resolve => require(['./components/input/pageInput'],resolve) 
+		},
+		{ 
+			path: '/components/input/saveInput', 
+			component: resolve => require(['./components/input/saveInput'],resolve) 
+		},
+		{ 
+			path: '/components/input/updateInput', 
+			component: resolve => require(['./components/input/updateInput'],resolve) 
+		},
+		{ 
+			path: '/components/user/login', 
+			component: resolve => require(['./components/user/login'],resolve) 
+		},
+	
+	]);
     return router ;
  
 });
@@ -67,7 +87,7 @@ define("store",function (require) {
 });
 
 //初始化
-define(['require','vue','router','store'],function (require,Vue,router,store) { 
+define(['vue','router','store'],function (Vue,router,store) { 
 	Vue.config.debug = true;
     Vue.config.devtools = true;	
    new Vue({
