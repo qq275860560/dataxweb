@@ -44,8 +44,24 @@ define("router",function (require) {
 // 定义状态管理
 define("store",function (require) {	
 	var Vue = require('vue');  
-	var store = require("vuex")
-	Vue.use(store); 
+	var Vuex = require("vuex")
+	Vue.use(Vuex); 
+	
+	
+	let store=new Vuex.Store({
+	    state:{
+	    	BASE_PATH:"http://localhost:8080"
+	    },
+	    mutations:{
+	      
+	    },
+	    actions:{
+	      
+	    },
+	    getters:{
+	       
+	    }
+	})
 	return store;
 });
 
@@ -70,7 +86,9 @@ define(['require','vue','router','store'],function (require,Vue,router,store) {
 			created:function(){		
 			},
             mounted:function(){
-				// updateRouterView("/components/home/home");
+				// updateRouterVie+w("/components/home/home");
+            	
+            	//alert( this.$store.state.BASE_PATH);
 			},
 			router
 	});
