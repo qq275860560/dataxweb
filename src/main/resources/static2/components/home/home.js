@@ -1,4 +1,4 @@
-define(['require','vue','router','text!./home.html'], function (require,Vue,router,componentTemplate) {	 	
+define(['vue','text!./home.html','components/navigation/navigation'], function (Vue,componentTemplate) {	 	
 	 
         return Vue.component('home',{
 			  template: componentTemplate,			 

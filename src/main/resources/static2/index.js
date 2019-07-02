@@ -20,6 +20,7 @@ require.config(
             shim: {
                 vue : [
                 	'css!https://cdn.bootcss.com/twitter-bootstrap/3.3.7/css/bootstrap.css',
+                	'css!index.css',
                 	'css!https://cdn.bootcss.com/bootstrap-validator/0.5.3/css/bootstrapValidator.css',
                 	'css!https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css'
                 ]
@@ -72,7 +73,7 @@ define(['require','vue','router','store'],function (require,Vue,router,store) {
    new Vue({
 			el: '#app', 
 			store:store,
-			template: '<div><a href="javascript:void(0)" @click="home"><i class="fa fa-table"></i>home</a><router-view></router-view></div>',	
+			template: '<router-view></router-view>',	
 			methods: {
 				 updateRouterView:function(path) {
 	         		console.log("path",path);            
@@ -86,12 +87,13 @@ define(['require','vue','router','store'],function (require,Vue,router,store) {
 			created:function(){		
 			},
             mounted:function(){
-				// updateRouterVie+w("/components/home/home");
-            	
+				this.updateRouterView("/components/home/home");
             	//alert( this.$store.state.BASE_PATH);
 			},
 			router
 	});
 });
+ 
+
 
  
