@@ -109,10 +109,10 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 		            },
 		            fields: {
 		                name: {
-		                    message: '输入流名称验证失败',
+		                    message: '输出流名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输入流名称不能为空'
+		                            message: '输出流名称不能为空'
 		                        }
 		                    }
 		                },	

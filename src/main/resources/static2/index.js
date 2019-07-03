@@ -71,6 +71,20 @@ define("router",function (require) {
 			component: resolve => require(['./components/output/updateOutput'],resolve) 
 		},
 		
+		
+		
+		{ 
+			path: '/components/job/pageJob', 
+			component: resolve => require(['./components/job/pageJob'],resolve) 
+		},
+		{ 
+			path: '/components/job/saveJob', 
+			component: resolve => require(['./components/job/saveJob'],resolve) 
+		},
+		{ 
+			path: '/components/job/updateJob', 
+			component: resolve => require(['./components/job/updateJob'],resolve) 
+		},
 	
 	]);
     return router ;

@@ -89,16 +89,16 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                validating: 'glyphicon glyphicon-refresh'
 		            },
 		            fields: {
-		                name: {
-		                    message: '输入流名称验证失败',
+		            	name: {
+		                    message: '输出流名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输入流名称不能为空'
+		                            message: '输出流名称不能为空'
 		                        }
 		                    }
 		                },	
 		                writerName: {
-		                    message: '输入流类型名称验证失败',
+		                    message: '输出流类型名称验证失败',
 		                    validators: {
 		                        notEmpty: {
 		                            message: '输出流类型名称不能为空'
@@ -106,11 +106,11 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        stringLength: {
 		                            min: 6,
 		                            max: 18,
-		                            message: '输出流类型长度必须在6到18位之间'
+		                            message: '输出流类型名称长度必须在6到18位之间'
 		                        },
 		                        regexp: {
 		                            regexp: /^[a-zA-Z0-9_]+$/,
-		                            message: '输出流类型只能包含大写、小写、数字和下划线'
+		                            message: '输出流类型名称只能包含大写、小写、数字和下划线'
 		                        }
 		                    }
 		                },
@@ -137,7 +137,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                            message: '写模式不能为空'
 		                        }
 		                    }
-		                },
+		                },		           	                
 		                writerParameterColumn: {
 		                    message: '列验证失败',
 		                    validators: {
@@ -146,6 +146,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },
+		                
 		                writerParameterConnectionJdbcUrl: {
 		                    message: 'url验证失败',
 		                    validators: {
@@ -161,7 +162,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                            message: '表不能为空'
 		                        }
 		                    }
-		                },
+		                },             
 		                
 		            }
 		        });			

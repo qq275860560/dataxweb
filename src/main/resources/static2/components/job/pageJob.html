@@ -1,0 +1,153 @@
+<div id="wrapper">
+	<navigation/>
+
+	<div id="page-wrapper">
+        
+         <div class="row">
+           <ol class="breadcrumb">
+             <li><a href="javascript:void(0)" @click="updateRouterView('/components/home/home')"><i class="fa fa-dashboard"></i> 主页</a></li>
+             <li class="active"><i class="fa fa-edit"></i>任务</li>
+           </ol>
+           
+           <div v-if="code && code!=200" 
+			class="alert alert-warning ">
+			<button type="button" class="close" @click="code=null"	 >×</button>
+			{{msg}}
+			</div>
+         </div>
+
+
+       
+         <div class="row">
+         
+         <div class="col-md-8 col-md-offset-2">
+           <form id="form" class="form-horizontal " role="form">
+				
+				<div class="form-group ">
+					<label class="col-md-2 control-label">任务名称</label>
+					<div class="col-md-6">
+						<input class="form-control" v-model="name" name="name" type="text">
+					</div>
+				</div>
+			
+ 
+        <div class="form-group">
+            <label class="col-md-2 control-label">开始时间：</label>        
+            <div class='col-md-6 input-group date ' id='startCreateTime'>
+                <input type='text' class="form-control"    v-model="startCreateTime" data-format="YYYY-MM-DD hh:mm:ss"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+  
+ 
+        <div class="form-group">
+            <label class="col-md-2 control-label">结束时间：</label>        
+            <div class='col-md-6 input-group date' id='endCreateTime' >
+                <input type='text' class="form-control" v-model="endCreateTime" data-format="YYYY-MM-DD hh:mm:ss"/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+ 
+    
+			 
+			 
+				<div class="form-group ">
+					<button type="button"
+						class="col-md-1 col-md-offset-4 btn btn-default" @click="pageJob(1,data.pageSize)">搜索</button>
+					<button type="button"
+						class="col-md-1 col-md-offset-1  btn btn-default"
+						@click="updateRouterView('/components/job/saveJob')">新建</button>
+				</div>
+				
+			
+			</form>
+		</div>
+		</div>
+		
+		<div class="row">
+		
+		
+           <h2>分页搜索结果</h2>
+           <div class="table-responsive">
+             <table class="table table-bordered table-hover tablesorter    table-striped table-responsive">
+               <thead>
+                 <tr>
+                 <th class="header">任务 <i class="fa fa-sort"></i></th>
+                   <th class="header">输入流 <i class="fa fa-sort"></i></th>
+                   <th class="header">类型 <i class="fa fa-sort"></i></th>
+                     <th class="header">输出流 <i class="fa fa-sort"></i></th>
+                   <th class="header">类型 <i class="fa fa-sort"></i></th>                   
+                   <th class="header">状态<i class="fa fa-sort"></i></th>
+                   <th class="header">构建号 <i class="fa fa-sort"></i></th>
+                    <th class="header">创建人 <i class="fa fa-sort"></i></th>
+                     <th class="header">创建时间 <i class="fa fa-sort"></i></th>
+                      <th class="header">操作 <i class="fa fa-sort"></i></th>
+                 </tr>                 
+               </thead>
+               <tbody>
+                 <tr v-for="item of data.pageList"  >
+                 <td>{{item.name}}</td>
+				<td>{{item.inputName}}</td>
+				<td>{{item.readerName}}</td>
+				<td>{{item.outputName}}</td>
+				<td>{{item.writerName}}</td>				
+				<td>{{item.status==1?"启用":"禁用"}} </td>
+				<td>{{item.number}}</td>				
+				<td>{{item.createUserName}}</td>
+				<td>{{item.createTime}}</td>
+				<td>
+					<button type="button"
+						class="btn btn-default"
+						@click="deleteJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
+					<button type="button"
+						class="btn btn-default"
+						@click="updateRouterView('/components/job/updateJob',{id:item.id,name:item.name})">编辑</button>
+				</td>
+			</tr>
+               </tbody>
+             </table>
+           </div>
+           </div>
+           
+           
+           <div class="row">
+           <ul class="pagination" style="float:right ">
+			<li><span>共{{Math.ceil((data.total+1)/data.pageSize)}}页{{data.total}}条记录</span>
+			</li>
+			<li><a href="javascript:void(0)" @click="pageJob(1,data.pageSize)">首页</a></li>
+			<li><a href="javascript:void(0)"
+				@click="pageJob(data.pageNum>1?data.pageNum-1:data.pageNum,data.pageSize)"
+				class="previous disabled">&laquo;上一页</a></li>
+			<li><a :style="item.style" v-for="item of array"
+				href='javascript:void(0)'
+				@click="pageJob( item.pageNum,data.pageSize )">{{item.pageNum}}&nbsp;</a></li>
+			<li><a href="javascript:void(0)"
+				@click="pageJob(data.pageNum<Math.ceil((data.total+1)/data.pageSize)?data.pageNum+1:data.pageNum,data.pageSize)"
+				class="next ">下一页&raquo;</a></li>
+			<li><a href="javascript:void(0)"
+				@click="pageJob(Math.ceil((data.total+1)/data.pageSize),data.pageSize)">尾页</a>
+			</li>
+			<li><span>跳转至<input
+					style="width: 24px;  padding-top: 0px; padding-bottom: 0px"
+					type="text" v-model="data.pageNum" />页
+			</span></li>
+			<li><span>每页<input
+					style="width: 24px;  padding-top: 0px; padding-bottom: 0px"
+					type="text" v-model="data.pageSize" />条
+			</span></li>
+			<li><a href='javascript:void(0)'
+				@click="pageJob(data.pageNum,data.pageSize)">确定</a></li>
+		</ul>
+         </div>
+         
+  
+       
+       
+</div><!-- /#page-wrapper -->   
+<deleteJob ref="deleteJob" @pageJob="pageJob"/>   
+</div><!-- /#wrapper -->
+	 

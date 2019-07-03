@@ -246,7 +246,7 @@ public class JobController {
 		requestMap.put("createTime", createTime);
 		jobDao.saveJob(requestMap);
 		
-	    //
+	    //TODO 这部分使用异步处理
 		String name=(String)requestMap.get("name");
 		File file = new File(Constant.DATAX_HOME + File.separator + "job" + File.separator + name + ".json");
 		FileUtils.writeStringToFile(file, dataxJson, "UTF-8");
@@ -453,6 +453,7 @@ public class JobController {
  
 		jobDao.updateJob(map);
 		
+		//TODO 这部分使用异步处理
 		 //不能对任务名称继续更新		
 		String name=(String)map.get("name");
 		File file = new File(Constant.DATAX_HOME + File.separator + "job" + File.separator + name + ".json");
@@ -479,6 +480,7 @@ public class JobController {
 
 		String id = (String) requestMap.get("id");
 		//
+		try {//TODO 这部分使用异步处理
 		Map<String, Object> map = jobDao.getJob(id);
 		String name=(String)map.get("name");
 		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/job/%s/doDelete", jenkinsUrl, name), HttpMethod.POST,
@@ -489,6 +491,9 @@ public class JobController {
 					}
 				}), String.class);
 		log.info(response.getBody());
+		}catch (Exception e) {
+			log.error("",e);
+		}
 		//
 		jobDao.deleteJob(id);
 		return new HashMap<String, Object>() {
