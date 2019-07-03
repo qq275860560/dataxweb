@@ -7,8 +7,10 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 				return {
 					name:"",
 					startCreateTime:"",
-					endCreateTime:"",
-					array:[],				
+					endCreateTime:"",					
+					array:[],	
+					selectAllItemId:[],
+					selectItemIds:[],
 					code:null,
 					msg:null,
 					data:{
@@ -70,7 +72,9 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 									style:{background:background}
 								}						
 						);				 
-					}			
+					}	
+					this.selectAllItemId=[];
+					this.selectItemIds=[];
 				},
 				saveOutput:function(){		
 					updateRouterView("/components/output/saveOutput");
@@ -78,7 +82,28 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 				deleteOutput:function(query){
 					 this.$refs.deleteOutput.show(query);
 				},
-			},				
+			},	
+			watch: {
+				selectAllItemId(newValue, oldValue) {      
+				      if(newValue.length>0){						
+						for(let item of this.data.pageList){							
+							let flag = false;
+							for(tmpId of this.selectItemIds){
+								if(tmpId==item.id){
+									flag=true;
+									break;
+								}								
+							}
+							if(flag==false){
+								this.selectItemIds.push(item.id);	
+							}
+						}						
+					}else{
+						this.selectItemIds=[];
+					}				
+				},				
+				
+			 },
 			created: function () {			
 				this.pageOutput(this.data.pageNum,this.data.pageSize);			    
 		    },

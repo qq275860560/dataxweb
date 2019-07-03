@@ -8,7 +8,9 @@ define(['vue','components/navigation/navigation','components/job/deleteJob','tex
 					name:"",
 					startCreateTime:"",
 					endCreateTime:"",
-					array:[],				
+					array:[],	
+					selectAllItemId:[],
+					selectItemIds:[],				
 					code:null,
 					msg:null,
 					data:{
@@ -70,7 +72,9 @@ define(['vue','components/navigation/navigation','components/job/deleteJob','tex
 									style:{background:background}
 								}						
 						);				 
-					}			
+					}
+					this.selectAllItemId=[];
+					this.selectItemIds=[];
 				},
 				saveJob:function(){		
 					updateRouterView("/components/job/saveJob");
@@ -78,7 +82,28 @@ define(['vue','components/navigation/navigation','components/job/deleteJob','tex
 				deleteJob:function(query){
 					 this.$refs.deleteJob.show(query);
 				},
-			},				
+			},	
+			watch: {
+				selectAllItemId(newValue, oldValue) {      
+				      if(newValue.length>0){						
+						for(let item of this.data.pageList){							
+							let flag = false;
+							for(tmpId of this.selectItemIds){
+								if(tmpId==item.id){
+									flag=true;
+									break;
+								}								
+							}
+							if(flag==false){
+								this.selectItemIds.push(item.id);	
+							}
+						}						
+					}else{
+						this.selectItemIds=[];
+					}				
+				},				
+				
+			 },
 			created: function () {			
 				this.pageJob(this.data.pageNum,this.data.pageSize);			    
 		    },

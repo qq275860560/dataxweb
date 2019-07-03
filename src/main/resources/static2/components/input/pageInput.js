@@ -8,7 +8,9 @@ define(['vue','components/navigation/navigation','components/input/deleteInput',
 					name:"",
 					startCreateTime:"",
 					endCreateTime:"",
-					array:[],				
+					array:[],	
+					selectAllItemId:[],
+					selectItemIds:[],				
 					code:null,
 					msg:null,
 					data:{
@@ -70,15 +72,39 @@ define(['vue','components/navigation/navigation','components/input/deleteInput',
 									style:{background:background}
 								}						
 						);				 
-					}			
+					}	
+					this.selectAllItemId=[];
+					this.selectItemIds=[];
 				},
 				saveInput:function(){		
 					updateRouterView("/components/input/saveInput");
 				},	
 				deleteInput:function(query){
 					 this.$refs.deleteInput.show(query);
-				},
-			},				
+				},			
+				
+			},	
+			watch: {
+				selectAllItemId(newValue, oldValue) {      
+				      if(newValue.length>0){						
+						for(let item of this.data.pageList){							
+							let flag = false;
+							for(tmpId of this.selectItemIds){
+								if(tmpId==item.id){
+									flag=true;
+									break;
+								}								
+							}
+							if(flag==false){
+								this.selectItemIds.push(item.id);	
+							}
+						}						
+					}else{
+						this.selectItemIds=[];
+					}				
+				},				
+				
+			 },
 			created: function () {			
 				this.pageInput(this.data.pageNum,this.data.pageSize);			    
 		    },

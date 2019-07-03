@@ -76,6 +76,7 @@
              <table class="table table-bordered table-hover tablesorter    table-striped table-responsive">
                <thead>
                  <tr>
+                 <th class="header"><input type="checkbox"    v-model="selectAllItemId" value="true">序号 <i class="fa fa-sort"></i></th>
                  <th class="header">任务 <i class="fa fa-sort"></i></th>
                    <th class="header">输入流 <i class="fa fa-sort"></i></th>
                    <th class="header">类型 <i class="fa fa-sort"></i></th>
@@ -89,7 +90,10 @@
                  </tr>                 
                </thead>
                <tbody>
-                 <tr v-for="item of data.pageList"  >
+                <tr v-for="(item,index) of data.pageList">                 
+                 <td>
+                 <input type="checkbox" name="id"   v-model="selectItemIds" :value="item.id"> {{index+1}}
+                 </td>
                  <td>{{item.name}}</td>
 				<td>{{item.inputName}}</td>
 				<td>{{item.readerName}}</td>
