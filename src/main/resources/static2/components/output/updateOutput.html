@@ -1,0 +1,138 @@
+<div id="wrapper">
+	<navigation/>
+
+	<div id="page-wrapper">
+
+<div class="row">
+	<div class="col-md-11 col-md-offset-1">
+	    <div class="col-md-offset-4">
+	    <h1>编辑输出流 <small>{{query.name}}</small>表单</h1>
+	    </div>
+		<ol class="breadcrumb">
+			<li><a href="javascript:void(0)" @click="updateRouterView('/components/home/home')"><i
+					class="fa fa-dashboard"></i>主页</a></li>
+			<li><a href="javascript:void(0)"
+				@click="updateRouterView('/components/output/pageOutput')"><i
+					class="fa fa-dashboard"></i>输出流</a></li>
+			<li class="active"><i class="fa fa-edit"></i>编辑</li>
+		</ol>
+		<div v-if="code && code!=200" 
+			class="alert alert-warning ">
+			<button type="button" class="close" @click="code=null"	 >×</button>
+			{{msg}}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-11 col-md-offset-1">
+		<form id="form" class="form-horizontal " role="form">
+
+			<div class="form-group ">
+				<label for="name"  class="col-md-2 control-label">输出流名称</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.name" name="name" id="name" type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+			<!-- <div class="form-group ">
+				<label for="writerId"  class="col-md-2 control-label">输出流类型ID</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.writerId" name="writerId" id="writerId" type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div> -->
+
+			<div class="form-group ">
+				<label for="writerName"  class="col-md-2 control-label">输出流类型名称</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.writerName" name="writerName" id="writerName" type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+			<div class="form-group ">
+				<label for="writerParameterUsername"  class="col-md-2 control-label">用户名</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.writerParameterUsername" name="writerParameterUsername" id="writerParameterUsername"
+						type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+			<div class="form-group ">
+				<label for="writerParameterPassword"  class="col-md-2 control-label">密码</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.writerParameterPassword" name="writerParameterPassword" id="writerParameterPassword"
+						type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+			<div class="form-group">
+				<label for="writerParameterWriteMode" class="col-md-2 control-label">写模式</label>
+				<div class="col-md-9">
+				<select class="form-control" v-model="query.writerParameterWriteMode" name="writerParameterWriteMode" id="writerParameterWriteMode">
+					<option>insert</option>
+					<option>replace</option>
+					<option>update</option>			
+				</select>	
+				</div>
+				<p class="help-block with-errors"> </p>	
+			</div>	
+
+			<div class="form-group ">
+				<label for="writerParameterColumn"  class="col-md-2 control-label">列</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.writerParameterColumn" name="writerParameterColumn" id="writerParameterColumn"
+						type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+			<div class="form-group ">
+				<label  for="writerParameterPreSql" class="col-md-2 control-label">前置操作的sql语句</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.writerParameterPreSql" name="writerParameterPreSql" id="writerParameterPreSql"
+						type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
+			<div class="form-group ">
+				<label class="col-md-2 control-label">url</label>
+				<div for="writerParameterConnectionJdbcUrl" class="col-md-9">
+					<input class="form-control"
+						v-model="query.writerParameterConnectionJdbcUrl" name="writerParameterConnectionJdbcUrl" id="writerParameterConnectionJdbcUrl"  type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+			<div class="form-group ">
+				<label for="writerParameterConnectionTable" class="col-md-2 control-label">表</label>
+				<div class="col-md-9">
+					<input class="form-control" 
+						v-model="query.writerParameterConnectionTable" name="writerParameterConnectionTable" id="writerParameterConnectionTable" type="text">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+
+
+
+
+			<div class="form-group ">
+				<button type="button"
+					class="col-md-1 col-md-offset-4 btn btn-default" @click="back()">返回</button>
+				<button type="button"
+					class="col-md-1 col-md-offset-1  btn btn-default"
+					@click="updateOutput()">确定</button>
+			</div>
+
+		</form>
+
+	</div>
+	</div><!-- /.row -->
+</div><!-- /#page-wrapper -->      
+</div><!-- /#wrapper -->
+

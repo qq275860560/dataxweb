@@ -41,6 +41,11 @@ define("router",function (require) {
 			component: resolve => require(['./components/home/home'],resolve) 
 		},
 		{ 
+			path: '/components/user/login', 
+			component: resolve => require(['./components/user/login'],resolve) 
+		},
+		
+		{ 
 			path: '/components/input/pageInput', 
 			component: resolve => require(['./components/input/pageInput'],resolve) 
 		},
@@ -52,10 +57,20 @@ define("router",function (require) {
 			path: '/components/input/updateInput', 
 			component: resolve => require(['./components/input/updateInput'],resolve) 
 		},
+		
 		{ 
-			path: '/components/user/login', 
-			component: resolve => require(['./components/user/login'],resolve) 
+			path: '/components/output/pageOutput', 
+			component: resolve => require(['./components/output/pageOutput'],resolve) 
 		},
+		{ 
+			path: '/components/output/saveOutput', 
+			component: resolve => require(['./components/output/saveOutput'],resolve) 
+		},
+		{ 
+			path: '/components/output/updateOutput', 
+			component: resolve => require(['./components/output/updateOutput'],resolve) 
+		},
+		
 	
 	]);
     return router ;
