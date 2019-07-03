@@ -98,7 +98,7 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 		         		    
 		    },
 			mounted:function(){
-				//TODO 远程校验名称唯一性
+				//TODO 远程校验名称唯一性debugger
 				$('#form').bootstrapValidator({
 		            message: 'This value is not valid',
 		            feedbackIcons: {

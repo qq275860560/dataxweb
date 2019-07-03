@@ -98,8 +98,8 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 			created: function () {			
 		         		    
 		    },
-			mounted:function(){
-				//TODO 远程校验名称唯一性
+			mounted:function(){				
+				//TODO 远程校验名称唯一性debugger
 				$('#form').bootstrapValidator({
 		            message: 'This value is not valid',
 		            feedbackIcons: {
