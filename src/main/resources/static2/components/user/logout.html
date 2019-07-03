@@ -1,31 +1,27 @@
-		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
-			aria-labelledby="logoutModalLabel" aria-hidden="true">			 	
-			<div class="modal-dialog"
-				>
-				<div class="modal-content">
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+	aria-labelledby="logoutModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
-					<div class="modal-header  "
-						>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="logoutModalLabel">提示</h4>
-					</div>
-
-					<div class="modal-body  "
-						>确定退出吗</div>
-
-					<div class="modal-footer  "
-						 >
-						<button type="button" class="btn btn-primary" @click="back()">
-							取消</button>
-						<button type="button" class="btn btn-primary" @click="logout()">
-							退出</button>
-					</div>
-					<!-- /.modal-footer -->
-
-				</div>
-				<!-- /.modal-content -->
+			<div class="modal-header  ">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="logoutModalLabel">提示</h4>
 			</div>
-			<!-- /.modal-dialog -->
+
+			<div class="modal-body  ">确定退出系统吗</div>
+
+			<div class="modal-footer  ">
+				<button type="button" class="btn btn-primary" @click="back()">
+					取消</button>
+				<button type="button" class="btn btn-primary" @click="logout()">
+					退出</button>
+			</div>
+			<!-- /.modal-footer -->
+
 		</div>
-		<!-- /.modal -->
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

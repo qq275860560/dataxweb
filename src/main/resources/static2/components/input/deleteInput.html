@@ -1,31 +1,28 @@
-		<div class="modal fade" id="deleteInputModal" tabindex="-1" role="dialog"
-			aria-labelledby="deleteInputModalLabel" aria-hidden="true">
-			<div class="modal-dialog"
-				>
-				<div class="modal-content">
-				
-					<div class="modal-header"
-						 >
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">&times;</button>
-						<h4 class="modal-title" id="deleteInputModalLabel">提示</h4>
-					</div>
+<div class="modal fade" id="deleteInputModal" tabindex="-1"
+	role="dialog" aria-labelledby="deleteInputModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
 
-					<div class="modal-body "
-						 >确定删除{{query.name}}吗</div>
-
-					<div class="modal-footer "
-						 >
-						<button type="button" class="btn btn-primary" @click="back()">
-							取消</button>
-						<button type="button" class="btn btn-primary" @click="deleteInput()">
-							删除</button>
-					</div>
-					<!-- /.modal-footer -->
-
-				</div>
-				<!-- /.modal-content -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="deleteInputModalLabel">提示</h4>
 			</div>
-			<!-- /.modal-dialog -->
+
+			<div class="modal-body ">确定删除{{query.name}}吗</div>
+
+			<div class="modal-footer ">
+				<button type="button" class="btn btn-primary" @click="back()">
+					取消</button>
+				<button type="button" class="btn btn-primary" @click="deleteInput()">
+					删除</button>
+			</div>
+			<!-- /.modal-footer -->
+
 		</div>
-		<!-- /.modal -->
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

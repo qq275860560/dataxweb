@@ -67,9 +67,9 @@ PRIMARY KEY ( id )
 DROP TABLE  IF EXISTS input;
 CREATE TABLE input (
 id VARCHAR ( 32 ) NOT NULL,
-name VARCHAR ( 64 ) DEFAULT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
 readerId  VARCHAR ( 32 ) DEFAULT NULL,
-readerName VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
+readerName VARCHAR ( 64 ) DEFAULT NULL comment '输入流类型名称',
 readerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterColumn VARCHAR ( 1024 ) DEFAULT NULL,
@@ -94,9 +94,9 @@ null,'createUserName1','1970-01-01 00:00:00');
 DROP TABLE  IF EXISTS output;
 CREATE TABLE output (
 id VARCHAR ( 32 ) NOT NULL,
-name VARCHAR ( 64 ) DEFAULT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
 writerId VARCHAR ( 32 ) DEFAULT NULL,
-writerName VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
+writerName VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型名称',
 writerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterWriteMode VARCHAR ( 1024 ) DEFAULT NULL,
