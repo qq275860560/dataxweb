@@ -1,4 +1,4 @@
-define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {	
+define(['vue','text!./enableJob.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			  template: componentTemplate,
 			  data:function() {			
@@ -16,14 +16,14 @@ define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {
 				},	 
 		       	back: function () {	
 		       		this.hide();		       	
-		       		$('#deleteInputModal').modal('hide');
+		       		$('#enableJobModal').modal('hide');
 		       	},
-		       	deleteInput: function () {			       		
+		       	enableJob: function () {			       		
 		       		//发送请求告知服务器
 		       		this.hide();		
 		       		
 		       		let tmpVue=this;
-		       		let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/input/deleteInput?id="+this.query.id;
+		       		let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/enableJob?id="+this.query.id;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -34,7 +34,7 @@ define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {
 						tmpVue.code=result.code;
 						 if(result.code==200){
 							   console.log("receive=",result );			
-							   tmpVue.$emit('pageInput',tmpVue.query.pageNum,tmpVue.query.pageSize);							
+							   tmpVue.$emit('pageJob',tmpVue.query.pageNum,tmpVue.query.pageSize);							
 						   }else if(result.code==401){						
 							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){
@@ -46,16 +46,15 @@ define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {
 					}).catch(function(e) {  				
 						tmpVue.msg=e;//此时弹出框可能已经隐藏了
 						tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中
-					});				
-		       					       					
+					});       					
 		       	},  
 		        hide:function (){
-		    	   $('#deleteInputModal').modal('hide');
+		    	   $('#enableJobModal').modal('hide');
 		    	},
 		    	show:function (query){
 		    		this.query=query;
 		    		console.log("query",query);
-		    		$('#deleteInputModal').modal('show');
+		    		$('#enableJobModal').modal('show');
 			    	$(".modal-backdrop").removeClass("modal-backdrop");//TODO 如果没有这一行代码则有遮罩，暂时只想到这个办法，
 
 			    }
@@ -69,5 +68,5 @@ define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {
 		    },
 		};
   		
-		return Vue.component('deleteInput', componentProperties);	
+		return Vue.component('enableJob', componentProperties);	
 }); 

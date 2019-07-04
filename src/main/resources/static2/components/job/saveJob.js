@@ -4,10 +4,10 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 			data:function() {
 				return {
 					query:{ 
-						name:"Name"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
-						inputId:"inputId",
+						name:"job"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
+						inputId:null,
 						inputName:null,
-						outputId:"outputId",	
+						outputId:null,	
 						outputName:null,						
 					},
 					code:null,

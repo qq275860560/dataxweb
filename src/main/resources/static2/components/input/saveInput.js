@@ -4,7 +4,7 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 			data:function() {
 				return {
 					query:{ 
-						name:"inputName"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
+						name:"input"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
 						readerId:"mysqlreader",
 						readerName:"mysqlreader",
 						readerParameterUsername:"root",

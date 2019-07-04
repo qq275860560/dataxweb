@@ -76,6 +76,10 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 					this.selectAllItemId=[];
 					this.selectItemIds=[];
 				},
+				setCodeAndMsg(code,msg){
+					this.code=code;
+					this.msg=msg;					
+				},
 				saveOutput:function(){		
 					updateRouterView("/components/output/saveOutput");
 				},	

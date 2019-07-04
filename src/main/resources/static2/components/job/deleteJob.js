@@ -40,13 +40,13 @@ define(['vue','text!./deleteJob.html'], function (Vue,componentTemplate) {
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
 						   }else{							   
-							   tmpVue.msg=result.msg;
-							   
+							   tmpVue.msg=result.msg;//此时弹出框可能已经隐藏了
+							   tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中							   
 						   }					
 					}).catch(function(e) {  				
-						tmpVue.msg=e;  					 
-					});					
-		       					       					
+						tmpVue.msg=e;//此时弹出框可能已经隐藏了
+						tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中
+					});		       					       					
 		       	},  
 		        hide:function (){
 		    	   $('#deleteJobModal').modal('hide');

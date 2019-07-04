@@ -47,12 +47,12 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
-						   }else{
-							   tmpVue.msg=result.msg;
+						   }else{							   
+							   tmpVue.msg=result.msg;							 
 						   }					
 					}).catch(function(e) {  				
-						tmpVue.msg=e;  					 
-					 });						
+						tmpVue.msg=e;						
+					});						
 				},
 				repaint:function(){					
 					this.array=[];			 

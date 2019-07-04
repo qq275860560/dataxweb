@@ -1,4 +1,4 @@
-define(['vue','components/navigation/navigation','components/job/deleteJob','text!./pageJob.html'], function (Vue,navigation,deleteJob,componentTemplate) {	
+define(['vue','components/navigation/navigation','components/job/runJob','components/job/stopJob','components/job/enableJob','components/job/disableJob','components/job/deleteJob','text!./pageJob.html'], function (Vue,navigation,runJob,stopJob,enableJob,disableJob,deleteJob,componentTemplate) {	
 	
 	let componentProperties = {
 			template: componentTemplate,
@@ -76,9 +76,25 @@ define(['vue','components/navigation/navigation','components/job/deleteJob','tex
 					this.selectAllItemId=[];
 					this.selectItemIds=[];
 				},
+				setCodeAndMsg(code,msg){
+					this.code=code;
+					this.msg=msg;					
+				},
 				saveJob:function(){		
 					updateRouterView("/components/job/saveJob");
-				},	
+				},
+				runJob:function(query){
+					 this.$refs.runJob.show(query);
+				},
+				stopJob:function(query){
+					 this.$refs.stopJob.show(query);
+				},
+				enableJob:function(query){
+					 this.$refs.enableJob.show(query);
+				},
+				disableJob:function(query){
+					 this.$refs.disableJob.show(query);
+				},
 				deleteJob:function(query){
 					 this.$refs.deleteJob.show(query);
 				},

@@ -692,7 +692,7 @@ public class JobController {
 
 	/*把接口改在build模块
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/stopJob?id=1"
+	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/stopJob?id=1&number=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/stopJob")
 	public Map<String, Object> stopJob(@RequestParam Map<String, Object> requestMap) throws Exception {

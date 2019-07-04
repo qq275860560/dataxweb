@@ -4,7 +4,7 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 			data:function() {
 				return {
 					query:{ 
-						name:"Name"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
+						name:"output"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
 						writerId:"mysqlwriter",
 						writerName:"mysqlwriter",
 						writerParameterUsername:"root",
