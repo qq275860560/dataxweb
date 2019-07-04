@@ -36,21 +36,40 @@
 				<p class="help-block with-errors"> </p>
 			</div>
 				
-			<div class="form-group ">
+			<div class="form-group " style="display:none">
 				<label  for="inputId" class="col-md-2 control-label">输入流id</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.inputId" name="inputId" id="inputId" type="text">
+					<input class="form-control" v-model="query.inputId" name="inputId" id="inputId" type="text" >
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
 			
 			<div class="form-group ">
-				<label  for="outputId" class="col-md-2 control-label">输出流id</label>
+				<label  for="inputName" class="col-md-2 control-label">输入流名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.outputId" name="outputId" id="outputId" type="text">
+					<input class="form-control" v-model="query.inputName" name="inputName" id="inputName" type="text" @click="selectInput({pageNum:1,pageSize:5})">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
+			
+			
+			<div class="form-group " style="display:none">
+				<label  for="outputId" class="col-md-2 control-label">输出流id</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.outputId" name="outputId" id="outputId" type="text" >
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
+			<div class="form-group ">
+				<label  for="outputName" class="col-md-2 control-label">输出流名称</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.outputName" name="outputName" id="outputName" type="text" @click="selectOutput({pageNum:1,pageSize:5})">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
+			
 			
  			<div class="form-group ">
 				<button type="button"
@@ -64,6 +83,8 @@
 
 	</div>
 	</div><!-- /.row -->
-</div><!-- /#page-wrapper -->      
+</div><!-- /#page-wrapper -->    
+<selectInput ref="selectInput" @setInput="setInput"/>   
+<selectOutput ref="selectOutput" @setOutput="setOutput"/> 
 </div><!-- /#wrapper -->
 

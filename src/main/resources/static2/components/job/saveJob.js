@@ -1,4 +1,4 @@
-define(['vue','components/navigation/navigation','text!./saveJob.html'], function (Vue,navigation,componentTemplate) {	
+define(['vue','components/navigation/navigation','components/input/selectInput','components/output/selectOutput','text!./saveJob.html'], function (Vue,navigation,selectInput,selectOutput,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
@@ -6,7 +6,9 @@ define(['vue','components/navigation/navigation','text!./saveJob.html'], functio
 					query:{ 
 						name:"Name"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
 						inputId:"inputId",
-						outputId:"outputId",						
+						inputName:null,
+						outputId:"outputId",	
+						outputName:null,						
 					},
 					code:null,
 					msg:null,
@@ -87,7 +89,21 @@ define(['vue','components/navigation/navigation','text!./saveJob.html'], functio
 				back:function(){
 					//this.updateRouterView("/components/job/pageJob");
 					this.$router.go(-1)	
-				},				
+				},	
+				selectInput:function(query){
+					 this.$refs.selectInput.show(query);
+				},
+				setInput:function(id,name){			
+					this.query.inputId=id;
+					this.query.inputName=name;
+				},
+				selectOutput:function(query){
+					 this.$refs.selectOutput.show(query);
+				},
+				setOutput:function(id,name){				 
+					this.query.outputId=id;
+					this.query.outputName=name;
+				},
 			},	
 			created: function () {			
 		         		    
@@ -110,19 +126,19 @@ define(['vue','components/navigation/navigation','text!./saveJob.html'], functio
 		                        }
 		                    }
 		                },	
-		                inputId: {
-		                    message: '输入流Id验证失败',
+		                inputName: {
+		                    message: '输入流名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输入流Id不能为空'
+		                            message: '输入流名称不能为空'
 		                        }		                        
 		                    }
 		                },
-		                outputId: {
-		                    message: '输出流Id验证失败',
+		                outputName: {
+		                    message: '输出流名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输出流Id不能为空'
+		                            message: '输出流名称不能为空'
 		                        }		                        
 		                    }
 		                },	                
