@@ -20,33 +20,34 @@ define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {
 		       	},
 		       	deleteInput: function () {			       		
 		       		//发送请求告知服务器
-		       		this.hide();		
-		       		
-		       		let tmpVue=this;
-		       		let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/input/deleteInput?id="+this.query.id;
-					let token_type=localStorage.getItem('token_type'); 
-					let access_token=localStorage.getItem('access_token');
-					if(token_type==null || access_token==null){
-						this.updateRouterView("/components/user/login");					
-					}
-					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
-					}).then(function(response) {return response.json();}).then(function(result){
-						tmpVue.code=result.code;
-						 if(result.code==200){
-							   console.log("receive=",result );			
-							   tmpVue.$emit('pageInput',tmpVue.query.pageNum,tmpVue.query.pageSize);							
-						   }else if(result.code==401){						
-							   tmpVue.updateRouterView("/components/user/login");
-						   }else if(result.code==403){
-							   tmpVue.msg="授权失败";					
-						   }else{							   
-							   tmpVue.msg=result.msg;//此时弹出框可能已经隐藏了
-							   tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中							   
-						   }					
-					}).catch(function(e) {  				
-						tmpVue.msg=e;//此时弹出框可能已经隐藏了
-						tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中
-					});				
+		       		this.hide();			       		
+		       		let tmpVue=this;		       		
+		       		for(let item of this.query.items){
+			       		let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/input/deleteInput?id="+item.id;
+						let token_type=localStorage.getItem('token_type'); 
+						let access_token=localStorage.getItem('access_token');
+						if(token_type==null || access_token==null){
+							this.updateRouterView("/components/user/login");					
+						}
+						fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
+						}).then(function(response) {return response.json();}).then(function(result){
+							tmpVue.code=result.code;
+							 if(result.code==200){
+								   console.log("receive=",result );			
+								   tmpVue.$emit('pageInput',tmpVue.query.pageNum,tmpVue.query.pageSize);							
+							   }else if(result.code==401){						
+								   tmpVue.updateRouterView("/components/user/login");
+							   }else if(result.code==403){
+								   tmpVue.msg="授权失败";					
+							   }else{							   
+								   tmpVue.msg=result.msg;//此时弹出框可能已经隐藏了
+								   tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中							   
+							   }					
+						}).catch(function(e) {  				
+							tmpVue.msg=e;//此时弹出框可能已经隐藏了
+							tmpVue.$emit('setCodeAndMsg',500,e);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中
+						});		
+		       		}
 		       					       					
 		       	},  
 		        hide:function (){

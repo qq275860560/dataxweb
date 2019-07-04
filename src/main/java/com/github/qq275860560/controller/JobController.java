@@ -698,6 +698,57 @@ public class JobController {
 	public Map<String, Object> stopJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
+		
+		String id = (String) requestMap.get("id");
+		String number = (String) requestMap.get("number");
+		Map<String, Object> map = jobDao.getJob(id);
+		String name = (String) map.get("name");
+
+		Integer status = (Integer) map.get("status");
+		if (status == 0) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "停止失败,任务禁用中");
+					put("data", null);
+				}
+			};
+		}
+		
+		
+		ResponseEntity<Map> response3  = restTemplate.exchange(
+				String.format("%s/job/%s/%s/api/json?pretty=true", jenkinsUrl, name, number),
+				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+					{
+						set("Content-Type", "text/xml; charset=UTF-8");
+
+					}
+				}), Map.class);
+		Map<String, Object> responseMap = (Map<String, Object>) response3.getBody();
+		log.info("是否构建中" + (boolean) responseMap.get("building"));
+		if((boolean) responseMap.get("building")==false) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "任务已经构建完毕，无法停止");
+					put("data", null);
+				}
+			};
+		}
+		//log.info("预期构建时长" + (Integer) responseMap.get("estimatedDuration"));
+		//log.info("实际构建时长" + (Integer) responseMap.get("duration"));
+		//log.info("构建结果" + (String) responseMap.get("result"));
+		
+		
+		//停止
+		ResponseEntity<String> response4  =  restTemplate.exchange(String.format("%s/job/%s/%s/stop", jenkinsUrl, name,number),
+				HttpMethod.POST, new HttpEntity<>(new HttpHeaders() {
+					{
+						set("Content-Type", "text/xml; charset=UTF-8");
+
+					}
+				}), String.class);	
+		log.info(""+response4.getStatusCode());;
 
 		return new HashMap<String, Object>() {
 			{
@@ -719,6 +770,18 @@ public class JobController {
 
 		String id = (String) requestMap.get("id");
 		Map<String, Object> map = jobDao.getJob(id);
+		
+		Integer status = (Integer) map.get("status");
+		if (status == 1) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "启用失败,任务启用中");
+					put("data", null);
+				}
+			};
+		}
+		
 		map.put("status", 1);
 		jobDao.updateJob(map);
 		return new HashMap<String, Object>() {
@@ -741,6 +804,18 @@ public class JobController {
 
 		String id = (String) requestMap.get("id");
 		Map<String, Object> map = jobDao.getJob(id);
+		
+		Integer status = (Integer) map.get("status");
+		if (status == 0) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "禁用失败,任务禁用中");
+					put("data", null);
+				}
+			};
+		}
+		
 		map.put("status", 0);
 		jobDao.updateJob(map);
 		return new HashMap<String, Object>() {

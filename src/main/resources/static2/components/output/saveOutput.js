@@ -87,6 +87,7 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");
+					$("#form").data("bootstrapValidator").resetForm();
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},

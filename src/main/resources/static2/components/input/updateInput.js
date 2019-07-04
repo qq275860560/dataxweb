@@ -43,6 +43,7 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");
+					$("#form").data("bootstrapValidator").resetForm();
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},

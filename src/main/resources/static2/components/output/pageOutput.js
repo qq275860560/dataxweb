@@ -86,6 +86,25 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 				deleteOutput:function(query){
 					 this.$refs.deleteOutput.show(query);
 				},
+				batchDeleteOutput:function(){
+					if(this.selectItemIds.length<=0){
+						this.setCodeAndMsg(400,"请选中要删除的数据");
+						return;
+					}
+					let items = [] 
+					for(tmpId of this.selectItemIds){
+						for(let item of this.data.pageList){
+							if(tmpId==item.id){
+								items.push({id:tmpId,name:item.name});
+							}
+						}
+					}
+					let query = {};
+					query.items=items;
+					query.pageNum=this.data.pageNum;
+					query.pageSize=this.data.pageSize;
+					this.$refs.deleteOutput.show(query);					 
+				},
 			},	
 			watch: {
 				selectAllItemId(newValue, oldValue) {      

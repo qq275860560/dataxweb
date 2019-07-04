@@ -10,7 +10,10 @@
 				<h4 class="modal-title" id="deleteInputModalLabel">提示</h4>
 			</div>
 
-			<div class="modal-body ">确定删除{{query.name}}吗</div>
+			<div class="modal-body ">
+			确定删除以下数据吗
+			<div v-for="(item,index) of query.items">{{item.name}}</div>
+			</div>
 
 			<div class="modal-footer ">
 				<button type="button" class="btn btn-primary" @click="back()">

@@ -54,11 +54,14 @@
 
 					<div class="form-group ">
 						<button type="button"
-							class="col-md-1 col-md-offset-4 btn btn-default"
+							class="col-md-1 col-md-offset-2 btn btn-default"
 							@click="pageOutput(1,data.pageSize)">搜索</button>
 						<button type="button"
 							class="col-md-1 col-md-offset-1  btn btn-default"
 							@click="updateRouterView('/components/output/saveOutput')">新建</button>
+						<button type="button" 
+						    class="col-md-2 col-md-offset-1 btn btn-default"
+							@click="batchDeleteOutput">批量删除</button>	
 					</div>
 				</form>
 			</div>
@@ -99,7 +102,7 @@
 							<td>{{item.createTime}}</td>
 							<td>
 								<button type="button" class="btn btn-default"
-									@click="deleteOutput({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
+									@click="deleteOutput({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
 								<button type="button" class="btn btn-default"
 									@click="updateRouterView('/components/output/updateOutput',{id:item.id,name:item.name})">编辑</button>
 							</td>

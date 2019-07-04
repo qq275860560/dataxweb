@@ -51,13 +51,16 @@
 						</div>
 					</div>
 
-					<div class="form-group ">
-						<button type="button"
-							class="col-md-1 col-md-offset-4 btn btn-default"
+					<div class="form-group ">							
+					     <button type="button"
+							class="col-md-1 col-md-offset-2 btn btn-default"
 							@click="pageJob(1,data.pageSize)">搜索</button>
 						<button type="button"
 							class="col-md-1 col-md-offset-1  btn btn-default"
 							@click="updateRouterView('/components/job/saveJob')">新建</button>
+						<button type="button" 
+						    class="col-md-2 col-md-offset-1 btn btn-default"
+							@click="batchDeleteJob">批量删除</button>		
 					</div>
 				</form>
 			</div>
@@ -96,14 +99,14 @@
 								<button type="button" class="btn btn-default"
 									@click="runJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">运行</button>
 								<button type="button" class="btn btn-default"
-									@click="stopJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">停止</button>
+									@click="stopJob({id:item.id,name:item.name,number:item.number,pageNum:data.pageNum,pageSize:data.pageSize})">停止</button>
 									<button type="button" class="btn btn-default"
 									@click="enableJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">启用</button>
 									<button type="button" class="btn btn-default"
 									@click="disableJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">停用</button>
 
 								<button type="button" class="btn btn-default"
-									@click="deleteJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
+									@click="deleteJob({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
 								<button type="button" class="btn btn-default"
 									@click="updateRouterView('/components/job/updateJob',{id:item.id,name:item.name})">编辑</button>
 							</td>

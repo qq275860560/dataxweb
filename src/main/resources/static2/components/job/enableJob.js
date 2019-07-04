@@ -45,7 +45,7 @@ define(['vue','text!./enableJob.html'], function (Vue,componentTemplate) {
 						   }					
 					}).catch(function(e) {  				
 						tmpVue.msg=e;//此时弹出框可能已经隐藏了
-						tmpVue.$emit('setCodeAndMsg',result.code,result.msg);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中
+						tmpVue.$emit('setCodeAndMsg',500,e);//如果弹出框已经隐藏了，需要把错误消息显示在父组件中
 					});       					
 		       	},  
 		        hide:function (){

@@ -83,6 +83,7 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");
+					$("#form").data("bootstrapValidator").resetForm();
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
