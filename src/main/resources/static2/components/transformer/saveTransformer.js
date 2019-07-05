@@ -1,16 +1,13 @@
-define(['vue','components/navigation/navigation','components/input/selectInput','components/output/selectOutput','components/transformer/selectTransformer','text!./saveJob.html'], function (Vue,navigation,selectInput,selectOutput,selectTransformer,componentTemplate) {	
+define(['vue','components/navigation/navigation','text!./saveTransformer.html'], function (Vue,navigation,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
 					query:{ 
-						name:"job"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
-						inputId:null,
-						inputName:null,
-						outputId:null,	
-						outputName:null,	
-						transformerId:null,	
-						transformerName:null,	
+						name:"transformer"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
+						transformerType:"dx_groovy",
+						transformerParameterCode:"Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;",
+						transformerParameterExtraPackage:"import groovy.json.JsonSlurper;",
 					},
 					code:null,
 					msg:null,
@@ -55,10 +52,10 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				saveJob:function(){					
+				saveTransformer:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/saveJob?name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId+"&transformerId="+this.query.transformerId;
+					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/transformer/saveTransformer?name="+this.query.name+"&transformerType="+this.query.transformerType+"&transformerParameterCode="+this.query.transformerParameterCode+"&transformerParameterExtraPackage="+this.query.transformerParameterExtraPackage;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -69,14 +66,13 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 						tmpVue.code=result.code;
 						 if(result.code==200){
 							   console.log("receive=",result );			
-							   tmpVue.updateRouterView( "/components/job/pageJob");
+							   tmpVue.updateRouterView( "/components/transformer/pageTransformer");
 						   }else if(result.code==401){						
 							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
 						   }else{							   
 							   tmpVue.msg=result.msg;
-							   console.log(tmpVue.msg);
 						   }					
 					}).catch(function(e) {  				
 						tmpVue.msg=e;  					 
@@ -90,30 +86,9 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
 				back:function(){
-					//this.updateRouterView("/components/job/pageJob");
+					//this.updateRouterView("/components/transformer/pageTransformer");
 					this.$router.go(-1)	
-				},	
-				selectInput:function(query){
-					 this.$refs.selectInput.show(query);
-				},
-				setInput:function(id,name){			
-					this.query.inputId=id;
-					this.query.inputName=name;
-				},
-				selectOutput:function(query){
-					 this.$refs.selectOutput.show(query);
-				},
-				setOutput:function(id,name){				 
-					this.query.outputId=id;
-					this.query.outputName=name;
-				},
-				selectTransformer:function(query){
-					 this.$refs.selectTransformer.show(query);
-				},
-				setTransformer:function(id,name){				 
-					this.query.transformerId=id;
-					this.query.transformerName=name;
-				},
+				},				
 			},	
 			created: function () {			
 		         		    
@@ -129,36 +104,45 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 		            },
 		            fields: {
 		                name: {
-		                    message: '任务名称验证失败',
+		                    message: '交换清洗名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '任务名称不能为空'
+		                            message: '交换清洗名称不能为空'
 		                        }
 		                    }
 		                },	
-		                inputName: {
-		                    message: '输入流名称验证失败',
+		                transformerType: {
+		                    message: '交换清洗类型名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输入流名称不能为空'
-		                        }		                        
+		                            message: '交换清洗类型名称不能为空'
+		                        },
+		                        stringLength: {
+		                            min: 6,
+		                            max: 18,
+		                            message: '交换清洗类型名称长度必须在6到18位之间'
+		                        },
+		                        regexp: {
+		                            regexp: /^[a-zA-Z0-9_]+$/,
+		                            message: '交换清洗类型名称只能包含大写、小写、数字和下划线'
+		                        }
 		                    }
 		                },
-		                outputName: {
-		                    message: '输出流名称验证失败',
+		                transformerParameterCode: {
+		                    message: '用户名验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输出流名称不能为空'
-		                        }		                        
+		                            message: '用户名不能为空'
+		                        }
 		                    }
-		                },	                
+		                },      
 		                
 		            }
 		        });			
 			}			
 	 	};
 	 	
-	 	return Vue.component('saveJob',  componentProperties);
+	 	return Vue.component('saveTransformer',  componentProperties);
 	 	
 	
 }); 

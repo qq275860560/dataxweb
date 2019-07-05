@@ -120,6 +120,25 @@ insert into output values(1,'outputName1',null,'mysqlwriter',
 'test',
 null,'createUserName1','1970-01-01 00:00:00');
 
+
+DROP TABLE  IF EXISTS transformer;
+CREATE TABLE transformer (
+id VARCHAR ( 32 ) NOT NULL,
+name VARCHAR ( 64 )  comment '交换清洗名称',
+transformerType VARCHAR (64) DEFAULT NULL comment '交换清洗类型',
+transformerParameterCode text DEFAULT NULL comment '交换清洗代码',
+transformerParameterExtraPackage text DEFAULT NULL comment '交换清洗引入的 包名引入语句，换行符结尾，如果存在多个引入，每一个语句还是分号结尾，也就是多行',
+createUserId VARCHAR ( 32 ) DEFAULT NULL,
+createUserName VARCHAR ( 64 ) DEFAULT NULL,
+createTime datetime DEFAULT NULL,
+PRIMARY KEY ( id ) 
+) ;
+
+insert into transformer values(1,'transformer','dx_groovy',
+'Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;',
+'import groovy.json.JsonSlurper;',
+null,'createUserName1','1970-01-01 00:00:00');
+
 DROP TABLE  IF EXISTS plugin;
 CREATE TABLE plugin (
 id VARCHAR ( 32 ) NOT NULL,

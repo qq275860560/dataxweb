@@ -71,6 +71,18 @@ define("router",function (require) {
 			component: resolve => require(['./components/output/updateOutput'],resolve) 
 		},
 		
+		{ 
+			path: '/components/transformer/pageTransformer', 
+			component: resolve => require(['./components/transformer/pageTransformer'],resolve) 
+		},
+		{ 
+			path: '/components/transformer/saveTransformer', 
+			component: resolve => require(['./components/transformer/saveTransformer'],resolve) 
+		},
+		{ 
+			path: '/components/transformer/updateTransformer', 
+			component: resolve => require(['./components/transformer/updateTransformer'],resolve) 
+		},
 		
 		
 		{ 

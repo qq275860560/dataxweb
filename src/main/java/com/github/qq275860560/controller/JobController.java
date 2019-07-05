@@ -34,6 +34,7 @@ import com.github.qq275860560.dao.BuildDao;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.JobDao;
 import com.github.qq275860560.dao.OutputDao;
+import com.github.qq275860560.dao.TransformerDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,7 +58,9 @@ public class JobController {
 	private InputDao inputDao;
 	@Autowired
 	private OutputDao outputDao;
-
+	@Autowired
+	private TransformerDao transformerDao;
+	
 	@Autowired
 	private ObjectMapper objectMapper;
 
@@ -231,6 +234,12 @@ public class JobController {
 		requestMap.put("writerParameterConnectionJdbcUrl", outputMap.get("writerParameterConnectionJdbcUrl"));
 		requestMap.put("writerParameterConnectionTable", outputMap.get("writerParameterConnectionTable"));
 
+		String transformerId = (String) requestMap.get("transformerId");
+		Map<String, Object> transformerMap = transformerDao.getTransformer(transformerId);
+		requestMap.put("transformerType", transformerMap.get("transformerType"));
+		requestMap.put("transformerParameterCode", transformerMap.get("transformerParameterCode"));
+		requestMap.put("transformerParameterExtraPackage", transformerMap.get("transformerParameterExtraPackage"));
+		
 		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(requestMap));
 		requestMap.put("dataxJson", dataxJson);
 

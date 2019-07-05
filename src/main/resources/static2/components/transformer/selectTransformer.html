@@ -1,0 +1,103 @@
+<div class="modal fade" id="selectTransformerModal" tabindex="-1"
+	role="dialog" aria-labelledby="selectTransformerModalLabel"
+	aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="selectTransformerModalLabel">选择交换清洗</h4>
+			</div>
+
+			<div class="modal-body ">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<form id="form" class="form-horizontal " role="form">
+							<div class="form-group ">
+								<label class="col-md-4 control-label">交换清洗名称</label>
+								<div class="col-md-4">
+									<input class="form-control" v-model="name" name="name"
+										type="text">
+								</div>
+								<button type="button" class="col-md-2   btn btn-default"
+									@click="pageTransformer(1,data.pageSize)">搜索</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<div class="row">
+					<div class="table-responsive">
+						<table
+							class="table table-bordered table-hover tablesorter    table-striped table-responsive">
+							<thead>
+								<tr>
+									<th class="header">选择 <i class="fa fa-sort"></i></th>
+									<th class="header">交换清洗名称 <i class="fa fa-sort"></i></th>
+									<th class="header">交换清洗类型名称 <i class="fa fa-sort"></i></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="(item,index) of data.pageList">
+									<td><input type="radio" name="id" v-model="selectItemId"
+										:value="item.id"> {{index+1}}</td>
+									<td>{{item.name}}</td>
+									<td>{{item.transformerName}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- /.row -->
+
+				<div class="row">
+					<ul class="pagination" style="float: right">
+						<li><span>共{{Math.ceil((data.total+1)/data.pageSize)}}页{{data.total}}条记录</span>
+						</li>
+						<li><a href="javascript:void(0)"
+							@click="pageTransformer(1,data.pageSize)">首页</a></li>
+						<li><a href="javascript:void(0)"
+							@click="pageTransformer(data.pageNum>1?data.pageNum-1:data.pageNum,data.pageSize)"
+							class="previous disabled">&laquo;上一页</a></li>
+						<li><a :style="item.style" v-for="item of array"
+							href='javascript:void(0)'
+							@click="pageTransformer( item.pageNum,data.pageSize )">{{item.pageNum}}&nbsp;</a></li>
+						<li><a href="javascript:void(0)"
+							@click="pageTransformer(data.pageNum<Math.ceil((data.total+1)/data.pageSize)?data.pageNum+1:data.pageNum,data.pageSize)"
+							class="next ">下一页&raquo;</a></li>
+						<li><a href="javascript:void(0)"
+							@click="pageTransformer(Math.ceil((data.total+1)/data.pageSize),data.pageSize)">尾页</a>
+						</li>
+						<li><span>跳转至<input
+								style="width: 24px; padding-top: 0px; padding-bottom: 0px"
+								type="text" v-model="data.pageNum" />页
+						</span></li>
+						<li><span>每页<input
+								style="width: 24px; padding-top: 0px; padding-bottom: 0px"
+								type="text" v-model="data.pageSize" />条
+						</span></li>
+						<li><a href='javascript:void(0)'
+							@click="pageTransformer(data.pageNum,data.pageSize)">确定</a></li>
+					</ul>
+				</div>
+				<!-- /.row -->
+
+			</div>
+			<!-- /.modal-body -->
+
+			<div class="modal-footer ">
+				<button type="button" class="btn btn-primary" @click="back()">
+					取消</button>
+				<button type="button" class="btn btn-primary"
+					@click="selectTransformer()">确定</button>
+			</div>
+			<!-- /.modal-footer -->
+
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
