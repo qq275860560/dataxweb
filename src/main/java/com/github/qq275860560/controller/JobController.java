@@ -4,11 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.catalina.filters.AddDefaultCharsetFilter;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -284,6 +287,7 @@ public class JobController {
 			throws IOException, JsonParseException, JsonMappingException {
 		Map<String, Object> readerMap = generateReaderMap(requestMap);
 		Map<String, Object> writerMap = generateWriterMap(requestMap);
+		List<HashMap<String, Object>> transformerList = generateTransformerList(requestMap);
 		Map<String, Object> dataxMap = new HashMap<String, Object>() {
 			{
 				put("job", new HashMap<String, Object>() {
@@ -310,6 +314,9 @@ public class JobController {
 									{
 										put("reader", readerMap);
 										put("writer", writerMap);
+										if(!transformerList.isEmpty()) {
+											put("transformer", transformerList);
+										}
 
 									}
 								});
@@ -418,6 +425,43 @@ public class JobController {
 
 	}
 
+	
+	
+	public static List<HashMap<String, Object>> generateTransformerList(Map<String, Object> requestMap)
+			throws IOException, JsonParseException, JsonMappingException {
+		String transformerType = (String) requestMap.get("transformerType");
+		
+		if (  "dx_groovy".equals(transformerType) ) {			
+			return new ArrayList<HashMap<String, Object>>() {
+				{
+					add(new HashMap<String, Object>() {
+						{
+							put("name", transformerType);
+							put("parameter", new HashMap<String, Object>() {
+								{
+									String transformerParameterCode = (String) requestMap.get("transformerParameterCode");
+									put("code", transformerParameterCode);
+								 
+
+									String[] column = ((String) requestMap.get("transformerParameterExtraPackage")).split("\n");
+									put("extraPackage", column);
+
+									 
+
+								}
+							});
+						}
+					});
+
+				}
+			};
+		}
+		return Collections.EMPTY_LIST;
+					
+				 
+	}
+
+	
 	/*
 	 * curl -i -X POST
 	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/updateJob?id=2&name=jobname2"

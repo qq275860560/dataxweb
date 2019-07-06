@@ -112,19 +112,19 @@ define(['vue','components/navigation/navigation','text!./saveTransformer.html'],
 		                    }
 		                },	
 		                transformerType: {
-		                    message: '交换清洗类型名称验证失败',
+		                    message: '交换清洗类型验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '交换清洗类型名称不能为空'
+		                            message: '交换清洗类型不能为空'
 		                        },
 		                        stringLength: {
 		                            min: 6,
 		                            max: 18,
-		                            message: '交换清洗类型名称长度必须在6到18位之间'
+		                            message: '交换清洗类型长度必须在6到18位之间'
 		                        },
 		                        regexp: {
 		                            regexp: /^[a-zA-Z0-9_]+$/,
-		                            message: '交换清洗类型名称只能包含大写、小写、数字和下划线'
+		                            message: '交换清洗类型只能包含大写、小写、数字和下划线'
 		                        }
 		                    }
 		                },

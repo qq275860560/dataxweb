@@ -17,7 +17,7 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 				updateTransformer:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/transformer/updateTransformer?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&writerName="+this.query.writerName+"&writerParameterUsername="+this.query.writerParameterUsername+"&writerParameterPassword="+this.query.writerParameterPassword+"&writerParameterWriteMode="+this.query.writerParameterWriteMode+"&writerParameterColumn="+this.query.writerParameterColumn+"&writerParameterPreSql="+this.query.writerParameterPreSql+"&writerParameterConnectionJdbcUrl="+this.query.writerParameterConnectionJdbcUrl+"&writerParameterConnectionTable="+this.query.writerParameterConnectionTable;
+					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/transformer/updateTransformer?id="+this.query.id+"&name="+this.query.name+"&transformerType="+this.query.transformerType+"&transformerParameterCode="+this.query.transformerParameterCode+"&transformerParameterExtraPackage="+this.query.transformerParameterExtraPackage;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -99,19 +99,19 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 		                    }
 		                },	
 		                transformerType: {
-		                    message: '交换清洗类型名称验证失败',
+		                    message: '交换清洗类型验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '交换清洗类型名称不能为空'
+		                            message: '交换清洗类型不能为空'
 		                        },
 		                        stringLength: {
 		                            min: 6,
 		                            max: 18,
-		                            message: '交换清洗类型名称长度必须在6到18位之间'
+		                            message: '交换清洗类型长度必须在6到18位之间'
 		                        },
 		                        regexp: {
 		                            regexp: /^[a-zA-Z0-9_]+$/,
-		                            message: '交换清洗类型名称只能包含大写、小写、数字和下划线'
+		                            message: '交换清洗类型只能包含大写、小写、数字和下划线'
 		                        }
 		                    }
 		                },

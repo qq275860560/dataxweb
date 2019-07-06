@@ -10,7 +10,7 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 						readerParameterUsername:"root",
 						readerParameterPassword:"123456",
 						readerParameterColumn:"id,name",
-						readerParameterWhere:"name !=null",
+						readerParameterWhere:"name is not null",
 						readerParameterConnectionJdbcUrl:"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
 						readerParameterConnectionTable:"job",	
 					},
