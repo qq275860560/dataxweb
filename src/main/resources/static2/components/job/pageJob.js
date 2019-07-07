@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/navigation/navigation','components/job/runJob','components/job/stopJob','components/job/enableJob','components/job/disableJob','components/job/deleteJob','text!./pageJob.html'], function (Vue,navigation,runJob,stopJob,enableJob,disableJob,deleteJob,componentTemplate) {	
 	
 	let componentProperties = {

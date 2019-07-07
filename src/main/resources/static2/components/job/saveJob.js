@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/navigation/navigation','components/input/selectInput','components/output/selectOutput','components/transformer/selectTransformer','text!./saveJob.html'], function (Vue,navigation,selectInput,selectOutput,selectTransformer,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,

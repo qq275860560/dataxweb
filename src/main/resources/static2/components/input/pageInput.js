@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/navigation/navigation','components/input/deleteInput','text!./pageInput.html'], function (Vue,navigation,deleteInput,componentTemplate) {	
 	
 	let componentProperties = {

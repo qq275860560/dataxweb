@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/navigation/navigation','components/output/deleteOutput','text!./pageOutput.html'], function (Vue,navigation,deleteOutput,componentTemplate) {	
 	
 	let componentProperties = {

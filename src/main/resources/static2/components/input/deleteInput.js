@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','text!./deleteInput.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			  template: componentTemplate,

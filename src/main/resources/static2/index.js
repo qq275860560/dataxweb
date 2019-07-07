@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 // 定义依赖
 require.config(
         {

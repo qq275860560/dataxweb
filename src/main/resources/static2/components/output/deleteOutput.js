@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','text!./deleteOutput.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			  template: componentTemplate,

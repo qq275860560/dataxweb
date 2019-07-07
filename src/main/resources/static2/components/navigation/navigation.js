@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/user/logout','text!./navigation.html'], function (Vue,logout,componentTemplate) {	
 	let componentProperties = {
 			  template: componentTemplate,

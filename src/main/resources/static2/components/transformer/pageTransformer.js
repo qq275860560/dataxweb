@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/navigation/navigation','components/transformer/deleteTransformer','text!./pageTransformer.html'], function (Vue,navigation,deleteTransformer,componentTemplate) {	
 	
 	let componentProperties = {

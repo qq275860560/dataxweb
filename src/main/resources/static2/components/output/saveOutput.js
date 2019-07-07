@@ -1,3 +1,6 @@
+/**
+ * @author jiangyuanlin@163.com
+ */
 define(['vue','components/navigation/navigation','text!./saveOutput.html'], function (Vue,navigation,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
