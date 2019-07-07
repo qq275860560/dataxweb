@@ -95,7 +95,7 @@
 							<td>{{item.jobName}}</td>
 							<td>{{item.number}}</td>
 							<td>{{item.duration}}</td>
-							<td>{{(item.result==1?"成功":item.result==2?"失败":"取消")}}</td>
+							<td>{{(item.result==1?"成功":(item.result==2?"失败":"取消"))}}</td>
 							<td><a href="javascript:void(0)" @click="updateRouterView('/components/build/getBuild',{id:item.id,name:item.name})">查看</a></td>							
 						</tr>
 					</tbody>
