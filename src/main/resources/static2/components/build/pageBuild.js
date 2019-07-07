@@ -1,14 +1,15 @@
 /**
  * @author jiangyuanlin@163.com
  */
-define(['vue','components/navigation/navigation','components/output/deleteOutput','text!./pageOutput.html'], function (Vue,navigation,deleteOutput,componentTemplate) {	
+define(['vue','components/navigation/navigation','components/build/getBuild','text!./pageBuild.html'], function (Vue,navigation,deleteBuild,componentTemplate) {	
 	
 	let componentProperties = {
 			template: componentTemplate,
 			
 			data:function() {
 				return {
-					name:"",
+					jobName:"",
+					number:"",
 					startCreateTime:"",
 					endCreateTime:"",					
 					array:[],	
@@ -29,9 +30,9 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				pageOutput:function(pageNum,pageSize){	
+				pageBuild:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/output/pageOutput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/build/pageBuild?pageNum="+pageNum+"&pageSize="+pageSize+"&jobName="+this.jobName+"&number="+this.number+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				
@@ -82,53 +83,14 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 				setCodeAndMsg(code,msg){
 					this.code=code;
 					this.msg=msg;					
-				},			
-				deleteOutput:function(query){
-					 this.$refs.deleteOutput.show(query);
-				},
-				batchDeleteOutput:function(){
-					if(this.selectItemIds.length<=0){
-						this.setCodeAndMsg(400,"请选中要删除的数据");
-						return;
-					}
-					let items = [] 
-					for(tmpId of this.selectItemIds){
-						for(let item of this.data.pageList){
-							if(tmpId==item.id){
-								items.push({id:tmpId,name:item.name});
-							}
-						}
-					}
-					let query = {};
-					query.items=items;
-					query.pageNum=this.data.pageNum;
-					query.pageSize=this.data.pageSize;
-					this.$refs.deleteOutput.show(query);					 
-				},
+				},				 
 			},	
 			watch: {
-				selectAllItemId(newValue, oldValue) {      
-				      if(newValue.length>0){						
-						for(let item of this.data.pageList){							
-							let flag = false;
-							for(tmpId of this.selectItemIds){
-								if(tmpId==item.id){
-									flag=true;
-									break;
-								}								
-							}
-							if(flag==false){
-								this.selectItemIds.push(item.id);	
-							}
-						}						
-					}else{
-						this.selectItemIds=[];
-					}				
-				},				
+				 			
 				
 			 },
 			created: function () {			
-				this.pageOutput(this.data.pageNum,this.data.pageSize);			    
+				this.pageBuild(this.data.pageNum,this.data.pageSize);			    
 		    },
 			mounted:function(){		
 				 let tmpVue=this;
@@ -169,7 +131,7 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 			}
 	 	};
 	 	
-	 	return Vue.component('pageOutput',  componentProperties);
+	 	return Vue.component('pageBuild',  componentProperties);
 	
 }); 
 

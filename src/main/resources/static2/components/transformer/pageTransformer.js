@@ -82,10 +82,7 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				setCodeAndMsg(code,msg){
 					this.code=code;
 					this.msg=msg;					
-				},
-				saveTransformer:function(){		
-					updateRouterView("/components/transformer/saveTransformer");
-				},	
+				},					
 				deleteTransformer:function(query){
 					 this.$refs.deleteTransformer.show(query);
 				},

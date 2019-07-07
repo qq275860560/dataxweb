@@ -83,9 +83,6 @@ define(['vue','components/navigation/navigation','components/job/runJob','compon
 					this.code=code;
 					this.msg=msg;					
 				},
-				saveJob:function(){		
-					updateRouterView("/components/job/saveJob");
-				},
 				runJob:function(query){
 					 this.$refs.runJob.show(query);
 				},

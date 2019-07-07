@@ -37,9 +37,9 @@ DROP TABLE  IF EXISTS build;
 CREATE TABLE build (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
-jobId VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属项目id',
-jobName VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属项目名称',
-number VARCHAR(32)  DEFAULT NULL,
+jobId VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属构建任务id',
+jobName VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属构建任务名称',
+number VARCHAR(32)  DEFAULT NULL COMMENT '构建日志编号',
 building int   DEFAULT NULL COMMENT '{0:还未构建或已构建完毕,1:构建中}',
 estimatedDuration int  DEFAULT NULL COMMENT '预期构建时长（毫秒）',
 duration int  DEFAULT NULL COMMENT '实际构建时长(毫秒)',

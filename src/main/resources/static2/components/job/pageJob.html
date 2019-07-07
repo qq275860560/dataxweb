@@ -8,7 +8,7 @@
 				<li><a href="javascript:void(0)"
 					@click="updateRouterView('/components/home/home')"><i
 						class="fa fa-dashboard"></i> 主页</a></li>
-				<li class="active"><i class="fa fa-edit"></i>任务</li>
+				<li class="active"><i class="fa fa-edit"></i>构建任务</li>
 			</ol>
 
 			<div v-if="code && code!=200" class="alert alert-warning ">
@@ -22,7 +22,7 @@
 				<form id="form" class="form-horizontal " role="form">
 
 					<div class="form-group ">
-						<label class="col-md-2 control-label">任务名称</label>
+						<label class="col-md-2 control-label">构建任务名称</label>
 						<div class="col-md-6">
 							<input class="form-control" v-model="name" name="name"
 								type="text">
@@ -78,7 +78,7 @@
 							<th class="header"><input type="checkbox"
 								v-model="selectAllItemId" value="true">序号 <i
 								class="fa fa-sort"></i></th>
-							<th class="header">任务 <i class="fa fa-sort"></i></th>
+							<th class="header">构建任务 <i class="fa fa-sort"></i></th>
 							<th class="header">输入流 <i class="fa fa-sort"></i></th>
 							<th class="header">输出流 <i class="fa fa-sort"></i></th>
 							<th class="header">状态<i class="fa fa-sort"></i></th>

@@ -65,6 +65,16 @@ public class BuildDao {
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
+	public int deleteBuildByJobId(String jobId) throws Exception {
+		StringBuilder sb = new StringBuilder();
+		List<Object> condition = new ArrayList<Object>();
+		sb.append(" delete  from build where 1=1 ");
+		sb.append(" and jobId = ? ");
+		condition.add(jobId);
+		log.info("sql=" + sb.toString());
+		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
+		return jdbcTemplate.update(sb.toString(), condition.toArray());
+	}
 
 	public Map<String, Object> getBuild(Object id) throws Exception {
 		StringBuilder sb = new StringBuilder();

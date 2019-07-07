@@ -132,10 +132,10 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 		            },
 		            fields: {
 		                name: {
-		                    message: '任务名称验证失败',
+		                    message: '构建任务名称验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '任务名称不能为空'
+		                            message: '构建任务名称不能为空'
 		                        }
 		                    }
 		                },	

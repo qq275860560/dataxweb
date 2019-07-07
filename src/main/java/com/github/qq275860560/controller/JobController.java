@@ -548,7 +548,8 @@ public class JobController {
 			log.error("",e);
 		}
 		//
-		jobDao.deleteJob(id);
+		jobDao.deleteJob(id);		
+		buildDao.deleteBuildByJobId(id);
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -706,20 +707,7 @@ public class JobController {
 		};
 	}
 
-	private String runJob(String id) throws Exception {
-		Map<String, Object> map = jobDao.getJob(id);
-		String dataxJson = (String) map.get("dataxJson");
-
-		String name = (String) map.get("name");
-		File file = new File(Constant.DATAX_HOME + File.separator + "job" + File.separator + name + ".json");
-		FileUtils.writeStringToFile(file, dataxJson, "UTF-8");
-
-		log.info(file.getAbsolutePath());
-		// 工具类实现参考https://github.com/qq275860560/common/blob/master/src/main/java/com/github/qq275860560/common/util/CommandUtil.java
-		return CommandUtil.runComand("python " + Constant.DATAX_HOME + File.separator + "bin" + File.separator
-				+ "datax.py " + file.getAbsolutePath());
-
-	}
+	
 
 	/*
 	 * 

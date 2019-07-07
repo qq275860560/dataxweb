@@ -82,10 +82,7 @@ define(['vue','components/navigation/navigation','components/input/deleteInput',
 				setCodeAndMsg(code,msg){
 					this.code=code;
 					this.msg=msg;					
-				},
-				saveInput:function(){		
-					updateRouterView("/components/input/saveInput");
-				},	
+				},				
 				deleteInput:function(query){
 					 this.$refs.deleteInput.show(query);
 				},
