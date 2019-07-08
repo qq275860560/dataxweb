@@ -27,7 +27,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+)  DEFAULT CHARSET=utf8;
 
 insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,0.0,null,'createUserName1','1970-01-01 00:00:00');
 insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,0.0,null,'createUserName2','1970-01-01 00:00:00');
@@ -49,7 +49,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+)  DEFAULT CHARSET=utf8;
 insert into build values('1','buildName1',1,'jobName1','1',0,100,101,null,'',null,'createUserName1','1970-01-01 00:00:00');
 
 
@@ -60,7 +60,7 @@ CREATE TABLE test (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+)  DEFAULT CHARSET=utf8;
 
  
 
@@ -80,7 +80,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+)  DEFAULT CHARSET=utf8;
 
 insert into input values(1,'inputName1',null,'mysqlreader',
 'root',
@@ -108,7 +108,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+)  DEFAULT CHARSET=utf8;
 
 insert into output values(1,'outputName1',null,'mysqlwriter',
 'root',
@@ -132,7 +132,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+)  DEFAULT CHARSET=utf8;
 
 insert into transformer values(1,'transformer','dx_groovy',
 'Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;',
@@ -151,7 +151,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-) ;
+) DEFAULT CHARSET=utf8;
 
 insert into plugin values(1,'mysqlreader',0,LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-README.md'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-source.zip'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-distribute.zip'),null,'createUserName1','1970-01-01 00:00:00');
 

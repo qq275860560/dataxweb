@@ -15,6 +15,19 @@ docker pull qq275860560/dataxweb
 docker run -d -p 45:45 --name dataxweb qq275860560/dataxweb 
 ```
 
+
+```
+
+docker run -d -p 45:45 --name dataxweb qq275860560/dataxweb  /bin/bash -c ' source /etc/profile &&\
+    /usr/sbin/sshd &&\
+    chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
+    /etc/rc.d/init.d/jenkins start &&\
+    cd /tmp/dataxweb && tail -f /var/log/lastlog'
+    
+```
+
 http://XXX:45
 其中XXX为linux的ip，使用ip a命令可以查看
  
