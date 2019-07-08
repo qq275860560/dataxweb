@@ -14,11 +14,11 @@ body {
   margin-top: 50px;
 }
 
-#app {
+#wrapper {
   padding-left: 0;
 }
 
-#container {
+#page-wrapper {
   width: 100%;
   padding: 5px 15px;
 }
@@ -88,11 +88,11 @@ table.tablesorter thead tr th:hover {
 
   /* Wrappers */
 
-  #app {
+  #wrapper {
 	padding-left: 225px;
   }
 
-  #container {
+  #page-wrapper {
 	padding: 15px 25px;
   }
 
