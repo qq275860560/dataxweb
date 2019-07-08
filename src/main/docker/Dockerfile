@@ -45,13 +45,13 @@ RUN echo "2019062920"
 RUN ps -aux
 RUN netstat -anltp
 
-CMD source /etc/profile &&\
-    /usr/sbin/sshd &&\
-    chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
-    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
-    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
-    /etc/rc.d/init.d/jenkins start &&\
-    cd /tmp/dataxweb && git pull && mvn test
+#RUN source /etc/profile &&\
+#    /usr/sbin/sshd &&\
+#    chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+#    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+#    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
+#    /etc/rc.d/init.d/jenkins start &&\
+#    cd /tmp/dataxweb && git pull && mvn test
  
 #RUN source /etc/profile && cd /tmp/dataxweb && git pull && mvn test
 
