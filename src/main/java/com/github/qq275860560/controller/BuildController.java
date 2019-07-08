@@ -33,7 +33,7 @@ public class BuildController {
  
  
 
-	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/build/pageBuild?pageNum=1&pageSize=10" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/build/pageBuild?pageNum=1&pageSize=10" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/build/pageBuild")
 	public Map<String, Object> pageBuild(
@@ -63,7 +63,7 @@ public class BuildController {
 	 
 	
 
-	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/build/getBuild?id=1" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/build/getBuild?id=1" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/build/getBuild")
 	public Map<String, Object> getBuild(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -83,7 +83,7 @@ public class BuildController {
 	
 	
  
- 	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/build/saveBuild?name=buildname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=job" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/build/saveBuild?name=buildname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=job" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/build/saveBuild")
 	public Map<String, Object> saveBuild(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -110,7 +110,7 @@ public class BuildController {
 
 
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/build/updateBuild?id=2&name=buildname2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/build/updateBuild?id=2&name=buildname2" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/build/updateBuild")
 	public Map<String, Object> updateBuild(
@@ -131,7 +131,7 @@ public class BuildController {
 		};
 	}
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/build/deleteBuild?id=2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/build/deleteBuild?id=2" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/build/deleteBuild")
 	public Map<String, Object> deleteBuild(

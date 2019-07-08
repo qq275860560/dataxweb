@@ -126,7 +126,7 @@ define("store",function (require) {
 	
 	let store=new Vuex.Store({
 	    state:{
-	    	BASE_PATH:"http://localhost:45"
+	    	BASE_PATH:"http://localhost:8045"
 	    },
 	    mutations:{
 	      

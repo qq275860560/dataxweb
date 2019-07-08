@@ -12,13 +12,13 @@ linux下执行
 ```
 docker pull qq275860560/dataxweb
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
-docker run -d -p 45:45 --name dataxweb qq275860560/dataxweb 
+docker run -d -p 80045:8045 --name dataxweb qq275860560/dataxweb 
 ```
 
 
 ```
 
-docker run -d -p 45:45 --name dataxweb qq275860560/dataxweb  /bin/bash -c ' source /etc/profile &&\
+docker run -d -p 8045:8045 --name dataxweb qq275860560/dataxweb  /bin/bash -c ' source /etc/profile &&\
     /usr/sbin/sshd &&\
     chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
@@ -28,7 +28,7 @@ docker run -d -p 45:45 --name dataxweb qq275860560/dataxweb  /bin/bash -c ' sour
     
 ```
 
-http://XXX:45
+http://XXX:8045
 其中XXX为linux的ip，使用ip a命令可以查看
  
 # 温馨提醒
