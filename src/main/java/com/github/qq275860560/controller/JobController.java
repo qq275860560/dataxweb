@@ -142,7 +142,7 @@ public class JobController {
 	}
 
 	/*
-	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/job/pageJob?pageNum=1&pageSize=10"
+	 * curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/job/pageJob?pageNum=1&pageSize=10"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/pageJob")
 	public Map<String, Object> pageJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -182,7 +182,7 @@ public class JobController {
 
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/getJob?id=1"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/getJob?id=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/getJob")
 	public Map<String, Object> getJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -202,7 +202,7 @@ public class JobController {
 
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/saveJob")
 	public Map<String, Object> saveJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -464,7 +464,7 @@ public class JobController {
 	
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/updateJob?id=2&name=jobname2"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/updateJob?id=2&name=jobname2"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/updateJob")
 	public Map<String, Object> updateJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -524,7 +524,7 @@ public class JobController {
 
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/deleteJob?id=2"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/deleteJob?id=2"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/deleteJob")
 	public Map<String, Object> deleteJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -561,7 +561,7 @@ public class JobController {
 
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/runJob?id=1"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/runJob?id=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/runJob")
 	public Map<String, Object> runJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -713,7 +713,7 @@ public class JobController {
 	 * 
 	 * 把接口改在build模块
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/getJobProgress?id=1"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/getJobProgress?id=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/getJobProgress")
 	public Map<String, Object> getJobProgress(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -733,7 +733,7 @@ public class JobController {
 
 	/*把接口改在build模块
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/stopJob?id=1&number=1"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/stopJob?id=1&number=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/stopJob")
 	public Map<String, Object> stopJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -802,7 +802,7 @@ public class JobController {
 
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/enableJob?id=1"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/enableJob?id=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/enableJob")
 	public Map<String, Object> enableJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -836,7 +836,7 @@ public class JobController {
 
 	/*
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8080/api/github/qq275860560/job/disableJob?id=1"
+	 * "http://admin:123456@localhost:45/api/github/qq275860560/job/disableJob?id=1"
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/disableJob")
 	public Map<String, Object> disableJob(@RequestParam Map<String, Object> requestMap) throws Exception {

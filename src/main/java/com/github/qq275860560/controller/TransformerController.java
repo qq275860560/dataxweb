@@ -35,7 +35,7 @@ public class TransformerController {
  
  
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/transformer/pageTransformer?pageNum=1&pageSize=10" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/transformer/pageTransformer?pageNum=1&pageSize=10" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/transformer/pageTransformer")
 	public Map<String, Object> pageTransformer(
@@ -65,7 +65,7 @@ public class TransformerController {
 	 
 	
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/transformer/getTransformer?id=1" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/transformer/getTransformer?id=1" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/transformer/getTransformer")
 	public Map<String, Object> getTransformer(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -85,7 +85,7 @@ public class TransformerController {
 	
 	
  
- 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/transformer/saveTransformer?name=dx_groovy&transformerParameterCode=Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;&transformerParameterExtraPackage=mysqlreader" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/transformer/saveTransformer?name=dx_groovy&transformerParameterCode=Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;&transformerParameterExtraPackage=mysqlreader" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/transformer/saveTransformer")
 	public Map<String, Object> saveTransformer(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -123,7 +123,7 @@ public class TransformerController {
 
 
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/transformer/updateTransformer?id=2&name=transformername2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/transformer/updateTransformer?id=2&name=transformername2" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/transformer/updateTransformer")
 	public Map<String, Object> updateTransformer(
@@ -144,7 +144,7 @@ public class TransformerController {
 		};
 	}
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/transformer/deleteTransformer?id=2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/transformer/deleteTransformer?id=2" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/transformer/deleteTransformer")
 	public Map<String, Object> deleteTransformer(

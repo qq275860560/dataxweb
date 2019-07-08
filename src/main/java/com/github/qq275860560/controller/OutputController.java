@@ -33,7 +33,7 @@ public class OutputController {
  
  
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/pageOutput?pageNum=1&pageSize=10" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/output/pageOutput?pageNum=1&pageSize=10" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/output/pageOutput")
 	public Map<String, Object> pageOutput(
@@ -63,7 +63,7 @@ public class OutputController {
 	 
 	
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/getOutput?id=1" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/output/getOutput?id=1" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/output/getOutput")
 	public Map<String, Object> getOutput(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -84,7 +84,7 @@ public class OutputController {
 	
  
  	/*  
- 	 * curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/saveOutput?name=outputname1&writerId=&writerName=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl=&writerParameterConnectionTable=test" 
+ 	 * curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/output/saveOutput?name=outputname1&writerId=&writerName=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl=&writerParameterConnectionTable=test" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/output/saveOutput")
 	public Map<String, Object> saveOutput(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -111,7 +111,7 @@ public class OutputController {
 
 
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/updateOutput?id=2&name=outputname2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/output/updateOutput?id=2&name=outputname2" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/output/updateOutput")
 	public Map<String, Object> updateOutput(
@@ -132,7 +132,7 @@ public class OutputController {
 		};
 	}
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/output/deleteOutput?id=2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/output/deleteOutput?id=2" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/output/deleteOutput")
 	public Map<String, Object> deleteOutput(

@@ -12,10 +12,10 @@ linux下执行
 ```
 docker pull qq275860560/dataxweb
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
-docker run -d -p 8080:8080 --name dataxweb qq275860560/dataxweb 
+docker run -d -p 45:45 --name dataxweb qq275860560/dataxweb 
 ```
 
-http://XXX:8080
+http://XXX:45
 其中XXX为linux的ip，使用ip a命令可以查看
  
 # 温馨提醒

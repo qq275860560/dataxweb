@@ -35,7 +35,7 @@ public class InputController {
  
  
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/input/pageInput?pageNum=1&pageSize=10" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/input/pageInput?pageNum=1&pageSize=10" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/input/pageInput")
 	public Map<String, Object> pageInput(
@@ -65,7 +65,7 @@ public class InputController {
 	 
 	
 
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/input/getInput?id=1" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/input/getInput?id=1" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/input/getInput")
 	public Map<String, Object> getInput(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -85,7 +85,7 @@ public class InputController {
 	
 	
  
- 	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/input/saveInput?name=inputname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=job" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/input/saveInput?name=inputname1&readerId=&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl=&readerParameterConnectionTable=job" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/input/saveInput")
 	public Map<String, Object> saveInput(@RequestParam Map<String, Object> requestMap)  throws Exception{
@@ -123,7 +123,7 @@ public class InputController {
 
 
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/input/updateInput?id=2&name=inputname2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/input/updateInput?id=2&name=inputname2" 
 	*/
 	@RequestMapping(value = "/api/github/qq275860560/input/updateInput")
 	public Map<String, Object> updateInput(
@@ -144,7 +144,7 @@ public class InputController {
 		};
 	}
 	
-	/*  curl -i -X POST "http://admin:123456@localhost:8080/api/github/qq275860560/input/deleteInput?id=2" 
+	/*  curl -i -X POST "http://admin:123456@localhost:45/api/github/qq275860560/input/deleteInput?id=2" 
 	*/
  	@RequestMapping(value = "/api/github/qq275860560/input/deleteInput")
 	public Map<String, Object> deleteInput(
