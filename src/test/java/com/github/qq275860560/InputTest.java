@@ -44,7 +44,7 @@ public class InputTest {
 		String name = "inputname" + System.currentTimeMillis();
 		// saveInput请求
 		response = testRestTemplate.exchange(
-				"/api/github/qq275860560/input/saveInput?name={name}&readerId=1&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
+				"/input/saveInput?name={name}&readerId=1&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -59,7 +59,7 @@ public class InputTest {
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 		// pageInput请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/input/pageInput?name=" + name, HttpMethod.GET,
+		response = testRestTemplate.exchange("/input/pageInput?name=" + name, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -73,7 +73,7 @@ public class InputTest {
 
 		// updateInput请求
 		String name2 = "inputName" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/input/updateInput?id=" + id + "&name=" + name2,
+		response = testRestTemplate.exchange("/input/updateInput?id=" + id + "&name=" + name2,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -83,7 +83,7 @@ public class InputTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// getInput请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/input/getInput?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/input/getInput?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -96,7 +96,7 @@ public class InputTest {
 		Assert.assertEquals(name2, name3);
 
 		// deleteInput请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/input/deleteInput?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/input/deleteInput?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

@@ -45,7 +45,7 @@ public class JobTest {
 
 		String name = "jobName" + System.currentTimeMillis();
 		// saveJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/saveJob?name={name}&inputId=1&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter" , HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/saveJob?name={name}&inputId=1&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter" , HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -58,7 +58,7 @@ public class JobTest {
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 		// pageJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/pageJob?name=" + name, HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/pageJob?name=" + name, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -72,7 +72,7 @@ public class JobTest {
 
 		////////////////////////////////
 		// runJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/runJob?id=" + id ,
+		response = testRestTemplate.exchange("/job/runJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -85,7 +85,7 @@ public class JobTest {
 		
 		// updateJob请求
 		String nextBuildNumber = "" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/updateJob?id=" + id ,
+		response = testRestTemplate.exchange("/job/updateJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -95,7 +95,7 @@ public class JobTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// getJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/getJob?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/getJob?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -108,7 +108,7 @@ public class JobTest {
 		
 		
 		// enableJob请求		
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/enableJob?id=" + id ,
+		response = testRestTemplate.exchange("/job/enableJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -118,7 +118,7 @@ public class JobTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// getJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/getJob?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/getJob?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -131,7 +131,7 @@ public class JobTest {
 		Assert.assertTrue(1==status);
 		
 		// runJob请求		
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/runJob?id=" + id ,
+		response = testRestTemplate.exchange("/job/runJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -142,7 +142,7 @@ public class JobTest {
 		 
 		
 		// disableJob请求		
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/disableJob?id=" + id ,
+		response = testRestTemplate.exchange("/job/disableJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -155,7 +155,7 @@ public class JobTest {
 		
 
 		// getJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/getJob?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/getJob?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -169,7 +169,7 @@ public class JobTest {
 				
 		
 		// runJob请求		
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/runJob?id=" + id ,
+		response = testRestTemplate.exchange("/job/runJob?id=" + id ,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -181,7 +181,7 @@ public class JobTest {
 
 		
 		// deleteJob请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/job/deleteJob?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/deleteJob?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

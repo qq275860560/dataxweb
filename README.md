@@ -12,7 +12,7 @@ linux下执行
 ```
 docker pull qq275860560/dataxweb
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
-docker run -d -p 80045:8045 --name dataxweb qq275860560/dataxweb 
+docker run -d -p 8045:8045 --name dataxweb qq275860560/dataxweb 
 ```
 
 

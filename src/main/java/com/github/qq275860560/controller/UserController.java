@@ -11,18 +11,71 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
- 
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 
  * @author jiangyuanlin@163.com
- *
+ * 
+ * @apiDefine UserController 用户接口
+ * @apiError {Object} data 返回数据
+ * @apiError {String} msg 说明
+ * @apiError {Integer} code 返回状态码,{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+ * @apiSuccess {Object} data 返回数据
+ * @apiSuccess {String} msg 说明
+ * @apiSuccess {Integer} code 返回状态码,{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
  */
 @RestController
 @Slf4j
 public class UserController {
 
-
+	 
+    /**
+	 * @api {POST} /login  登录用户（获取令牌）
+	 * @apiGroup UserController
+	 * @apiName login
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription  
+	 * <p>登录用户（获取令牌），成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>
+	 * <p><li><font color="red">XXX系统-XXX菜单-XXX页面-XXX按钮/链接</font></li></p>
+ 	 * 
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8"
+	 * }
+	 * 
+	 * @apiParam {String} username 用户名称
+	 * @apiParam {String} password 用户密码
+	 * 	 
+	 * @apiParamExample {String} 请求参数示例:
+	 * username=admin&password=123456
+	 * 	 
+	 * @apiExample {curl} 命令行调用示例:  
+	 * curl  -i -X  POST http://localhost:8045/login?username=admin&password=123456	  
+	 
+	 * @apiSuccess (返回结果:) {Integer} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息，校验结果的提示信息
+	 * @apiSuccess (返回结果:) {String} token_type 默认为bearer
+	 * @apiSuccess (返回结果:) {Long} expires_in 过期时间
+	 * @apiSuccess (返回结果:) {String} access_token 用户令牌 ,接下来所有访问该应用的请求都带上token，请在有效期内使用，如果即将过期，可以调用/refreshToken刷新token
+	 *  
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":0,"msg":"请求成功","access_token":"XXX"}
+	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX","data":null}
+	 * @apiUse UserController
+	 * @apiSampleRequest /login
+	 * 
+	 */	
+	public void login() {}
  
 
 	/*  curl -i -X POST "http://localhost:8045/api/github/qq275860560/user/pageUser?pageNum=1&pageSize=10" -H "Authorization:Bearer  eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJ1c2VybmFtZTEiLCJleHAiOjE4NzQ1NDY2ODIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJqdGkiOiJkODMzMDMyNi03MWRkLTRiNTgtOTk4Yi04OGJlNThlMmQxNTUifQ.Osw9GC9SuQQ3ESfqEFSLm0TJlsYXcTOrs5KtmZd72O91NcGSFDaoBl8R3m4DkOWjtH7syM67A8RbID-CiI43jw" 

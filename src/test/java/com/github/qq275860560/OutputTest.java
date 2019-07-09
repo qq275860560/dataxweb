@@ -44,7 +44,7 @@ public class OutputTest {
 		String name = "outputname" + System.currentTimeMillis();
 		// saveOutput请求
 		response = testRestTemplate.exchange(
-				"/api/github/qq275860560/output/saveOutput?name={name}&writerId=1&writerName=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl={writerParameterConnectionJdbcUrl}&writerParameterConnectionTable=test",
+				"//output/saveOutput?name={name}&writerId=1&writerName=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl={writerParameterConnectionJdbcUrl}&writerParameterConnectionTable=test",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -59,7 +59,7 @@ public class OutputTest {
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 		// pageOutput请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/output/pageOutput?name=" + name, HttpMethod.GET,
+		response = testRestTemplate.exchange("//output/pageOutput?name=" + name, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -73,7 +73,7 @@ public class OutputTest {
 
 		// updateOutput请求
 		String name2 = "outputName" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/output/updateOutput?id=" + id + "&name=" + name2,
+		response = testRestTemplate.exchange("//output/updateOutput?id=" + id + "&name=" + name2,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -83,7 +83,7 @@ public class OutputTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// getOutput请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/output/getOutput?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("//output/getOutput?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -96,7 +96,7 @@ public class OutputTest {
 		Assert.assertEquals(name2, name3);
 
 		// deleteOutput请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/output/deleteOutput?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("//output/deleteOutput?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

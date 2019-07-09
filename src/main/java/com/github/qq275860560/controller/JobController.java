@@ -42,8 +42,16 @@ import com.github.qq275860560.dao.TransformerDao;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * 
  * @author jiangyuanlin@163.com
- *
+ * 
+ * @apiDefine JobController 计划任务接口
+ * @apiError {Object} data 返回数据
+ * @apiError {String} msg 说明
+ * @apiError {Integer} code 返回状态码,{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+ * @apiSuccess {Object} data 返回数据
+ * @apiSuccess {String} msg 说明
+ * @apiSuccess {Integer} code 返回状态码,{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
  */
 @RestController
 @Slf4j
@@ -73,12 +81,12 @@ public class JobController {
 	 * @apiName checkJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
-	 * @apiDescription   <p>校验唯一性，成功code返回200并且data返回true </p>
-	 * <p><font color="red">适用具体场景：</font></p>	
-	 * <p><li><font color="red">数据交换组件-任务管理管理-新建-校验合法性</font></li></p>
-	 * <p><li><font color="red">数据交换组件-任务管理管理-编辑-校验合法性</font></li></p>
+	 * @apiDescription   <p>校验唯一性，成功code返回200 </p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-新建-校验合法性</font></li></p>
+	 * <p><li><font color="red">数据交换组件-计划任务管理-编辑-校验合法性</font></li></p>
 	  
-	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型,确保参数urlencode之后才发送
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
 	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
 	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
 	
@@ -89,18 +97,18 @@ public class JobController {
 	 *      "Authorization":"Bearer XXX" 
 	 * }
 	 * 
-	 * @apiParam {String} id 任务,新建时为空，编辑时必填，
+	 * @apiParam {String} id ID,新建时为空，编辑时必填，
 	 * @apiParam {String} name 要校验唯一性的名称，必填
 	 * 
 	 * @apiParamExample {String} 请求参数示例:
 	 * id=2&name=name2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -X POST 'http://127.0.0.1:8080/api/github/qq275860560/job/checkJob' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/checkJob' -H "Authorization:Bearer admin_token" 
 	
-	 * @apiSuccess (返回结果:) {int} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
-	 * @apiSuccess (返回结果:) {String} msg 提示信息，校验结果的提示信息
-	 * @apiSuccess (返回结果:) {Boolean} data 返回对象,code为200时此字段有效{true:合法,false:不合法}		
+	 * @apiSuccess (返回结果:) {Integer} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Boolean} data 校验结果{true:合法,false:不合法}		
 	 * 
 	 * @apiSuccessExample {json} 成功返回(校验成功时): 
 	 * {"code":200,"msg":"名称有效","data":true}
@@ -116,7 +124,7 @@ public class JobController {
 	 * @apiSampleRequest /api/github/qq275860560/job/checkJob
 	 *	 
 	 */
-	@RequestMapping(value = "/checkJob")
+	@RequestMapping(value = "/api/github/qq275860560/job/checkJob")
 	public Map<String, Object> checkJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String id = (String) requestMap.get("id");
 		String name = (String) requestMap.get("name");
@@ -141,8 +149,58 @@ public class JobController {
 
 	}
 
-	/*
-	 * curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/job/pageJob?pageNum=1&pageSize=10"
+
+	/**
+	 * @api {POST} /api/github/qq275860560/job/pageJob  分页搜索计划任务
+	 * @apiGroup JobController
+	 * @apiName pageJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>分页搜索计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理</font></li></p>
+	  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} name 名称
+	 * @apiParam {Integer} pageNum 查询页码，从1开始计算
+     * @apiParam {Integer} pageSize 每页展示的条数
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * pageNum=1&pageSize=10
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/pageJob?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data 返回对象
+	 * @apiSuccess (data对象字段数据:) {Integer} total 记录总数，前端可以根据此值和pageSize，pageNum计算其他分页参数
+	 * @apiSuccess (data对象字段数据:) {Object[]} pageList 数组
+     * @apiSuccess (pageList数组每个对象字段数据:) {String} id Id
+	 * @apiSuccess (pageList数组每个对象字段数据:) {String} name 名称
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":{"total":100,"pageList":[{"id":"XXX","name":"XXX"}]}}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/pageJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/pageJob")
 	public Map<String, Object> pageJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -180,9 +238,54 @@ public class JobController {
 		};
 	}
 
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/getJob?id=1"
+	/**
+	 * @api {POST} /api/github/qq275860560/job/getJob  获取计划任务详情
+	 * @apiGroup JobController
+	 * @apiName getJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>获取计划任务详情，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-编辑</font></li></p>
+	 * <p><li><font color="red">数据交换组件-计划任务管理-详情</font></li></p>
+	  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=1
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/getJob?id=1' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data 返回对象
+	 * @apiSuccess (data对象字段数据:) {String} id Id
+	 * @apiSuccess (data对象字段数据:) {String} name 名称
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":{"id":"XXX","name":"XXX"}}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/getJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/getJob")
 	public Map<String, Object> getJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -200,9 +303,54 @@ public class JobController {
 		};
 	}
 
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter"
+	
+	
+	/**
+	 * @api {POST} /api/github/qq275860560/job/saveJob  保存计划任务
+	 * @apiGroup JobController
+	 * @apiName saveJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>保存计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-新建-确定</font></li></p>
+
+	  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} name 名称
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/saveJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/saveJob")
 	public Map<String, Object> saveJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -462,9 +610,53 @@ public class JobController {
 	}
 
 	
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/updateJob?id=2&name=jobname2"
+	/**
+	 * @api {POST} /api/github/qq275860560/job/updateJob  更新计划任务
+	 * @apiGroup JobController
+	 * @apiName updateJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>更新计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-编辑-确定</font></li></p>
+
+	  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * @apiParam {String} name 名称
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=2&name=jobName2
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/updateJob?id=2&name=jobName2' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/updateJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/updateJob")
 	public Map<String, Object> updateJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -522,9 +714,52 @@ public class JobController {
 		};
 	}
 
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/deleteJob?id=2"
+	/**
+	 * @api {POST} /api/github/qq275860560/job/deleteJob  删除计划任务
+	 * @apiGroup JobController
+	 * @apiName deleteJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>删除计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-删除</font></li></p>
+		  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=1
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/deleteJob?id=1' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/deleteJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/deleteJob")
 	public Map<String, Object> deleteJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -559,9 +794,52 @@ public class JobController {
 		};
 	}
 
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/runJob?id=1"
+	/**
+	 * @api {POST} /api/github/qq275860560/job/runJob  运行计划任务
+	 * @apiGroup JobController
+	 * @apiName runJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>运行计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-运行</font></li></p>
+		  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=1
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/runJob?id=1' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/runJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/runJob")
 	public Map<String, Object> runJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -800,9 +1078,52 @@ public class JobController {
 		};
 	}
 
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/enableJob?id=1"
+	/**
+	 * @api {POST} /api/github/qq275860560/job/enableJob  启用计划任务
+	 * @apiGroup JobController
+	 * @apiName enableJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>启用计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-启用</font></li></p>
+		  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=1
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/enableJob?id=1' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/enableJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/enableJob")
 	public Map<String, Object> enableJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -834,9 +1155,52 @@ public class JobController {
 		};
 	}
 
-	/*
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/disableJob?id=1"
+	/**
+	 * @api {POST} /api/github/qq275860560/job/disableJob  停用计划任务
+	 * @apiGroup JobController
+	 * @apiName disableJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>停用计划任务，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-停用</font></li></p>
+		  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=1
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/disableJob?id=1' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/github/qq275860560/job/disableJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/github/qq275860560/job/disableJob")
 	public Map<String, Object> disableJob(@RequestParam Map<String, Object> requestMap) throws Exception {

@@ -6,14 +6,14 @@
 <div class="row">
 	<div class="col-md-11 col-md-offset-1">
 	    <div class="col-md-offset-4">
-	    <h1>新建构建任务表单</h1>
+	    <h1>新建计划任务表单</h1>
 	    </div>
 		<ol class="breadcrumb">
 			<li><a href="javascript:void(0)" @click="updateRouterView('/components/home/home')"><i
 					class="fa fa-dashboard"></i>主页</a></li>
 			<li><a href="javascript:void(0)"
 				@click="updateRouterView('/components/job/pageJob')"><i
-					class="fa fa-dashboard"></i>构建任务</a></li>
+					class="fa fa-dashboard"></i>计划任务</a></li>
 			<li class="active"><i class="fa fa-edit"></i>新建</li>
 		</ol>
 		<div v-if="code && code!=200" 
@@ -29,7 +29,7 @@
 		<form id="form" class="form-horizontal " role="form">
 
 			<div class="form-group ">
-				<label for="name" class="col-md-2 control-label">构建任务名称</label>
+				<label for="name" class="col-md-2 control-label">计划任务名称</label>
 				<div class="col-md-9">
 					<input class="form-control" v-model="query.name" name="name" id="name" type="text">
 				</div>

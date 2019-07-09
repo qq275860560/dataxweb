@@ -44,7 +44,7 @@ public class BuildTest {
 		String name = "buildname" + System.currentTimeMillis();
 		// saveBuild请求
 		response = testRestTemplate.exchange(
-				"/api/github/qq275860560/build/saveBuild?name={name}&readerId=1&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
+				"/build/saveBuild?name={name}&readerId=1&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -59,7 +59,7 @@ public class BuildTest {
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 		// pageBuild请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/build/pageBuild?name=" + name, HttpMethod.GET,
+		response = testRestTemplate.exchange("/build/pageBuild?name=" + name, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -73,7 +73,7 @@ public class BuildTest {
 
 		// updateBuild请求
 		String name2 = "buildName" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/build/updateBuild?id=" + id + "&name=" + name2,
+		response = testRestTemplate.exchange("/build/updateBuild?id=" + id + "&name=" + name2,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -83,7 +83,7 @@ public class BuildTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// getBuild请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/build/getBuild?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/build/getBuild?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -96,7 +96,7 @@ public class BuildTest {
 		Assert.assertEquals(name2, name3);
 
 		// deleteBuild请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/build/deleteBuild?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/build/deleteBuild?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

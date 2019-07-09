@@ -41,12 +41,12 @@ public class ApplicationTest {
 		Assert.assertTrue(access_token.length() > 0);
 
 		// 错误(没有认证)
-		response = testRestTemplate.exchange("/api/github/qq275860560/user/pageUser?pageNum=1&pageSize=10",
+		response = testRestTemplate.exchange("//user/pageUser?pageNum=1&pageSize=10",
 				HttpMethod.GET, null, Map.class);
 		Assert.assertEquals(401, response.getStatusCode().value());
 
 		// get正常
-		response = testRestTemplate.exchange("/api/github/qq275860560/user/pageUser?pageNum=1&pageSize=10",
+		response = testRestTemplate.exchange("//user/pageUser?pageNum=1&pageSize=10",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -56,7 +56,7 @@ public class ApplicationTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// save错误(没有权限)
-		response = testRestTemplate.exchange("/api/github/qq275860560/user/saveUser?username=username2", HttpMethod.GET,
+		response = testRestTemplate.exchange("//user/saveUser?username=username2", HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -71,12 +71,12 @@ public class ApplicationTest {
 		Assert.assertTrue(access_token2.length() > 0);
 
 		// 错误(没有认证)
-		response = testRestTemplate.exchange("/api/github/qq275860560/user/pageUser?pageNum=1&pageSize=10",
+		response = testRestTemplate.exchange("//user/pageUser?pageNum=1&pageSize=10",
 				HttpMethod.GET, null, Map.class);
 		Assert.assertEquals(401, response.getStatusCode().value());
 
 		// get正常
-		response = testRestTemplate.exchange("/api/github/qq275860560/user/pageUser?pageNum=1&pageSize=10",
+		response = testRestTemplate.exchange("//user/pageUser?pageNum=1&pageSize=10",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token2);
@@ -86,7 +86,7 @@ public class ApplicationTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// save正常
-		response = testRestTemplate.exchange("/api/github/qq275860560/user/saveUser?username=username2", HttpMethod.GET,
+		response = testRestTemplate.exchange("//user/saveUser?username=username2", HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token2);

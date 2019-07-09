@@ -90,7 +90,7 @@ public class PluginTest {
 	    
         param.add("name", name);
         param.add("type", 0);
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/savePlugin",
+		response = testRestTemplate.exchange("/plugin/savePlugin",
 				HttpMethod.POST, new HttpEntity<>(param,new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -99,7 +99,7 @@ public class PluginTest {
 		Assert.assertEquals(200, response.getStatusCode().value());
 		Assert.assertEquals(200, response.getBody().get("code"));
 		// pagePlugin请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/pagePlugin?name=" + name, HttpMethod.GET,
+		response = testRestTemplate.exchange("/plugin/pagePlugin?name=" + name, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -113,7 +113,7 @@ public class PluginTest {
 
 		
 		// getPluginReadme请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginReadme?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/plugin/getPluginReadme?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -125,7 +125,7 @@ public class PluginTest {
 	
 		
 		// getPluginSource请求
-		response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginSource?id="+ id, HttpMethod.GET,
+		response2 = testRestTemplate.exchange("/plugin/getPluginSource?id="+ id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -138,7 +138,7 @@ public class PluginTest {
 	
 			
 		// getPluginDistribute请求
-		response2 = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPluginDistribute?id="+ id, HttpMethod.GET,
+		response2 = testRestTemplate.exchange("/plugin/getPluginDistribute?id="+ id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -152,7 +152,7 @@ public class PluginTest {
 				
 		// updatePlugin请求
 		String name2 = "pluginName" + System.currentTimeMillis();
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/updatePlugin?id=" + id + "&name=" + name2,
+		response = testRestTemplate.exchange("/plugin/updatePlugin?id=" + id + "&name=" + name2,
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -162,7 +162,7 @@ public class PluginTest {
 		Assert.assertEquals(200, response.getBody().get("code"));
 
 		// getPlugin请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/getPlugin?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/plugin/getPlugin?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
@@ -179,7 +179,7 @@ public class PluginTest {
  
 
 		// deletePlugin请求
-		response = testRestTemplate.exchange("/api/github/qq275860560/plugin/deletePlugin?id=" + id, HttpMethod.GET,
+		response = testRestTemplate.exchange("/plugin/deletePlugin?id=" + id, HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
