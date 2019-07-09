@@ -848,10 +848,10 @@ public class JobController {
 		log.info("当前登录用户=" + currentLoginUsername);
 
 		String id = (String) requestMap.get("id");
-		Map<String, Object> map = jobDao.getJob(id);
-		String name = (String) map.get("name");
+		Map<String, Object> jobMap = jobDao.getJob(id);
+		String name = (String) jobMap.get("name");
 
-		Integer status = (Integer) map.get("status");
+		Integer status = (Integer) jobMap.get("status");
 		if (status == Constant.JOB_STATUS_DISABLE) {
 			return new HashMap<String, Object>() {
 				{
@@ -881,12 +881,12 @@ public class JobController {
 				}), String.class);
 		
 		//写入构建日志
-		String currentBuildNumber = (String) map.get("nextBuildNumber");
+		String currentBuildNumber = (String) jobMap.get("nextBuildNumber");
 		Map<String, Object> buildMap = new HashMap<>();
 		buildMap.put("id", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
 		buildMap.put("name", currentBuildNumber);
-		buildMap.put("jobId", map.get("id"));
-		buildMap.put("jobName", map.get("name"));
+		buildMap.put("jobId", jobMap.get("id"));
+		buildMap.put("jobName", jobMap.get("name"));
 		buildMap.put("number", currentBuildNumber);		
 		buildMap.put("status", Constant.BUILD_STATUS_RUNNING);	
 		String createUserName = currentLoginUsername;
@@ -896,14 +896,14 @@ public class JobController {
 		buildDao.saveBuild(buildMap);
 		
 		//更新计划任务
-		map.put("number", currentBuildNumber);
-		map.put("nextBuildNumber", Integer.parseInt(currentBuildNumber)+1+"");
-		map.put("status", Constant.JOB_STATUS_RUNNING);
-		jobDao.updateJob(map);
+		jobMap.put("number", currentBuildNumber);
+		jobMap.put("nextBuildNumber", Integer.parseInt(currentBuildNumber)+1+"");
+		jobMap.put("status", Constant.JOB_STATUS_RUNNING);
+		jobDao.updateJob(jobMap);
 		
 		//异步更新计划任务和构建日志START
-		String jobId=(String)map.get("id");
-		String jobName=(String)map.get("name");	 
+		String jobId=(String)jobMap.get("id");
+		String jobName=(String)jobMap.get("name");	 
 		 new Thread(){
 			 public void run() {
 				 updateJobAndBuild( jobId, jobName, currentBuildNumber);			 }
@@ -1024,12 +1024,8 @@ public class JobController {
 					
 				}
 	}
-	/*
-	 * 
-	 * 把接口改在build模块
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/job/getJobProgress?id=1"
-	 */
+
+    //todo 把progress字段和lastBuildCreateTime字段写到job表中
 	@RequestMapping(value = "/api/job/getJobProgress")
 	public Map<String, Object> getJobProgress(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
@@ -1046,9 +1042,54 @@ public class JobController {
 		};
 	}
 
-	/*把接口改在build模块
-	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/job/stopJob?id=1&number=1"
+
+	
+	/**
+	 * @api {POST} /api/job/stopJob  停止计划任务的当前构建
+	 * @apiGroup JobController
+	 * @apiName /api/job/stopJob
+	 * @apiVersion 1.0.0
+	 * @apiPermission user
+	 * @apiDescription   <p>停止计划任务的当前构建，成功code返回200</p>
+	 * <p><font color="red">适用场景：</font></p>	
+	 * <p><li><font color="red">数据交换组件-计划任务管理-停止</font></li></p>
+		  
+	 * @apiHeader {String} ContentType=application/x-www-form-urlencoded  请求类型
+	 * @apiHeader {String} Accept=application/json;charset=UTF-8 响应类型
+	 * @apiHeader {String} Authorization "Bearer "串接调用/login接口获取的令牌
+	
+	 * @apiHeaderExample {json} 请求头部示例: 
+	 * { 
+	 * 		"Content-Type":"application/x-www-form-urlencoded", 
+	 *      "Accept":"application/json;charset=UTF-8",
+	 *      "Authorization":"Bearer XXX" 
+	 * }
+	 * 
+	 * @apiParam {String} id ID
+	 * 
+	 * 
+	 * @apiParamExample {String} 请求参数示例:
+	 * id=1
+	 
+	 * @apiExample {curl} 命令行调用示例: 	
+	 * curl -i -X POST 'http://localhost:8045/api/job/stopJob?id=1' -H "Authorization:Bearer admin_token" 
+	
+	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
+	 * @apiSuccess (返回结果:) {String} msg 提示信息
+	 * @apiSuccess (返回结果:) {Object} data null
+
+	 * 
+	 * @apiSuccessExample {json} 成功返回: 
+	 * {"code":200,"msg":"请求成功","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":400,"msg":"XXX参数不规范","data":null}	
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":401,"msg":"token已过期","data":null}
+	 * @apiErrorExample {json} 失败返回: 
+	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
+	 *  
+	 * @apiSampleRequest /api/job/stopJob
+	 *	 
 	 */
 	@RequestMapping(value = "/api/job/stopJob")
 	public Map<String, Object> stopJob(@RequestParam Map<String, Object> requestMap) throws Exception {
@@ -1056,12 +1097,13 @@ public class JobController {
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id = (String) requestMap.get("id");
-		String number = (String) requestMap.get("number");
+		
 		Map<String, Object> map = jobDao.getJob(id);
 		String name = (String) map.get("name");
+		String number = (String)map.get("number");
 
 		Integer status = (Integer) map.get("status");
-		if (status == 0) {
+		if (status == Constant.JOB_STATUS_DISABLE) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -1070,19 +1112,8 @@ public class JobController {
 				}
 			};
 		}
-		
-		
-		ResponseEntity<Map> response3  = restTemplate.exchange(
-				String.format("%s/job/%s/%s/api/json?pretty=true", jenkinsUrl, name, number),
-				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
-					{
-						set("Content-Type", "text/xml; charset=UTF-8");
-
-					}
-				}), Map.class);
-		Map<String, Object> responseMap = (Map<String, Object>) response3.getBody();
-		log.info("是否构建中" + (boolean) responseMap.get("building"));
-		if((boolean) responseMap.get("building")==false) {
+		 
+		if(status==Constant.JOB_STATUS_ENABLE) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -1091,20 +1122,16 @@ public class JobController {
 				}
 			};
 		}
-		//log.info("预期构建时长" + (Integer) responseMap.get("estimatedDuration"));
-		//log.info("实际构建时长" + (Integer) responseMap.get("duration"));
-		//log.info("构建结果" + (String) responseMap.get("result"));
-		
-		
+			
 		//停止
-		ResponseEntity<String> response4  =  restTemplate.exchange(String.format("%s/job/%s/%s/stop", jenkinsUrl, name,number),
+		ResponseEntity<String> response  =  restTemplate.exchange(String.format("%s/job/%s/%s/stop", jenkinsUrl, name,number),
 				HttpMethod.POST, new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
 
 					}
 				}), String.class);	
-		log.info(""+response4.getStatusCode());;
+		log.info(""+response.getStatusCode());;
 
 		return new HashMap<String, Object>() {
 			{
