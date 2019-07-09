@@ -51,6 +51,11 @@ define(['vue','components/navigation/navigation','text!./getBuild.html'], functi
 				});			
 		         		    
 		    },
+		    watch:{
+		    	query(newValue, oldValue) {
+		    		console.log("newValue",newValue);
+		    	}
+		    }
 		
 				
 	 	};

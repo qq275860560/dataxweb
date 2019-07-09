@@ -20,6 +20,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.mapping.MapBasedAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -394,7 +395,7 @@ public class JobController {
 		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(requestMap));
 		requestMap.put("dataxJson", dataxJson);
 
-		Integer status = 1;
+		Integer status = Constant.JOB_STATUS_ENABLE;
 		requestMap.put("status", status);
 		requestMap.put("nextBuildNumber", "1");
 		Double progress = 0.0;
@@ -851,7 +852,7 @@ public class JobController {
 		String name = (String) map.get("name");
 
 		Integer status = (Integer) map.get("status");
-		if (status == 0) {
+		if (status == Constant.JOB_STATUS_DISABLE) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -860,9 +861,17 @@ public class JobController {
 				}
 			};
 		}
-		
-		//todo 正在构建中不允许发送第二次请求
-		// String result = runJob(id);
+		if (status == Constant.JOB_STATUS_RUNNING) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "构建失败,任务正在构建中");
+					put("data", null);
+				}
+			};
+		}
+ 
+	   //向jenkins发送构建请求
 		ResponseEntity<String> response = restTemplate.exchange(String.format("%s/job/%s/build", jenkinsUrl, name),
 				HttpMethod.POST, new HttpEntity<>(new HttpHeaders() {
 					{
@@ -870,112 +879,38 @@ public class JobController {
 
 					}
 				}), String.class);
+		
+		//写入构建日志
 		String currentBuildNumber = (String) map.get("nextBuildNumber");
-
-		// 不断的更新mysql		
-				while (true) {
-				try {
-					
-						// 获取job的最后一次构建状态
-						ResponseEntity<Map> response3 = restTemplate.exchange(
-								String.format("%s/job/%s/api/json?pretty=true", jenkinsUrl, name), HttpMethod.GET,
-								new HttpEntity<>(new HttpHeaders() {
-									{
-										set("Content-Type", "text/xml; charset=UTF-8");
-
-									}
-								}), Map.class);
-
-						Map<String, Object> responseMap = (Map<String, Object>) response3.getBody();
-						if (responseMap.get("lastBuild")== null) {
-							continue;
-						}
-							Integer number = (Integer) ((Map<String, Object>) responseMap.get("lastBuild")).get("number");
-
-							log.info("最后一次构建编号" + number);
-							log.info("最后一次成功构建编号", responseMap.get("lastSuccessfulBuild") == null ? null
-									: ((Map<String, Object>) responseMap.get("lastSuccessfulBuild")).get("number"));
-							log.info("最后一次失败构建编号", responseMap.get("lastUnsuccessfulBuild") == null ? null
-									: ((Map<String, Object>) responseMap.get("lastUnsuccessfulBuild")).get("number"));
-							Map<String, Object> map2 = jobDao.getJob(id);
-							map2.put("number", number);
-							map2.put("lastSuccessfulBuild", responseMap.get("lastSuccessfulBuild") == null ? null
-									: ((Map<String, Object>) responseMap.get("lastSuccessfulBuild")).get("number"));
-							map2.put("lastUnsuccessfulBuild", responseMap.get("lastUnsuccessfulBuild") == null ? null
-									: ((Map<String, Object>) responseMap.get("lastUnsuccessfulBuild")).get("number"));
-							map2.put("nextBuildNumber", responseMap.get("nextBuildNumber"));
-							jobDao.updateJob(map2);
-
-							// getBuild-1请求
-							response3 = restTemplate.exchange(
-									String.format("%s/job/%s/%s/api/json?pretty=true", jenkinsUrl, name, currentBuildNumber),
-									HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
-										{
-											set("Content-Type", "text/xml; charset=UTF-8");
-
-										}
-									}), Map.class);
-							responseMap = (Map<String, Object>) response3.getBody();
-							log.info("是否构建中" + (boolean) responseMap.get("building"));
-							log.info("预期构建时长" + (Integer) responseMap.get("estimatedDuration"));
-							log.info("实际构建时长" + (Integer) responseMap.get("duration"));
-							log.info("构建结果" + (String) responseMap.get("result"));
-
-							// getBuild-2请求
-							ResponseEntity<String> response4 = restTemplate.exchange(
-									String.format("%s/job/%s/%s/consoleText", jenkinsUrl, name, currentBuildNumber), HttpMethod.GET,
-									new HttpEntity<>(new HttpHeaders() {
-										{
-											set("Content-Type", "text/xml; charset=UTF-8");
-
-										}
-									}), String.class);
-							String consoleText = response4.getBody();
-							log.info("控制台日志=" + consoleText);
-
-							Map<String, Object> buildMap = buildDao.getBuildByJobNameAndNumber(name, currentBuildNumber);
-							if (buildMap.isEmpty()) {
-								buildMap.put("id", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
-								buildDao.saveBuild(buildMap);
-							}
-							buildMap.put("jobId", id);
-							buildMap.put("jobName", name);
-							buildMap.put("number", currentBuildNumber);
-							boolean building = (boolean) responseMap.get("building");
-							buildMap.put("building", building == false ? 0 : 1);
-							buildMap.put("estimatedDuration", (Integer) responseMap.get("estimatedDuration"));
-							buildMap.put("duration", (Integer) responseMap.get("duration"));
-							String result = (String) responseMap.get("result");
-							if(result==null) {
-								buildMap.put("result", null);
-							}else if(result.equals("SUCCESS")) {
-									buildMap.put("result", 1);
-							}else if(result.equals("FAILURE")) {
-								buildMap.put("result", 2);
-							}else if(result.equals("ABORTED")) {
-								buildMap.put("result", 3);
-						    }
-							buildMap.put("consoleText", consoleText);
-							buildDao.updateBuild(buildMap);
-
-							if (building == false && responseMap.get("result") != null) {
-								break;
-							}
-
-						
-						
-				} catch (Exception e) {
-					log.error("", e);
-					continue;
-				}
-				try{Thread.sleep(5000);}catch (Exception e) {
-					// TODO: handle exception
-				}
-					}
-				
-				
+		Map<String, Object> buildMap = new HashMap<>();
+		buildMap.put("id", new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()));
+		buildMap.put("name", currentBuildNumber);
+		buildMap.put("jobId", map.get("id"));
+		buildMap.put("jobName", map.get("name"));
+		buildMap.put("number", currentBuildNumber);		
+		buildMap.put("status", Constant.BUILD_STATUS_RUNNING);	
+		String createUserName = currentLoginUsername;
+		buildMap.put("createUserName", createUserName);
+		String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+		buildMap.put("createTime", createTime);		
+		buildDao.saveBuild(buildMap);
+		
+		//更新计划任务
+		map.put("number", currentBuildNumber);
+		map.put("nextBuildNumber", Integer.parseInt(currentBuildNumber)+1+"");
+		map.put("status", Constant.JOB_STATUS_RUNNING);
+		jobDao.updateJob(map);
+		
+		//异步更新计划任务和构建日志START
+		String jobId=(String)map.get("id");
+		String jobName=(String)map.get("name");	 
+		 new Thread(){
+			 public void run() {
+				 updateJobAndBuild( jobId, jobName, currentBuildNumber);			 }
+		 }.start();
+		//异步更新计划任务和构建日志END
 		 
-
+		 
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -986,7 +921,109 @@ public class JobController {
 	}
 
 	
+	public void updateJobAndBuild(String jobId,String jobName,String currentBuildNumber) {
+		// 不断的更新mysql
+				while (true) {
+					try {
 
+						
+
+						// getBuild-1请求
+						ResponseEntity<Map> response3 = restTemplate.exchange(
+								String.format("%s/job/%s/%s/api/json?pretty=true", jenkinsUrl, jobName, currentBuildNumber),
+								HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
+									{
+										set("Content-Type", "text/xml; charset=UTF-8");
+
+									}
+								}), Map.class);
+						Map<String, Object> responseMap = (Map<String, Object>) response3.getBody();
+						Map<String, Object> buildMap = buildDao.getBuildByJobNameAndNumber(jobName, currentBuildNumber);
+						buildMap.put("jobId", jobId);
+						buildMap.put("jobName", jobName);
+						buildMap.put("number", currentBuildNumber);
+						// 是否构建中
+						boolean building = (boolean) responseMap.get("building");
+						buildMap.put("status", building == false ? Constant.BUILD_STATUS_EXIT : Constant.BUILD_STATUS_RUNNING);
+						// 预期构建时长
+						buildMap.put("estimatedDuration", (Integer) responseMap.get("estimatedDuration"));
+						// 实际构建时长
+						buildMap.put("duration", (Integer) responseMap.get("duration"));
+						String result = (String) responseMap.get("result");
+						if (result == null) {
+							buildMap.put("result", null);
+						} else if (result.equals("SUCCESS")) {
+							buildMap.put("result", Constant.BUILD_RESULT_SUCCESS);
+						} else if (result.equals("FAILURE")) {
+							buildMap.put("result", Constant.BUILD_RESULT_FAILURE);
+						} else if (result.equals("ABORTED")) {
+							buildMap.put("result", Constant.BUILD_RESULT_ABORTED);
+						}
+						
+					
+						// getBuild-2请求
+						ResponseEntity<String> response4 = restTemplate.exchange(
+								String.format("%s/job/%s/%s/consoleText", jenkinsUrl, jobName, currentBuildNumber), HttpMethod.GET,
+								new HttpEntity<>(new HttpHeaders() {
+									{
+										set("Content-Type", "text/xml; charset=UTF-8");
+
+									}
+								}), String.class);
+						//控制台日志
+						String consoleText = response4.getBody();					
+						buildDao.updateBuild(buildMap);
+
+						// 获取job的最后一次构建状态
+						 response3 = restTemplate.exchange(
+								String.format("%s/job/%s/api/json?pretty=true", jenkinsUrl, jobName), HttpMethod.GET,
+								new HttpEntity<>(new HttpHeaders() {
+									{
+										set("Content-Type", "text/xml; charset=UTF-8");
+
+									}
+								}), Map.class);
+
+						responseMap = (Map<String, Object>) response3.getBody();
+						
+						Integer number = (Integer) ((Map<String, Object>) responseMap.get("lastBuild")).get("number");
+
+						Map<String, Object> jobMap = jobDao.getJob(jobId);
+						//最后一次构建编号
+						jobMap.put("number", number);
+						//最后一次成功构建编号
+						jobMap.put("lastSuccessfulBuild", responseMap.get("lastSuccessfulBuild") == null ? null
+								: ((Map<String, Object>) responseMap.get("lastSuccessfulBuild")).get("number"));
+						//最后一次失败构建编号
+						jobMap.put("lastUnsuccessfulBuild", responseMap.get("lastUnsuccessfulBuild") == null ? null
+								: ((Map<String, Object>) responseMap.get("lastUnsuccessfulBuild")).get("number"));
+						//下一次构建编号
+						jobMap.put("nextBuildNumber", responseMap.get("nextBuildNumber"));
+						jobMap.put("status", building == false ? Constant.JOB_STATUS_ENABLE : Constant.JOB_STATUS_RUNNING);
+						jobDao.updateJob(jobMap);
+						if (building == false && result != null) {
+							break;// 已经构建完毕
+						}
+
+						
+						try {
+							Thread.sleep(5000);
+						} catch (Exception e) {
+							 
+						}
+					} catch (Exception e) {
+						log.error("", e);
+						try {
+							Thread.sleep(5000);
+						} catch (Exception e2) {
+							 
+						}
+						continue;		
+						
+					}
+					
+				}
+	}
 	/*
 	 * 
 	 * 把接口改在build模块
@@ -1134,7 +1171,7 @@ public class JobController {
 		Map<String, Object> map = jobDao.getJob(id);
 		
 		Integer status = (Integer) map.get("status");
-		if (status == 1) {
+		if (status == Constant.JOB_STATUS_ENABLE) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -1144,7 +1181,7 @@ public class JobController {
 			};
 		}
 		
-		map.put("status", 1);
+		map.put("status", Constant.JOB_STATUS_ENABLE);
 		jobDao.updateJob(map);
 		return new HashMap<String, Object>() {
 			{
@@ -1211,7 +1248,7 @@ public class JobController {
 		Map<String, Object> map = jobDao.getJob(id);
 		
 		Integer status = (Integer) map.get("status");
-		if (status == 0) {
+		if (status == Constant.JOB_STATUS_DISABLE) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -1221,7 +1258,7 @@ public class JobController {
 			};
 		}
 		
-		map.put("status", 0);
+		map.put("status", Constant.JOB_STATUS_DISABLE);
 		jobDao.updateJob(map);
 		return new HashMap<String, Object>() {
 			{

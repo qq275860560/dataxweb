@@ -47,7 +47,18 @@ define(['vue','components/navigation/navigation','components/build/getBuild','te
 							    tmpVue.data.pageSize=pageSize;
 							    tmpVue.data.total=result.data.total;	
 							    tmpVue.data.pageList=result.data.pageList;					
-							    tmpVue.repaint();						
+							    tmpVue.repaint();	
+							    //如果有任务正在构建中，每隔5秒钟刷新一次列表START
+							    for(let item of tmpVue.data.pageList){
+									if(item.status==2){
+										console.log("有任务正在运行");
+										setTimeout(	function(){
+							    			tmpVue.pageBuild(tmpVue.data.pageNum,tmpVue.data.pageSize);
+							    		}, 5000 );										
+							    		break;
+									}
+								}	
+							    //如果有任务正在构建中，每隔5秒钟刷新一次列表END	
 						   }else if(result.code==401){						
 							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){

@@ -82,7 +82,7 @@
 							<th class="header">输入流 <i class="fa fa-sort"></i></th>
 							<th class="header">输出流 <i class="fa fa-sort"></i></th>
 							<th class="header">状态<i class="fa fa-sort"></i></th>
-							<th class="header">构建号 <i class="fa fa-sort"></i></th>
+							<th class="header">最后构建编号 <i class="fa fa-sort"></i></th>
 							<th class="header">操作 <i class="fa fa-sort"></i></th>
 						</tr>
 					</thead>
@@ -93,11 +93,11 @@
 							<td>{{item.name}}</td>
 							<td>{{item.inputName}}</td>
 							<td>{{item.outputName}}</td>
-							<td>{{item.status==1?"启用":item.status==2?"正在构建":"停用"}}</td>
+							<td>{{item.status==1?"启用":item.status==2?"构建中":"停用"}}</td>
 							<td>{{item.number}}</td>					
 							<td>							
 								<a href="javascript:void(0)" @click="runJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">运行</a>
-								<a href="javascript:void(0)" @click="stopJob({id:item.id,name:item.name,number:item.number,pageNum:data.pageNum,pageSize:data.pageSize})">停止</a>
+								<a href="javascript:void(0)" v-if="item.status==2" @click="stopJob({id:item.id,name:item.name,number:item.number,pageNum:data.pageNum,pageSize:data.pageSize})">停止</a>
 								<a href="javascript:void(0)" @click="enableJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">启用</a>
 								<a href="javascript:void(0)" @click="disableJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">停用</a>
 								<a href="javascript:void(0)" @click="deleteJob({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</a>

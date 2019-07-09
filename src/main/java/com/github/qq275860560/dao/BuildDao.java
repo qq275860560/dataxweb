@@ -80,7 +80,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,building,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -102,7 +102,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,building,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -122,7 +122,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,building,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		sb.append(" and jobName = ? ");
 		condition.add(name);
 		sb.append(" and number = ? ");
@@ -164,9 +164,9 @@ public class BuildDao {
 		sb2.append("?,");
 		condition.add(map.get("number"));
 
-		sb1.append("building").append(",");
+		sb1.append("status").append(",");
 		sb2.append("?,");
-		condition.add(map.get("building"));
+		condition.add(map.get("status"));
 
 		sb1.append("estimatedDuration").append(",");
 		sb2.append("?,");
@@ -222,8 +222,8 @@ public class BuildDao {
 		sb.append(" number = ? ,");
 		condition.add(map.get("number"));
 
-		sb.append(" building = ? ,");
-		condition.add(map.get("building"));
+		sb.append(" status = ? ,");
+		condition.add(map.get("status"));
 
 		sb.append(" estimatedDuration = ? ,");
 		condition.add(map.get("estimatedDuration"));
@@ -256,12 +256,12 @@ public class BuildDao {
 	}
 
 	public List<Map<String, Object>> listBuild(String id, String name, String jobId, String jobName, String number,
-			Integer building, Integer estimatedDuration, Integer duration, Integer result, String consoleText,
+			Integer status, Integer estimatedDuration, Integer duration, Integer result, String consoleText,
 			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,building,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -282,9 +282,9 @@ public class BuildDao {
 			sb.append(" and number like ? ");
 			condition.add("%" + number + "%");
 		}
-		if (building != null) {
-			sb.append(" and building = ? ");
-			condition.add(building);
+		if (status != null) {
+			sb.append(" and status = ? ");
+			condition.add(status);
 		}
 		if (estimatedDuration != null) {
 			sb.append(" and estimatedDuration = ? ");
@@ -325,7 +325,7 @@ public class BuildDao {
 	}
 
 	public Map<String, Object> pageBuild(String id, String name, String jobId, String jobName, String number,
-			Integer building, Integer estimatedDuration, Integer duration, Integer result, String consoleText,
+			Integer status, Integer estimatedDuration, Integer duration, Integer result, String consoleText,
 			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
 			Integer pageSize) throws Exception {
 		if (pageNum == null)
@@ -337,7 +337,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,building,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -358,9 +358,9 @@ public class BuildDao {
 			sb.append(" and number like ? ");
 			condition.add("%" + number + "%");
 		}
-		if (building != null) {
-			sb.append(" and building = ? ");
-			condition.add(building);
+		if (status != null) {
+			sb.append(" and status = ? ");
+			condition.add(status);
 		}
 		if (estimatedDuration != null) {
 			sb.append(" and estimatedDuration = ? ");

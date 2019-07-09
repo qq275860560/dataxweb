@@ -17,11 +17,12 @@ outputName VARCHAR ( 64 ) DEFAULT NULL,
 writerId VARCHAR ( 32 ) DEFAULT NULL,
 writerName VARCHAR ( 64 ) DEFAULT NULL,
 dataxJson  VARCHAR ( 1024 ) DEFAULT NULL,
-status int DEFAULT NULL comment '{1:启用，允许构建，2：正在构建中，3:停用:不允许构建}',
+status int DEFAULT NULL comment '{0:停用:不允许构建,1:启用，允许构建，2：正在构建中}',
 number VARCHAR(32) DEFAULT NULL COMMENT '最后一次构建编号',
 lastSuccessfulBuild VARCHAR(32) DEFAULT NULL COMMENT '最后一次成功构建编号',
 lastUnsuccessfulBuild VARCHAR(32) DEFAULT NULL COMMENT '最后一次失败构建编号',
 nextBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '下一次构建编号',
+lastBuildCreateTime datetime DEFAULT NULL,
 progress double  DEFAULT NULL,
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
@@ -29,8 +30,8 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
 
-insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,0.0,null,'createUserName1','1970-01-01 00:00:00');
-insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,0.0,null,'createUserName2','1970-01-01 00:00:00');
+insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',0.0,null,'createUserName1','1970-01-01 00:00:00');
+insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',0.0,null,'createUserName2','1970-01-01 00:00:00');
 
 
 DROP TABLE  IF EXISTS build;
@@ -40,10 +41,10 @@ name VARCHAR ( 64 ) DEFAULT NULL,
 jobId VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属计划任务id',
 jobName VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属计划任务名称',
 number VARCHAR(32)  DEFAULT NULL COMMENT '构建日志编号',
-building int   DEFAULT NULL COMMENT '{0:还未构建或已构建完毕,1:构建中}',
+status int   DEFAULT NULL COMMENT '{2:构建中,3:构建停止}',
 estimatedDuration int  DEFAULT NULL COMMENT '预期构建时长（毫秒）',
 duration int  DEFAULT NULL COMMENT '实际构建时长(毫秒)',
-result int   DEFAULT NULL COMMENT '1:成功，2:失败,3:取消ABORTED',
+result int   DEFAULT NULL COMMENT '{1:成功，2:失败,3:取消}',
 consoleText longtext  DEFAULT NULL COMMENT '控制台日志',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
