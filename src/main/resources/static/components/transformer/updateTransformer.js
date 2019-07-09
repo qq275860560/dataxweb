@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 				updateTransformer:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/transformer/updateTransformer?id="+this.query.id+"&name="+this.query.name+"&transformerType="+this.query.transformerType+"&transformerParameterCode="+this.query.transformerParameterCode+"&transformerParameterExtraPackage="+this.query.transformerParameterExtraPackage;
+					let url=this.$store.state.BASE_PATH+"/api/transformer/updateTransformer?id="+this.query.id+"&name="+this.query.name+"&transformerType="+this.query.transformerType+"&transformerParameterCode="+this.query.transformerParameterCode+"&transformerParameterExtraPackage="+this.query.transformerParameterExtraPackage;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -59,7 +59,7 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 				let tmpVue=this;
 				this.query=this.$route.query;					
 				
-				let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/transformer/getTransformer?id="+this.query.id;
+				let url=this.$store.state.BASE_PATH+"/api/transformer/getTransformer?id="+this.query.id;
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){

@@ -26,7 +26,7 @@ define(['vue','text!./runJob.html'], function (Vue,componentTemplate) {
 		       		this.hide();		
 		       		
 		       		let tmpVue=this;
-		       		let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/runJob?id="+this.query.id;
+		       		let url=this.$store.state.BASE_PATH+"/api/job/runJob?id="+this.query.id;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

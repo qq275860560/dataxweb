@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateJob.html'], funct
 				updateJob:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/updateJob?id="+this.query.id+"&name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId;
+					let url=this.$store.state.BASE_PATH+"/api/job/updateJob?id="+this.query.id+"&name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -59,7 +59,7 @@ define(['vue','components/navigation/navigation','text!./updateJob.html'], funct
 				let tmpVue=this;
 				this.query=this.$route.query;					
 				
-				let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/getJob?id="+this.query.id;
+				let url=this.$store.state.BASE_PATH+"/api/job/getJob?id="+this.query.id;
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){

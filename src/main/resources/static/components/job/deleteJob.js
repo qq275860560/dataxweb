@@ -26,7 +26,7 @@ define(['vue','text!./deleteJob.html'], function (Vue,componentTemplate) {
 		       		this.hide();			       		
 		       		let tmpVue=this;		       		
 		       		for(let item of this.query.items){
-			       		let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/deleteJob?id="+item.id;
+			       		let url=this.$store.state.BASE_PATH+"/api/job/deleteJob?id="+item.id;
 						let token_type=localStorage.getItem('token_type'); 
 						let access_token=localStorage.getItem('access_token');
 						if(token_type==null || access_token==null){

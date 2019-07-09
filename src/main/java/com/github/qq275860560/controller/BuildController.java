@@ -42,7 +42,7 @@ public class BuildController {
  
 
 	/**
-	 * @api {POST} /api/github/qq275860560/build/pageBuild  分页搜索构建日志
+	 * @api {POST} /api/build/pageBuild  分页搜索构建日志
 	 * @apiGroup BuildController
 	 * @apiName pageBuild
 	 * @apiVersion 1.0.0
@@ -71,7 +71,7 @@ public class BuildController {
 	 * pageNum=1&pageSize=10
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/build/pageBuild?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/build/pageBuild?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -90,10 +90,10 @@ public class BuildController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/build/pageBuild
+	 * @apiSampleRequest /api/build/pageBuild
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/build/pageBuild")
+	@RequestMapping(value = "/api/build/pageBuild")
 	public Map<String, Object> pageBuild(
 			@RequestParam Map<String, Object> requestMap
 			)  throws Exception{
@@ -122,7 +122,7 @@ public class BuildController {
 	
 
 	/**
-	 * @api {POST} /api/github/qq275860560/build/getBuild  获取构建日志详情
+	 * @api {POST} /api/build/getBuild  获取构建日志详情
 	 * @apiGroup BuildController
 	 * @apiName getBuild
 	 * @apiVersion 1.0.0
@@ -150,7 +150,7 @@ public class BuildController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/build/getBuild?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/build/getBuild?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -167,10 +167,10 @@ public class BuildController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/build/getBuild
+	 * @apiSampleRequest /api/build/getBuild
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/build/getBuild")
+ 	@RequestMapping(value = "/api/build/getBuild")
 	public Map<String, Object> getBuild(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -188,7 +188,7 @@ public class BuildController {
 	
 	
   
-	@RequestMapping(value = "/api/github/qq275860560/build/saveBuild")
+	@RequestMapping(value = "/api/build/saveBuild")
 	public Map<String, Object> saveBuild(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
@@ -214,7 +214,7 @@ public class BuildController {
 
 	
  
-	@RequestMapping(value = "/api/github/qq275860560/build/updateBuild")
+	@RequestMapping(value = "/api/build/updateBuild")
 	public Map<String, Object> updateBuild(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
@@ -234,7 +234,7 @@ public class BuildController {
 	}
 	
 	 
- 	@RequestMapping(value = "/api/github/qq275860560/build/deleteBuild")
+ 	@RequestMapping(value = "/api/build/deleteBuild")
 	public Map<String, Object> deleteBuild(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();

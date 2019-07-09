@@ -53,7 +53,7 @@ public class PluginController {
  
  
 	/**
-	 * @api {POST} /api/github/qq275860560/plugin/checkPlugin  校验唯一性
+	 * @api {POST} /api/plugin/checkPlugin  校验唯一性
 	 * @apiGroup PluginController
 	 * @apiName checkPlugin
 	 * @apiVersion 1.0.0
@@ -81,7 +81,7 @@ public class PluginController {
 	 * id=2&name=name2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/plugin/checkPlugin' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/plugin/checkPlugin' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -98,10 +98,10 @@ public class PluginController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/plugin/checkPlugin
+	 * @apiSampleRequest /api/plugin/checkPlugin
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/plugin/checkPlugin")
+	@RequestMapping(value = "/api/plugin/checkPlugin")
 	public Map<String, Object> checkPlugin(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String id = (String) requestMap.get("id");
 		String name = (String) requestMap.get("name");
@@ -127,7 +127,7 @@ public class PluginController {
 	}
 
 	/**
-	 * @api {POST} /api/github/qq275860560/plugin/pagePlugin  分页搜索插件
+	 * @api {POST} /api/plugin/pagePlugin  分页搜索插件
 	 * @apiGroup PluginController
 	 * @apiName pagePlugin
 	 * @apiVersion 1.0.0
@@ -156,7 +156,7 @@ public class PluginController {
 	 * pageNum=1&pageSize=10
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/plugin/pagePlugin?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/plugin/pagePlugin?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -175,10 +175,10 @@ public class PluginController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/plugin/pagePlugin
+	 * @apiSampleRequest /api/plugin/pagePlugin
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/plugin/pagePlugin")
+	@RequestMapping(value = "/api/plugin/pagePlugin")
 	public Map<String, Object> pagePlugin(
 			@RequestParam Map<String, Object> requestMap
 			)  throws Exception{
@@ -208,7 +208,7 @@ public class PluginController {
 	
 
 	/**
-	 * @api {POST} /api/github/qq275860560/plugin/getPlugin  获取插件详情
+	 * @api {POST} /api/plugin/getPlugin  获取插件详情
 	 * @apiGroup PluginController
 	 * @apiName getPlugin
 	 * @apiVersion 1.0.0
@@ -236,7 +236,7 @@ public class PluginController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/plugin/getPlugin?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/plugin/getPlugin?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -253,10 +253,10 @@ public class PluginController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/plugin/getPlugin
+	 * @apiSampleRequest /api/plugin/getPlugin
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPlugin")
+ 	@RequestMapping(value = "/api/plugin/getPlugin")
 	public Map<String, Object> getPlugin(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -275,7 +275,7 @@ public class PluginController {
 	
  
  	/**
-	 * @api {POST} /api/github/qq275860560/plugin/savePlugin  保存插件
+	 * @api {POST} /api/plugin/savePlugin  保存插件
 	 * @apiGroup PluginController
 	 * @apiName savePlugin
 	 * @apiVersion 1.0.0
@@ -303,7 +303,7 @@ public class PluginController {
 	 * name=pluginName1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/plugin/savePlugin?name=pluginName1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/plugin/savePlugin?name=pluginName1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -318,10 +318,10 @@ public class PluginController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/plugin/savePlugin
+	 * @apiSampleRequest /api/plugin/savePlugin
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/plugin/savePlugin")
+	@RequestMapping(value = "/api/plugin/savePlugin")
 	public Map<String, Object> savePlugin(@RequestParam Map<String, Object> requestMap,@RequestParam("readme") MultipartFile readme,@RequestParam("source") MultipartFile source,@RequestParam("distribute") MultipartFile distribute)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
@@ -360,7 +360,7 @@ public class PluginController {
 
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/plugin/updatePlugin  更新插件
+	 * @api {POST} /api/plugin/updatePlugin  更新插件
 	 * @apiGroup PluginController
 	 * @apiName updatePlugin
 	 * @apiVersion 1.0.0
@@ -389,7 +389,7 @@ public class PluginController {
 	 * id=2&name=pluginName2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/plugin/updatePlugin?id=2&name=pluginName2' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/plugin/updatePlugin?id=2&name=pluginName2' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -404,10 +404,10 @@ public class PluginController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/plugin/updatePlugin
+	 * @apiSampleRequest /api/plugin/updatePlugin
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/plugin/updatePlugin")
+	@RequestMapping(value = "/api/plugin/updatePlugin")
 	public Map<String, Object> updatePlugin(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
@@ -427,7 +427,7 @@ public class PluginController {
 	}
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/plugin/deletePlugin 删除插件
+	 * @api {POST} /api/plugin/deletePlugin 删除插件
 	 * @apiGroup PluginController
 	 * @apiName deletePlugin
 	 * @apiVersion 1.0.0
@@ -454,7 +454,7 @@ public class PluginController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/plugin/deletePlugin?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/plugin/deletePlugin?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -470,10 +470,10 @@ public class PluginController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/plugin/deletePlugin
+	 * @apiSampleRequest /api/plugin/deletePlugin
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/plugin/deletePlugin")
+ 	@RequestMapping(value = "/api/plugin/deletePlugin")
 	public Map<String, Object> deletePlugin(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
@@ -490,9 +490,9 @@ public class PluginController {
 		};
 	}
 	 
- 	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/github/qq275860560/plugin/getPluginReadme?id=1" 
+ 	/*  curl -i -X POST "http://admin:123456@localhost:8045/api/plugin/getPluginReadme?id=1" 
 	*/
-	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginReadme")
+	@RequestMapping(value = "/api/plugin/getPluginReadme")
 	public Map<String, Object> getPluginReadme(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -513,9 +513,9 @@ public class PluginController {
  	
  	
  	    //下载插件源码接口 	 
- 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8045/api/github/qq275860560/plugin/getPluginSource?id=1" -o "/tmp/mysqlreader-source.zip" 
+ 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8045/api/plugin/getPluginSource?id=1" -o "/tmp/mysqlreader-source.zip" 
  		*/
-	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginSource")
+	@RequestMapping(value = "/api/plugin/getPluginSource")
 	public void getPluginSource(@RequestParam Map<String, Object> requestMap, HttpServletResponse response)
 			throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
@@ -530,9 +530,9 @@ public class PluginController {
 	}
  	 
  	 	//下载插件发布包接口
- 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8045/api/github/qq275860560/plugin/getPluginDistribute?id=1" -o "/tmp/mysqlreader-distribute.zip" 
+ 	 	/*  curl -i -X POST   "http://admin:123456@localhost:8045/api/plugin/getPluginDistribute?id=1" -o "/tmp/mysqlreader-distribute.zip" 
  		*/
- 	 	@RequestMapping(value = "/api/github/qq275860560/plugin/getPluginDistribute")
+ 	 	@RequestMapping(value = "/api/plugin/getPluginDistribute")
  		public void getPluginDistribute(
  				@RequestParam Map<String, Object> requestMap,HttpServletResponse response)  throws Exception{
  			String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();

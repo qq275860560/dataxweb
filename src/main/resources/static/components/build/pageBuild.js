@@ -32,7 +32,7 @@ define(['vue','components/navigation/navigation','components/build/getBuild','te
 				},
 				pageBuild:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/build/pageBuild?pageNum="+pageNum+"&pageSize="+pageSize+"&jobName="+this.jobName+"&number="+this.number+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/build/pageBuild?pageNum="+pageNum+"&pageSize="+pageSize+"&jobName="+this.jobName+"&number="+this.number+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				

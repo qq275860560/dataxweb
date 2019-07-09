@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 				updateOutput:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&writerName="+this.query.writerName+"&writerParameterUsername="+this.query.writerParameterUsername+"&writerParameterPassword="+this.query.writerParameterPassword+"&writerParameterWriteMode="+this.query.writerParameterWriteMode+"&writerParameterColumn="+this.query.writerParameterColumn+"&writerParameterPreSql="+this.query.writerParameterPreSql+"&writerParameterConnectionJdbcUrl="+this.query.writerParameterConnectionJdbcUrl+"&writerParameterConnectionTable="+this.query.writerParameterConnectionTable;
+					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&writerName="+this.query.writerName+"&writerParameterUsername="+this.query.writerParameterUsername+"&writerParameterPassword="+this.query.writerParameterPassword+"&writerParameterWriteMode="+this.query.writerParameterWriteMode+"&writerParameterColumn="+this.query.writerParameterColumn+"&writerParameterPreSql="+this.query.writerParameterPreSql+"&writerParameterConnectionJdbcUrl="+this.query.writerParameterConnectionJdbcUrl+"&writerParameterConnectionTable="+this.query.writerParameterConnectionTable;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -59,7 +59,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 				let tmpVue=this;
 				this.query=this.$route.query;					
 				
-				let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/output/getOutput?id="+this.query.id;
+				let url=this.$store.state.BASE_PATH+"/api/output/getOutput?id="+this.query.id;
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){

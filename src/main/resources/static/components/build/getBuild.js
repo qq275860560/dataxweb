@@ -27,7 +27,7 @@ define(['vue','components/navigation/navigation','text!./getBuild.html'], functi
 				let tmpVue=this;
 				this.query=this.$route.query;					
 				
-				let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/build/getBuild?id="+this.query.id;
+				let url=this.$store.state.BASE_PATH+"/api/build/getBuild?id="+this.query.id;
 				let token_type=localStorage.getItem('token_type'); 
 				let access_token=localStorage.getItem('access_token');
 				if(token_type==null || access_token==null){

@@ -1,7 +1,7 @@
 [
   {
     "type": "POST",
-    "url": "/build/getBuild",
+    "url": "/api/build/getBuild",
     "title": "获取构建日志详情",
     "group": "BuildController",
     "name": "getBuild",
@@ -71,7 +71,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/build/getBuild?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/build/getBuild?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -146,7 +146,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/build/getBuild"
+        "url": "/api/build/getBuild"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/BuildController.java",
@@ -154,7 +154,7 @@
   },
   {
     "type": "POST",
-    "url": "/build/pageBuild",
+    "url": "/api/build/pageBuild",
     "title": "分页搜索构建日志",
     "group": "BuildController",
     "name": "pageBuild",
@@ -238,7 +238,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/build/pageBuild?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/build/pageBuild?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -329,7 +329,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/build/pageBuild"
+        "url": "/api/build/pageBuild"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/BuildController.java",
@@ -393,7 +393,7 @@
   },
   {
     "type": "POST",
-    "url": "/input/checkInput",
+    "url": "/api/input/checkInput",
     "title": "校验唯一性",
     "group": "InputController",
     "name": "checkInput",
@@ -470,7 +470,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/input/checkInput' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/input/checkInput' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -534,7 +534,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/input/checkInput"
+        "url": "/api/input/checkInput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/InputController.java",
@@ -542,7 +542,7 @@
   },
   {
     "type": "POST",
-    "url": "/input/deleteInput",
+    "url": "/api/input/deleteInput",
     "title": "删除输入流",
     "group": "InputController",
     "name": "deleteInput",
@@ -612,7 +612,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/input/deleteInput?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/input/deleteInput?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -671,7 +671,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/input/deleteInput"
+        "url": "/api/input/deleteInput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/InputController.java",
@@ -679,7 +679,7 @@
   },
   {
     "type": "POST",
-    "url": "/input/getInput",
+    "url": "/api/input/getInput",
     "title": "获取输入流详情",
     "group": "InputController",
     "name": "getInput",
@@ -749,7 +749,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/input/getInput?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/input/getInput?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -824,7 +824,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/input/getInput"
+        "url": "/api/input/getInput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/InputController.java",
@@ -832,7 +832,7 @@
   },
   {
     "type": "POST",
-    "url": "/input/pageInput",
+    "url": "/api/input/pageInput",
     "title": "分页搜索输入流",
     "group": "InputController",
     "name": "pageInput",
@@ -916,7 +916,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/input/pageInput?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/input/pageInput?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1007,7 +1007,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/input/pageInput"
+        "url": "/api/input/pageInput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/InputController.java",
@@ -1015,7 +1015,7 @@
   },
   {
     "type": "POST",
-    "url": "/input/saveInput",
+    "url": "/api/input/saveInput",
     "title": "保存输入流",
     "group": "InputController",
     "name": "saveInput",
@@ -1085,7 +1085,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/input/saveInput?name=inputName1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/input/saveInput?name=inputName1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1144,7 +1144,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/input/saveInput"
+        "url": "/api/input/saveInput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/InputController.java",
@@ -1152,7 +1152,7 @@
   },
   {
     "type": "POST",
-    "url": "/input/updateInput",
+    "url": "/api/input/updateInput",
     "title": "更新输入流",
     "group": "InputController",
     "name": "updateInput",
@@ -1229,7 +1229,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/input/updateInput?id=2&name=inputName2' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/input/updateInput?id=2&name=inputName2' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1288,7 +1288,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/input/updateInput"
+        "url": "/api/input/updateInput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/InputController.java",
@@ -1296,7 +1296,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/checkJob",
+    "url": "/api/job/checkJob",
     "title": "校验唯一性",
     "group": "JobController",
     "name": "checkJob",
@@ -1373,7 +1373,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/checkJob' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/checkJob' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1437,7 +1437,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/checkJob"
+        "url": "/api/job/checkJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -1445,7 +1445,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/deleteJob",
+    "url": "/api/job/deleteJob",
     "title": "删除计划任务",
     "group": "JobController",
     "name": "deleteJob",
@@ -1515,7 +1515,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/deleteJob?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/deleteJob?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1574,7 +1574,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/deleteJob"
+        "url": "/api/job/deleteJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -1582,7 +1582,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/disableJob",
+    "url": "/api/job/disableJob",
     "title": "停用计划任务",
     "group": "JobController",
     "name": "disableJob",
@@ -1652,7 +1652,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/disableJob?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/disableJob?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1711,7 +1711,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/disableJob"
+        "url": "/api/job/disableJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -1719,7 +1719,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/enableJob",
+    "url": "/api/job/enableJob",
     "title": "启用计划任务",
     "group": "JobController",
     "name": "enableJob",
@@ -1789,7 +1789,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/enableJob?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/enableJob?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -1848,7 +1848,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/enableJob"
+        "url": "/api/job/enableJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -1856,7 +1856,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/getJob",
+    "url": "/api/job/getJob",
     "title": "获取计划任务详情",
     "group": "JobController",
     "name": "getJob",
@@ -1926,7 +1926,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/getJob?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/getJob?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2001,7 +2001,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/getJob"
+        "url": "/api/job/getJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -2009,7 +2009,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/pageJob",
+    "url": "/api/job/pageJob",
     "title": "分页搜索计划任务",
     "group": "JobController",
     "name": "pageJob",
@@ -2093,7 +2093,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/pageJob?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/pageJob?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2184,7 +2184,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/pageJob"
+        "url": "/api/job/pageJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -2192,7 +2192,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/runJob",
+    "url": "/api/job/runJob",
     "title": "运行计划任务",
     "group": "JobController",
     "name": "runJob",
@@ -2262,7 +2262,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/runJob?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/runJob?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2321,7 +2321,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/runJob"
+        "url": "/api/job/runJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -2329,7 +2329,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/saveJob",
+    "url": "/api/job/saveJob",
     "title": "保存计划任务",
     "group": "JobController",
     "name": "saveJob",
@@ -2399,7 +2399,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2458,7 +2458,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/saveJob"
+        "url": "/api/job/saveJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -2466,7 +2466,7 @@
   },
   {
     "type": "POST",
-    "url": "/job/updateJob",
+    "url": "/api/job/updateJob",
     "title": "更新计划任务",
     "group": "JobController",
     "name": "updateJob",
@@ -2543,7 +2543,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/job/updateJob?id=2&name=jobName2' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/updateJob?id=2&name=jobName2' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2602,7 +2602,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/job/updateJob"
+        "url": "/api/job/updateJob"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/JobController.java",
@@ -2610,7 +2610,7 @@
   },
   {
     "type": "POST",
-    "url": "//output/checkOutput",
+    "url": "/api/output/checkOutput",
     "title": "校验唯一性",
     "group": "OutputController",
     "name": "checkOutput",
@@ -2687,7 +2687,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045//output/checkOutput' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/output/checkOutput' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2751,7 +2751,7 @@
     },
     "sampleRequest": [
       {
-        "url": "//output/checkOutput"
+        "url": "/api/output/checkOutput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/OutputController.java",
@@ -2759,7 +2759,7 @@
   },
   {
     "type": "POST",
-    "url": "//output/deleteOutput",
+    "url": "/api/output/deleteOutput",
     "title": "删除输出流",
     "group": "OutputController",
     "name": "deleteOutput",
@@ -2829,7 +2829,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045//output/deleteOutput?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/output/deleteOutput?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -2888,7 +2888,7 @@
     },
     "sampleRequest": [
       {
-        "url": "//output/deleteOutput"
+        "url": "/api/output/deleteOutput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/OutputController.java",
@@ -2896,7 +2896,7 @@
   },
   {
     "type": "POST",
-    "url": "//output/getOutput",
+    "url": "/api/output/getOutput",
     "title": "获取输出流详情",
     "group": "OutputController",
     "name": "getOutput",
@@ -2966,7 +2966,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045//output/getOutput?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/output/getOutput?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3041,7 +3041,7 @@
     },
     "sampleRequest": [
       {
-        "url": "//output/getOutput"
+        "url": "/api/output/getOutput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/OutputController.java",
@@ -3049,7 +3049,7 @@
   },
   {
     "type": "POST",
-    "url": "//output/pageOutput",
+    "url": "/api/output/pageOutput",
     "title": "分页搜索输出流",
     "group": "OutputController",
     "name": "pageOutput",
@@ -3133,7 +3133,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045//output/pageOutput?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/output/pageOutput?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3224,7 +3224,7 @@
     },
     "sampleRequest": [
       {
-        "url": "//output/pageOutput"
+        "url": "/api/output/pageOutput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/OutputController.java",
@@ -3232,7 +3232,7 @@
   },
   {
     "type": "POST",
-    "url": "//ouput/saveOutput",
+    "url": "/api/ouput/saveOutput",
     "title": "保存输出流",
     "group": "OutputController",
     "name": "saveOutput",
@@ -3302,7 +3302,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045//output/saveOutput?name=outputName1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/output/saveOutput?name=outputName1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3361,7 +3361,7 @@
     },
     "sampleRequest": [
       {
-        "url": "//output/saveOutput"
+        "url": "/api/output/saveOutput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/OutputController.java",
@@ -3369,7 +3369,7 @@
   },
   {
     "type": "POST",
-    "url": "//output/updateOutput",
+    "url": "/api/output/updateOutput",
     "title": "更新输出流",
     "group": "OutputController",
     "name": "updateOutput",
@@ -3446,7 +3446,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045//output/updateOutput?id=2&name=outputName2' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/output/updateOutput?id=2&name=outputName2' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3505,7 +3505,7 @@
     },
     "sampleRequest": [
       {
-        "url": "//output/updateOutput"
+        "url": "/api/output/updateOutput"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/OutputController.java",
@@ -3513,7 +3513,7 @@
   },
   {
     "type": "POST",
-    "url": "/plugin/checkPlugin",
+    "url": "/api/plugin/checkPlugin",
     "title": "校验唯一性",
     "group": "PluginController",
     "name": "checkPlugin",
@@ -3590,7 +3590,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/plugin/checkPlugin' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/plugin/checkPlugin' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3654,7 +3654,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/plugin/checkPlugin"
+        "url": "/api/plugin/checkPlugin"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/PluginController.java",
@@ -3662,7 +3662,7 @@
   },
   {
     "type": "POST",
-    "url": "/plugin/deletePlugin",
+    "url": "/api/plugin/deletePlugin",
     "title": "删除插件",
     "group": "PluginController",
     "name": "deletePlugin",
@@ -3732,7 +3732,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/plugin/deletePlugin?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/plugin/deletePlugin?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3791,7 +3791,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/plugin/deletePlugin"
+        "url": "/api/plugin/deletePlugin"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/PluginController.java",
@@ -3799,7 +3799,7 @@
   },
   {
     "type": "POST",
-    "url": "/plugin/getPlugin",
+    "url": "/api/plugin/getPlugin",
     "title": "获取插件详情",
     "group": "PluginController",
     "name": "getPlugin",
@@ -3869,7 +3869,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/plugin/getPlugin?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/plugin/getPlugin?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -3944,7 +3944,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/plugin/getPlugin"
+        "url": "/api/plugin/getPlugin"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/PluginController.java",
@@ -3952,7 +3952,7 @@
   },
   {
     "type": "POST",
-    "url": "/plugin/pagePlugin",
+    "url": "/api/plugin/pagePlugin",
     "title": "分页搜索插件",
     "group": "PluginController",
     "name": "pagePlugin",
@@ -4036,7 +4036,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/plugin/pagePlugin?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/plugin/pagePlugin?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -4127,7 +4127,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/plugin/pagePlugin"
+        "url": "/api/plugin/pagePlugin"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/PluginController.java",
@@ -4135,7 +4135,7 @@
   },
   {
     "type": "POST",
-    "url": "/plugin/savePlugin",
+    "url": "/api/plugin/savePlugin",
     "title": "保存插件",
     "group": "PluginController",
     "name": "savePlugin",
@@ -4205,7 +4205,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/plugin/savePlugin?name=pluginName1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/plugin/savePlugin?name=pluginName1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -4264,7 +4264,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/plugin/savePlugin"
+        "url": "/api/plugin/savePlugin"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/PluginController.java",
@@ -4272,7 +4272,7 @@
   },
   {
     "type": "POST",
-    "url": "/plugin/updatePlugin",
+    "url": "/api/plugin/updatePlugin",
     "title": "更新插件",
     "group": "PluginController",
     "name": "updatePlugin",
@@ -4349,7 +4349,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/plugin/updatePlugin?id=2&name=pluginName2' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/plugin/updatePlugin?id=2&name=pluginName2' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -4408,7 +4408,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/plugin/updatePlugin"
+        "url": "/api/plugin/updatePlugin"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/PluginController.java",
@@ -4416,7 +4416,7 @@
   },
   {
     "type": "POST",
-    "url": "/transformer/checkTransformer",
+    "url": "/api/transformer/checkTransformer",
     "title": "校验唯一性",
     "group": "TransformerController",
     "name": "checkTransformer",
@@ -4493,7 +4493,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/transformer/checkTransformer' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/transformer/checkTransformer' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -4557,7 +4557,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/transformer/checkTransformer"
+        "url": "/api/transformer/checkTransformer"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/TransformerController.java",
@@ -4565,7 +4565,7 @@
   },
   {
     "type": "POST",
-    "url": "/transformer/deleteTransformer",
+    "url": "/api/transformer/deleteTransformer",
     "title": "删除交换清洗",
     "group": "TransformerController",
     "name": "deleteTransformer",
@@ -4635,7 +4635,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/transformer/deleteTransformer?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/transformer/deleteTransformer?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -4694,7 +4694,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/transformer/deleteTransformer"
+        "url": "/api/transformer/deleteTransformer"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/TransformerController.java",
@@ -4702,7 +4702,7 @@
   },
   {
     "type": "POST",
-    "url": "/transformer/getTransformer",
+    "url": "/api/transformer/getTransformer",
     "title": "获取交换清洗详情",
     "group": "TransformerController",
     "name": "getTransformer",
@@ -4772,7 +4772,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/transformer/getTransformer?id=1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/transformer/getTransformer?id=1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -4847,7 +4847,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/transformer/getTransformer"
+        "url": "/api/transformer/getTransformer"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/TransformerController.java",
@@ -4855,7 +4855,7 @@
   },
   {
     "type": "POST",
-    "url": "/transformer/pageTransformer",
+    "url": "/api/transformer/pageTransformer",
     "title": "分页搜索交换清洗",
     "group": "TransformerController",
     "name": "pageTransformer",
@@ -4939,7 +4939,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/transformer/pageTransformer?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/transformer/pageTransformer?pageNum=1&pageSize=10' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -5030,7 +5030,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/transformer/pageTransformer"
+        "url": "/api/transformer/pageTransformer"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/TransformerController.java",
@@ -5038,7 +5038,7 @@
   },
   {
     "type": "POST",
-    "url": "/transformer/saveTransformer",
+    "url": "/api/transformer/saveTransformer",
     "title": "保存交换清洗",
     "group": "TransformerController",
     "name": "saveTransformer",
@@ -5108,7 +5108,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/transformer/saveTransformer?name=transformerName1' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/transformer/saveTransformer?name=transformerName1' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -5167,7 +5167,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/transformer/saveTransformer"
+        "url": "/api/transformer/saveTransformer"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/TransformerController.java",
@@ -5175,7 +5175,7 @@
   },
   {
     "type": "POST",
-    "url": "/transformer/updateTransformer",
+    "url": "/api/transformer/updateTransformer",
     "title": "更新交换清洗",
     "group": "TransformerController",
     "name": "updateTransformer",
@@ -5252,7 +5252,7 @@
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/transformer/updateTransformer?id=2&name=transformerName2' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/transformer/updateTransformer?id=2&name=transformerName2' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
@@ -5311,7 +5311,7 @@
     },
     "sampleRequest": [
       {
-        "url": "/transformer/updateTransformer"
+        "url": "/api/transformer/updateTransformer"
       }
     ],
     "filename": "./src/main/java/com/github/qq275860560/controller/TransformerController.java",

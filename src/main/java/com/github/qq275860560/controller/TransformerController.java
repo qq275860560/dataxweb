@@ -41,7 +41,7 @@ public class TransformerController {
  
  
 	/**
-	 * @api {POST} /api/github/qq275860560/transformer/checkTransformer  校验唯一性
+	 * @api {POST} /api/transformer/checkTransformer  校验唯一性
 	 * @apiGroup TransformerController
 	 * @apiName checkTransformer
 	 * @apiVersion 1.0.0
@@ -69,7 +69,7 @@ public class TransformerController {
 	 * id=2&name=name2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/transformer/checkTransformer' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/transformer/checkTransformer' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -86,10 +86,10 @@ public class TransformerController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/transformer/checkTransformer
+	 * @apiSampleRequest /api/transformer/checkTransformer
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/transformer/checkTransformer")
+	@RequestMapping(value = "/api/transformer/checkTransformer")
 	public Map<String, Object> checkTransformer(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String id = (String) requestMap.get("id");
 		String name = (String) requestMap.get("name");
@@ -116,7 +116,7 @@ public class TransformerController {
 	
 
 	/**
-	 * @api {POST} /api/github/qq275860560/transformer/pageTransformer  分页搜索交换清洗
+	 * @api {POST} /api/transformer/pageTransformer  分页搜索交换清洗
 	 * @apiGroup TransformerController
 	 * @apiName pageTransformer
 	 * @apiVersion 1.0.0
@@ -145,7 +145,7 @@ public class TransformerController {
 	 * pageNum=1&pageSize=10
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/transformer/pageTransformer?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/transformer/pageTransformer?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -164,10 +164,10 @@ public class TransformerController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/transformer/pageTransformer
+	 * @apiSampleRequest /api/transformer/pageTransformer
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/transformer/pageTransformer")
+	@RequestMapping(value = "/api/transformer/pageTransformer")
 	public Map<String, Object> pageTransformer(
 			@RequestParam Map<String, Object> requestMap
 			)  throws Exception{
@@ -196,7 +196,7 @@ public class TransformerController {
 	
 
 	/**
-	 * @api {POST} /api/github/qq275860560/transformer/getTransformer  获取交换清洗详情
+	 * @api {POST} /api/transformer/getTransformer  获取交换清洗详情
 	 * @apiGroup TransformerController
 	 * @apiName getTransformer
 	 * @apiVersion 1.0.0
@@ -224,7 +224,7 @@ public class TransformerController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/transformer/getTransformer?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/transformer/getTransformer?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -241,10 +241,10 @@ public class TransformerController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/transformer/getTransformer
+	 * @apiSampleRequest /api/transformer/getTransformer
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/transformer/getTransformer")
+ 	@RequestMapping(value = "/api/transformer/getTransformer")
 	public Map<String, Object> getTransformer(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -263,7 +263,7 @@ public class TransformerController {
 	
  
  	/**
-	 * @api {POST} /api/github/qq275860560/transformer/saveTransformer  保存交换清洗
+	 * @api {POST} /api/transformer/saveTransformer  保存交换清洗
 	 * @apiGroup TransformerController
 	 * @apiName saveTransformer
 	 * @apiVersion 1.0.0
@@ -291,7 +291,7 @@ public class TransformerController {
 	 * name=transformerName1
 	 * 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/transformer/saveTransformer?name=transformerName1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/transformer/saveTransformer?name=transformerName1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -306,10 +306,10 @@ public class TransformerController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/transformer/saveTransformer
+	 * @apiSampleRequest /api/transformer/saveTransformer
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/transformer/saveTransformer")
+	@RequestMapping(value = "/api/transformer/saveTransformer")
 	public Map<String, Object> saveTransformer(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
@@ -346,7 +346,7 @@ public class TransformerController {
 
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/transformer/updateTransformer  更新交换清洗
+	 * @api {POST} /api/transformer/updateTransformer  更新交换清洗
 	 * @apiGroup TransformerController
 	 * @apiName updateTransformer
 	 * @apiVersion 1.0.0
@@ -375,7 +375,7 @@ public class TransformerController {
 	 * id=2&name=transformerName2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/transformer/updateTransformer?id=2&name=transformerName2' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/transformer/updateTransformer?id=2&name=transformerName2' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -390,10 +390,10 @@ public class TransformerController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/transformer/updateTransformer
+	 * @apiSampleRequest /api/transformer/updateTransformer
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/transformer/updateTransformer")
+	@RequestMapping(value = "/api/transformer/updateTransformer")
 	public Map<String, Object> updateTransformer(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
@@ -413,7 +413,7 @@ public class TransformerController {
 	}
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/transformer/deleteTransformer  删除交换清洗
+	 * @api {POST} /api/transformer/deleteTransformer  删除交换清洗
 	 * @apiGroup TransformerController
 	 * @apiName deleteTransformer
 	 * @apiVersion 1.0.0
@@ -440,7 +440,7 @@ public class TransformerController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/transformer/deleteTransformer?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/transformer/deleteTransformer?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -456,10 +456,10 @@ public class TransformerController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/transformer/deleteTransformer
+	 * @apiSampleRequest /api/transformer/deleteTransformer
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/transformer/deleteTransformer")
+ 	@RequestMapping(value = "/api/transformer/deleteTransformer")
 	public Map<String, Object> deleteTransformer(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();

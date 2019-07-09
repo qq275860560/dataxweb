@@ -41,7 +41,7 @@ public class OutputController {
  
  
 	/**
-	 * @api {POST} /api/github/qq275860560/output/checkOutput  校验唯一性
+	 * @api {POST} /api/output/checkOutput  校验唯一性
 	 * @apiGroup OutputController
 	 * @apiName checkOutput
 	 * @apiVersion 1.0.0
@@ -69,7 +69,7 @@ public class OutputController {
 	 * id=2&name=name2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/output/checkOutput' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/output/checkOutput' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -86,10 +86,10 @@ public class OutputController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/output/checkOutput
+	 * @apiSampleRequest /api/output/checkOutput
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/output/checkOutput")
+	@RequestMapping(value = "/api/output/checkOutput")
 	public Map<String, Object> checkOutput(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String id = (String) requestMap.get("id");
 		String name = (String) requestMap.get("name");
@@ -116,7 +116,7 @@ public class OutputController {
 	
 
 	/**
-	 * @api {POST} /api/github/qq275860560/output/pageOutput  分页搜索输出流
+	 * @api {POST} /api/output/pageOutput  分页搜索输出流
 	 * @apiGroup OutputController
 	 * @apiName pageOutput
 	 * @apiVersion 1.0.0
@@ -145,7 +145,7 @@ public class OutputController {
 	 * pageNum=1&pageSize=10
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/output/pageOutput?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/output/pageOutput?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -164,10 +164,10 @@ public class OutputController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/output/pageOutput
+	 * @apiSampleRequest /api/output/pageOutput
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/output/pageOutput")
+	@RequestMapping(value = "/api/output/pageOutput")
 	public Map<String, Object> pageOutput(
 			@RequestParam Map<String, Object> requestMap
 			)  throws Exception{
@@ -196,7 +196,7 @@ public class OutputController {
 	
 
 	/**
-	 * @api {POST} /api/github/qq275860560/output/getOutput  获取输出流详情
+	 * @api {POST} /api/output/getOutput  获取输出流详情
 	 * @apiGroup OutputController
 	 * @apiName getOutput
 	 * @apiVersion 1.0.0
@@ -224,7 +224,7 @@ public class OutputController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/output/getOutput?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/output/getOutput?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -241,10 +241,10 @@ public class OutputController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/output/getOutput
+	 * @apiSampleRequest /api/output/getOutput
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/output/getOutput")
+ 	@RequestMapping(value = "/api/output/getOutput")
 	public Map<String, Object> getOutput(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -263,7 +263,7 @@ public class OutputController {
 	
  
  	/**
-	 * @api {POST} /api/github/qq275860560/ouput/saveOutput  保存输出流
+	 * @api {POST} /api/ouput/saveOutput  保存输出流
 	 * @apiGroup OutputController
 	 * @apiName saveOutput
 	 * @apiVersion 1.0.0
@@ -291,7 +291,7 @@ public class OutputController {
 	 * name=outputName1
 	 * 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/output/saveOutput?name=outputName1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/output/saveOutput?name=outputName1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -306,10 +306,10 @@ public class OutputController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/output/saveOutput
+	 * @apiSampleRequest /api/output/saveOutput
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/output/saveOutput")
+	@RequestMapping(value = "/api/output/saveOutput")
 	public Map<String, Object> saveOutput(@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);		
@@ -335,7 +335,7 @@ public class OutputController {
 
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/output/updateOutput  更新输出流
+	 * @api {POST} /api/output/updateOutput  更新输出流
 	 * @apiGroup OutputController
 	 * @apiName updateOutput
 	 * @apiVersion 1.0.0
@@ -364,7 +364,7 @@ public class OutputController {
 	 * id=2&name=outputName2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/output/updateOutput?id=2&name=outputName2' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/output/updateOutput?id=2&name=outputName2' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -379,10 +379,10 @@ public class OutputController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/output/updateOutput
+	 * @apiSampleRequest /api/output/updateOutput
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/output/updateOutput")
+	@RequestMapping(value = "/api/output/updateOutput")
 	public Map<String, Object> updateOutput(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
@@ -402,7 +402,7 @@ public class OutputController {
 	}
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/output/deleteOutput  删除输出流
+	 * @api {POST} /api/output/deleteOutput  删除输出流
 	 * @apiGroup OutputController
 	 * @apiName deleteOutput
 	 * @apiVersion 1.0.0
@@ -429,7 +429,7 @@ public class OutputController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/output/deleteOutput?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/output/deleteOutput?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -445,10 +445,10 @@ public class OutputController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/output/deleteOutput
+	 * @apiSampleRequest /api/output/deleteOutput
 	 *	 
 	 */
- 	@RequestMapping(value = "/api/github/qq275860560/output/deleteOutput")
+ 	@RequestMapping(value = "/api/output/deleteOutput")
 	public Map<String, Object> deleteOutput(
 			@RequestParam Map<String, Object> requestMap)  throws Exception{
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();

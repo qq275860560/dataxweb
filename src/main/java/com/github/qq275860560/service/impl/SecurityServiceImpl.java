@@ -70,73 +70,73 @@ public class SecurityServiceImpl extends SecurityService {
 	private Map<String, Map<String, Object>> url_cache = new HashMap<String, Map<String, Object>>() {
 		{
 
-			put("/api/github/qq275860560/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+			put("/api/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_ADMIN");// 只需此角色即可访问
 				}
 			});
 			
-			put("/api/github/qq275860560/input/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+			put("/api/input/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_USER");// 只需此角色即可访问
 				}
 			});
-			put("/api/github/qq275860560/output/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+			put("/api/output/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_USER");// 只需此角色即可访问
 				}
 			});
-			put("/api/github/qq275860560/plugin/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
-				{
-					put("roleNames", "ROLE_USER");// 只需此角色即可访问
-				}
-			});
-			
-			put("/api/github/qq275860560/job/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
-				{
-					put("roleNames", "ROLE_USER");// 只需此角色即可访问
-				}
-			});
-			put("/api/github/qq275860560/build/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+			put("/api/plugin/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_USER");// 只需此角色即可访问
 				}
 			});
 			
+			put("/api/job/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
+			put("/api/build/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+				{
+					put("roleNames", "ROLE_USER");// 只需此角色即可访问
+				}
+			});
 			
 			
-			put("/api/github/qq275860560/user/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
+			
+			put("/api/user/**", new HashMap<String, Object>() {//请注意正则表达式的写法，是两个*号
 				{
 					put("roleNames", "ROLE_ADMIN");// 只需此角色即可访问
 				}
 			});
-			put("/api/github/qq275860560/user/pageUser", new HashMap<String, Object>() {
+			put("/api/user/pageUser", new HashMap<String, Object>() {
 				{
 					put("roleNames", "ROLE_USER");// 只需此权限即可访问
 				}
 			});
 
-			put("/api/github/qq275860560/user/listUser", new HashMap<String, Object>() {
+			put("/api/user/listUser", new HashMap<String, Object>() {
 				{
 					put("roleNames", "ROLE_USER");// 只需此权限即可访问
 				}
 			});
-			put("/api/github/qq275860560/user/getUser", new HashMap<String, Object>() {
+			put("/api/user/getUser", new HashMap<String, Object>() {
 				{
 					put("roleNames", "ROLE_USER");// 只需此权限即可访问
 				}
 			});
-			put("/api/github/qq275860560/user/saveUser", new HashMap<String, Object>() {
+			put("/api/user/saveUser", new HashMap<String, Object>() {
 				{
 					put("roleNames", "");
 				}
 			});
-			put("/api/github/qq275860560/user/deleteUser", new HashMap<String, Object>() {
+			put("/api/user/deleteUser", new HashMap<String, Object>() {
 				{
 					put("roleNames", "");
 				}
 			});
-			put("/api/github/qq275860560/user/updateUser", new HashMap<String, Object>() {
+			put("/api/user/updateUser", new HashMap<String, Object>() {
 				{
 					put("roleNames", "");
 				}

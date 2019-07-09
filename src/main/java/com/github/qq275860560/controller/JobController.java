@@ -76,7 +76,7 @@ public class JobController {
 	private ObjectMapper objectMapper;
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/checkJob  校验唯一性
+	 * @api {POST} /api/job/checkJob  校验唯一性
 	 * @apiGroup JobController
 	 * @apiName checkJob
 	 * @apiVersion 1.0.0
@@ -104,7 +104,7 @@ public class JobController {
 	 * id=2&name=name2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/checkJob' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/checkJob' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码:{200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -121,10 +121,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/checkJob
+	 * @apiSampleRequest /api/job/checkJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/checkJob")
+	@RequestMapping(value = "/api/job/checkJob")
 	public Map<String, Object> checkJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String id = (String) requestMap.get("id");
 		String name = (String) requestMap.get("name");
@@ -151,7 +151,7 @@ public class JobController {
 
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/pageJob  分页搜索计划任务
+	 * @api {POST} /api/job/pageJob  分页搜索计划任务
 	 * @apiGroup JobController
 	 * @apiName pageJob
 	 * @apiVersion 1.0.0
@@ -180,7 +180,7 @@ public class JobController {
 	 * pageNum=1&pageSize=10
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/pageJob?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/pageJob?pageNum=1&pageSize=10' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -199,10 +199,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/pageJob
+	 * @apiSampleRequest /api/job/pageJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/pageJob")
+	@RequestMapping(value = "/api/job/pageJob")
 	public Map<String, Object> pageJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -239,7 +239,7 @@ public class JobController {
 	}
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/getJob  获取计划任务详情
+	 * @api {POST} /api/job/getJob  获取计划任务详情
 	 * @apiGroup JobController
 	 * @apiName getJob
 	 * @apiVersion 1.0.0
@@ -267,7 +267,7 @@ public class JobController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/getJob?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/getJob?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -284,10 +284,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/getJob
+	 * @apiSampleRequest /api/job/getJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/getJob")
+	@RequestMapping(value = "/api/job/getJob")
 	public Map<String, Object> getJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -306,7 +306,7 @@ public class JobController {
 	
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/job/saveJob  保存计划任务
+	 * @api {POST} /api/job/saveJob  保存计划任务
 	 * @apiGroup JobController
 	 * @apiName saveJob
 	 * @apiVersion 1.0.0
@@ -334,7 +334,7 @@ public class JobController {
 	 * name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -349,10 +349,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/saveJob
+	 * @apiSampleRequest /api/job/saveJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/saveJob")
+	@RequestMapping(value = "/api/job/saveJob")
 	public Map<String, Object> saveJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -611,7 +611,7 @@ public class JobController {
 
 	
 	/**
-	 * @api {POST} /api/github/qq275860560/job/updateJob  更新计划任务
+	 * @api {POST} /api/job/updateJob  更新计划任务
 	 * @apiGroup JobController
 	 * @apiName updateJob
 	 * @apiVersion 1.0.0
@@ -640,7 +640,7 @@ public class JobController {
 	 * id=2&name=jobName2
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/updateJob?id=2&name=jobName2' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/updateJob?id=2&name=jobName2' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -655,10 +655,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/updateJob
+	 * @apiSampleRequest /api/job/updateJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/updateJob")
+	@RequestMapping(value = "/api/job/updateJob")
 	public Map<String, Object> updateJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -715,7 +715,7 @@ public class JobController {
 	}
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/deleteJob  删除计划任务
+	 * @api {POST} /api/job/deleteJob  删除计划任务
 	 * @apiGroup JobController
 	 * @apiName deleteJob
 	 * @apiVersion 1.0.0
@@ -742,7 +742,7 @@ public class JobController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/deleteJob?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/deleteJob?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -758,10 +758,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/deleteJob
+	 * @apiSampleRequest /api/job/deleteJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/deleteJob")
+	@RequestMapping(value = "/api/job/deleteJob")
 	public Map<String, Object> deleteJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -795,7 +795,7 @@ public class JobController {
 	}
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/runJob  运行计划任务
+	 * @api {POST} /api/job/runJob  运行计划任务
 	 * @apiGroup JobController
 	 * @apiName runJob
 	 * @apiVersion 1.0.0
@@ -822,7 +822,7 @@ public class JobController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/runJob?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/runJob?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -838,10 +838,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/runJob
+	 * @apiSampleRequest /api/job/runJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/runJob")
+	@RequestMapping(value = "/api/job/runJob")
 	public Map<String, Object> runJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -991,9 +991,9 @@ public class JobController {
 	 * 
 	 * 把接口改在build模块
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/getJobProgress?id=1"
+	 * "http://admin:123456@localhost:8045/api/job/getJobProgress?id=1"
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/getJobProgress")
+	@RequestMapping(value = "/api/job/getJobProgress")
 	public Map<String, Object> getJobProgress(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -1011,9 +1011,9 @@ public class JobController {
 
 	/*把接口改在build模块
 	 * curl -i -X POST
-	 * "http://admin:123456@localhost:8045/api/github/qq275860560/job/stopJob?id=1&number=1"
+	 * "http://admin:123456@localhost:8045/api/job/stopJob?id=1&number=1"
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/stopJob")
+	@RequestMapping(value = "/api/job/stopJob")
 	public Map<String, Object> stopJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -1079,7 +1079,7 @@ public class JobController {
 	}
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/enableJob  启用计划任务
+	 * @api {POST} /api/job/enableJob  启用计划任务
 	 * @apiGroup JobController
 	 * @apiName enableJob
 	 * @apiVersion 1.0.0
@@ -1106,7 +1106,7 @@ public class JobController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/enableJob?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/enableJob?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -1122,10 +1122,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/enableJob
+	 * @apiSampleRequest /api/job/enableJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/enableJob")
+	@RequestMapping(value = "/api/job/enableJob")
 	public Map<String, Object> enableJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
@@ -1156,7 +1156,7 @@ public class JobController {
 	}
 
 	/**
-	 * @api {POST} /api/github/qq275860560/job/disableJob  停用计划任务
+	 * @api {POST} /api/job/disableJob  停用计划任务
 	 * @apiGroup JobController
 	 * @apiName disableJob
 	 * @apiVersion 1.0.0
@@ -1183,7 +1183,7 @@ public class JobController {
 	 * id=1
 	 
 	 * @apiExample {curl} 命令行调用示例: 	
-	 * curl -i -X POST 'http://localhost:8045/api/github/qq275860560/job/disableJob?id=1' -H "Authorization:Bearer admin_token" 
+	 * curl -i -X POST 'http://localhost:8045/api/job/disableJob?id=1' -H "Authorization:Bearer admin_token" 
 	
 	 * @apiSuccess (返回结果:) {Integer} code 状态码, {200:成功,400:参数错误(比如参数格式不符合文档要求),401:认证失败(比如token已过期),403:授权失败(比如用户无权限访问该接口)}
 	 * @apiSuccess (返回结果:) {String} msg 提示信息
@@ -1199,10 +1199,10 @@ public class JobController {
 	 * @apiErrorExample {json} 失败返回: 
 	 * {"code":403,"msg":"用户无权限访问该接口","data":null}
 	 *  
-	 * @apiSampleRequest /api/github/qq275860560/job/disableJob
+	 * @apiSampleRequest /api/job/disableJob
 	 *	 
 	 */
-	@RequestMapping(value = "/api/github/qq275860560/job/disableJob")
+	@RequestMapping(value = "/api/job/disableJob")
 	public Map<String, Object> disableJob(@RequestParam Map<String, Object> requestMap) throws Exception {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);

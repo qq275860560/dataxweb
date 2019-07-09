@@ -61,7 +61,7 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 				saveJob:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/github/qq275860560/job/saveJob?name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId+"&transformerId="+this.query.transformerId;
+					let url=this.$store.state.BASE_PATH+"/api/job/saveJob?name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId+"&transformerId="+this.query.transformerId;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
