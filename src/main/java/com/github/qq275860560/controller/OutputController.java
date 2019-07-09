@@ -43,7 +43,7 @@ public class OutputController {
 	/**
 	 * @api {POST} /api/output/checkOutput  校验唯一性
 	 * @apiGroup OutputController
-	 * @apiName checkOutput
+	 * @apiName /api/output/checkOutput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>校验唯一性，成功code返回200 </p>
@@ -118,7 +118,7 @@ public class OutputController {
 	/**
 	 * @api {POST} /api/output/pageOutput  分页搜索输出流
 	 * @apiGroup OutputController
-	 * @apiName pageOutput
+	 * @apiName /api/output/pageOutput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>分页搜索输出流，成功code返回200</p>
@@ -198,7 +198,7 @@ public class OutputController {
 	/**
 	 * @api {POST} /api/output/getOutput  获取输出流详情
 	 * @apiGroup OutputController
-	 * @apiName getOutput
+	 * @apiName /api/output/getOutput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>获取输出流详情，成功code返回200</p>
@@ -265,7 +265,7 @@ public class OutputController {
  	/**
 	 * @api {POST} /api/ouput/saveOutput  保存输出流
 	 * @apiGroup OutputController
-	 * @apiName saveOutput
+	 * @apiName /api/ouput/saveOutput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>保存输出流，成功code返回200</p>
@@ -337,7 +337,7 @@ public class OutputController {
 	/**
 	 * @api {POST} /api/output/updateOutput  更新输出流
 	 * @apiGroup OutputController
-	 * @apiName updateOutput
+	 * @apiName /api/output/updateOutput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>更新输出流，成功code返回200</p>
@@ -404,7 +404,7 @@ public class OutputController {
 	/**
 	 * @api {POST} /api/output/deleteOutput  删除输出流
 	 * @apiGroup OutputController
-	 * @apiName deleteOutput
+	 * @apiName /api/output/deleteOutput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>删除输出流，成功code返回200</p>

@@ -33,7 +33,7 @@ public class UserController {
     /**
 	 * @api {POST} /login  登录用户（获取令牌）
 	 * @apiGroup UserController
-	 * @apiName login
+	 * @apiName /login
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription  

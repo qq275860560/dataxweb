@@ -55,7 +55,7 @@ public class PluginController {
 	/**
 	 * @api {POST} /api/plugin/checkPlugin  校验唯一性
 	 * @apiGroup PluginController
-	 * @apiName checkPlugin
+	 * @apiName /api/plugin/checkPlugin
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>校验唯一性，成功code返回200 </p>
@@ -129,7 +129,7 @@ public class PluginController {
 	/**
 	 * @api {POST} /api/plugin/pagePlugin  分页搜索插件
 	 * @apiGroup PluginController
-	 * @apiName pagePlugin
+	 * @apiName /api/plugin/pagePlugin
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>分页搜索插件，成功code返回200</p>
@@ -210,7 +210,7 @@ public class PluginController {
 	/**
 	 * @api {POST} /api/plugin/getPlugin  获取插件详情
 	 * @apiGroup PluginController
-	 * @apiName getPlugin
+	 * @apiName /api/plugin/getPlugin
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>获取插件详情，成功code返回200</p>
@@ -277,7 +277,7 @@ public class PluginController {
  	/**
 	 * @api {POST} /api/plugin/savePlugin  保存插件
 	 * @apiGroup PluginController
-	 * @apiName savePlugin
+	 * @apiName /api/plugin/savePlugin
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>保存插件，成功code返回200</p>
@@ -362,7 +362,7 @@ public class PluginController {
 	/**
 	 * @api {POST} /api/plugin/updatePlugin  更新插件
 	 * @apiGroup PluginController
-	 * @apiName updatePlugin
+	 * @apiName /api/plugin/updatePlugin
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>更新插件，成功code返回200</p>
@@ -429,7 +429,7 @@ public class PluginController {
 	/**
 	 * @api {POST} /api/plugin/deletePlugin 删除插件
 	 * @apiGroup PluginController
-	 * @apiName deletePlugin
+	 * @apiName /api/plugin/deletePlugin
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>删除插件，成功code返回200</p>

@@ -44,7 +44,7 @@ public class BuildController {
 	/**
 	 * @api {POST} /api/build/pageBuild  分页搜索构建日志
 	 * @apiGroup BuildController
-	 * @apiName pageBuild
+	 * @apiName /api/build/pageBuild
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>分页搜索构建日志，成功code返回200</p>
@@ -124,7 +124,7 @@ public class BuildController {
 	/**
 	 * @api {POST} /api/build/getBuild  获取构建日志详情
 	 * @apiGroup BuildController
-	 * @apiName getBuild
+	 * @apiName /api/build/getBuild
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>获取构建日志详情，成功code返回200</p>

@@ -43,7 +43,7 @@ public class TransformerController {
 	/**
 	 * @api {POST} /api/transformer/checkTransformer  校验唯一性
 	 * @apiGroup TransformerController
-	 * @apiName checkTransformer
+	 * @apiName /api/transformer/checkTransformer
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>校验唯一性，成功code返回200 </p>
@@ -118,7 +118,7 @@ public class TransformerController {
 	/**
 	 * @api {POST} /api/transformer/pageTransformer  分页搜索交换清洗
 	 * @apiGroup TransformerController
-	 * @apiName pageTransformer
+	 * @apiName /api/transformer/pageTransformer 
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>分页搜索交换清洗，成功code返回200</p>
@@ -198,7 +198,7 @@ public class TransformerController {
 	/**
 	 * @api {POST} /api/transformer/getTransformer  获取交换清洗详情
 	 * @apiGroup TransformerController
-	 * @apiName getTransformer
+	 * @apiName /api/transformer/getTransformer
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>获取交换清洗详情，成功code返回200</p>
@@ -265,7 +265,7 @@ public class TransformerController {
  	/**
 	 * @api {POST} /api/transformer/saveTransformer  保存交换清洗
 	 * @apiGroup TransformerController
-	 * @apiName saveTransformer
+	 * @apiName /api/transformer/saveTransformer
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>保存交换清洗，成功code返回200</p>
@@ -348,7 +348,7 @@ public class TransformerController {
 	/**
 	 * @api {POST} /api/transformer/updateTransformer  更新交换清洗
 	 * @apiGroup TransformerController
-	 * @apiName updateTransformer
+	 * @apiName /api/transformer/updateTransformer
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>更新交换清洗，成功code返回200</p>
@@ -415,7 +415,7 @@ public class TransformerController {
 	/**
 	 * @api {POST} /api/transformer/deleteTransformer  删除交换清洗
 	 * @apiGroup TransformerController
-	 * @apiName deleteTransformer
+	 * @apiName /api/transformer/deleteTransformer
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>删除交换清洗，成功code返回200</p>

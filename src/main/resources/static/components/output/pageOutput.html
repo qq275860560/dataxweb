@@ -100,11 +100,9 @@
 							<td>{{item.writerParameterConnectionTable}}</td>
 							<td>{{item.createUserName}}</td>
 							<td>{{item.createTime}}</td>
-							<td>
-								<button type="button" class="btn btn-default"
-									@click="deleteOutput({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
-								<button type="button" class="btn btn-default"
-									@click="updateRouterView('/components/output/updateOutput',{id:item.id,name:item.name})">编辑</button>
+							<td>						
+								<a href="javascript:void(0)" @click="deleteOutput({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</a>
+								<a href="javascript:void(0)" @click="updateRouterView('/components/output/updateOutput',{id:item.id,name:item.name})">编辑</a>
 							</td>
 						</tr>
 					</tbody>

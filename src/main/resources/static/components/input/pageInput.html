@@ -99,10 +99,8 @@
 							<td>{{item.createUserName}}</td>
 							<td>{{item.createTime}}</td>
 							<td>
-								<button type="button" class="btn btn-default"
-									@click="deleteInput({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</button>
-								<button type="button" class="btn btn-default"
-									@click="updateRouterView('/components/input/updateInput',{id:item.id,name:item.name})">编辑</button>
+								<a href="javascript:void(0)" @click="deleteInput({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</a>
+								<a href="javascript:void(0)" @click="updateRouterView('/components/input/updateInput',{id:item.id,name:item.name})">编辑</a>
 							</td>
 						</tr>
 					</tbody>

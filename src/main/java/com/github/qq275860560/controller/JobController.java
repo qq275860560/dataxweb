@@ -78,7 +78,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/checkJob  校验唯一性
 	 * @apiGroup JobController
-	 * @apiName checkJob
+	 * @apiName /api/job/checkJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>校验唯一性，成功code返回200 </p>
@@ -153,7 +153,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/pageJob  分页搜索计划任务
 	 * @apiGroup JobController
-	 * @apiName pageJob
+	 * @apiName /api/job/pageJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>分页搜索计划任务，成功code返回200</p>
@@ -241,7 +241,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/getJob  获取计划任务详情
 	 * @apiGroup JobController
-	 * @apiName getJob
+	 * @apiName /api/job/getJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>获取计划任务详情，成功code返回200</p>
@@ -308,7 +308,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/saveJob  保存计划任务
 	 * @apiGroup JobController
-	 * @apiName saveJob
+	 * @apiName /api/job/saveJob 
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>保存计划任务，成功code返回200</p>
@@ -613,7 +613,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/updateJob  更新计划任务
 	 * @apiGroup JobController
-	 * @apiName updateJob
+	 * @apiName /api/job/updateJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>更新计划任务，成功code返回200</p>
@@ -717,7 +717,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/deleteJob  删除计划任务
 	 * @apiGroup JobController
-	 * @apiName deleteJob
+	 * @apiName /api/job/deleteJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>删除计划任务，成功code返回200</p>
@@ -797,7 +797,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/runJob  运行计划任务
 	 * @apiGroup JobController
-	 * @apiName runJob
+	 * @apiName /api/job/runJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>运行计划任务，成功code返回200</p>
@@ -855,7 +855,7 @@ public class JobController {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
-					put("msg", "构建失败,任务禁用中");
+					put("msg", "构建失败,任务停用中");
 					put("data", null);
 				}
 			};
@@ -1028,7 +1028,7 @@ public class JobController {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
-					put("msg", "停止失败,任务禁用中");
+					put("msg", "停止失败,任务停用中");
 					put("data", null);
 				}
 			};
@@ -1081,7 +1081,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/enableJob  启用计划任务
 	 * @apiGroup JobController
-	 * @apiName enableJob
+	 * @apiName /api/job/enableJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>启用计划任务，成功code返回200</p>
@@ -1158,7 +1158,7 @@ public class JobController {
 	/**
 	 * @api {POST} /api/job/disableJob  停用计划任务
 	 * @apiGroup JobController
-	 * @apiName disableJob
+	 * @apiName /api/job/disableJob
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>停用计划任务，成功code返回200</p>
@@ -1215,7 +1215,7 @@ public class JobController {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
-					put("msg", "禁用失败,任务禁用中");
+					put("msg", "禁用失败,任务停用中");
 					put("data", null);
 				}
 			};

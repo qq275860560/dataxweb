@@ -41,7 +41,7 @@ public class InputController {
 	/**
 	 * @api {POST} /api/input/checkInput  校验唯一性
 	 * @apiGroup InputController
-	 * @apiName checkInput
+	 * @apiName /api/input/checkInput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>校验唯一性，成功code返回200 </p>
@@ -115,7 +115,7 @@ public class InputController {
 	/**
 	 * @api {POST} /api/input/pageInput  分页搜索输入流
 	 * @apiGroup InputController
-	 * @apiName pageInput
+	 * @apiName /api/input/pageInput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>分页搜索输入流，成功code返回200</p>
@@ -193,7 +193,7 @@ public class InputController {
 	/**
 	 * @api {POST} /api/input/getInput  获取输入流详情
 	 * @apiGroup InputController
-	 * @apiName getInput
+	 * @apiName /api/input/getInput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>获取输入流详情，成功code返回200</p>
@@ -259,7 +259,7 @@ public class InputController {
 	/**
 	 * @api {POST} /api/input/saveInput  保存输入流
 	 * @apiGroup InputController
-	 * @apiName saveInput
+	 * @apiName /api/input/saveInput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>保存输入流，成功code返回200</p>
@@ -340,7 +340,7 @@ public class InputController {
 	/**
 	 * @api {POST} /api/input/updateInput  更新输入流
 	 * @apiGroup InputController
-	 * @apiName updateInput
+	 * @apiName /api/input/updateInput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>更新输入流，成功code返回200</p>
@@ -407,7 +407,7 @@ public class InputController {
 	/**
 	 * @api {POST} /api/input/deleteInput  删除输入流
 	 * @apiGroup InputController
-	 * @apiName deleteInput
+	 * @apiName /api/input/deleteInput
 	 * @apiVersion 1.0.0
 	 * @apiPermission user
 	 * @apiDescription   <p>删除输入流，成功code返回200</p>
