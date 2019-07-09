@@ -896,7 +896,7 @@ public class JobController {
 		buildDao.saveBuild(buildMap);
 		
 		//更新计划任务
-		jobMap.put("number", currentBuildNumber);
+		jobMap.put("lastBuildNumber", currentBuildNumber);
 		jobMap.put("nextBuildNumber", Integer.parseInt(currentBuildNumber)+1+"");
 		jobMap.put("status", Constant.JOB_STATUS_RUNNING);
 		jobDao.updateJob(jobMap);
@@ -971,7 +971,8 @@ public class JobController {
 									}
 								}), String.class);
 						//控制台日志
-						String consoleText = response4.getBody();					
+						String consoleText = response4.getBody();	
+						buildMap.put("consoleText", consoleText);
 						buildDao.updateBuild(buildMap);
 
 						// 获取job的最后一次构建状态
@@ -986,17 +987,17 @@ public class JobController {
 
 						responseMap = (Map<String, Object>) response3.getBody();
 						
-						Integer number = (Integer) ((Map<String, Object>) responseMap.get("lastBuild")).get("number");
+						Integer lastBuildNumber = (Integer) ((Map<String, Object>) responseMap.get("lastBuild")).get("number");
 
 						Map<String, Object> jobMap = jobDao.getJob(jobId);
 						//最后一次构建编号
-						jobMap.put("number", number);
+						jobMap.put("lastBuildNumber", lastBuildNumber);
 						//最后一次成功构建编号
-						jobMap.put("lastSuccessfulBuild", responseMap.get("lastSuccessfulBuild") == null ? null
-								: ((Map<String, Object>) responseMap.get("lastSuccessfulBuild")).get("number"));
+						jobMap.put("lastSuccessfulBuildNumber", responseMap.get("lastSuccessfulBuildNumber") == null ? null
+								: ((Map<String, Object>) responseMap.get("lastSuccessfulBuildNumber")).get("number"));
 						//最后一次失败构建编号
-						jobMap.put("lastUnsuccessfulBuild", responseMap.get("lastUnsuccessfulBuild") == null ? null
-								: ((Map<String, Object>) responseMap.get("lastUnsuccessfulBuild")).get("number"));
+						jobMap.put("lastUnsuccessfulBuildNumber", responseMap.get("lastUnsuccessfulBuildNumber") == null ? null
+								: ((Map<String, Object>) responseMap.get("lastUnsuccessfulBuildNumber")).get("number"));
 						//下一次构建编号
 						jobMap.put("nextBuildNumber", responseMap.get("nextBuildNumber"));
 						jobMap.put("status", building == false ? Constant.JOB_STATUS_ENABLE : Constant.JOB_STATUS_RUNNING);
@@ -1100,7 +1101,7 @@ public class JobController {
 		
 		Map<String, Object> map = jobDao.getJob(id);
 		String name = (String) map.get("name");
-		String number = (String)map.get("number");
+		String lastBuildNumber = (String)map.get("lastBuildNumber");
 
 		Integer status = (Integer) map.get("status");
 		if (status == Constant.JOB_STATUS_DISABLE) {
@@ -1122,16 +1123,20 @@ public class JobController {
 				}
 			};
 		}
-			
+		//TODO取消队列	
 		//停止
-		ResponseEntity<String> response  =  restTemplate.exchange(String.format("%s/job/%s/%s/stop", jenkinsUrl, name,number),
+		ResponseEntity<String> response  =  restTemplate.exchange(String.format("%s/job/%s/%s/stop", jenkinsUrl, name,lastBuildNumber),
 				HttpMethod.POST, new HttpEntity<>(new HttpHeaders() {
 					{
 						set("Content-Type", "text/xml; charset=UTF-8");
 
 					}
 				}), String.class);	
-		log.info(""+response.getStatusCode());;
+		log.info(""+response.getStatusCode());
+		
+		//更新job
+	    map.put("status", Constant.JOB_STATUS_ENABLE);
+	    jobDao.updateJob(map);
 
 		return new HashMap<String, Object>() {
 			{

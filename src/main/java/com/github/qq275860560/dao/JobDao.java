@@ -70,7 +70,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -92,7 +92,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -160,17 +160,17 @@ public class JobDao {
 		sb2.append("?,");
 		condition.add(map.get("status"));
 
-		sb1.append("number").append(",");
+		sb1.append("lastBuildNumber").append(",");
 		sb2.append("?,");
-		condition.add(map.get("number"));
+		condition.add(map.get("lastBuildNumber"));
 
-		sb1.append("lastSuccessfulBuild").append(",");
+		sb1.append("lastSuccessfulBuildNumber").append(",");
 		sb2.append("?,");
-		condition.add(map.get("lastSuccessfulBuild"));
+		condition.add(map.get("lastSuccessfulBuildNumber"));
 
-		sb1.append("lastUnsuccessfulBuild").append(",");
+		sb1.append("lastUnsuccessfulBuildNumber").append(",");
 		sb2.append("?,");
-		condition.add(map.get("lastUnsuccessfulBuild"));
+		condition.add(map.get("lastUnsuccessfulBuildNumber"));
 
 		sb1.append("nextBuildNumber").append(",");
 		sb2.append("?,");
@@ -239,14 +239,14 @@ public class JobDao {
 		sb.append(" status = ? ,");
 		condition.add(map.get("status"));
 
-		sb.append(" number = ? ,");
-		condition.add(map.get("number"));
+		sb.append(" lastBuildNumber = ? ,");
+		condition.add(map.get("lastBuildNumber"));
 
-		sb.append(" lastSuccessfulBuild = ? ,");
-		condition.add(map.get("lastSuccessfulBuild"));
+		sb.append(" lastSuccessfulBuildNumber = ? ,");
+		condition.add(map.get("lastSuccessfulBuildNumber"));
 
-		sb.append(" lastUnsuccessfulBuild = ? ,");
-		condition.add(map.get("lastUnsuccessfulBuild"));
+		sb.append(" lastUnsuccessfulBuildNumber = ? ,");
+		condition.add(map.get("lastUnsuccessfulBuildNumber"));
 
 		sb.append(" nextBuildNumber = ? ,");
 		condition.add(map.get("nextBuildNumber"));
@@ -274,13 +274,13 @@ public class JobDao {
 
 	public List<Map<String, Object>> listJob(String id, String name, String inputId, String inputName, String readerId,
 			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, String number, String lastSuccessfulBuild, String lastUnsuccessfulBuild,
+			Integer status, String lastBuildNumber, String lastSuccessfulBuildNumber, String lastUnsuccessfulBuildNumber,
 			String nextBuildNumber, Double progress, String createUserId, String createUserName, String startCreateTime,
 			String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -329,17 +329,17 @@ public class JobDao {
 			sb.append(" and status = ? ");
 			condition.add(status);
 		}
-		if (!StringUtils.isEmpty(number)) {
-			sb.append(" and number like ? ");
-			condition.add("%" + number + "%");
+		if (!StringUtils.isEmpty(lastBuildNumber)) {
+			sb.append(" and lastBuildNumber like ? ");
+			condition.add("%" + lastBuildNumber + "%");
 		}
-		if (!StringUtils.isEmpty(lastSuccessfulBuild)) {
-			sb.append(" and lastSuccessfulBuild like ? ");
-			condition.add("%" + lastSuccessfulBuild + "%");
+		if (!StringUtils.isEmpty(lastSuccessfulBuildNumber)) {
+			sb.append(" and lastSuccessfulBuildNumber like ? ");
+			condition.add("%" + lastSuccessfulBuildNumber + "%");
 		}
-		if (!StringUtils.isEmpty(lastUnsuccessfulBuild)) {
-			sb.append(" and lastUnsuccessfulBuild like ? ");
-			condition.add("%" + lastUnsuccessfulBuild + "%");
+		if (!StringUtils.isEmpty(lastUnsuccessfulBuildNumber)) {
+			sb.append(" and lastUnsuccessfulBuildNumber like ? ");
+			condition.add("%" + lastUnsuccessfulBuildNumber + "%");
 		}
 		if (!StringUtils.isEmpty(nextBuildNumber)) {
 			sb.append(" and nextBuildNumber like ? ");
@@ -373,7 +373,7 @@ public class JobDao {
 
 	public Map<String, Object> pageJob(String id, String name, String inputId, String inputName, String readerId,
 			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, String number, String lastSuccessfulBuild, String lastUnsuccessfulBuild,
+			Integer status, String lastBuildNumber, String lastSuccessfulBuildNumber, String lastUnsuccessfulBuildNumber,
 			String nextBuildNumber, Double progress, String createUserId, String createUserName, String startCreateTime,
 			String endCreateTime, Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum == null)
@@ -385,7 +385,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,number,lastSuccessfulBuild,lastUnsuccessfulBuild,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -434,17 +434,17 @@ public class JobDao {
 			sb.append(" and status = ? ");
 			condition.add(status);
 		}
-		if (!StringUtils.isEmpty(number)) {
-			sb.append(" and number like ? ");
-			condition.add("%" + number + "%");
+		if (!StringUtils.isEmpty(lastBuildNumber)) {
+			sb.append(" and lastBuildNumber like ? ");
+			condition.add("%" + lastBuildNumber + "%");
 		}
-		if (!StringUtils.isEmpty(lastSuccessfulBuild)) {
-			sb.append(" and lastSuccessfulBuild like ? ");
-			condition.add("%" + lastSuccessfulBuild + "%");
+		if (!StringUtils.isEmpty(lastSuccessfulBuildNumber)) {
+			sb.append(" and lastSuccessfulBuildNumber like ? ");
+			condition.add("%" + lastSuccessfulBuildNumber + "%");
 		}
-		if (!StringUtils.isEmpty(lastUnsuccessfulBuild)) {
-			sb.append(" and lastUnsuccessfulBuild like ? ");
-			condition.add("%" + lastUnsuccessfulBuild + "%");
+		if (!StringUtils.isEmpty(lastUnsuccessfulBuildNumber)) {
+			sb.append(" and lastUnsuccessfulBuildNumber like ? ");
+			condition.add("%" + lastUnsuccessfulBuildNumber + "%");
 		}
 		if (!StringUtils.isEmpty(nextBuildNumber)) {
 			sb.append(" and nextBuildNumber like ? ");

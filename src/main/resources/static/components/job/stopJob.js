@@ -26,7 +26,7 @@ define(['vue','text!./stopJob.html'], function (Vue,componentTemplate) {
 		       		this.hide();		
 		       		
 		       		let tmpVue=this;
-		       		let url=this.$store.state.BASE_PATH+"/api/job/stopJob?id="+this.query.id+"&number="+this.query.number;
+		       		let url=this.$store.state.BASE_PATH+"/api/job/stopJob?id="+this.query.id;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

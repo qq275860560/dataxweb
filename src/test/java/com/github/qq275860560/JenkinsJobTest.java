@@ -111,8 +111,8 @@ public class JenkinsJobTest {
 		log.info("job的所有构建编号"+list);
 		Integer number = (Integer)((Map<String, Object>)responseMap.get("lastBuild")).get("number");
 		log.info("最后一次构建编号"+number);
-		log.info("最后一次成功构建编号"+responseMap.get("lastSuccessfulBuild"));
-		log.info("最后一次失败构建编号"+responseMap.get("lastUnsuccessfulBuild"));
+		log.info("最后一次成功构建编号"+responseMap.get("lastSuccessfulBuildNumber"));
+		log.info("最后一次失败构建编号"+responseMap.get("lastUnsuccessfulBuildNumber"));
 		
 	
 		// getBuild-1请求
