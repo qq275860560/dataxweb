@@ -120,19 +120,19 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 		                    }
 		                },	
 		                readerName: {
-		                    message: '输入流名称验证失败',
+		                    message: '输入流类型验证失败',
 		                    validators: {
 		                        notEmpty: {
-		                            message: '输入流名称不能为空'
+		                            message: '输入流类型不能为空'
 		                        },
 		                        stringLength: {
 		                            min: 6,
 		                            max: 18,
-		                            message: '输入流名称长度必须在6到18位之间'
+		                            message: '输入流类型长度必须在6到18位之间'
 		                        },
 		                        regexp: {
 		                            regexp: /^[a-zA-Z0-9_]+$/,
-		                            message: '输入流名称只能包含大写、小写、数字和下划线'
+		                            message: '输入流类型只能包含大写、小写、数字和下划线'
 		                        }
 		                    }
 		                },
