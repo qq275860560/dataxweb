@@ -34,7 +34,11 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
         
 # download maven dependency
 RUN cd /tmp && curl  -O https://raw.githubusercontent.com/qq275860560/dataxweb/master/pom.xml && (mvn install -e -U || true) 
- 
+
+# test
+RUN rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git &&\
+    cd /tmp/dataxweb && mvn spring-boot:run 
+     
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
     echo "启动mysql" &&\
