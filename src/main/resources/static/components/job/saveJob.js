@@ -92,8 +92,7 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
-				back:function(){
-					//this.updateRouterView("/components/job/pageJob");
+				back:function(){					 
 					this.$router.go(-1)	
 				},	
 				selectInput:function(query){

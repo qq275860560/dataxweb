@@ -81,8 +81,8 @@
 							<th class="header">计划任务 <i class="fa fa-sort"></i></th>
 							<th class="header">输入流 <i class="fa fa-sort"></i></th>
 							<th class="header">输出流 <i class="fa fa-sort"></i></th>
-							<th class="header">状态<i class="fa fa-sort"></i></th>
-							<th class="header">最后构建编号 <i class="fa fa-sort"></i></th>
+							<th class="header" width="15%">状态<i class="fa fa-sort"></i></th>
+							<th class="header">最新构建 <i class="fa fa-sort"></i></th>
 							<th class="header">操作 <i class="fa fa-sort"></i></th>
 						</tr>
 					</thead>
@@ -93,8 +93,21 @@
 							<td>{{item.name}}</td>
 							<td>{{item.inputName}}</td>
 							<td>{{item.outputName}}</td>
-							<td>{{item.status==1?"启用":item.status==2?"构建中":"停用"}}</td>
-							<td>{{item.lastBuildNumber}}</td>					
+							
+							<td v-if="item.status!=2">{{item.status==1?"就绪":item.status==2?"构建中":"停用"}}</td>
+							<td v-if="item.status==2">
+								<div class="progress progress-striped active">
+									<div class="progress-bar progress-bar-success" role="progressbar"
+										 aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+										 :style="{width: item.lastBuildProgress}">
+										<span class="sr-only">{{item.lastBuildProgress}} 完成</span>
+									</div>
+								</div>
+							</td>
+							
+							<td v-if="!item.lastBuildNumber"> </td>					
+							<td v-if="item.lastBuildNumber"><a href="javascript:void(0)" @click="updateRouterView('/components/build/getBuild',{id:item.lastBuildId,name:item.lastBuildNumber})">查看日志</a></td>
+							
 							<td>							
 								<a href="javascript:void(0)" v-if="item.status==1" @click="runJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">运行</a>
 								<a href="javascript:void(0)" v-if="item.status==2" @click="stopJob({id:item.id,name:item.name,pageNum:data.pageNum,pageSize:data.pageSize})">停止</a>

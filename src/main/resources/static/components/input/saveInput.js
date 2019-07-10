@@ -93,8 +93,7 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
-				back:function(){
-					//this.updateRouterView("/components/input/pageInput");
+				back:function(){					 
 					this.$router.go(-1)	
 				},				
 			},	

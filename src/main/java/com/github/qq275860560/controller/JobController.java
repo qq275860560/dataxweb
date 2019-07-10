@@ -227,7 +227,7 @@ public class JobController {
 				null, name, null, inputName, null,
 				null,null,outputName,null,null, 
 				null, status,
-				null,null,	null,null, 
+				null,null,null,	null,null, 
 				null,null,null,lastBuildProgress,  
 				null,createUserName, startCreateTime, endCreateTime, pageNum,pageSize);
 
@@ -900,6 +900,7 @@ public class JobController {
 		//更新计划任务
 		jobMap.put("lastBuildCreateTime", createTime);
 		jobMap.put("lastBuildProgress",0.0);
+		jobMap.put("lastBuildId", buildMap.get("id"));
 		jobMap.put("lastBuildNumber", currentBuildNumber);
 		jobMap.put("nextBuildNumber", Integer.parseInt(currentBuildNumber)+1+"");
 		jobMap.put("status", Constant.JOB_STATUS_RUNNING);

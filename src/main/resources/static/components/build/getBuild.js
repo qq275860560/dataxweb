@@ -18,9 +18,8 @@ define(['vue','components/navigation/navigation','text!./getBuild.html'], functi
 	         		this.$router.push({path:path,query:query});	     
 				},		
 				
-				back:function(){
-					 this.updateRouterView("/components/build/pageBuild");
-					//this.$router.go(-1)	
+				back:function(){					 
+					this.$router.go(-1)	
 				},				
 			},	
 			created: function () {	

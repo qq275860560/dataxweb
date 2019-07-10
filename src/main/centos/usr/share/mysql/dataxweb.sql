@@ -18,6 +18,7 @@ writerId VARCHAR ( 32 ) DEFAULT NULL,
 writerName VARCHAR ( 64 ) DEFAULT NULL,
 dataxJson  VARCHAR ( 1024 ) DEFAULT NULL,
 status int DEFAULT NULL comment '{0:停用:不允许构建,1:启用，允许构建，2：正在构建中}',
+lastBuildId VARCHAR(32) DEFAULT NULL COMMENT '最后一次构建Id',
 lastBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '最后一次构建编号',
 lastSuccessfulBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '最后一次成功构建编号',
 lastUnsuccessfulBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '最后一次失败构建编号',
@@ -31,8 +32,8 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
 
-insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName1','1970-01-01 00:00:00');
-insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName2','1970-01-01 00:00:00');
+insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',null,1,null,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName1','1970-01-01 00:00:00');
+insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',null,1,null,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName2','1970-01-01 00:00:00');
 
 
 DROP TABLE  IF EXISTS build;

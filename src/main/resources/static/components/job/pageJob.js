@@ -57,7 +57,14 @@ define(['vue','components/navigation/navigation','components/job/runJob','compon
 							    		break;
 									}
 								}	
-							    //如果有任务正在构建中，每隔5秒钟刷新一次列表END							    
+							    //如果有任务正在构建中，每隔5秒钟刷新一次列表END		
+							    
+							  //把小数转换为百分数START
+							    for(let item of tmpVue.data.pageList){
+							    	item.lastBuildProgress=item.lastBuildProgress*100+"%";									
+								}	
+							    //把小数转换为百分数END		
+							    
 						   }else if(result.code==401){						
 							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){

@@ -88,8 +88,7 @@ define(['vue','components/navigation/navigation','text!./saveTransformer.html'],
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
-				back:function(){
-					//this.updateRouterView("/components/transformer/pageTransformer");
+				back:function(){					 
 					this.$router.go(-1)	
 				},				
 			},	

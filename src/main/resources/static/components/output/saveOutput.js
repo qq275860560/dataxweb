@@ -94,10 +94,9 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
-				back:function(){
-					//this.updateRouterView("/components/output/pageOutput");
+				back:function(){					 
 					this.$router.go(-1)	
-				},				
+				},			
 			},	
 			created: function () {			
 		         		    

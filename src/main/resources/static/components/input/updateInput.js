@@ -50,9 +50,8 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
-				back:function(){
-					 this.updateRouterView("/components/input/pageInput");
-					//this.$router.go(-1)	
+				back:function(){					 
+					this.$router.go(-1)	
 				},				
 			},	
 			created: function () {	

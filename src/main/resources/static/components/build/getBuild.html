@@ -56,8 +56,9 @@
 			<div class="form-group ">
 				<label for="result"  class="col-md-2 control-label">构建结果</label>
 				<div class="col-md-9">
-					<input class="form-control" :value='query.result==1?"成功":(query.result==2?"失败":(query.result==3?"取消":""))' name="result" id="result"
-						type="text">
+					<input class="form-control" 
+					:value='query.result==1?"成功":(query.result==2?"失败":(query.result==3?"取消":""))' 
+					name="result" id="result" type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
