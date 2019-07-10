@@ -101,14 +101,28 @@ public class BuildController {
 		log.info("当前登录用户=" + currentLoginUsername);	
 		
 		String name=(String)requestMap.get("name");
+		String jobName=(String)requestMap.get("jobName");
+		String number=(String)requestMap.get("number");
 	
+		Integer status = requestMap.get("status") == null ? null
+				: Integer.parseInt(requestMap.get("status").toString());
+		Double progress = requestMap.get("progress") == null ? null
+				: Double.parseDouble(requestMap.get("progress").toString());		
+		Integer result = requestMap.get("result") == null ? null
+				: Integer.parseInt(requestMap.get("result").toString());
+		
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
 		String endCreateTime=(String)requestMap.get("endCreateTime");
 		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
 		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
-		Map<String, Object> data = buildDao.pageBuild(null, name, null, null, null, null, null, null, null, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		Map<String, Object> data = buildDao.pageBuild(
+				null, name, null,jobName, number, 
+				
+				status, null, progress, null, result, 
+				
+				null, null,createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
 			{				 
 				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明

@@ -80,7 +80,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,progress,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -102,7 +102,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,progress,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -172,6 +172,10 @@ public class BuildDao {
 		sb2.append("?,");
 		condition.add(map.get("estimatedDuration"));
 
+		sb1.append("progress").append(",");
+		sb2.append("?,");
+		condition.add(map.get("progress"));
+
 		sb1.append("duration").append(",");
 		sb2.append("?,");
 		condition.add(map.get("duration"));
@@ -228,6 +232,9 @@ public class BuildDao {
 		sb.append(" estimatedDuration = ? ,");
 		condition.add(map.get("estimatedDuration"));
 
+		sb.append(" progress = ? ,");
+		condition.add(map.get("progress"));
+
 		sb.append(" duration = ? ,");
 		condition.add(map.get("duration"));
 
@@ -256,12 +263,13 @@ public class BuildDao {
 	}
 
 	public List<Map<String, Object>> listBuild(String id, String name, String jobId, String jobName, String number,
-			Integer status, Integer estimatedDuration, Integer duration, Integer result, String consoleText,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
+			Integer status, Integer estimatedDuration, Double progress, Integer duration, Integer result,
+			String consoleText, String createUserId, String createUserName, String startCreateTime,
+			String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,progress,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -289,6 +297,10 @@ public class BuildDao {
 		if (estimatedDuration != null) {
 			sb.append(" and estimatedDuration = ? ");
 			condition.add(estimatedDuration);
+		}
+		if (progress != null) {
+			sb.append(" and progress = ? ");
+			condition.add(progress);
 		}
 		if (duration != null) {
 			sb.append(" and duration = ? ");
@@ -324,10 +336,11 @@ public class BuildDao {
 
 	}
 
-	public Map<String, Object> pageBuild(String id, String name, String jobId, String jobName, String number,
-			Integer status, Integer estimatedDuration, Integer duration, Integer result, String consoleText,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
-			Integer pageSize) throws Exception {
+	public Map<String, Object> pageBuild(
+			String id, String name, String jobId, String jobName, String number,
+			Integer status, Integer estimatedDuration, Double progress, Integer duration, Integer result,
+			String consoleText, String createUserId, String createUserName, String startCreateTime,
+			String endCreateTime, Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
 		if (pageSize == null)
@@ -337,7 +350,7 @@ public class BuildDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,duration,result,consoleText,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
+				" SELECT id,name,jobId,jobName,number,status,estimatedDuration,progress,duration,result,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from build where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -365,6 +378,10 @@ public class BuildDao {
 		if (estimatedDuration != null) {
 			sb.append(" and estimatedDuration = ? ");
 			condition.add(estimatedDuration);
+		}
+		if (progress != null) {
+			sb.append(" and progress = ? ");
+			condition.add(progress);
 		}
 		if (duration != null) {
 			sb.append(" and duration = ? ");

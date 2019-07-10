@@ -23,15 +23,16 @@ lastSuccessfulBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '最后一次成功�
 lastUnsuccessfulBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '最后一次失败构建编号',
 nextBuildNumber VARCHAR(32) DEFAULT NULL COMMENT '下一次构建编号',
 lastBuildCreateTime datetime DEFAULT NULL,
-progress double  DEFAULT NULL,
+lastBuildEstimatedDuration int  DEFAULT NULL COMMENT '预期构建时长（毫秒）',
+lastBuildProgress double  DEFAULT NULL COMMENT '完成进度百分比',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
 
-insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',0.0,null,'createUserName1','1970-01-01 00:00:00');
-insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',0.0,null,'createUserName2','1970-01-01 00:00:00');
+insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName1','1970-01-01 00:00:00');
+insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',1,1,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName2','1970-01-01 00:00:00');
 
 
 DROP TABLE  IF EXISTS build;
@@ -43,6 +44,7 @@ jobName VARCHAR ( 32 ) DEFAULT NULL COMMENT '所属计划任务名称',
 number VARCHAR(32)  DEFAULT NULL COMMENT '构建日志编号',
 status int   DEFAULT NULL COMMENT '{2:构建中,3:构建停止}',
 estimatedDuration int  DEFAULT NULL COMMENT '预期构建时长（毫秒）',
+progress double  DEFAULT NULL COMMENT '完成进度百分比',
 duration int  DEFAULT NULL COMMENT '实际构建时长(毫秒)',
 result int   DEFAULT NULL COMMENT '{1:成功，2:失败,3:取消}',
 consoleText longtext  DEFAULT NULL COMMENT '控制台日志',
@@ -51,7 +53,7 @@ createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
-insert into build values('1','buildName1',1,'jobName1','1',0,100,101,null,'',null,'createUserName1','1970-01-01 00:00:00');
+insert into build values('1','buildName1',1,'jobName1','1',3,100,1.0,101000,null,'',null,'createUserName1','1970-01-01 00:00:00');
 
 
 

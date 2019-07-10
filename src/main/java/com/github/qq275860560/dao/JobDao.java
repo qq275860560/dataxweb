@@ -1,11 +1,13 @@
 package com.github.qq275860560.dao;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.LongToIntFunction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -70,7 +72,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -80,7 +82,7 @@ public class JobDao {
 		condition.add(1);
 		log.info("sql=" + sb.toString());
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
-		Map<String, Object> map = Collections.EMPTY_MAP;
+		Map<String, Object> map = new HashMap<>();
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
 		} catch (Exception e) {
@@ -92,7 +94,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -100,7 +102,7 @@ public class JobDao {
 		condition.add(1);
 		log.info("sql=" + sb.toString());
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
-		Map<String, Object> map = Collections.EMPTY_MAP;
+		Map<String, Object> map = new HashMap<>();
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
 		} catch (Exception e) {
@@ -176,9 +178,17 @@ public class JobDao {
 		sb2.append("?,");
 		condition.add(map.get("nextBuildNumber"));
 
-		sb1.append("progress").append(",");
+		sb1.append("lastBuildCreateTime").append(",");
 		sb2.append("?,");
-		condition.add(map.get("progress"));
+		condition.add(map.get("lastBuildCreateTime"));
+
+		sb1.append("lastBuildEstimatedDuration").append(",");
+		sb2.append("?,");
+		condition.add(map.get("lastBuildEstimatedDuration"));
+
+		sb1.append("lastBuildProgress").append(",");
+		sb2.append("?,");
+		condition.add(map.get("lastBuildProgress"));
 
 		sb1.append("createUserId").append(",");
 		sb2.append("?,");
@@ -251,8 +261,14 @@ public class JobDao {
 		sb.append(" nextBuildNumber = ? ,");
 		condition.add(map.get("nextBuildNumber"));
 
-		sb.append(" progress = ? ,");
-		condition.add(map.get("progress"));
+		sb.append(" lastBuildCreateTime = ? ,");
+		condition.add(map.get("lastBuildCreateTime"));
+
+		sb.append(" lastBuildEstimatedDuration = ? ,");
+		condition.add(map.get("lastBuildEstimatedDuration"));
+
+		sb.append(" lastBuildProgress = ? ,");
+		condition.add(map.get("lastBuildProgress"));
 
 		sb.append(" createUserId = ? ,");
 		condition.add(map.get("createUserId"));
@@ -274,13 +290,14 @@ public class JobDao {
 
 	public List<Map<String, Object>> listJob(String id, String name, String inputId, String inputName, String readerId,
 			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, String lastBuildNumber, String lastSuccessfulBuildNumber, String lastUnsuccessfulBuildNumber,
-			String nextBuildNumber, Double progress, String createUserId, String createUserName, String startCreateTime,
-			String endCreateTime) throws Exception {
+			Integer status, String lastBuildNumber, String lastSuccessfulBuildNumber,
+			String lastUnsuccessfulBuildNumber, String nextBuildNumber, String startLastBuildCreateTime,
+			String endLastBuildCreateTime, Integer lastBuildEstimatedDuration, Double lastBuildProgress,
+			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -345,9 +362,21 @@ public class JobDao {
 			sb.append(" and nextBuildNumber like ? ");
 			condition.add("%" + nextBuildNumber + "%");
 		}
-		if (progress != null) {
-			sb.append(" and progress = ? ");
-			condition.add(progress);
+		if (!StringUtils.isEmpty(startLastBuildCreateTime)) {
+			sb.append(" and lastBuildCreateTime >=  ?  ");
+			condition.add(startLastBuildCreateTime);
+		}
+		if (!StringUtils.isEmpty(endLastBuildCreateTime)) {
+			sb.append(" and lastBuildCreateTime <=  ?  ");
+			condition.add(endLastBuildCreateTime);
+		}
+		if (lastBuildEstimatedDuration != null) {
+			sb.append(" and lastBuildEstimatedDuration = ? ");
+			condition.add(lastBuildEstimatedDuration);
+		}
+		if (lastBuildProgress != null) {
+			sb.append(" and lastBuildProgress = ? ");
+			condition.add(lastBuildProgress);
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -371,11 +400,14 @@ public class JobDao {
 
 	}
 
-	public Map<String, Object> pageJob(String id, String name, String inputId, String inputName, String readerId,
-			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, String lastBuildNumber, String lastSuccessfulBuildNumber, String lastUnsuccessfulBuildNumber,
-			String nextBuildNumber, Double progress, String createUserId, String createUserName, String startCreateTime,
-			String endCreateTime, Integer pageNum, Integer pageSize) throws Exception {
+	public Map<String, Object> pageJob(
+			String id, String name, String inputId, String inputName, String readerId,
+			String readerName, String outputId, String outputName, String writerId, String writerName, 
+			String dataxJson,Integer status, 
+			String lastBuildNumber, String lastSuccessfulBuildNumber,String lastUnsuccessfulBuildNumber, String nextBuildNumber, 
+			String startLastBuildCreateTime,String endLastBuildCreateTime, 	Integer lastBuildEstimatedDuration, Double lastBuildProgress,
+			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
+			Integer pageSize) throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
 		if (pageSize == null)
@@ -385,7 +417,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,progress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -450,9 +482,21 @@ public class JobDao {
 			sb.append(" and nextBuildNumber like ? ");
 			condition.add("%" + nextBuildNumber + "%");
 		}
-		if (progress != null) {
-			sb.append(" and progress = ? ");
-			condition.add(progress);
+		if (!StringUtils.isEmpty(startLastBuildCreateTime)) {
+			sb.append(" and lastBuildCreateTime >=  ?  ");
+			condition.add(startLastBuildCreateTime);
+		}
+		if (!StringUtils.isEmpty(endLastBuildCreateTime)) {
+			sb.append(" and lastBuildCreateTime <=  ?  ");
+			condition.add(endLastBuildCreateTime);
+		}
+		if (lastBuildEstimatedDuration != null) {
+			sb.append(" and lastBuildEstimatedDuration = ? ");
+			condition.add(lastBuildEstimatedDuration);
+		}
+		if (lastBuildProgress != null) {
+			sb.append(" and lastBuildProgress = ? ");
+			condition.add(lastBuildProgress);
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -472,7 +516,7 @@ public class JobDao {
 		}
 		String countSql = "select count(1) count from ( " + sb.toString() + ") t";
 		int count = jdbcTemplate.queryForObject(countSql, condition.toArray(), Integer.class);
-		sb.append(" order by createTime desc ");
+		sb.append(" order by lastBuildCreateTime desc ");
 		sb.append(" limit ? ,?  ");
 		condition.add(from);
 		condition.add(size);
@@ -485,4 +529,5 @@ public class JobDao {
 		return map;
 
 	}
+
 }

@@ -2,6 +2,7 @@ package com.github.qq275860560.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.apache.catalina.filters.AddDefaultCharsetFilter;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.mapping.MapBasedAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,6 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.qq275860560.common.util.CommandUtil;
 import com.github.qq275860560.common.util.JenkinsUtil;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.BuildDao;
@@ -209,14 +207,13 @@ public class JobController {
 		log.info("当前登录用户=" + currentLoginUsername);
 
 		String name = (String) requestMap.get("name");
-		String inputName = (String) requestMap.get("inputName");
-		String readerName = (String) requestMap.get("readerName");
+		String inputName = (String) requestMap.get("inputName"); 
 		String outputName = (String) requestMap.get("outputName");
-		String writerName = (String) requestMap.get("writerName");
+ 
 		Integer status = requestMap.get("status") == null ? null
 				: Integer.parseInt(requestMap.get("status").toString());
-		Double progress = requestMap.get("progress") == null ? null
-				: Double.parseDouble(requestMap.get("progress").toString());
+		Double lastBuildProgress = requestMap.get("lastBuildProgress") == null ? null
+				: Double.parseDouble(requestMap.get("lastBuildProgress").toString());
 		String createUserName = (String) requestMap.get("createUserName");
 		String startCreateTime = (String) requestMap.get("startCreateTime");
 		String endCreateTime = (String) requestMap.get("endCreateTime");
@@ -226,9 +223,13 @@ public class JobController {
 		Integer pageSize = requestMap.get("pageSize") == null ? 10
 				: Integer.parseInt(requestMap.get("pageSize").toString());
 
-		Map<String, Object> data = jobDao.pageJob(null, name, null, inputName, null, outputName, null, readerName, null,
-				writerName, null, status,null,null,null,null, progress, null, createUserName, startCreateTime, endCreateTime, pageNum,
-				pageSize);
+		Map<String, Object> data = jobDao.pageJob(
+				null, name, null, inputName, null,
+				null,null,outputName,null,null, 
+				null, status,
+				null,null,	null,null, 
+				null,null,null,lastBuildProgress,  
+				null,createUserName, startCreateTime, endCreateTime, pageNum,pageSize);
 
 		return new HashMap<String, Object>() {
 			{
@@ -395,8 +396,8 @@ public class JobController {
 		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(requestMap));
 		requestMap.put("dataxJson", dataxJson);
 
-		Integer status = Constant.JOB_STATUS_ENABLE;
-		requestMap.put("status", status);
+		
+		requestMap.put("status", Constant.JOB_STATUS_ENABLE);
 		requestMap.put("nextBuildNumber", "1");
 		Double progress = 0.0;
 		requestMap.put("progress", progress);
@@ -889,6 +890,7 @@ public class JobController {
 		buildMap.put("jobName", jobMap.get("name"));
 		buildMap.put("number", currentBuildNumber);		
 		buildMap.put("status", Constant.BUILD_STATUS_RUNNING);	
+		buildMap.put("progress", 0.0);
 		String createUserName = currentLoginUsername;
 		buildMap.put("createUserName", createUserName);
 		String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -896,6 +898,8 @@ public class JobController {
 		buildDao.saveBuild(buildMap);
 		
 		//更新计划任务
+		jobMap.put("lastBuildCreateTime", createTime);
+		jobMap.put("lastBuildProgress",0.0);
 		jobMap.put("lastBuildNumber", currentBuildNumber);
 		jobMap.put("nextBuildNumber", Integer.parseInt(currentBuildNumber)+1+"");
 		jobMap.put("status", Constant.JOB_STATUS_RUNNING);
@@ -946,7 +950,10 @@ public class JobController {
 						boolean building = (boolean) responseMap.get("building");
 						buildMap.put("status", building == false ? Constant.BUILD_STATUS_EXIT : Constant.BUILD_STATUS_RUNNING);
 						// 预期构建时长
-						buildMap.put("estimatedDuration", (Integer) responseMap.get("estimatedDuration"));
+						int estimatedDuration=(Integer) responseMap.get("estimatedDuration");
+						buildMap.put("estimatedDuration", estimatedDuration);
+						
+												
 						// 实际构建时长
 						buildMap.put("duration", (Integer) responseMap.get("duration"));
 						String result = (String) responseMap.get("result");
@@ -959,6 +966,21 @@ public class JobController {
 						} else if (result.equals("ABORTED")) {
 							buildMap.put("result", Constant.BUILD_RESULT_ABORTED);
 						}
+						
+						// 更新任务执行进度
+						double progress = 0.0;
+						if (building == false && result != null) {
+							progress=1.0;// 已经构建完毕
+						}else {
+							DecimalFormat df=new DecimalFormat("0.00");
+							long duration = System.currentTimeMillis()-new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse((String)buildMap.get("createTime")).getTime();
+							progress=
+									Double.parseDouble(df.format(
+											 (float)duration/estimatedDuration
+											));	
+							if(progress>1) progress=0.99;
+						}						
+						buildMap.put("progress", progress);
 						
 					
 						// getBuild-2请求
@@ -1001,11 +1023,24 @@ public class JobController {
 						//下一次构建编号
 						jobMap.put("nextBuildNumber", responseMap.get("nextBuildNumber"));
 						jobMap.put("status", building == false ? Constant.JOB_STATUS_ENABLE : Constant.JOB_STATUS_RUNNING);
+						jobMap.put("lastBuildEstimatedDuration", estimatedDuration);
+						//更新任务执行进度
+						jobMap.put("lastBuildProgress", progress);
+						
+						boolean end = false;
+						if (building == false && result != null) {
+							if (result.equals("SUCCESS")) {
+								jobMap.put("lastSuccessfulBuildNumber", lastBuildNumber);
+							} else if (result.equals("FAILURE")) {
+								jobMap.put("lastUnsuccessfulBuildNumber", lastBuildNumber);
+							}
+							end = true;
+						}
 						jobDao.updateJob(jobMap);
+						
 						if (building == false && result != null) {
 							break;// 已经构建完毕
 						}
-
 						
 						try {
 							Thread.sleep(5000);
@@ -1026,23 +1061,7 @@ public class JobController {
 				}
 	}
 
-    //todo 把progress字段和lastBuildCreateTime字段写到job表中
-	@RequestMapping(value = "/api/job/getJobProgress")
-	public Map<String, Object> getJobProgress(@RequestParam Map<String, Object> requestMap) throws Exception {
-		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
-		log.info("当前登录用户=" + currentLoginUsername);
-
-		String id = (String) requestMap.get("id");
-		Double data = (Double) jobDao.getJob(id).get("progress");
-		return new HashMap<String, Object>() {
-			{
-				put("code", HttpStatus.OK.value());
-				put("msg", "获取进度成功");
-				put("data", data);
-			}
-		};
-	}
-
+  
 
 	
 	/**
