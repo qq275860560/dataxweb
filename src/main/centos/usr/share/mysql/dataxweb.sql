@@ -32,9 +32,7 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
 
-insert into job values(1,'jobName1',1,'inputName1',null,'mysqlreader',1,'outputName1',null,'mysqlwriter',null,1,null,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName1','1970-01-01 00:00:00');
-insert into job values(2,'jobName2',2,'inputName2',null,'mysqlreader',2,'outputName2',null,'mysqlwriter',null,1,null,null,null,null,1,'1970-01-01 00:00:00',101000,0.0,null,'createUserName2','1970-01-01 00:00:00');
-
+ 
 
 DROP TABLE  IF EXISTS build;
 CREATE TABLE build (
@@ -54,8 +52,7 @@ createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
-insert into build values('1','buildName1',1,'jobName1','1',3,100,1.0,101000,null,'',null,'createUserName1','1970-01-01 00:00:00');
-
+ 
 
 
 

@@ -33,7 +33,7 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     yum -y install apache-maven
         
 # download maven dependency
-RUN cd /tmp && curl  -O https://raw.githubusercontent.com/qq275860560/dataxweb/master/pom.xml && (mvn dependency:tree -e -U || true) 
+RUN cd /tmp && curl  -O https://raw.githubusercontent.com/qq275860560/dataxweb/master/pom.xml && (mvn install -e -U || true) 
  
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
