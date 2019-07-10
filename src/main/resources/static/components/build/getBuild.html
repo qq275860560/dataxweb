@@ -77,10 +77,8 @@
 
 			<div class="form-group ">
 				<label for="consoleText"  class="col-md-2 control-label">构建日志</label>
-				<div class="col-md-9">	
-				
-				   <div class="test_box" contenteditable="true" name="consoleText" id="consoleText">  
-				   {{query.consoleText}}
+				<div class="col-md-9">					
+				   <div  contenteditable="true" name="consoleText" id="consoleText" v-html="query.consoleText">  
 				   </div>					
 				</div>
 				<p class="help-block with-errors"> </p>
