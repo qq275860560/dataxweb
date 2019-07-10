@@ -17,11 +17,11 @@
 							<div class="form-group ">
 								<label class="col-md-4 control-label">交换清洗名称</label>
 								<div class="col-md-4">
-									<input class="form-control" v-model="name" name="name"
+									<input class="form-control" v-model="query.name" name="name"
 										type="text">
 								</div>
 								<button type="button" class="col-md-2   btn btn-default"
-									@click="pageTransformer(1,data.pageSize)">搜索</button>
+									@click="pageTransformer(1,query.pageSize)">搜索</button>
 							</div>
 						</form>
 					</div>
@@ -44,7 +44,7 @@
 									<td><input type="radio" name="id" v-model="selectItemId"
 										:value="item.id"> {{index+1}}</td>
 									<td>{{item.name}}</td>
-									<td>{{item.transformerName}}</td>
+									<td>{{item.transformerType}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -54,32 +54,32 @@
 
 				<div class="row">
 					<ul class="pagination" style="float: right">
-						<li><span>共{{Math.ceil((data.total+1)/data.pageSize)}}页{{data.total}}条记录</span>
+						<li><span>共{{Math.ceil((data.total+1)/query.pageSize)}}页{{data.total}}条记录</span>
 						</li>
 						<li><a href="javascript:void(0)"
-							@click="pageTransformer(1,data.pageSize)">首页</a></li>
+							@click="pageTransformer(1,query.pageSize)">首页</a></li>
 						<li><a href="javascript:void(0)"
-							@click="pageTransformer(data.pageNum>1?data.pageNum-1:data.pageNum,data.pageSize)"
+							@click="pageTransformer(query.pageNum>1?query.pageNum-1:query.pageNum,query.pageSize)"
 							class="previous disabled">&laquo;上一页</a></li>
 						<li><a :style="item.style" v-for="item of array"
 							href='javascript:void(0)'
-							@click="pageTransformer( item.pageNum,data.pageSize )">{{item.pageNum}}&nbsp;</a></li>
+							@click="pageTransformer( item.pageNum,query.pageSize )">{{item.pageNum}}&nbsp;</a></li>
 						<li><a href="javascript:void(0)"
-							@click="pageTransformer(data.pageNum<Math.ceil((data.total+1)/data.pageSize)?data.pageNum+1:data.pageNum,data.pageSize)"
+							@click="pageTransformer(query.pageNum<Math.ceil((data.total+1)/query.pageSize)?query.pageNum+1:query.pageNum,query.pageSize)"
 							class="next ">下一页&raquo;</a></li>
 						<li><a href="javascript:void(0)"
-							@click="pageTransformer(Math.ceil((data.total+1)/data.pageSize),data.pageSize)">尾页</a>
+							@click="pageTransformer(Math.ceil((data.total+1)/query.pageSize),query.pageSize)">尾页</a>
 						</li>
 						<li><span>跳转至<input
 								style="width: 24px; padding-top: 0px; padding-bottom: 0px"
-								type="text" v-model="data.pageNum" />页
+								type="text" v-model="query.pageNum" />页
 						</span></li>
 						<li><span>每页<input
 								style="width: 24px; padding-top: 0px; padding-bottom: 0px"
-								type="text" v-model="data.pageSize" />条
+								type="text" v-model="query.pageSize" />条
 						</span></li>
 						<li><a href='javascript:void(0)'
-							@click="pageTransformer(data.pageNum,data.pageSize)">确定</a></li>
+							@click="pageTransformer(query.pageNum,query.pageSize)">确定</a></li>
 					</ul>
 				</div>
 				<!-- /.row -->

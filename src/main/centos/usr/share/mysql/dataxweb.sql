@@ -16,6 +16,9 @@ outputId VARCHAR ( 32 ) DEFAULT NULL,
 outputName VARCHAR ( 64 ) DEFAULT NULL,
 writerId VARCHAR ( 32 ) DEFAULT NULL,
 writerName VARCHAR ( 64 ) DEFAULT NULL,
+transformerId VARCHAR ( 32 ) DEFAULT NULL,
+transformerName VARCHAR ( 64 ) DEFAULT NULL,
+transformerType VARCHAR ( 64 ) DEFAULT NULL,
 dataxJson  VARCHAR ( 1024 ) DEFAULT NULL,
 status int DEFAULT NULL comment '{0:停用:不允许构建,1:启用，允许构建，2：正在构建中}',
 lastBuildId VARCHAR(32) DEFAULT NULL COMMENT '最后一次构建Id',
@@ -71,6 +74,15 @@ id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
 readerId  VARCHAR ( 32 ) DEFAULT NULL,
 readerName VARCHAR ( 64 ) DEFAULT NULL comment '输入流类型',
+createUserId VARCHAR ( 32 ) DEFAULT NULL,
+createUserName VARCHAR ( 64 ) DEFAULT NULL,
+createTime datetime DEFAULT NULL,
+PRIMARY KEY ( id ) 
+)  DEFAULT CHARSET=utf8;
+
+DROP TABLE  IF EXISTS mysqlReader;
+CREATE TABLE mysqlreader (
+id VARCHAR ( 32 ) NOT NULL,
 readerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterColumn VARCHAR ( 1024 ) DEFAULT NULL,
@@ -82,15 +94,7 @@ createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
-
-insert into input values(1,'inputName1',null,'mysqlreader',
-'root',
-'123456',
-'id,name',
-null,
-'jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false',
-'job',
-null,'createUserName1','1970-01-01 00:00:00');
+ 
 
 DROP TABLE  IF EXISTS output;
 CREATE TABLE output (
@@ -98,6 +102,15 @@ id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
 writerId VARCHAR ( 32 ) DEFAULT NULL,
 writerName VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型',
+createUserId VARCHAR ( 32 ) DEFAULT NULL,
+createUserName VARCHAR ( 64 ) DEFAULT NULL,
+createTime datetime DEFAULT NULL,
+PRIMARY KEY ( id ) 
+)  DEFAULT CHARSET=utf8;
+
+DROP TABLE  IF EXISTS mysqlWriter;
+CREATE TABLE mysqlwriter (
+id VARCHAR ( 32 ) NOT NULL,
 writerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterWriteMode VARCHAR ( 1024 ) DEFAULT NULL,
@@ -109,17 +122,7 @@ createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
-)  DEFAULT CHARSET=utf8;
-
-insert into output values(1,'outputName1',null,'mysqlwriter',
-'root',
-'123456',
-'insert',
-'id,name',
-'delete from test',
-'jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false',
-'test',
-null,'createUserName1','1970-01-01 00:00:00');
+)  DEFAULT CHARSET=utf8; 
 
 
 DROP TABLE  IF EXISTS transformer;

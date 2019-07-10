@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.qq275860560.dao.MysqlWriterDao;
 import com.github.qq275860560.dao.OutputDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +39,8 @@ public class OutputController {
   
 	@Autowired
 	private OutputDao outputDao;
+	@Autowired
+	private MysqlWriterDao mysqlWriterDao;
  
  
 	/**
@@ -175,6 +178,7 @@ public class OutputController {
 		log.info("当前登录用户=" + currentLoginUsername);	
 		
 		String name=(String)requestMap.get("name");
+		String writerName=(String)requestMap.get("writerName");
 	
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
@@ -182,7 +186,7 @@ public class OutputController {
 		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
 		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
-		Map<String, Object> data = outputDao.pageOutput(null,name, null, null, null, null, null, null, null, null, null, null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		Map<String, Object> data = outputDao.pageOutput(null,name, null, writerName,  null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
 			{				 
 				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明
@@ -250,7 +254,21 @@ public class OutputController {
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id=(String)requestMap.get("id");
-		Map<String, Object> data=outputDao.getOutput(id);
+		Map<String, Object> outputMap=outputDao.getOutput(id);
+		
+		String writerId = (String)outputMap.get("writerId");
+		String writerName = (String)outputMap.get("writerName");
+		Map<String,Object> writerMap = null;
+		if(writerName.equalsIgnoreCase("mysqlwriter")) {
+			writerMap =mysqlWriterDao.getMysqlWriter(writerId);
+		}
+		
+		Map<String, Object> data = new HashMap<>();
+		data.putAll(writerMap);
+		data.put("writerId", writerMap.get("id"));
+		data.put("writerName",writerMap.get("name") );
+		data.putAll(outputMap);
+		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -315,12 +333,44 @@ public class OutputController {
 		log.info("当前登录用户=" + currentLoginUsername);		
 	 
 		String id=UUID.randomUUID().toString().replace("-", "");
-		requestMap.put("id", id);	
+		requestMap.put("id", id);
+		
+		String name = (String) requestMap.get("name");
+		if (StringUtils.isEmpty(name)) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "名称不能为空");
+					put("data", null);
+				}
+			};
+		}
+		
+		String writerName = (String) requestMap.get("writerName");
+		if (StringUtils.isEmpty(writerName)) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "输出流类型不能为空");
+					put("data", null);
+				}
+			};
+		}
 				
 		String createUserName=currentLoginUsername;
 		requestMap.put("createUserName", createUserName);
 		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		requestMap.put("createTime", createTime);
+		
+		Map<String, Object> writerMap = new HashMap<>();
+		writerMap.putAll(requestMap);
+		writerMap.put("id", UUID.randomUUID().toString().replace("-", ""));
+		writerMap.put("name",writerName);
+		if(writerName.equalsIgnoreCase("mysqlwriter")) {
+			mysqlWriterDao.saveMysqlWriter(writerMap);
+		}
+		
+		requestMap.put("writerId", writerMap.get("id"));			
 		outputDao.saveOutput(requestMap);
 		return new HashMap<String, Object>() {
 			{
@@ -388,10 +438,19 @@ public class OutputController {
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
-		String id=(String)requestMap.get("id");
-		Map<String, Object> map=outputDao.getOutput(id);
-		map.putAll(requestMap);
-		outputDao.updateOutput(map);		
+		// name,writerName不允许修改
+		String id = (String) requestMap.get("id");		
+		Map<String, Object> outputMap = outputDao.getOutput(id);	 
+		String writerId = (String)outputMap.get("writerId");
+		String writerName = (String)outputMap.get("writerName");
+		Map<String, Object> writerMap = null;
+		if(writerName.equals("mysqlwriter")) {
+			writerMap=mysqlWriterDao.getMysqlWriter(writerId);
+			writerMap.putAll(requestMap);		
+			writerMap.put("id",writerId);
+			writerMap.put("name",writerName);
+			mysqlWriterDao.updateMysqlWriter(writerMap);
+		}		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -454,7 +513,13 @@ public class OutputController {
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
-		String id=(String)requestMap.get("id");
+		String id = (String) requestMap.get("id");
+		Map<String, Object> outputMap = outputDao.getOutput(id);		
+		String writerId = (String)outputMap.get("writerId");
+		String writerName = (String)outputMap.get("writerName");
+		if(writerName.equalsIgnoreCase("mysqlreader")) {
+			mysqlWriterDao.deleteMysqlWriter(writerId);
+		}	
 		outputDao.deleteOutput(id);
 		return new HashMap<String, Object>() {
 			{

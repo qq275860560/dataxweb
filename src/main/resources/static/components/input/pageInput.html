@@ -22,7 +22,15 @@
 					<div class="form-group ">
 						<label class="col-md-2 control-label">输入流名称</label>
 						<div class="col-md-6">
-							<input class="form-control" v-model="name" name="name"
+							<input class="form-control" v-model="query.name" name="name"
+								type="text">
+						</div>
+					</div>
+					
+					<div class="form-group ">
+						<label class="col-md-2 control-label">输入流类型</label>
+						<div class="col-md-6">
+							<input class="form-control" v-model="query.readerName" name="readerName"
 								type="text">
 						</div>
 					</div>
@@ -30,7 +38,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">开始时间：</label>
 						<div class='col-md-6 input-group date ' id='startCreateTime'>
-							<input type='text' class="form-control" v-model="startCreateTime"
+							<input type='text' class="form-control" v-model="query.startCreateTime"
 								data-format="YYYY-MM-DD hh:mm:ss" /> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
@@ -41,7 +49,7 @@
 					<div class="form-group">
 						<label class="col-md-2 control-label">结束时间：</label>
 						<div class='col-md-6 input-group date' id='endCreateTime'>
-							<input type='text' class="form-control" v-model="endCreateTime"
+							<input type='text' class="form-control" v-model="query.endCreateTime"
 								data-format="YYYY-MM-DD hh:mm:ss" /> <span
 								class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
@@ -52,7 +60,7 @@
 					<div class="form-group ">
 						<button type="button"
 							class="col-md-1 col-md-offset-2 btn btn-default"
-							@click="pageInput(1,data.pageSize)">搜索</button>
+							@click="pageInput(1,query.pageSize)">搜索</button>
 						<button type="button"
 							class="col-md-1 col-md-offset-1  btn btn-default"
 							@click="updateRouterView('/components/input/saveInput')">新建</button>
@@ -79,9 +87,6 @@
 								class="fa fa-sort"></i></th>
 							<th class="header">输入流名称 <i class="fa fa-sort"></i></th>
 							<th class="header">输入流类型 <i class="fa fa-sort"></i></th>
-							<th class="header">用户名 <i class="fa fa-sort"></i></th>
-							<th class="header">列 <i class="fa fa-sort"></i></th>
-							<th class="header">表 <i class="fa fa-sort"></i></th>
 							<th class="header">创建人 <i class="fa fa-sort"></i></th>
 							<th class="header">创建时间 <i class="fa fa-sort"></i></th>
 							<th class="header">操作 <i class="fa fa-sort"></i></th>
@@ -93,13 +98,10 @@
 								:value="item.id"> {{index+1}}</td>
 							<td>{{item.name}}</td>
 							<td>{{item.readerName}}</td>
-							<td>{{item.readerParameterUsername}}</td>
-							<td>{{item.readerParameterColumn}}</td>
-							<td>{{item.readerParameterConnectionTable}}</td>
 							<td>{{item.createUserName}}</td>
 							<td>{{item.createTime}}</td>
 							<td>
-								<a href="javascript:void(0)" @click="deleteInput({items:[{id:item.id,name:item.name}],pageNum:data.pageNum,pageSize:data.pageSize})">删除</a>
+								<a href="javascript:void(0)" @click="deleteInput({items:[{id:item.id,name:item.name}],pageNum:query.pageNum,pageSize:query.pageSize})">删除</a>
 								<a href="javascript:void(0)" @click="updateRouterView('/components/input/updateInput',{id:item.id,name:item.name})">编辑</a>
 							</td>
 						</tr>
@@ -112,32 +114,32 @@
 
 		<div class="row">
 			<ul class="pagination" style="float: right">
-				<li><span>共{{Math.ceil((data.total+1)/data.pageSize)}}页{{data.total}}条记录</span>
+				<li><span>共{{Math.ceil((data.total+1)/query.pageSize)}}页{{data.total}}条记录</span>
 				</li>
 				<li><a href="javascript:void(0)"
-					@click="pageInput(1,data.pageSize)">首页</a></li>
+					@click="pageInput(1,query.pageSize)">首页</a></li>
 				<li><a href="javascript:void(0)"
-					@click="pageInput(data.pageNum>1?data.pageNum-1:data.pageNum,data.pageSize)"
+					@click="pageInput(query.pageNum>1?query.pageNum-1:query.pageNum,query.pageSize)"
 					class="previous disabled">&laquo;上一页</a></li>
 				<li><a :style="item.style" v-for="item of array"
 					href='javascript:void(0)'
-					@click="pageInput( item.pageNum,data.pageSize )">{{item.pageNum}}&nbsp;</a></li>
+					@click="pageInput( item.pageNum,query.pageSize )">{{item.pageNum}}&nbsp;</a></li>
 				<li><a href="javascript:void(0)"
-					@click="pageInput(data.pageNum<Math.ceil((data.total+1)/data.pageSize)?data.pageNum+1:data.pageNum,data.pageSize)"
+					@click="pageInput(query.pageNum<Math.ceil((data.total+1)/query.pageSize)?query.pageNum+1:query.pageNum,query.pageSize)"
 					class="next ">下一页&raquo;</a></li>
 				<li><a href="javascript:void(0)"
-					@click="pageInput(Math.ceil((data.total+1)/data.pageSize),data.pageSize)">尾页</a>
+					@click="pageInput(Math.ceil((data.total+1)/query.pageSize),query.pageSize)">尾页</a>
 				</li>
 				<li><span>跳转至<input
 						style="width: 24px; padding-top: 0px; padding-bottom: 0px"
-						type="text" v-model="data.pageNum" />页
+						type="text" v-model="query.pageNum" />页
 				</span></li>
 				<li><span>每页<input
 						style="width: 24px; padding-top: 0px; padding-bottom: 0px"
-						type="text" v-model="data.pageSize" />条
+						type="text" v-model="query.pageSize" />条
 				</span></li>
 				<li><a href='javascript:void(0)'
-					@click="pageInput(data.pageNum,data.pageSize)">确定</a></li>
+					@click="pageInput(query.pageNum,query.pageSize)">确定</a></li>
 			</ul>
 		</div>
 		<!-- /.row -->

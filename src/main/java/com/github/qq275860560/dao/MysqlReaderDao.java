@@ -20,15 +20,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @Slf4j
-public class OutputDao {
+public class MysqlReaderDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public int countOutput(String name) throws Exception {
+	public int countMysqlReader(String name) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" SELECT count(1) count from output where 1=1 ");
+		sb.append(" SELECT count(1) count from mysqlReader where 1=1 ");
 		sb.append(" and name = ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
@@ -36,10 +36,10 @@ public class OutputDao {
 		return jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 	}
 
-	public boolean checkOutput(String id, String name) throws Exception {
+	public boolean checkMysqlReader(String id, String name) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" SELECT count(1) count  from output where 1=1 ");
+		sb.append(" SELECT count(1) count  from mysqlReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id != ? ");
 			condition.add(id);
@@ -55,10 +55,10 @@ public class OutputDao {
 			return true;
 	}
 
-	public int deleteOutput(String id) throws Exception {
+	public int deleteMysqlReader(String id) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" delete  from output where 1=1 ");
+		sb.append(" delete  from mysqlReader where 1=1 ");
 		sb.append(" and id = ? ");
 		condition.add(id);
 		log.info("sql=" + sb.toString());
@@ -66,11 +66,11 @@ public class OutputDao {
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
 
-	public Map<String, Object> getOutput(Object id) throws Exception {
+	public Map<String, Object> getMysqlReader(Object id) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -88,11 +88,11 @@ public class OutputDao {
 		return map;
 	}
 
-	public Map<String, Object> getOutputByKeyValue(String key, Object value) throws Exception {
+	public Map<String, Object> getMysqlReaderByKeyValue(String key, Object value) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlReader where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -108,7 +108,7 @@ public class OutputDao {
 		return map;
 	}
 
-	public int saveOutput(Map<String, Object> map) throws Exception {
+	public int saveMysqlReader(Map<String, Object> map) throws Exception {
 		StringBuilder sb1 = new StringBuilder();
 		StringBuilder sb2 = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
@@ -116,17 +116,29 @@ public class OutputDao {
 		sb2.append("?,");
 		condition.add(map.get("id"));
 
-		sb1.append("name").append(",");
+		sb1.append("readerParameterUsername").append(",");
 		sb2.append("?,");
-		condition.add(map.get("name"));
+		condition.add(map.get("readerParameterUsername"));
 
-		sb1.append("writerId").append(",");
+		sb1.append("readerParameterPassword").append(",");
 		sb2.append("?,");
-		condition.add(map.get("writerId"));
+		condition.add(map.get("readerParameterPassword"));
 
-		sb1.append("writerName").append(",");
+		sb1.append("readerParameterColumn").append(",");
 		sb2.append("?,");
-		condition.add(map.get("writerName"));
+		condition.add(map.get("readerParameterColumn"));
+
+		sb1.append("readerParameterWhere").append(",");
+		sb2.append("?,");
+		condition.add(map.get("readerParameterWhere"));
+
+		sb1.append("readerParameterConnectionJdbcUrl").append(",");
+		sb2.append("?,");
+		condition.add(map.get("readerParameterConnectionJdbcUrl"));
+
+		sb1.append("readerParameterConnectionTable").append(",");
+		sb2.append("?,");
+		condition.add(map.get("readerParameterConnectionTable"));
 
 		sb1.append("createUserId").append(",");
 		sb2.append("?,");
@@ -144,24 +156,33 @@ public class OutputDao {
 			sb1.deleteCharAt(sb1.length() - 1);
 		if (sb2.length() > 0)
 			sb2.deleteCharAt(sb2.length() - 1);
-		String sql = "insert into output(" + sb1.toString() + ") values(" + sb2.toString() + ")";
+		String sql = "insert into mysqlReader(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
 
-	public int updateOutput(Map<String, Object> map) throws Exception {
+	public int updateMysqlReader(Map<String, Object> map) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" name = ? ,");
-		condition.add(map.get("name"));
+		sb.append(" readerParameterUsername = ? ,");
+		condition.add(map.get("readerParameterUsername"));
 
-		sb.append(" writerId = ? ,");
-		condition.add(map.get("writerId"));
+		sb.append(" readerParameterPassword = ? ,");
+		condition.add(map.get("readerParameterPassword"));
 
-		sb.append(" writerName = ? ,");
-		condition.add(map.get("writerName"));
+		sb.append(" readerParameterColumn = ? ,");
+		condition.add(map.get("readerParameterColumn"));
+
+		sb.append(" readerParameterWhere = ? ,");
+		condition.add(map.get("readerParameterWhere"));
+
+		sb.append(" readerParameterConnectionJdbcUrl = ? ,");
+		condition.add(map.get("readerParameterConnectionJdbcUrl"));
+
+		sb.append(" readerParameterConnectionTable = ? ,");
+		condition.add(map.get("readerParameterConnectionTable"));
 
 		sb.append(" createUserId = ? ,");
 		condition.add(map.get("createUserId"));
@@ -174,34 +195,48 @@ public class OutputDao {
 
 		if (sb.length() > 0)
 			sb.deleteCharAt(sb.length() - 1);
-		String sql = "update output set " + sb.toString() + " where    id=?";
+		String sql = "update mysqlReader set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 
-	public List<Map<String, Object>> listOutput(String id, String name, String writerId, String writerName,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
+	public List<Map<String, Object>> listMysqlReader(String id, String readerParameterUsername,
+			String readerParameterPassword, String readerParameterColumn, String readerParameterWhere,
+			String readerParameterConnectionJdbcUrl, String readerParameterConnectionTable, String createUserId,
+			String createUserName, String startCreateTime, String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
 		}
-		if (!StringUtils.isEmpty(name)) {
-			sb.append(" and name like ? ");
-			condition.add("%" + name + "%");
+		if (!StringUtils.isEmpty(readerParameterUsername)) {
+			sb.append(" and readerParameterUsername like ? ");
+			condition.add("%" + readerParameterUsername + "%");
 		}
-		if (!StringUtils.isEmpty(writerId)) {
-			sb.append(" and writerId like ? ");
-			condition.add("%" + writerId + "%");
+		if (!StringUtils.isEmpty(readerParameterPassword)) {
+			sb.append(" and readerParameterPassword like ? ");
+			condition.add("%" + readerParameterPassword + "%");
 		}
-		if (!StringUtils.isEmpty(writerName)) {
-			sb.append(" and writerName like ? ");
-			condition.add("%" + writerName + "%");
+		if (!StringUtils.isEmpty(readerParameterColumn)) {
+			sb.append(" and readerParameterColumn like ? ");
+			condition.add("%" + readerParameterColumn + "%");
+		}
+		if (!StringUtils.isEmpty(readerParameterWhere)) {
+			sb.append(" and readerParameterWhere like ? ");
+			condition.add("%" + readerParameterWhere + "%");
+		}
+		if (!StringUtils.isEmpty(readerParameterConnectionJdbcUrl)) {
+			sb.append(" and readerParameterConnectionJdbcUrl like ? ");
+			condition.add("%" + readerParameterConnectionJdbcUrl + "%");
+		}
+		if (!StringUtils.isEmpty(readerParameterConnectionTable)) {
+			sb.append(" and readerParameterConnectionTable like ? ");
+			condition.add("%" + readerParameterConnectionTable + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -225,9 +260,11 @@ public class OutputDao {
 
 	}
 
-	public Map<String, Object> pageOutput(String id, String name, String writerId, String writerName,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
-			Integer pageSize) throws Exception {
+	public Map<String, Object> pageMysqlReader(String id, String readerParameterUsername,
+			String readerParameterPassword, String readerParameterColumn, String readerParameterWhere,
+			String readerParameterConnectionJdbcUrl, String readerParameterConnectionTable, String createUserId,
+			String createUserName, String startCreateTime, String endCreateTime, Integer pageNum, Integer pageSize)
+			throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
 		if (pageSize == null)
@@ -237,22 +274,34 @@ public class OutputDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
 		}
-		if (!StringUtils.isEmpty(name)) {
-			sb.append(" and name like ? ");
-			condition.add("%" + name + "%");
+		if (!StringUtils.isEmpty(readerParameterUsername)) {
+			sb.append(" and readerParameterUsername like ? ");
+			condition.add("%" + readerParameterUsername + "%");
 		}
-		if (!StringUtils.isEmpty(writerId)) {
-			sb.append(" and writerId like ? ");
-			condition.add("%" + writerId + "%");
+		if (!StringUtils.isEmpty(readerParameterPassword)) {
+			sb.append(" and readerParameterPassword like ? ");
+			condition.add("%" + readerParameterPassword + "%");
 		}
-		if (!StringUtils.isEmpty(writerName)) {
-			sb.append(" and writerName like ? ");
-			condition.add("%" + writerName + "%");
+		if (!StringUtils.isEmpty(readerParameterColumn)) {
+			sb.append(" and readerParameterColumn like ? ");
+			condition.add("%" + readerParameterColumn + "%");
+		}
+		if (!StringUtils.isEmpty(readerParameterWhere)) {
+			sb.append(" and readerParameterWhere like ? ");
+			condition.add("%" + readerParameterWhere + "%");
+		}
+		if (!StringUtils.isEmpty(readerParameterConnectionJdbcUrl)) {
+			sb.append(" and readerParameterConnectionJdbcUrl like ? ");
+			condition.add("%" + readerParameterConnectionJdbcUrl + "%");
+		}
+		if (!StringUtils.isEmpty(readerParameterConnectionTable)) {
+			sb.append(" and readerParameterConnectionTable like ? ");
+			condition.add("%" + readerParameterConnectionTable + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");

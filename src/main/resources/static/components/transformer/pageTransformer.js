@@ -8,17 +8,20 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 			
 			data:function() {
 				return {
-					name:"",
-					startCreateTime:"",
-					endCreateTime:"",					
+					query:{
+						name:"",						
+						transformerType:"",
+						startCreateTime:"",
+						endCreateTime:"",
+						pageNum:1,
+						pageSize:10,
+					},										
 					array:[],	
 					selectAllItemId:[],
 					selectItemIds:[],
 					code:null,
 					msg:null,
-					data:{
-						pageNum:1,
-						pageSize:10,
+					data:{						
 						total:null,
 						pageList:null,
 					}
@@ -31,7 +34,7 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				},
 				pageTransformer:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/transformer/pageTransformer?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/transformer/pageTransformer?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&transformerType="+this.query.transformerType+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				
@@ -42,8 +45,8 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 						tmpVue.code=result.code; 
 						if(result.code==200){
 							    console.log("receive=",result );	
-							    tmpVue.data.pageNum=pageNum;
-							    tmpVue.data.pageSize=pageSize;
+							    tmpVue.query.pageNum=pageNum;
+							    tmpVue.query.pageSize=pageSize;
 							    tmpVue.data.total=result.data.total;	
 							    tmpVue.data.pageList=result.data.pageList;					
 							    tmpVue.repaint();						
@@ -60,11 +63,11 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				},
 				repaint:function(){					
 					this.array=[];			 
-					let pageCount = Math.ceil((this.data.total+1)/this.data.pageSize);
+					let pageCount = Math.ceil((this.data.total+1)/this.query.pageSize);
 					for(let i=0;i<pageCount;i++){		
 						let pageNum=i+1;
 						let background;
-						if(pageNum==this.data.pageNum){
+						if(pageNum==this.query.pageNum){
 							background="#ddd";
 						}else{
 							background="";
@@ -101,8 +104,8 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 					}
 					let query = {};
 					query.items=items;
-					query.pageNum=this.data.pageNum;
-					query.pageSize=this.data.pageSize;
+					query.pageNum=this.query.pageNum;
+					query.pageSize=this.query.pageSize;
 					this.$refs.deleteTransformer.show(query);					 
 				},
 			},	
@@ -128,7 +131,7 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				
 			 },
 			created: function () {			
-				this.pageTransformer(this.data.pageNum,this.data.pageSize);			    
+				this.pageTransformer(this.query.pageNum,this.query.pageSize);			    
 		    },
 			mounted:function(){		
 				 let tmpVue=this;
@@ -154,14 +157,13 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				        showClear:true, 				        
 				    });
 				  
-				    startCreateTimePicker.on('dp.change', function (e) {
-				    
-				    	tmpVue.startCreateTime = $("#startCreateTime").find("input").val();
+				    startCreateTimePicker.on('dp.change', function (e) {				    
+				    	tmpVue.query.startCreateTime = $("#startCreateTime").find("input").val();
 				        endCreateTimePicker.data('DateTimePicker').minDate(e.date);	
 				    });
 				      endCreateTimePicker.on('dp.change', function (e) {
 				        startCreateTimePicker.data('DateTimePicker').maxDate(e.date);	
-				        tmpVue.endCreateTime = $("#endCreateTime").find("input").val();
+				        tmpVue.query.endCreateTime = $("#endCreateTime").find("input").val();
 				      });
 			        
 					      

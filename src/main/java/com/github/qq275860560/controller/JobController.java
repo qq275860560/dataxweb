@@ -208,7 +208,12 @@ public class JobController {
 
 		String name = (String) requestMap.get("name");
 		String inputName = (String) requestMap.get("inputName"); 
+		String readerName = (String) requestMap.get("readerName"); 
 		String outputName = (String) requestMap.get("outputName");
+		String writerName = (String) requestMap.get("writerName");
+		
+		String transformerName = (String) requestMap.get("transformerName");
+		String transformerType = (String) requestMap.get("transformerType");
  
 		Integer status = requestMap.get("status") == null ? null
 				: Integer.parseInt(requestMap.get("status").toString());
@@ -225,7 +230,8 @@ public class JobController {
 
 		Map<String, Object> data = jobDao.pageJob(
 				null, name, null, inputName, null,
-				null,null,outputName,null,null, 
+				readerName,null,outputName,null,writerName,
+				null,transformerName,transformerType,
 				null, status,
 				null,null,null,	null,null, 
 				null,null,null,lastBuildProgress,  
@@ -389,6 +395,7 @@ public class JobController {
 
 		String transformerId = (String) requestMap.get("transformerId");
 		Map<String, Object> transformerMap = transformerDao.getTransformer(transformerId);
+		requestMap.put("transformerName", transformerMap.get("name"));
 		requestMap.put("transformerType", transformerMap.get("transformerType"));
 		requestMap.put("transformerParameterCode", transformerMap.get("transformerParameterCode"));
 		requestMap.put("transformerParameterExtraPackage", transformerMap.get("transformerParameterExtraPackage"));

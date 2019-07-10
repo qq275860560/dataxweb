@@ -70,7 +70,7 @@ public class InputDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,readerId,readerName,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
+				" SELECT id,name,readerId,readerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -80,7 +80,7 @@ public class InputDao {
 		condition.add(1);
 		log.info("sql=" + sb.toString());
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
-		Map<String, Object> map = Collections.EMPTY_MAP;
+		Map<String, Object> map = new HashMap<>();
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
 		} catch (Exception e) {
@@ -92,7 +92,7 @@ public class InputDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,readerId,readerName,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
+				" SELECT id,name,readerId,readerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -100,7 +100,7 @@ public class InputDao {
 		condition.add(1);
 		log.info("sql=" + sb.toString());
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
-		Map<String, Object> map = Collections.EMPTY_MAP;
+		Map<String, Object> map = new HashMap<>();
 		try {
 			map = jdbcTemplate.queryForMap(sb.toString(), condition.toArray());
 		} catch (Exception e) {
@@ -127,30 +127,6 @@ public class InputDao {
 		sb1.append("readerName").append(",");
 		sb2.append("?,");
 		condition.add(map.get("readerName"));
-
-		sb1.append("readerParameterUsername").append(",");
-		sb2.append("?,");
-		condition.add(map.get("readerParameterUsername"));
-
-		sb1.append("readerParameterPassword").append(",");
-		sb2.append("?,");
-		condition.add(map.get("readerParameterPassword"));
-
-		sb1.append("readerParameterColumn").append(",");
-		sb2.append("?,");
-		condition.add(map.get("readerParameterColumn"));
-
-		sb1.append("readerParameterWhere").append(",");
-		sb2.append("?,");
-		condition.add(map.get("readerParameterWhere"));
-
-		sb1.append("readerParameterConnectionJdbcUrl").append(",");
-		sb2.append("?,");
-		condition.add(map.get("readerParameterConnectionJdbcUrl"));
-
-		sb1.append("readerParameterConnectionTable").append(",");
-		sb2.append("?,");
-		condition.add(map.get("readerParameterConnectionTable"));
 
 		sb1.append("createUserId").append(",");
 		sb2.append("?,");
@@ -187,24 +163,6 @@ public class InputDao {
 		sb.append(" readerName = ? ,");
 		condition.add(map.get("readerName"));
 
-		sb.append(" readerParameterUsername = ? ,");
-		condition.add(map.get("readerParameterUsername"));
-
-		sb.append(" readerParameterPassword = ? ,");
-		condition.add(map.get("readerParameterPassword"));
-
-		sb.append(" readerParameterColumn = ? ,");
-		condition.add(map.get("readerParameterColumn"));
-
-		sb.append(" readerParameterWhere = ? ,");
-		condition.add(map.get("readerParameterWhere"));
-
-		sb.append(" readerParameterConnectionJdbcUrl = ? ,");
-		condition.add(map.get("readerParameterConnectionJdbcUrl"));
-
-		sb.append(" readerParameterConnectionTable = ? ,");
-		condition.add(map.get("readerParameterConnectionTable"));
-
 		sb.append(" createUserId = ? ,");
 		condition.add(map.get("createUserId"));
 
@@ -224,13 +182,11 @@ public class InputDao {
 	}
 
 	public List<Map<String, Object>> listInput(String id, String name, String readerId, String readerName,
-			String readerParameterUsername, String readerParameterPassword, String readerParameterColumn,
-			String readerParameterWhere, String readerParameterConnectionJdbcUrl, String readerParameterConnectionTable,
 			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,readerId,readerName,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
+				" SELECT id,name,readerId,readerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -246,30 +202,6 @@ public class InputDao {
 		if (!StringUtils.isEmpty(readerName)) {
 			sb.append(" and readerName like ? ");
 			condition.add("%" + readerName + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterUsername)) {
-			sb.append(" and readerParameterUsername like ? ");
-			condition.add("%" + readerParameterUsername + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterPassword)) {
-			sb.append(" and readerParameterPassword like ? ");
-			condition.add("%" + readerParameterPassword + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterColumn)) {
-			sb.append(" and readerParameterColumn like ? ");
-			condition.add("%" + readerParameterColumn + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterWhere)) {
-			sb.append(" and readerParameterWhere like ? ");
-			condition.add("%" + readerParameterWhere + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterConnectionJdbcUrl)) {
-			sb.append(" and readerParameterConnectionJdbcUrl like ? ");
-			condition.add("%" + readerParameterConnectionJdbcUrl + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterConnectionTable)) {
-			sb.append(" and readerParameterConnectionTable like ? ");
-			condition.add("%" + readerParameterConnectionTable + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -294,8 +226,6 @@ public class InputDao {
 	}
 
 	public Map<String, Object> pageInput(String id, String name, String readerId, String readerName,
-			String readerParameterUsername, String readerParameterPassword, String readerParameterColumn,
-			String readerParameterWhere, String readerParameterConnectionJdbcUrl, String readerParameterConnectionTable,
 			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
 			Integer pageSize) throws Exception {
 		if (pageNum == null)
@@ -307,7 +237,7 @@ public class InputDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,readerId,readerName,readerParameterUsername,readerParameterPassword,readerParameterColumn,readerParameterWhere,readerParameterConnectionJdbcUrl,readerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
+				" SELECT id,name,readerId,readerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from input where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -323,30 +253,6 @@ public class InputDao {
 		if (!StringUtils.isEmpty(readerName)) {
 			sb.append(" and readerName like ? ");
 			condition.add("%" + readerName + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterUsername)) {
-			sb.append(" and readerParameterUsername like ? ");
-			condition.add("%" + readerParameterUsername + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterPassword)) {
-			sb.append(" and readerParameterPassword like ? ");
-			condition.add("%" + readerParameterPassword + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterColumn)) {
-			sb.append(" and readerParameterColumn like ? ");
-			condition.add("%" + readerParameterColumn + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterWhere)) {
-			sb.append(" and readerParameterWhere like ? ");
-			condition.add("%" + readerParameterWhere + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterConnectionJdbcUrl)) {
-			sb.append(" and readerParameterConnectionJdbcUrl like ? ");
-			condition.add("%" + readerParameterConnectionJdbcUrl + "%");
-		}
-		if (!StringUtils.isEmpty(readerParameterConnectionTable)) {
-			sb.append(" and readerParameterConnectionTable like ? ");
-			condition.add("%" + readerParameterConnectionTable + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");

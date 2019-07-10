@@ -6,18 +6,20 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 			  template: componentTemplate,
 			  data:function() {			
 		           return {   
-		        	query:{},   
-		        	name:"",
-					startCreateTime:"",
-					endCreateTime:"",
+		        	query:{
+		        		name:"",
+		        		readerName:"",
+						startCreateTime:"",
+						endCreateTime:"",
+		        		pageNum:1,
+						pageSize:10,
+		        	},   		        	
 					array:[],					
 					selectItemId:null,	
 					selectItemName:null,
 					code:null,
 					msg:null,
-					data:{
-						pageNum:1,
-						pageSize:10,
+					data:{						
 						total:null,
 						pageList:null,
 					}    			
@@ -30,7 +32,7 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 				},
 				pageInput:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.name+"&startCreateTime="+this.startCreateTime+"&endCreateTime="+this.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&readerName="+this.query.readerName+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				
@@ -41,8 +43,8 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 						tmpVue.code=result.code; 
 						if(result.code==200){
 							    console.log("receive=",result );	
-							    tmpVue.data.pageNum=pageNum;
-							    tmpVue.data.pageSize=pageSize;
+							    tmpVue.query.pageNum=pageNum;
+							    tmpVue.query.pageSize=pageSize;
 							    tmpVue.data.total=result.data.total;	
 							    tmpVue.data.pageList=result.data.pageList;					
 							    tmpVue.repaint();						
@@ -59,11 +61,11 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 				},
 				repaint:function(){					
 					this.array=[];			 
-					let pageCount = Math.ceil((this.data.total+1)/this.data.pageSize);
+					let pageCount = Math.ceil((this.data.total+1)/this.query.pageSize);
 					for(let i=0;i<pageCount;i++){		
 						let pageNum=i+1;
 						let background;
-						if(pageNum==this.data.pageNum){
+						if(pageNum==this.query.pageNum){
 							background="#ddd";
 						}else{
 							background="";
@@ -89,15 +91,13 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 		        hide:function (){
 		    	   $('#selectInputModal').modal('hide');
 		    	},
-		    	show:function (query){
-		    		this.query=query;
-		    		console.log("query",query);
+		    	show:function (query){		    		
 		    		$('#selectInputModal').modal('show');
 			    	$(".modal-backdrop").removeClass("modal-backdrop");//TODO 如果没有这一行代码则有遮罩，暂时只想到这个办法，
 			    	
-			    	this.data.pageNum=this.query.pageNum;
-			    	this.data.pageSize=this.query.pageSize;
-			    	this.pageInput(this.data.pageNum,this.data.pageSize);	
+			    	this.query.pageNum=query.pageNum;
+			    	this.query.pageSize=query.pageSize;
+			    	this.pageInput(this.query.pageNum,this.query.pageSize);	
 			    }
 		    },	
 		    watch: {

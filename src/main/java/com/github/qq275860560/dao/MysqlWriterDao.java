@@ -20,15 +20,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @Slf4j
-public class OutputDao {
+public class MysqlWriterDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public int countOutput(String name) throws Exception {
+	public int countMysqlWriter(String name) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" SELECT count(1) count from output where 1=1 ");
+		sb.append(" SELECT count(1) count from mysqlWriter where 1=1 ");
 		sb.append(" and name = ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
@@ -36,10 +36,10 @@ public class OutputDao {
 		return jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 	}
 
-	public boolean checkOutput(String id, String name) throws Exception {
+	public boolean checkMysqlWriter(String id, String name) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" SELECT count(1) count  from output where 1=1 ");
+		sb.append(" SELECT count(1) count  from mysqlWriter where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id != ? ");
 			condition.add(id);
@@ -55,10 +55,10 @@ public class OutputDao {
 			return true;
 	}
 
-	public int deleteOutput(String id) throws Exception {
+	public int deleteMysqlWriter(String id) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" delete  from output where 1=1 ");
+		sb.append(" delete  from mysqlWriter where 1=1 ");
 		sb.append(" and id = ? ");
 		condition.add(id);
 		log.info("sql=" + sb.toString());
@@ -66,11 +66,11 @@ public class OutputDao {
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
 
-	public Map<String, Object> getOutput(Object id) throws Exception {
+	public Map<String, Object> getMysqlWriter(Object id) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,writerParameterUsername,writerParameterPassword,writerParameterWriteMode,writerParameterColumn,writerParameterPreSql,writerParameterConnectionJdbcUrl,writerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlWriter where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -88,11 +88,11 @@ public class OutputDao {
 		return map;
 	}
 
-	public Map<String, Object> getOutputByKeyValue(String key, Object value) throws Exception {
+	public Map<String, Object> getMysqlWriterByKeyValue(String key, Object value) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,writerParameterUsername,writerParameterPassword,writerParameterWriteMode,writerParameterColumn,writerParameterPreSql,writerParameterConnectionJdbcUrl,writerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlWriter where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -108,7 +108,7 @@ public class OutputDao {
 		return map;
 	}
 
-	public int saveOutput(Map<String, Object> map) throws Exception {
+	public int saveMysqlWriter(Map<String, Object> map) throws Exception {
 		StringBuilder sb1 = new StringBuilder();
 		StringBuilder sb2 = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
@@ -116,17 +116,33 @@ public class OutputDao {
 		sb2.append("?,");
 		condition.add(map.get("id"));
 
-		sb1.append("name").append(",");
+		sb1.append("writerParameterUsername").append(",");
 		sb2.append("?,");
-		condition.add(map.get("name"));
+		condition.add(map.get("writerParameterUsername"));
 
-		sb1.append("writerId").append(",");
+		sb1.append("writerParameterPassword").append(",");
 		sb2.append("?,");
-		condition.add(map.get("writerId"));
+		condition.add(map.get("writerParameterPassword"));
 
-		sb1.append("writerName").append(",");
+		sb1.append("writerParameterWriteMode").append(",");
 		sb2.append("?,");
-		condition.add(map.get("writerName"));
+		condition.add(map.get("writerParameterWriteMode"));
+
+		sb1.append("writerParameterColumn").append(",");
+		sb2.append("?,");
+		condition.add(map.get("writerParameterColumn"));
+
+		sb1.append("writerParameterPreSql").append(",");
+		sb2.append("?,");
+		condition.add(map.get("writerParameterPreSql"));
+
+		sb1.append("writerParameterConnectionJdbcUrl").append(",");
+		sb2.append("?,");
+		condition.add(map.get("writerParameterConnectionJdbcUrl"));
+
+		sb1.append("writerParameterConnectionTable").append(",");
+		sb2.append("?,");
+		condition.add(map.get("writerParameterConnectionTable"));
 
 		sb1.append("createUserId").append(",");
 		sb2.append("?,");
@@ -144,24 +160,36 @@ public class OutputDao {
 			sb1.deleteCharAt(sb1.length() - 1);
 		if (sb2.length() > 0)
 			sb2.deleteCharAt(sb2.length() - 1);
-		String sql = "insert into output(" + sb1.toString() + ") values(" + sb2.toString() + ")";
+		String sql = "insert into mysqlWriter(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
 
-	public int updateOutput(Map<String, Object> map) throws Exception {
+	public int updateMysqlWriter(Map<String, Object> map) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" name = ? ,");
-		condition.add(map.get("name"));
+		sb.append(" writerParameterUsername = ? ,");
+		condition.add(map.get("writerParameterUsername"));
 
-		sb.append(" writerId = ? ,");
-		condition.add(map.get("writerId"));
+		sb.append(" writerParameterPassword = ? ,");
+		condition.add(map.get("writerParameterPassword"));
 
-		sb.append(" writerName = ? ,");
-		condition.add(map.get("writerName"));
+		sb.append(" writerParameterWriteMode = ? ,");
+		condition.add(map.get("writerParameterWriteMode"));
+
+		sb.append(" writerParameterColumn = ? ,");
+		condition.add(map.get("writerParameterColumn"));
+
+		sb.append(" writerParameterPreSql = ? ,");
+		condition.add(map.get("writerParameterPreSql"));
+
+		sb.append(" writerParameterConnectionJdbcUrl = ? ,");
+		condition.add(map.get("writerParameterConnectionJdbcUrl"));
+
+		sb.append(" writerParameterConnectionTable = ? ,");
+		condition.add(map.get("writerParameterConnectionTable"));
 
 		sb.append(" createUserId = ? ,");
 		condition.add(map.get("createUserId"));
@@ -174,34 +202,53 @@ public class OutputDao {
 
 		if (sb.length() > 0)
 			sb.deleteCharAt(sb.length() - 1);
-		String sql = "update output set " + sb.toString() + " where    id=?";
+		String sql = "update mysqlWriter set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 
-	public List<Map<String, Object>> listOutput(String id, String name, String writerId, String writerName,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
+	public List<Map<String, Object>> listMysqlWriter(String id, String writerParameterUsername,
+			String writerParameterPassword, String writerParameterWriteMode, String writerParameterColumn,
+			String writerParameterPreSql, String writerParameterConnectionJdbcUrl,
+			String writerParameterConnectionTable, String createUserId, String createUserName, String startCreateTime,
+			String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,writerParameterUsername,writerParameterPassword,writerParameterWriteMode,writerParameterColumn,writerParameterPreSql,writerParameterConnectionJdbcUrl,writerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlWriter where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
 		}
-		if (!StringUtils.isEmpty(name)) {
-			sb.append(" and name like ? ");
-			condition.add("%" + name + "%");
+		if (!StringUtils.isEmpty(writerParameterUsername)) {
+			sb.append(" and writerParameterUsername like ? ");
+			condition.add("%" + writerParameterUsername + "%");
 		}
-		if (!StringUtils.isEmpty(writerId)) {
-			sb.append(" and writerId like ? ");
-			condition.add("%" + writerId + "%");
+		if (!StringUtils.isEmpty(writerParameterPassword)) {
+			sb.append(" and writerParameterPassword like ? ");
+			condition.add("%" + writerParameterPassword + "%");
 		}
-		if (!StringUtils.isEmpty(writerName)) {
-			sb.append(" and writerName like ? ");
-			condition.add("%" + writerName + "%");
+		if (!StringUtils.isEmpty(writerParameterWriteMode)) {
+			sb.append(" and writerParameterWriteMode like ? ");
+			condition.add("%" + writerParameterWriteMode + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterColumn)) {
+			sb.append(" and writerParameterColumn like ? ");
+			condition.add("%" + writerParameterColumn + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterPreSql)) {
+			sb.append(" and writerParameterPreSql like ? ");
+			condition.add("%" + writerParameterPreSql + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterConnectionJdbcUrl)) {
+			sb.append(" and writerParameterConnectionJdbcUrl like ? ");
+			condition.add("%" + writerParameterConnectionJdbcUrl + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterConnectionTable)) {
+			sb.append(" and writerParameterConnectionTable like ? ");
+			condition.add("%" + writerParameterConnectionTable + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -225,9 +272,11 @@ public class OutputDao {
 
 	}
 
-	public Map<String, Object> pageOutput(String id, String name, String writerId, String writerName,
-			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
-			Integer pageSize) throws Exception {
+	public Map<String, Object> pageMysqlWriter(String id, String writerParameterUsername,
+			String writerParameterPassword, String writerParameterWriteMode, String writerParameterColumn,
+			String writerParameterPreSql, String writerParameterConnectionJdbcUrl,
+			String writerParameterConnectionTable, String createUserId, String createUserName, String startCreateTime,
+			String endCreateTime, Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
 		if (pageSize == null)
@@ -237,22 +286,38 @@ public class OutputDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,writerId,writerName,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from output where 1=1 ");
+				" SELECT id,writerParameterUsername,writerParameterPassword,writerParameterWriteMode,writerParameterColumn,writerParameterPreSql,writerParameterConnectionJdbcUrl,writerParameterConnectionTable,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from mysqlWriter where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
 		}
-		if (!StringUtils.isEmpty(name)) {
-			sb.append(" and name like ? ");
-			condition.add("%" + name + "%");
+		if (!StringUtils.isEmpty(writerParameterUsername)) {
+			sb.append(" and writerParameterUsername like ? ");
+			condition.add("%" + writerParameterUsername + "%");
 		}
-		if (!StringUtils.isEmpty(writerId)) {
-			sb.append(" and writerId like ? ");
-			condition.add("%" + writerId + "%");
+		if (!StringUtils.isEmpty(writerParameterPassword)) {
+			sb.append(" and writerParameterPassword like ? ");
+			condition.add("%" + writerParameterPassword + "%");
 		}
-		if (!StringUtils.isEmpty(writerName)) {
-			sb.append(" and writerName like ? ");
-			condition.add("%" + writerName + "%");
+		if (!StringUtils.isEmpty(writerParameterWriteMode)) {
+			sb.append(" and writerParameterWriteMode like ? ");
+			condition.add("%" + writerParameterWriteMode + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterColumn)) {
+			sb.append(" and writerParameterColumn like ? ");
+			condition.add("%" + writerParameterColumn + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterPreSql)) {
+			sb.append(" and writerParameterPreSql like ? ");
+			condition.add("%" + writerParameterPreSql + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterConnectionJdbcUrl)) {
+			sb.append(" and writerParameterConnectionJdbcUrl like ? ");
+			condition.add("%" + writerParameterConnectionJdbcUrl + "%");
+		}
+		if (!StringUtils.isEmpty(writerParameterConnectionTable)) {
+			sb.append(" and writerParameterConnectionTable like ? ");
+			condition.add("%" + writerParameterConnectionTable + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");

@@ -175,6 +175,7 @@ public class TransformerController {
 		log.info("当前登录用户=" + currentLoginUsername);	
 		
 		String name=(String)requestMap.get("name");
+		String transformerType=(String)requestMap.get("transformerType");
 	
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
@@ -182,7 +183,7 @@ public class TransformerController {
 		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
 		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
-		Map<String, Object> data = transformerDao.pageTransformer(null, name, null, null, null,null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		Map<String, Object> data = transformerDao.pageTransformer(null, name, transformerType, null, null,null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
 			{				 
 				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明

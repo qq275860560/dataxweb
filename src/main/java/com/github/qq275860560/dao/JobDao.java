@@ -1,13 +1,10 @@
 package com.github.qq275860560.dao;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.LongToIntFunction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -72,7 +69,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,transformerId,transformerName,transformerType,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -94,7 +91,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,transformerId,transformerName,transformerType,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -153,6 +150,18 @@ public class JobDao {
 		sb1.append("writerName").append(",");
 		sb2.append("?,");
 		condition.add(map.get("writerName"));
+
+		sb1.append("transformerId").append(",");
+		sb2.append("?,");
+		condition.add(map.get("transformerId"));
+
+		sb1.append("transformerName").append(",");
+		sb2.append("?,");
+		condition.add(map.get("transformerName"));
+
+		sb1.append("transformerType").append(",");
+		sb2.append("?,");
+		condition.add(map.get("transformerType"));
 
 		sb1.append("dataxJson").append(",");
 		sb2.append("?,");
@@ -247,6 +256,15 @@ public class JobDao {
 		sb.append(" writerName = ? ,");
 		condition.add(map.get("writerName"));
 
+		sb.append(" transformerId = ? ,");
+		condition.add(map.get("transformerId"));
+
+		sb.append(" transformerName = ? ,");
+		condition.add(map.get("transformerName"));
+
+		sb.append(" transformerType = ? ,");
+		condition.add(map.get("transformerType"));
+
 		sb.append(" dataxJson = ? ,");
 		condition.add(map.get("dataxJson"));
 
@@ -296,15 +314,16 @@ public class JobDao {
 	}
 
 	public List<Map<String, Object>> listJob(String id, String name, String inputId, String inputName, String readerId,
-			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, String lastBuildId, String lastBuildNumber, String lastSuccessfulBuildNumber,
+			String readerName, String outputId, String outputName, String writerId, String writerName,
+			String transformerId, String transformerName, String transformerType, String dataxJson, Integer status,
+			String lastBuildId, String lastBuildNumber, String lastSuccessfulBuildNumber,
 			String lastUnsuccessfulBuildNumber, String nextBuildNumber, String startLastBuildCreateTime,
 			String endLastBuildCreateTime, Integer lastBuildEstimatedDuration, Double lastBuildProgress,
 			String createUserId, String createUserName, String startCreateTime, String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,transformerId,transformerName,transformerType,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -344,6 +363,18 @@ public class JobDao {
 		if (!StringUtils.isEmpty(writerName)) {
 			sb.append(" and writerName like ? ");
 			condition.add("%" + writerName + "%");
+		}
+		if (!StringUtils.isEmpty(transformerId)) {
+			sb.append(" and transformerId like ? ");
+			condition.add("%" + transformerId + "%");
+		}
+		if (!StringUtils.isEmpty(transformerName)) {
+			sb.append(" and transformerName like ? ");
+			condition.add("%" + transformerName + "%");
+		}
+		if (!StringUtils.isEmpty(transformerType)) {
+			sb.append(" and transformerType like ? ");
+			condition.add("%" + transformerType + "%");
 		}
 		if (!StringUtils.isEmpty(dataxJson)) {
 			sb.append(" and dataxJson like ? ");
@@ -412,8 +443,9 @@ public class JobDao {
 	}
 
 	public Map<String, Object> pageJob(String id, String name, String inputId, String inputName, String readerId,
-			String readerName, String outputId, String outputName, String writerId, String writerName, String dataxJson,
-			Integer status, String lastBuildId, String lastBuildNumber, String lastSuccessfulBuildNumber,
+			String readerName, String outputId, String outputName, String writerId, String writerName,
+			String transformerId, String transformerName, String transformerType, String dataxJson, Integer status,
+			String lastBuildId, String lastBuildNumber, String lastSuccessfulBuildNumber,
 			String lastUnsuccessfulBuildNumber, String nextBuildNumber, String startLastBuildCreateTime,
 			String endLastBuildCreateTime, Integer lastBuildEstimatedDuration, Double lastBuildProgress,
 			String createUserId, String createUserName, String startCreateTime, String endCreateTime, Integer pageNum,
@@ -427,7 +459,7 @@ public class JobDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
+				" SELECT id,name,inputId,inputName,readerId,readerName,outputId,outputName,writerId,writerName,transformerId,transformerName,transformerType,dataxJson,status,lastBuildId,lastBuildNumber,lastSuccessfulBuildNumber,lastUnsuccessfulBuildNumber,nextBuildNumber,date_format(lastBuildCreateTime,	'%Y-%m-%d %H:%i:%s') lastBuildCreateTime,lastBuildEstimatedDuration,lastBuildProgress,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from job where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -467,6 +499,18 @@ public class JobDao {
 		if (!StringUtils.isEmpty(writerName)) {
 			sb.append(" and writerName like ? ");
 			condition.add("%" + writerName + "%");
+		}
+		if (!StringUtils.isEmpty(transformerId)) {
+			sb.append(" and transformerId like ? ");
+			condition.add("%" + transformerId + "%");
+		}
+		if (!StringUtils.isEmpty(transformerName)) {
+			sb.append(" and transformerName like ? ");
+			condition.add("%" + transformerName + "%");
+		}
+		if (!StringUtils.isEmpty(transformerType)) {
+			sb.append(" and transformerType like ? ");
+			condition.add("%" + transformerType + "%");
 		}
 		if (!StringUtils.isEmpty(dataxJson)) {
 			sb.append(" and dataxJson like ? ");
