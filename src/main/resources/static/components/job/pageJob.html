@@ -29,6 +29,7 @@
 						</div>
 					</div>
 					
+					<div id="demo" class="collapse">
 					<div class="form-group ">
 						<label class="col-md-2 control-label">输入流名称</label>
 						<div class="col-md-6">
@@ -99,10 +100,14 @@
 							</span>
 						</div>
 					</div>
+					</div><!-- /.collapse -->
 
-					<div class="form-group ">							
+					<div class="form-group ">	
 					     <button type="button"
-							class="col-md-1 col-md-offset-2 btn btn-default"
+							class="col-md-2 btn btn-default"
+							data-toggle="collapse" data-target="#demo">高级选型</button>						
+					     <button type="button"
+							class="col-md-1 col-md-offset-1 btn btn-default"
 							@click="pageJob(1,query.pageSize)">搜索</button>
 						<button type="button"
 							class="col-md-1 col-md-offset-1  btn btn-default"
