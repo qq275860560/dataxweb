@@ -41,23 +41,23 @@ public class DataxJobTest {
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("name", "mysql-mysql");
 		requestMap.put("type", "mysqlreader");
-		requestMap.put("readerParameterUsername", "root");
-		requestMap.put("readerParameterPassword", "123456");
-		requestMap.put("readerParameterColumn", "id,name");
-		requestMap.put("readerParameterWhere", "");
-		requestMap.put("readerParameterConnectionJdbcUrl",
+		requestMap.put("parameterUsername", "root");
+		requestMap.put("parameterPassword", "123456");
+		requestMap.put("parameterColumn", "id,name");
+		requestMap.put("parameterWhere", "");
+		requestMap.put("parameterConnectionJdbcUrl",
 				"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
-		requestMap.put("readerParameterConnectionTable", "job");
+		requestMap.put("parameterConnectionTable", "job");
 
 		requestMap.put("type", "mysqlwriter");
-		requestMap.put("writerParameterUsername", "root");
-		requestMap.put("writerParameterPassword", "123456");
-		requestMap.put("writerParameterWriteMode", "insert");
-		requestMap.put("writerParameterColumn", "id,name");
-		requestMap.put("writerParameterPreSql", "delete from test");
-		requestMap.put("writerParameterConnectionJdbcUrl",
+		requestMap.put("parameterUsername", "root");
+		requestMap.put("parameterPassword", "123456");
+		requestMap.put("parameterWriteMode", "insert");
+		requestMap.put("parameterColumn", "id,name");
+		requestMap.put("parameterPreSql", "delete from test");
+		requestMap.put("parameterConnectionJdbcUrl",
 				"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
-		requestMap.put("writerParameterConnectionTable", "test");
+		requestMap.put("parameterConnectionTable", "test");
 
 		Map<String, Object> dataxMap = JobController.generateDataxMap(requestMap);
 

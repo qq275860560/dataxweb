@@ -69,6 +69,9 @@ define(['vue','components/navigation/navigation','components/job/runJob','compon
 							    
 							  //把小数转换为百分数START
 							    for(let item of tmpVue.data.pageList){
+							    	if(item.lastBuildProgress==0){
+							    		item.lastBuildProgress=0.1;
+							    	}
 							    	item.lastBuildProgress=item.lastBuildProgress*100+"%";									
 								}	
 							    //把小数转换为百分数END		

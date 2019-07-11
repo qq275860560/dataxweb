@@ -44,14 +44,14 @@ public class InputTest {
 		String name = "inputname" + System.currentTimeMillis();
 		// saveInput请求
 		response = testRestTemplate.exchange(
-				"/input/saveInput?name={name}&readerId=1&type=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
+				"/input/saveInput?name={name}&readerId=1&type=mysqlreader&parameterUsername=root&parameterPassword=123456&parameterColumn=id,name&parameterConnectionJdbcUrl={parameterConnectionJdbcUrl}&parameterConnectionTable=job",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
 					}
 				}), Map.class, new HashMap<String, Object>() {
 					{
-						put("readerParameterConnectionJdbcUrl",
+						put("parameterConnectionJdbcUrl",
 								"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
 						put("name", name);
 					}

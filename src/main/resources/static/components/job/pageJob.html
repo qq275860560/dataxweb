@@ -150,7 +150,8 @@
 							<td>{{item.outputType}}</td>
 							<td>{{item.transformerType}}</td>
 							
-							<td v-if="item.status!=2">{{item.status==1?"就绪":item.status==2?"构建中":"停用"}}</td>
+							<td v-if="item.status!=2">{{item.status==1?"就绪":"停用"}}</td>
+						
 							<td v-if="item.status==2">
 								<div class="progress progress-striped active">
 									<div class="progress-bar progress-bar-success" role="progressbar"

@@ -44,14 +44,14 @@ public class OutputTest {
 		String name = "outputname" + System.currentTimeMillis();
 		// saveOutput请求
 		response = testRestTemplate.exchange(
-				"//output/saveOutput?name={name}&writerId=1&type=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl={writerParameterConnectionJdbcUrl}&writerParameterConnectionTable=test",
+				"//output/saveOutput?name={name}&writerId=1&type=mysqlwriter&parameterUsername=root&parameterPassword=123456&parameterWriteMode=insert&parameterColumn=id,name&parameterPreSql=delete from test&parameterConnectionJdbcUrl={parameterConnectionJdbcUrl}&parameterConnectionTable=test",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);
 					}
 				}), Map.class, new HashMap<String, Object>() {
 					{
-						put("writerParameterConnectionJdbcUrl",
+						put("parameterConnectionJdbcUrl",
 								"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
 						put("name", name);
 					}

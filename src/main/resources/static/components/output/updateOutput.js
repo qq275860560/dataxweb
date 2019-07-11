@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 				updateOutput:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&type="+this.query.type+"&writerParameterUsername="+this.query.writerParameterUsername+"&writerParameterPassword="+this.query.writerParameterPassword+"&writerParameterWriteMode="+this.query.writerParameterWriteMode+"&writerParameterColumn="+this.query.writerParameterColumn+"&writerParameterPreSql="+this.query.writerParameterPreSql+"&writerParameterConnectionJdbcUrl="+this.query.writerParameterConnectionJdbcUrl+"&writerParameterConnectionTable="+this.query.writerParameterConnectionTable;
+					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterWriteMode="+this.query.parameterWriteMode+"&parameterColumn="+this.query.parameterColumn+"&parameterPreSql="+this.query.parameterPreSql+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -117,7 +117,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },
-		                writerParameterUsername: {
+		                parameterUsername: {
 		                    message: '用户名验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -125,7 +125,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },
-		                writerParameterPassword: {
+		                parameterPassword: {
 		                    message: '密码验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -133,7 +133,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },
-		                writerParameterWriteMode: {
+		                parameterWriteMode: {
 		                    message: '写模式验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -141,7 +141,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },		           	                
-		                writerParameterColumn: {
+		                parameterColumn: {
 		                    message: '列验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -150,7 +150,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                    }
 		                },
 		                
-		                writerParameterConnectionJdbcUrl: {
+		                parameterConnectionJdbcUrl: {
 		                    message: 'url验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -158,7 +158,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },
-		                writerParameterConnectionTable: {
+		                parameterConnectionTable: {
 		                    message: '表验证失败',
 		                    validators: {
 		                        notEmpty: {

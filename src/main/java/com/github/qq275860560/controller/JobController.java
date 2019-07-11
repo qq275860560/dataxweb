@@ -403,12 +403,12 @@ public class JobController {
 			requestMap.put("inputId", readerMap.get("id"));		
 			requestMap.put("inputName", readerMap.get("name"));
 			requestMap.put("inputType", readerMap.get("type"));
-			requestMap.put("readerParameterUsername", readerMap.get("readerParameterUsername"));
-			requestMap.put("readerParameterPassword", readerMap.get("readerParameterPassword"));
-			requestMap.put("readerParameterColumn", readerMap.get("readerParameterColumn"));
-			requestMap.put("readerParameterWhere", readerMap.get("readerParameterWhere"));
-			requestMap.put("readerParameterConnectionJdbcUrl", readerMap.get("readerParameterConnectionJdbcUrl"));
-			requestMap.put("readerParameterConnectionTable", readerMap.get("readerParameterConnectionTable"));
+			requestMap.put("parameterUsername", readerMap.get("parameterUsername"));
+			requestMap.put("parameterPassword", readerMap.get("parameterPassword"));
+			requestMap.put("parameterColumn", readerMap.get("parameterColumn"));
+			requestMap.put("parameterWhere", readerMap.get("parameterWhere"));
+			requestMap.put("parameterConnectionJdbcUrl", readerMap.get("parameterConnectionJdbcUrl"));
+			requestMap.put("parameterConnectionTable", readerMap.get("parameterConnectionTable"));
 		}
 
 		String outputId = (String) requestMap.get("outputId");
@@ -428,13 +428,13 @@ public class JobController {
 			requestMap.put("outputId", writerMap.get("id"));
 			requestMap.put("outputName", writerMap.get("name"));
 			requestMap.put("outputType", writerMap.get("type"));
-			requestMap.put("writerParameterUsername", writerMap.get("writerParameterUsername"));
-			requestMap.put("writerParameterPassword", writerMap.get("writerParameterPassword"));
-			requestMap.put("writerParameterWriteMode", writerMap.get("writerParameterWriteMode"));
-			requestMap.put("writerParameterColumn", writerMap.get("writerParameterColumn"));
-			requestMap.put("writerParameterPreSql", writerMap.get("writerParameterPreSql"));
-			requestMap.put("writerParameterConnectionJdbcUrl", writerMap.get("writerParameterConnectionJdbcUrl"));
-			requestMap.put("writerParameterConnectionTable", writerMap.get("writerParameterConnectionTable"));
+			requestMap.put("parameterUsername", writerMap.get("parameterUsername"));
+			requestMap.put("parameterPassword", writerMap.get("parameterPassword"));
+			requestMap.put("parameterWriteMode", writerMap.get("parameterWriteMode"));
+			requestMap.put("parameterColumn", writerMap.get("parameterColumn"));
+			requestMap.put("parameterPreSql", writerMap.get("parameterPreSql"));
+			requestMap.put("parameterConnectionJdbcUrl", writerMap.get("parameterConnectionJdbcUrl"));
+			requestMap.put("parameterConnectionTable", writerMap.get("parameterConnectionTable"));
 		}
 		
 		String transformerId = (String) requestMap.get("transformerId");
@@ -543,15 +543,15 @@ public class JobController {
 					put("name", name);
 					put("parameter", new HashMap<String, Object>() {
 						{
-							String username = (String) requestMap.get("readerParameterUsername");
+							String username = (String) requestMap.get("parameterUsername");
 							put("username", username);
-							String password = (String) requestMap.get("readerParameterPassword");
+							String password = (String) requestMap.get("parameterPassword");
 							put("password", password);
 
-							String[] column = ((String) requestMap.get("readerParameterColumn")).split(",");
+							String[] column = ((String) requestMap.get("parameterColumn")).split(",");
 							put("column", column);
 
-							String where = (String) requestMap.get("readerParameterWhere");
+							String where = (String) requestMap.get("parameterWhere");
 							put("where", where);
 
 							put("connection", new ArrayList<HashMap<String, Object>>() {
@@ -559,9 +559,9 @@ public class JobController {
 									add(new HashMap<String, Object>() {
 										{
 											String[] jdbcUrl = ((String) requestMap
-													.get("readerParameterConnectionJdbcUrl")).split(",");
+													.get("parameterConnectionJdbcUrl")).split(",");
 											put("jdbcUrl", jdbcUrl);
-											String[] table = ((String) requestMap.get("readerParameterConnectionTable"))
+											String[] table = ((String) requestMap.get("parameterConnectionTable"))
 													.split(",");
 											put("table", table);
 										}
@@ -589,18 +589,18 @@ public class JobController {
 					put("name", name);
 					put("parameter", new HashMap<String, Object>() {
 						{
-							String username = (String) requestMap.get("writerParameterUsername");
+							String username = (String) requestMap.get("parameterUsername");
 							put("username", username);
-							String password = (String) requestMap.get("writerParameterPassword");
+							String password = (String) requestMap.get("parameterPassword");
 							put("password", password);
 
-							String writeMode = (String) requestMap.get("writerParameterWriteMode");
+							String writeMode = (String) requestMap.get("parameterWriteMode");
 							put("writeMode", writeMode);
 
-							String[] column = ((String) requestMap.get("writerParameterColumn")).split(",");
+							String[] column = ((String) requestMap.get("parameterColumn")).split(",");
 							put("column", column);
 
-							String[] preSql = ((String) requestMap.get("writerParameterPreSql")).split(",");
+							String[] preSql = ((String) requestMap.get("parameterPreSql")).split(",");
 							put("preSql", preSql);
 
 							put("connection", new ArrayList<HashMap<String, Object>>() {
@@ -608,10 +608,10 @@ public class JobController {
 									add(new HashMap<String, Object>() {
 										{
 											String jdbcUrl = (String) requestMap
-													.get("writerParameterConnectionJdbcUrl");
+													.get("parameterConnectionJdbcUrl");
 											put("jdbcUrl", jdbcUrl);
 
-											String[] table = ((String) requestMap.get("writerParameterConnectionTable"))
+											String[] table = ((String) requestMap.get("parameterConnectionTable"))
 													.split(",");
 											put("table", table);
 										}
@@ -732,12 +732,12 @@ public class JobController {
 			requestMap.put("inputId", readerMap.get("id"));		
 			requestMap.put("inputName", readerMap.get("name"));
 			requestMap.put("inputType", readerMap.get("type"));
-			requestMap.put("readerParameterUsername", readerMap.get("readerParameterUsername"));
-			requestMap.put("readerParameterPassword", readerMap.get("readerParameterPassword"));
-			requestMap.put("readerParameterColumn", readerMap.get("readerParameterColumn"));
-			requestMap.put("readerParameterWhere", readerMap.get("readerParameterWhere"));
-			requestMap.put("readerParameterConnectionJdbcUrl", readerMap.get("readerParameterConnectionJdbcUrl"));
-			requestMap.put("readerParameterConnectionTable", readerMap.get("readerParameterConnectionTable"));
+			requestMap.put("parameterUsername", readerMap.get("parameterUsername"));
+			requestMap.put("parameterPassword", readerMap.get("parameterPassword"));
+			requestMap.put("parameterColumn", readerMap.get("parameterColumn"));
+			requestMap.put("parameterWhere", readerMap.get("parameterWhere"));
+			requestMap.put("parameterConnectionJdbcUrl", readerMap.get("parameterConnectionJdbcUrl"));
+			requestMap.put("parameterConnectionTable", readerMap.get("parameterConnectionTable"));
 		}
 
 		String outputId = (String) requestMap.get("outputId");
@@ -748,13 +748,13 @@ public class JobController {
 			requestMap.put("outputId", writerMap.get("id"));
 			requestMap.put("outputName", writerMap.get("name"));
 			requestMap.put("outputType", writerMap.get("type"));
-			requestMap.put("writerParameterUsername", writerMap.get("writerParameterUsername"));
-			requestMap.put("writerParameterPassword", writerMap.get("writerParameterPassword"));
-			requestMap.put("writerParameterWriteMode", writerMap.get("writerParameterWriteMode"));
-			requestMap.put("writerParameterColumn", writerMap.get("writerParameterColumn"));
-			requestMap.put("writerParameterPreSql", writerMap.get("writerParameterPreSql"));
-			requestMap.put("writerParameterConnectionJdbcUrl", writerMap.get("writerParameterConnectionJdbcUrl"));
-			requestMap.put("writerParameterConnectionTable", writerMap.get("writerParameterConnectionTable"));
+			requestMap.put("parameterUsername", writerMap.get("parameterUsername"));
+			requestMap.put("parameterPassword", writerMap.get("parameterPassword"));
+			requestMap.put("parameterWriteMode", writerMap.get("parameterWriteMode"));
+			requestMap.put("parameterColumn", writerMap.get("parameterColumn"));
+			requestMap.put("parameterPreSql", writerMap.get("parameterPreSql"));
+			requestMap.put("parameterConnectionJdbcUrl", writerMap.get("parameterConnectionJdbcUrl"));
+			requestMap.put("parameterConnectionTable", writerMap.get("parameterConnectionTable"));
 		}
 		
 		String transformerId = (String) requestMap.get("transformerId");
