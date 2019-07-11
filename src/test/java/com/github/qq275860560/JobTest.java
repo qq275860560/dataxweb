@@ -45,7 +45,7 @@ public class JobTest {
 
 		String name = "jobName" + System.currentTimeMillis();
 		// saveJob请求
-		response = testRestTemplate.exchange("/job/saveJob?name={name}&inputId=1&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter" , HttpMethod.GET,
+		response = testRestTemplate.exchange("/job/saveJob?name={name}&inputId=1&inputName=inputName1&readerId=&type=mysqlreader&outputId=1&outputName=outputName1&writerId=&type=mysqlwriter" , HttpMethod.GET,
 				new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

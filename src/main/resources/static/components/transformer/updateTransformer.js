@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 				updateTransformer:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/transformer/updateTransformer?id="+this.query.id+"&name="+this.query.name+"&transformerType="+this.query.transformerType+"&transformerParameterCode="+this.query.transformerParameterCode+"&transformerParameterExtraPackage="+this.query.transformerParameterExtraPackage;
+					let url=this.$store.state.BASE_PATH+"/api/transformer/updateTransformer?id="+this.query.id+"&name="+this.query.name+"&type="+this.query.type+"&parameterCode="+this.query.parameterCode+"&parameterExtraPackage="+this.query.parameterExtraPackage;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -100,7 +100,7 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 		                        }
 		                    }
 		                },	
-		                transformerType: {
+		                type: {
 		                    message: '交换清洗类型验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -117,7 +117,7 @@ define(['vue','components/navigation/navigation','text!./updateTransformer.html'
 		                        }
 		                    }
 		                },
-		                transformerParameterCode: {
+		                parameterCode: {
 		                    message: '用户名验证失败',
 		                    validators: {
 		                        notEmpty: {

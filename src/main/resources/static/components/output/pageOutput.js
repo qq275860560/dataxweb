@@ -10,7 +10,7 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 				return {
 					query:{
 						name:"",
-						writerName:"",
+						type:"",
 						startCreateTime:"",
 						endCreateTime:"",
 						pageNum:1,
@@ -34,7 +34,7 @@ define(['vue','components/navigation/navigation','components/output/deleteOutput
 				},
 				pageOutput:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/output/pageOutput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&writerName="+this.query.writerName+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/output/pageOutput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&type="+this.query.type+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				

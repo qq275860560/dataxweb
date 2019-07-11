@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.MysqlWriterDao;
 import com.github.qq275860560.dao.OutputDao;
 
@@ -178,7 +179,7 @@ public class OutputController {
 		log.info("当前登录用户=" + currentLoginUsername);	
 		
 		String name=(String)requestMap.get("name");
-		String writerName=(String)requestMap.get("writerName");
+		String type=(String)requestMap.get("type");
 	
 		String createUserName=(String)requestMap.get("createUserName");
 		String startCreateTime=(String)requestMap.get("startCreateTime");
@@ -186,7 +187,7 @@ public class OutputController {
 		Integer pageNum =requestMap.get("pageNum")==null?1:Integer.parseInt(requestMap.get("pageNum").toString());
 		Integer pageSize =requestMap.get("pageSize")==null?10:Integer.parseInt(requestMap.get("pageSize").toString());
 		 
-		Map<String, Object> data = outputDao.pageOutput(null,name, null, writerName,  null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
+		Map<String, Object> data = outputDao.pageOutput(null,name,  type,  null, createUserName, startCreateTime, endCreateTime, pageNum, pageSize) ;
 		return new HashMap<String, Object>() {
 			{				 
 				put("code", HttpStatus.OK.value());//此字段可以省略，这里仿照蚂蚁金服的接口返回字段code，增加状态码说明
@@ -254,20 +255,13 @@ public class OutputController {
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id=(String)requestMap.get("id");
-		Map<String, Object> outputMap=outputDao.getOutput(id);
+		Map<String, Object> outputMap=outputDao.getOutput(id);		
 		
-		String writerId = (String)outputMap.get("writerId");
-		String writerName = (String)outputMap.get("writerName");
-		Map<String,Object> writerMap = null;
-		if(writerName.equalsIgnoreCase("mysqlwriter")) {
-			writerMap =mysqlWriterDao.getMysqlWriter(writerId);
+		String type = (String)outputMap.get("type");
+		Map<String,Object> data = new HashMap<>();
+		if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
+			data.putAll(mysqlWriterDao.getMysqlWriter(id));
 		}
-		
-		Map<String, Object> data = new HashMap<>();
-		data.putAll(writerMap);
-		data.put("writerId", writerMap.get("id"));
-		data.put("writerName",writerMap.get("name") );
-		data.putAll(outputMap);
 		
 		return new HashMap<String, Object>() {
 			{
@@ -346,8 +340,8 @@ public class OutputController {
 			};
 		}
 		
-		String writerName = (String) requestMap.get("writerName");
-		if (StringUtils.isEmpty(writerName)) {
+		String type = (String) requestMap.get("type");
+		if (StringUtils.isEmpty(type)) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -362,16 +356,11 @@ public class OutputController {
 		String createTime=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		requestMap.put("createTime", createTime);
 		
-		Map<String, Object> writerMap = new HashMap<>();
-		writerMap.putAll(requestMap);
-		writerMap.put("id", UUID.randomUUID().toString().replace("-", ""));
-		writerMap.put("name",writerName);
-		if(writerName.equalsIgnoreCase("mysqlwriter")) {
-			mysqlWriterDao.saveMysqlWriter(writerMap);
-		}
-		
-		requestMap.put("writerId", writerMap.get("id"));			
+		if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
+			mysqlWriterDao.saveMysqlWriter(requestMap);
+		}					
 		outputDao.saveOutput(requestMap);
+		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -438,19 +427,17 @@ public class OutputController {
 		String currentLoginUsername=(String)SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 		
-		// name,writerName不允许修改
-		String id = (String) requestMap.get("id");		
-		Map<String, Object> outputMap = outputDao.getOutput(id);	 
-		String writerId = (String)outputMap.get("writerId");
-		String writerName = (String)outputMap.get("writerName");
+		// name,type不允许修改
+		String id = (String) requestMap.get("id");	
+		Map<String, Object> outputMap = outputDao.getOutput(id);
+		String type = (String)outputMap.get("type");
 		Map<String, Object> writerMap = null;
-		if(writerName.equals("mysqlwriter")) {
-			writerMap=mysqlWriterDao.getMysqlWriter(writerId);
+		if(type.equals(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
+			writerMap=mysqlWriterDao.getMysqlWriter(id);
 			writerMap.putAll(requestMap);		
-			writerMap.put("id",writerId);
-			writerMap.put("name",writerName);
 			mysqlWriterDao.updateMysqlWriter(writerMap);
-		}		
+		}
+		 
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -514,12 +501,13 @@ public class OutputController {
 		log.info("当前登录用户=" + currentLoginUsername);
 		
 		String id = (String) requestMap.get("id");
-		Map<String, Object> outputMap = outputDao.getOutput(id);		
-		String writerId = (String)outputMap.get("writerId");
-		String writerName = (String)outputMap.get("writerName");
-		if(writerName.equalsIgnoreCase("mysqlreader")) {
-			mysqlWriterDao.deleteMysqlWriter(writerId);
-		}	
+		Map<String, Object> outputMap = outputDao.getOutput(id);	
+		
+		String type = (String)outputMap.get("type");
+		if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
+			mysqlWriterDao.deleteMysqlWriter(id);
+		}
+		 
 		outputDao.deleteOutput(id);
 		return new HashMap<String, Object>() {
 			{

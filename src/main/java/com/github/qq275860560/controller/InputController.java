@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.MysqlReaderDao;
 
@@ -173,7 +174,7 @@ public class InputController {
 		log.info("当前登录用户=" + currentLoginUsername);
 
 		String name = (String) requestMap.get("name");
-		String readerName = (String) requestMap.get("readerName");
+		String type = (String) requestMap.get("type");
 
 		String createUserName = (String) requestMap.get("createUserName");
 		String startCreateTime = (String) requestMap.get("startCreateTime");
@@ -183,7 +184,7 @@ public class InputController {
 		Integer pageSize = requestMap.get("pageSize") == null ? 10
 				: Integer.parseInt(requestMap.get("pageSize").toString());
 
-		Map<String, Object> data = inputDao.pageInput(null, name, null, readerName,  null,
+		Map<String, Object> data = inputDao.pageInput(null, name,  type,  null,
 				createUserName, startCreateTime, endCreateTime, pageNum, pageSize);
 		return new HashMap<String, Object>() {
 			{
@@ -250,18 +251,12 @@ public class InputController {
 
 		String id = (String) requestMap.get("id");
 		Map<String, Object> inputMap = inputDao.getInput(id);		
-		String readerId = (String)inputMap.get("readerId");
-		String readerName = (String)inputMap.get("readerName");
-		Map<String,Object> readerMap = null;
-		if(readerName.equalsIgnoreCase("mysqlreader")) {
-			readerMap =mysqlReaderDao.getMysqlReader(readerId);
-		}
-		
-		Map<String, Object> data = new HashMap<>();
-		data.putAll(readerMap);
-		data.put("readerId", readerMap.get("id"));
-		data.put("readerName",readerMap.get("name") );
-		data.putAll(inputMap);
+
+		String type = (String)inputMap.get("type");
+		Map<String,Object> data = new HashMap<>();
+		if(type.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
+			data.putAll(mysqlReaderDao.getMysqlReader(id));
+		}	
 		
 		return new HashMap<String, Object>() {
 			{
@@ -339,8 +334,8 @@ public class InputController {
 			};
 		}
 		
-		String readerName = (String) requestMap.get("readerName");
-		if (StringUtils.isEmpty(readerName)) {
+		String type = (String) requestMap.get("type");
+		if (StringUtils.isEmpty(type)) {
 			return new HashMap<String, Object>() {
 				{
 					put("code", HttpStatus.BAD_REQUEST.value());
@@ -354,18 +349,13 @@ public class InputController {
 		String createUserName = currentLoginUsername;
 		requestMap.put("createUserName", createUserName);
 		String createTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		requestMap.put("createTime", createTime);
-		
-		Map<String, Object> readerMap = new HashMap<>();
-		readerMap.putAll(requestMap);
-		readerMap.put("id", UUID.randomUUID().toString().replace("-", ""));
-		readerMap.put("name",readerName);
-		if(readerName.equalsIgnoreCase("mysqlreader")) {
-			mysqlReaderDao.saveMysqlReader(readerMap);
-		}
-		
-		requestMap.put("readerId", readerMap.get("id"));	 
+		requestMap.put("createTime", createTime);	 
+	 
+		if(type.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
+			mysqlReaderDao.saveMysqlReader(requestMap);
+		}	 	 
 		inputDao.saveInput(requestMap);
+		
 		return new HashMap<String, Object>() {
 			{
 				put("code", HttpStatus.OK.value());
@@ -429,17 +419,14 @@ public class InputController {
 		String currentLoginUsername = (String) SecurityContextHolder.getContext().getAuthentication().getName();
 		log.info("当前登录用户=" + currentLoginUsername);
 
-		// name,readerName不允许修改
+		// name,type不允许修改
 		String id = (String) requestMap.get("id");		
 		Map<String, Object> inputMap = inputDao.getInput(id);	 
-		String readerId = (String)inputMap.get("readerId");
-		String readerName = (String)inputMap.get("readerName");
+		String type = (String)inputMap.get("type");
 		Map<String, Object> readerMap = null;
-		if(readerName.equals("mysqlreader")) {
-			readerMap=mysqlReaderDao.getMysqlReader(readerId);
+		if(type.equals(Constant.INPUT_TYPE_MYSQLREADER)) {
+			readerMap=mysqlReaderDao.getMysqlReader(id);
 			readerMap.putAll(requestMap);		
-			readerMap.put("id",readerId);
-			readerMap.put("name",readerName);
 			mysqlReaderDao.updateMysqlReader(readerMap);
 		}
 		
@@ -507,10 +494,9 @@ public class InputController {
 
 		String id = (String) requestMap.get("id");
 		Map<String, Object> inputMap = inputDao.getInput(id);		
-		String readerId = (String)inputMap.get("readerId");
-		String readerName = (String)inputMap.get("readerName");
-		if(readerName.equalsIgnoreCase("mysqlreader")) {
-			mysqlReaderDao.deleteMysqlReader(readerId);
+	 	String type = (String)inputMap.get("type");
+		if(type.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
+			mysqlReaderDao.deleteMysqlReader(id);
 		}
 		inputDao.deleteInput(id);
 		return new HashMap<String, Object>() {

@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 				updateOutput:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&writerName="+this.query.writerName+"&writerParameterUsername="+this.query.writerParameterUsername+"&writerParameterPassword="+this.query.writerParameterPassword+"&writerParameterWriteMode="+this.query.writerParameterWriteMode+"&writerParameterColumn="+this.query.writerParameterColumn+"&writerParameterPreSql="+this.query.writerParameterPreSql+"&writerParameterConnectionJdbcUrl="+this.query.writerParameterConnectionJdbcUrl+"&writerParameterConnectionTable="+this.query.writerParameterConnectionTable;
+					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&writerId="+this.query.writerId+"&type="+this.query.type+"&writerParameterUsername="+this.query.writerParameterUsername+"&writerParameterPassword="+this.query.writerParameterPassword+"&writerParameterWriteMode="+this.query.writerParameterWriteMode+"&writerParameterColumn="+this.query.writerParameterColumn+"&writerParameterPreSql="+this.query.writerParameterPreSql+"&writerParameterConnectionJdbcUrl="+this.query.writerParameterConnectionJdbcUrl+"&writerParameterConnectionTable="+this.query.writerParameterConnectionTable;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -100,7 +100,7 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 		                        }
 		                    }
 		                },	
-		                writerName: {
+		                type: {
 		                    message: '输出流类型验证失败',
 		                    validators: {
 		                        notEmpty: {

@@ -8,9 +8,9 @@ define(['vue','components/navigation/navigation','text!./saveTransformer.html'],
 				return {
 					query:{ 
 						name:"transformer"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
-						transformerType:"dx_groovy",
-						transformerParameterCode:"Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;",
-						transformerParameterExtraPackage:"import groovy.json.JsonSlurper;",
+						type:"dx_groovy",
+						parameterCode:"Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;",
+						parameterExtraPackage:"import groovy.json.JsonSlurper;",
 					},
 					code:null,
 					msg:null,
@@ -58,7 +58,7 @@ define(['vue','components/navigation/navigation','text!./saveTransformer.html'],
 				saveTransformer:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/transformer/saveTransformer?name="+this.query.name+"&transformerType="+this.query.transformerType+"&transformerParameterCode="+this.query.transformerParameterCode+"&transformerParameterExtraPackage="+this.query.transformerParameterExtraPackage;
+					let url=this.$store.state.BASE_PATH+"/api/transformer/saveTransformer?name="+this.query.name+"&type="+this.query.type+"&parameterCode="+this.query.parameterCode+"&parameterExtraPackage="+this.query.parameterExtraPackage;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -113,7 +113,7 @@ define(['vue','components/navigation/navigation','text!./saveTransformer.html'],
 		                        }
 		                    }
 		                },	
-		                transformerType: {
+		                type: {
 		                    message: '交换清洗类型验证失败',
 		                    validators: {
 		                        notEmpty: {
@@ -130,7 +130,7 @@ define(['vue','components/navigation/navigation','text!./saveTransformer.html'],
 		                        }
 		                    }
 		                },
-		                transformerParameterCode: {
+		                parameterCode: {
 		                    message: '用户名验证失败',
 		                    validators: {
 		                        notEmpty: {

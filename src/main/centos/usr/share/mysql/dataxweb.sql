@@ -10,12 +10,10 @@ id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL,
 inputId VARCHAR ( 32 ) DEFAULT NULL,
 inputName VARCHAR ( 64 ) DEFAULT NULL,
-readerId VARCHAR ( 32 ) DEFAULT NULL,
-readerName VARCHAR ( 64 ) DEFAULT NULL,
+inputType VARCHAR ( 64 ) DEFAULT NULL COMMENT '输入流类型，比如mysqlreader',
 outputId VARCHAR ( 32 ) DEFAULT NULL,
-outputName VARCHAR ( 64 ) DEFAULT NULL,
-writerId VARCHAR ( 32 ) DEFAULT NULL,
-writerName VARCHAR ( 64 ) DEFAULT NULL,
+outputName VARCHAR ( 64 ) DEFAULT NULL, 
+outputType VARCHAR ( 64 ) DEFAULT NULL COMMENT '输出流类型，比如mysqlwriter',
 transformerId VARCHAR ( 32 ) DEFAULT NULL,
 transformerName VARCHAR ( 64 ) DEFAULT NULL,
 transformerType VARCHAR ( 64 ) DEFAULT NULL,
@@ -72,8 +70,7 @@ DROP TABLE  IF EXISTS input;
 CREATE TABLE input (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
-readerId  VARCHAR ( 32 ) DEFAULT NULL,
-readerName VARCHAR ( 64 ) DEFAULT NULL comment '输入流类型',
+type VARCHAR ( 64 ) DEFAULT NULL comment '输入流类型',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
@@ -83,6 +80,8 @@ PRIMARY KEY ( id )
 DROP TABLE  IF EXISTS mysqlReader;
 CREATE TABLE mysqlreader (
 id VARCHAR ( 32 ) NOT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL comment '输入流名称',
+type VARCHAR ( 64 ) DEFAULT NULL comment '输入流类型',
 readerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 readerParameterColumn VARCHAR ( 1024 ) DEFAULT NULL,
@@ -100,8 +99,7 @@ DROP TABLE  IF EXISTS output;
 CREATE TABLE output (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
-writerId VARCHAR ( 32 ) DEFAULT NULL,
-writerName VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型',
+type VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
@@ -111,6 +109,8 @@ PRIMARY KEY ( id )
 DROP TABLE  IF EXISTS mysqlWriter;
 CREATE TABLE mysqlwriter (
 id VARCHAR ( 32 ) NOT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
+type VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型',
 writerParameterUsername VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterPassword VARCHAR ( 32 ) DEFAULT NULL,
 writerParameterWriteMode VARCHAR ( 1024 ) DEFAULT NULL,
@@ -129,19 +129,16 @@ DROP TABLE  IF EXISTS transformer;
 CREATE TABLE transformer (
 id VARCHAR ( 32 ) NOT NULL,
 name VARCHAR ( 64 )  comment '交换清洗名称',
-transformerType VARCHAR (64) DEFAULT NULL comment '交换清洗类型',
-transformerParameterCode text DEFAULT NULL comment '交换清洗代码',
-transformerParameterExtraPackage text DEFAULT NULL comment '交换清洗引入的 包名引入语句，换行符结尾，如果存在多个引入，每一个语句还是分号结尾，也就是多行',
+type VARCHAR (64) DEFAULT NULL comment '交换清洗类型',
+parameterCode text DEFAULT NULL comment '交换清洗代码',
+parameterExtraPackage text DEFAULT NULL comment '交换清洗引入的 包名引入语句，换行符结尾，如果存在多个引入，每一个语句还是分号结尾，也就是多行',
 createUserId VARCHAR ( 32 ) DEFAULT NULL,
 createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;
 
-insert into transformer values(1,'transformer','dx_groovy',
-'Column column = record.getColumn(1);\nString oriValue = column.asString();\nString newValue = oriValue.substring(0, 3);\nrecord.setColumn(1, new StringColumn(newValue));\nreturn record;',
-'import groovy.json.JsonSlurper;',
-null,'createUserName1','1970-01-01 00:00:00');
+ 
 
 DROP TABLE  IF EXISTS plugin;
 CREATE TABLE plugin (

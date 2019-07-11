@@ -44,7 +44,7 @@ public class OutputTest {
 		String name = "outputname" + System.currentTimeMillis();
 		// saveOutput请求
 		response = testRestTemplate.exchange(
-				"//output/saveOutput?name={name}&writerId=1&writerName=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl={writerParameterConnectionJdbcUrl}&writerParameterConnectionTable=test",
+				"//output/saveOutput?name={name}&writerId=1&type=mysqlwriter&writerParameterUsername=root&writerParameterPassword=123456&writerParameterWriteMode=insert&writerParameterColumn=id,name&writerParameterPreSql=delete from test&writerParameterConnectionJdbcUrl={writerParameterConnectionJdbcUrl}&writerParameterConnectionTable=test",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

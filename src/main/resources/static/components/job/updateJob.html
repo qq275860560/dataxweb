@@ -4,9 +4,10 @@
 	<div id="page-wrapper">
 
 <div class="row">
-	<div class="col-md-11 col-md-offset-1">
-	    <div class="col-md-offset-4">
-	    <h1>编辑计划任务表单<small>{{query.name}}</small></h1>
+	<div class="col-md-11 col-md-offset-1">	    
+	    <div style="text-align:center;">
+	    <h1>编辑计划任务表单</h1>
+	    <h1><small>{{query.name}}</small></h1>
 	    </div>
 		<ol class="breadcrumb">
 			<li><a href="javascript:void(0)" @click="updateRouterView('/components/home/home')"><i
@@ -29,28 +30,65 @@
 		<form id="form" class="form-horizontal " role="form">
 
 			<div class="form-group ">
-				<label for="name"  class="col-md-2 control-label">计划任务名称</label>
+				<label for="name" class="col-md-2 control-label">计划任务名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.name" name="name" id="name" type="text">
+					<input class="form-control" v-model="query.name" name="name" id="name" type="text" readonly>
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
-
-			<div class="form-group ">
+				
+			<div class="form-group " style="display:none">
 				<label  for="inputId" class="col-md-2 control-label">输入流id</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.inputId" name="inputId" id="inputId" type="text">
+					<input class="form-control" v-model="query.inputId" name="inputId" id="inputId" type="text" >
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
 			
 			<div class="form-group ">
-				<label  for="outputId" class="col-md-2 control-label">输出流id</label>
+				<label  for="inputName" class="col-md-2 control-label">输入流名称</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.outputId" name="outputId" id="outputId" type="text">
+					<input class="form-control" v-model="query.inputName" name="inputName" id="inputName" type="text" @click="selectInput({pageNum:1,pageSize:5})">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
+			
+			
+			<div class="form-group " style="display:none">
+				<label  for="outputId" class="col-md-2 control-label">输出流id</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.outputId" name="outputId" id="outputId" type="text" >
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
+			<div class="form-group ">
+				<label  for="outputName" class="col-md-2 control-label">输出流名称</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.outputName" name="outputName" id="outputName" type="text" @click="selectOutput({pageNum:1,pageSize:5})">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
+			
+			
+			
+			<div class="form-group " style="display:none">
+				<label  for="transformerId" class="col-md-2 control-label">交换清洗id</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.transformerId" name="transformerId" id="transformerId" type="text" >
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
+			<div class="form-group ">
+				<label  for="transformerName" class="col-md-2 control-label">交换清洗名称</label>
+				<div class="col-md-9">
+					<input class="form-control" v-model="query.transformerName" name="transformerName" id="transformerName" type="text" @click="selectTransformer({pageNum:1,pageSize:5})">
+				</div>
+				<p class="help-block with-errors"> </p>
+			</div>
+			
 
 			<div class="form-group ">
 				<button type="button"
@@ -64,6 +102,9 @@
 
 	</div>
 	</div><!-- /.row -->
-</div><!-- /#page-wrapper -->      
+</div><!-- /#page-wrapper -->  
+<selectInput ref="selectInput" @setInput="setInput"/>   
+<selectOutput ref="selectOutput" @setOutput="setOutput"/> 
+<selectTransformer ref="selectTransformer" @setTransformer="setTransformer"/>     
 </div><!-- /#wrapper -->
 

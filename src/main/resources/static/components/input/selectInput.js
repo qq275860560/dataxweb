@@ -8,7 +8,7 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 		           return {   
 		        	query:{
 		        		name:"",
-		        		readerName:"",
+		        		type:"",
 						startCreateTime:"",
 						endCreateTime:"",
 		        		pageNum:1,
@@ -32,7 +32,7 @@ define(['vue','text!./selectInput.html'], function (Vue,componentTemplate) {
 				},
 				pageInput:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&readerName="+this.query.readerName+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/input/pageInput?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&type="+this.query.type+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				

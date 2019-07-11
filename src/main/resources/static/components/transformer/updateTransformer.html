@@ -5,8 +5,9 @@
 
 <div class="row">
 	<div class="col-md-11 col-md-offset-1">
-	    <div class="col-md-offset-4">
-	    <h1>编辑交换清洗表单<small>{{query.name}}</small></h1>
+	     <div style="text-align:center;">
+	    <h1>编辑交换清洗表单</h1>
+	    <h1><small>{{query.name}}</small></h1>
 	    </div>
 		<ol class="breadcrumb">
 			<li><a href="javascript:void(0)" @click="updateRouterView('/components/home/home')"><i
@@ -37,25 +38,25 @@
 			</div>
 			
 			<div class="form-group ">
-				<label  for="transformerType" class="col-md-2 control-label">交换清洗类型</label>
+				<label  for="type" class="col-md-2 control-label">交换清洗类型</label>
 				<div class="col-md-9">
-					<input class="form-control" v-model="query.transformerType" name="transformerType" id="transformerType" type="text">
+					<input class="form-control" v-model="query.type" name="type" id="type" type="text">
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label  for="transformerParameterCode" class="col-md-2 control-label">交换清洗代码</label>
+				<label  for="parameterCode" class="col-md-2 control-label">交换清洗代码</label>
 				<div class="col-md-9">
-				<textarea class="form-control" v-model="query.transformerParameterCode" name="transformerParameterCode" id="transformerParameterCode"></textarea>
+				<textarea class="form-control" v-model="query.parameterCode" name="parameterCode" id="parameterCode"></textarea>
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>
 
 			<div class="form-group ">
-				<label  for="transformerParameterExtraPackage" class="col-md-2 control-label">交换清洗引入的包</label>
+				<label  for="parameterExtraPackage" class="col-md-2 control-label">交换清洗引入的包</label>
 				<div class="col-md-9">			
-					<textarea class="form-control" v-model="query.transformerParameterExtraPackage" name="transformerParameterExtraPackage" id="transformerParameterExtraPackage"></textarea>
+					<textarea class="form-control" v-model="query.parameterExtraPackage" name="parameterExtraPackage" id="parameterExtraPackage"></textarea>
 				</div>
 				<p class="help-block with-errors"> </p>
 			</div>

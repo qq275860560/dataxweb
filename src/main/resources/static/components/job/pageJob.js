@@ -11,9 +11,9 @@ define(['vue','components/navigation/navigation','components/job/runJob','compon
 					query:{
 						name:"",
 						inputName:"",
-						readerName:"",
+						inputType:"",
 						outputName:"",
-						writerName:"",
+						outputType:"",
 						transformerName:"",
 						transformerType:"",
 						startCreateTime:"",
@@ -39,7 +39,7 @@ define(['vue','components/navigation/navigation','components/job/runJob','compon
 				},
 				pageJob:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/job/pageJob?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&inputName="+this.query.inputName+"&readerName="+this.query.readerName+"&outputName="+this.query.outputName+"&writerName="+this.query.writerName+"&transformerName="+this.query.transformerName+"&transformerType="+this.query.transformerType+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/job/pageJob?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&inputName="+this.query.inputName+"&inputType="+this.query.inputType+"&outputName="+this.query.outputName+"&outputType="+this.query.outputType+"&transformerName="+this.query.transformerName+"&transformerType="+this.query.transformerType+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				

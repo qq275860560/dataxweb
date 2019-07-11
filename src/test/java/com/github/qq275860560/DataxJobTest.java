@@ -40,7 +40,7 @@ public class DataxJobTest {
 	 
 		Map<String, Object> requestMap = new HashMap<>();
 		requestMap.put("name", "mysql-mysql");
-		requestMap.put("readerName", "mysqlreader");
+		requestMap.put("type", "mysqlreader");
 		requestMap.put("readerParameterUsername", "root");
 		requestMap.put("readerParameterPassword", "123456");
 		requestMap.put("readerParameterColumn", "id,name");
@@ -49,7 +49,7 @@ public class DataxJobTest {
 				"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
 		requestMap.put("readerParameterConnectionTable", "job");
 
-		requestMap.put("writerName", "mysqlwriter");
+		requestMap.put("type", "mysqlwriter");
 		requestMap.put("writerParameterUsername", "root");
 		requestMap.put("writerParameterPassword", "123456");
 		requestMap.put("writerParameterWriteMode", "insert");

@@ -16,7 +16,11 @@ public class Constant {
     
     public static final int BUILD_RESULT_SUCCESS = 1;//构建成功
     public static final int BUILD_RESULT_FAILURE = 2;//构建失败
-    public static final int BUILD_RESULT_ABORTED = 3;//构建取消
+    public static final int BUILD_RESULT_ABORTED = 3;//构建取消    
+    
+    public static final String INPUT_TYPE_MYSQLREADER = "mysqlreader";//mysql类型的输入流
+    public static final String OUTPUT_TYPE_MYSQLWRITER = "mysqlwriter";//mysql类型的输出流
+    public static final String TRANSFORMER_TYPE_GROOVY = "dx_groovy";//交换清洗规则
 
     
 }

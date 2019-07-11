@@ -40,7 +40,7 @@
 					<div class="form-group ">
 						<label class="col-md-2 control-label">输入流类型</label>
 						<div class="col-md-6">
-							<input class="form-control" v-model="query.readerName" name="readerName"
+							<input class="form-control" v-model="query.inputType" name="inputType"
 								type="text">
 						</div>
 					</div>
@@ -56,7 +56,7 @@
 					<div class="form-group ">
 						<label class="col-md-2 control-label">输出流类型</label>
 						<div class="col-md-6">
-							<input class="form-control" v-model="query.writerName" name="writerName"
+							<input class="form-control" v-model="query.outputType" name="outputType"
 								type="text">
 						</div>
 					</div>
@@ -128,9 +128,10 @@
 								v-model="selectAllItemId" value="true">序号 <i
 								class="fa fa-sort"></i></th>
 							<th class="header">计划任务 <i class="fa fa-sort"></i></th>
-							<th class="header">输入流 <i class="fa fa-sort"></i></th>
-							<th class="header">输出流 <i class="fa fa-sort"></i></th>
-							<th class="header" width="15%">状态<i class="fa fa-sort"></i></th>
+							<th class="header">输入流类型 <i class="fa fa-sort"></i></th>
+							<th class="header">输出流类型 <i class="fa fa-sort"></i></th>
+							<th class="header">交换清洗类型 <i class="fa fa-sort"></i></th>
+							<th class="header" width="15%">任务状态<i class="fa fa-sort"></i></th>
 							<th class="header">最新构建 <i class="fa fa-sort"></i></th>
 							<th class="header">操作 <i class="fa fa-sort"></i></th>
 						</tr>
@@ -140,8 +141,9 @@
 							<td><input type="checkbox" name="id" v-model="selectItemIds"
 								:value="item.id"> {{index+1}}</td>
 							<td>{{item.name}}</td>
-							<td>{{item.inputName}}</td>
-							<td>{{item.outputName}}</td>
+							<td>{{item.inputType}}</td>
+							<td>{{item.outputType}}</td>
+							<td>{{item.transformerType}}</td>
 							
 							<td v-if="item.status!=2">{{item.status==1?"就绪":item.status==2?"构建中":"停用"}}</td>
 							<td v-if="item.status==2">

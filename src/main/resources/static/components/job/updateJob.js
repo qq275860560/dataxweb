@@ -1,7 +1,7 @@
 /**
  * @author jiangyuanlin@163.com
  */
-define(['vue','components/navigation/navigation','text!./updateJob.html'], function (Vue,navigation,componentTemplate) {	
+define(['vue','components/navigation/navigation','components/input/selectInput','components/output/selectOutput','components/transformer/selectTransformer','text!./updateJob.html'], function (Vue,navigation,selectInput,selectOutput,selectTransformer,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
@@ -20,7 +20,7 @@ define(['vue','components/navigation/navigation','text!./updateJob.html'], funct
 				updateJob:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/job/updateJob?id="+this.query.id+"&name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId;
+					let url=this.$store.state.BASE_PATH+"/api/job/updateJob?id="+this.query.id+"&name="+this.query.name+"&inputId="+this.query.inputId+"&outputId="+this.query.outputId+"&transformerId="+this.query.transformerId;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -52,7 +52,28 @@ define(['vue','components/navigation/navigation','text!./updateJob.html'], funct
 				},
 				back:function(){					 
 					this.$router.go(-1)	
-				},				
+				},
+				selectInput:function(query){
+					 this.$refs.selectInput.show(query);
+				},
+				setInput:function(id,name){			
+					this.query.inputId=id;
+					this.query.inputName=name;
+				},
+				selectOutput:function(query){
+					 this.$refs.selectOutput.show(query);
+				},
+				setOutput:function(id,name){				 
+					this.query.outputId=id;
+					this.query.outputName=name;
+				},
+				selectTransformer:function(query){
+					 this.$refs.selectTransformer.show(query);
+				},
+				setTransformer:function(id,name){				 
+					this.query.transformerId=id;
+					this.query.transformerName=name;
+				},
 			},	
 			created: function () {	
 				let tmpVue=this;

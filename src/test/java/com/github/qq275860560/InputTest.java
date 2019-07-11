@@ -44,7 +44,7 @@ public class InputTest {
 		String name = "inputname" + System.currentTimeMillis();
 		// saveInput请求
 		response = testRestTemplate.exchange(
-				"/input/saveInput?name={name}&readerId=1&readerName=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
+				"/input/saveInput?name={name}&readerId=1&type=mysqlreader&readerParameterUsername=root&readerParameterPassword=123456&readerParameterColumn=id,name&readerParameterConnectionJdbcUrl={readerParameterConnectionJdbcUrl}&readerParameterConnectionTable=job",
 				HttpMethod.GET, new HttpEntity<>(new HttpHeaders() {
 					{
 						setBearerAuth(access_token);

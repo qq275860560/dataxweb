@@ -5,7 +5,7 @@
 
 <div class="row">
 	<div class="col-md-11 col-md-offset-1">
-	    <div class="col-md-offset-4">
+	    <div  style="text-align:center;">
 	    <h1>新建输出流表单</h1>
 	    </div>
 		<ol class="breadcrumb">
@@ -45,9 +45,9 @@
 			</div> -->
 
 			<div class="form-group">
-				<label for="writerName" class="col-md-2 control-label">输出流类型</label>
+				<label for="type" class="col-md-2 control-label">输出流类型</label>
 				<div class="col-md-9">
-				<select class="form-control" v-model="query.writerName" name="writerName" id="writerName" >
+				<select class="form-control" v-model="query.type" name="type" id="type" >
 					<option>mysqlwriter</option>
 					<option>httpwriter</option>
 					<option>txtfilewriter</option>

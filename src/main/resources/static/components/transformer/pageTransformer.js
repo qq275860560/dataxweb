@@ -10,7 +10,7 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				return {
 					query:{
 						name:"",						
-						transformerType:"",
+						type:"",
 						startCreateTime:"",
 						endCreateTime:"",
 						pageNum:1,
@@ -34,7 +34,7 @@ define(['vue','components/navigation/navigation','components/transformer/deleteT
 				},
 				pageTransformer:function(pageNum,pageSize){	
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/transformer/pageTransformer?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&transformerType="+this.query.transformerType+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
+					let url=this.$store.state.BASE_PATH+"/api/transformer/pageTransformer?pageNum="+pageNum+"&pageSize="+pageSize+"&name="+this.query.name+"&type="+this.query.type+"&startCreateTime="+this.query.startCreateTime+"&endCreateTime="+this.query.endCreateTime;
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){				

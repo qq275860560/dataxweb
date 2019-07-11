@@ -2391,7 +2391,7 @@ define({ "api": [
       "examples": [
         {
           "title": "请求参数示例:",
-          "content": "name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter",
+          "content": "name=jobName1&inputId=&inputName=inputName1&readerId=&type=mysqlreader&outputId=1&outputName=outputName1&writerId=&type=mysqlwriter",
           "type": "String"
         }
       ]
@@ -2399,7 +2399,7 @@ define({ "api": [
     "examples": [
       {
         "title": "命令行调用示例: \t",
-        "content": "curl -i -X POST 'http://localhost:8045/api/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&readerName=mysqlreader&outputId=1&outputName=outputName1&writerId=&writerName=mysqlwriter' -H \"Authorization:Bearer admin_token\"",
+        "content": "curl -i -X POST 'http://localhost:8045/api/job/saveJob?name=jobName1&inputId=&inputName=inputName1&readerId=&type=mysqlreader&outputId=1&outputName=outputName1&writerId=&type=mysqlwriter' -H \"Authorization:Bearer admin_token\"",
         "type": "curl"
       }
     ],
