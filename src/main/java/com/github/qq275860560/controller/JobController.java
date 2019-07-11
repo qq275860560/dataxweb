@@ -39,6 +39,7 @@ import com.github.qq275860560.dao.MysqlReaderDao;
 import com.github.qq275860560.dao.MysqlWriterDao;
 import com.github.qq275860560.dao.OutputDao;
 import com.github.qq275860560.dao.TransformerDao;
+import com.github.qq275860560.dao.TxtFileWriterDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -74,6 +75,8 @@ public class JobController {
 	private OutputDao outputDao;
 	@Autowired
 	private MysqlWriterDao mysqlWriterDao;
+	@Autowired
+	private TxtFileWriterDao txtFileWriterDao;
 	@Autowired
 	private TransformerDao transformerDao;
 	
@@ -386,6 +389,8 @@ public class JobController {
 			};
 		}
 
+		//生成datax格式的reader
+		Map<String, Object> readerMap = null;
 		String inputId = (String) requestMap.get("inputId");
 		if (StringUtils.isEmpty(inputId)) {
 			return new HashMap<String, Object>() {
@@ -395,22 +400,17 @@ public class JobController {
 					put("data", null);
 				}
 			};
-		}
+		}		
 		Map<String, Object> inputMap = inputDao.getInput(inputId);
+		requestMap.put("inputName", inputMap.get("name"));
+		requestMap.put("inputType", inputMap.get("type"));
 		String inputType = (String)inputMap.get("type");
 		if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
-			Map<String, Object> readerMap = mysqlReaderDao.getMysqlReader(inputId);
-			requestMap.put("inputId", readerMap.get("id"));		
-			requestMap.put("inputName", readerMap.get("name"));
-			requestMap.put("inputType", readerMap.get("type"));
-			requestMap.put("parameterUsername", readerMap.get("parameterUsername"));
-			requestMap.put("parameterPassword", readerMap.get("parameterPassword"));
-			requestMap.put("parameterColumn", readerMap.get("parameterColumn"));
-			requestMap.put("parameterWhere", readerMap.get("parameterWhere"));
-			requestMap.put("parameterConnectionJdbcUrl", readerMap.get("parameterConnectionJdbcUrl"));
-			requestMap.put("parameterConnectionTable", readerMap.get("parameterConnectionTable"));
+			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
 		}
 
+		//生成datax格式的writer
+		Map<String, Object> writerMap = null;
 		String outputId = (String) requestMap.get("outputId");
 		if (StringUtils.isEmpty(inputId)) {
 			return new HashMap<String, Object>() {
@@ -420,36 +420,27 @@ public class JobController {
 					put("data", null);
 				}
 			};
-		}
+		}		
 		Map<String, Object> outputMap = outputDao.getOutput(outputId);
+		requestMap.put("outputName", outputMap.get("name"));
+		requestMap.put("outputType", outputMap.get("type"));
 		String outputType = (String)outputMap.get("type");
 		if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
-			Map<String, Object> writerMap = mysqlWriterDao.getMysqlWriter(outputId);		
-			requestMap.put("outputId", writerMap.get("id"));
-			requestMap.put("outputName", writerMap.get("name"));
-			requestMap.put("outputType", writerMap.get("type"));
-			requestMap.put("parameterUsername", writerMap.get("parameterUsername"));
-			requestMap.put("parameterPassword", writerMap.get("parameterPassword"));
-			requestMap.put("parameterWriteMode", writerMap.get("parameterWriteMode"));
-			requestMap.put("parameterColumn", writerMap.get("parameterColumn"));
-			requestMap.put("parameterPreSql", writerMap.get("parameterPreSql"));
-			requestMap.put("parameterConnectionJdbcUrl", writerMap.get("parameterConnectionJdbcUrl"));
-			requestMap.put("parameterConnectionTable", writerMap.get("parameterConnectionTable"));
+			writerMap = generateWriterMap(mysqlWriterDao.getMysqlWriter(outputId));	
+		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
+			writerMap = generateWriterMap(txtFileWriterDao.getTxtFileWriter(outputId));		
 		}
 		
+		//生成datax格式的transformer
+		List<HashMap<String, Object>> transformerList = new ArrayList<>();
 		String transformerId = (String) requestMap.get("transformerId");
+		Map<String, Object> transformerMap = transformerDao.getTransformer(transformerId);
+		requestMap.put("transformerName", transformerMap.get("name"));
+		requestMap.put("transformerType", transformerMap.get("type"));
 		if(transformerId!=null) {
-			Map<String, Object> transformerMap = transformerDao.getTransformer(transformerId);
-			String transformerType = (String)transformerMap.get("type");
-			if(transformerType.equalsIgnoreCase(Constant.TRANSFORMER_TYPE_GROOVY)) {			
-				requestMap.put("transformerId", transformerMap.get("id"));
-				requestMap.put("transformerName", transformerMap.get("name"));
-				requestMap.put("transformerType", transformerMap.get("type"));
-				requestMap.put("parameterCode", transformerMap.get("parameterCode"));
-				requestMap.put("parameterExtraPackage", transformerMap.get("parameterExtraPackage"));
-			}
-		}
-		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(requestMap));
+			transformerList = generateTransformerList(transformerMap);		 
+		}		
+		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(readerMap,writerMap,transformerList));
 		requestMap.put("dataxJson", dataxJson);
 
 		
@@ -488,11 +479,13 @@ public class JobController {
 		};
 	}
 
-	public static Map<String, Object> generateDataxMap(Map<String, Object> requestMap)
+	public static Map<String, Object> generateDataxMap(Map<String, Object> readerMap ,
+			Map<String, Object> writerMap ,
+			List<HashMap<String, Object>> transformerList 
+			
+			)
 			throws IOException, JsonParseException, JsonMappingException {
-		Map<String, Object> readerMap = generateReaderMap(requestMap);
-		Map<String, Object> writerMap = generateWriterMap(requestMap);
-		List<HashMap<String, Object>> transformerList = generateTransformerList(requestMap);
+		
 		Map<String, Object> dataxMap = new HashMap<String, Object>() {
 			{
 				put("job", new HashMap<String, Object>() {
@@ -536,11 +529,11 @@ public class JobController {
 	}
 
 	public static Map<String, Object> generateReaderMap(Map<String, Object> requestMap) {
-		String name = (String) requestMap.get("inputType");
-		if (Constant.INPUT_TYPE_MYSQLREADER.equals(name)) {
+		String type = (String) requestMap.get("type");
+		if (Constant.INPUT_TYPE_MYSQLREADER.equals(type)) {
 			return new HashMap<String, Object>() {
 				{
-					put("name", name);
+					put("name", type);
 					put("parameter", new HashMap<String, Object>() {
 						{
 							String username = (String) requestMap.get("parameterUsername");
@@ -581,12 +574,12 @@ public class JobController {
 
 	public static Map<String, Object> generateWriterMap(Map<String, Object> requestMap)
 			throws IOException, JsonParseException, JsonMappingException {
-		String name = (String) requestMap.get("outputType");
+		String type = (String) requestMap.get("type");
 
-		if (Constant.OUTPUT_TYPE_MYSQLWRITER.equals(name)) {
+		if (Constant.OUTPUT_TYPE_MYSQLWRITER.equals(type)) {
 			return new HashMap<String, Object>() {
 				{
-					put("name", name);
+					put("name", type);
 					put("parameter", new HashMap<String, Object>() {
 						{
 							String username = (String) requestMap.get("parameterUsername");
@@ -625,6 +618,23 @@ public class JobController {
 
 				}
 			};
+		}else if (Constant.OUTPUT_TYPE_TXTFILEWRITER.equals(type)) {
+			return new HashMap<String, Object>() {
+				{
+					put("name", type);
+					put("parameter", new HashMap<String, Object>() {
+						{
+							String path = (String) requestMap.get("parameterPath");
+							put("path", path);
+							String fileName = (String) requestMap.get("parameterFileName");
+							put("fileName", fileName);
+							String writeMode = (String) requestMap.get("parameterWriteMode");
+							put("writeMode", writeMode);
+						}
+					});
+
+				}
+			};
 		}
 		return null;
 
@@ -634,14 +644,14 @@ public class JobController {
 	
 	public static List<HashMap<String, Object>> generateTransformerList(Map<String, Object> requestMap)
 			throws IOException, JsonParseException, JsonMappingException {
-		String name = (String) requestMap.get("transformerType");
+		String type = (String) requestMap.get("type");
 		
-		if (  Constant.TRANSFORMER_TYPE_GROOVY.equals(name) ) {			
+		if (  Constant.TRANSFORMER_TYPE_GROOVY.equals(type) ) {			
 			return new ArrayList<HashMap<String, Object>>() {
 				{
 					add(new HashMap<String, Object>() {
 						{
-							put("name", name);
+							put("name", type);
 							put("parameter", new HashMap<String, Object>() {
 								{
 									String parameterCode = (String) requestMap.get("parameterCode");
@@ -724,54 +734,61 @@ public class JobController {
 		String id = (String) requestMap.get("id");
 		Map<String, Object> map = jobDao.getJob(id);
 				
+		//生成datax格式的reader
+		Map<String, Object> readerMap = null;
 		String inputId = (String) requestMap.get("inputId");
+		if (StringUtils.isEmpty(inputId)) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "输入流不能为空");
+					put("data", null);
+				}
+			};
+		}		
 		Map<String, Object> inputMap = inputDao.getInput(inputId);
+		requestMap.put("inputName", inputMap.get("name"));
+		requestMap.put("inputType", inputMap.get("type"));
 		String inputType = (String)inputMap.get("type");
 		if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
-			Map<String, Object> readerMap = mysqlReaderDao.getMysqlReader(inputId);
-			requestMap.put("inputId", readerMap.get("id"));		
-			requestMap.put("inputName", readerMap.get("name"));
-			requestMap.put("inputType", readerMap.get("type"));
-			requestMap.put("parameterUsername", readerMap.get("parameterUsername"));
-			requestMap.put("parameterPassword", readerMap.get("parameterPassword"));
-			requestMap.put("parameterColumn", readerMap.get("parameterColumn"));
-			requestMap.put("parameterWhere", readerMap.get("parameterWhere"));
-			requestMap.put("parameterConnectionJdbcUrl", readerMap.get("parameterConnectionJdbcUrl"));
-			requestMap.put("parameterConnectionTable", readerMap.get("parameterConnectionTable"));
+			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
 		}
 
+		//生成datax格式的writer
+		Map<String, Object> writerMap = null;
 		String outputId = (String) requestMap.get("outputId");
+		if (StringUtils.isEmpty(inputId)) {
+			return new HashMap<String, Object>() {
+				{
+					put("code", HttpStatus.BAD_REQUEST.value());
+					put("msg", "输出流不能为空");
+					put("data", null);
+				}
+			};
+		}		
 		Map<String, Object> outputMap = outputDao.getOutput(outputId);
+		requestMap.put("outputName", outputMap.get("name"));
+		requestMap.put("outputType", outputMap.get("type"));
 		String outputType = (String)outputMap.get("type");
 		if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
-			Map<String, Object> writerMap = mysqlWriterDao.getMysqlWriter(outputId);	
-			requestMap.put("outputId", writerMap.get("id"));
-			requestMap.put("outputName", writerMap.get("name"));
-			requestMap.put("outputType", writerMap.get("type"));
-			requestMap.put("parameterUsername", writerMap.get("parameterUsername"));
-			requestMap.put("parameterPassword", writerMap.get("parameterPassword"));
-			requestMap.put("parameterWriteMode", writerMap.get("parameterWriteMode"));
-			requestMap.put("parameterColumn", writerMap.get("parameterColumn"));
-			requestMap.put("parameterPreSql", writerMap.get("parameterPreSql"));
-			requestMap.put("parameterConnectionJdbcUrl", writerMap.get("parameterConnectionJdbcUrl"));
-			requestMap.put("parameterConnectionTable", writerMap.get("parameterConnectionTable"));
+			writerMap = generateWriterMap(mysqlWriterDao.getMysqlWriter(outputId));	
+		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
+			writerMap = generateWriterMap(txtFileWriterDao.getTxtFileWriter(outputId));		
 		}
 		
+		//生成datax格式的transformer
+		List<HashMap<String, Object>> transformerList = new ArrayList<>();
 		String transformerId = (String) requestMap.get("transformerId");
-		if(transformerId!=null) {
 		Map<String, Object> transformerMap = transformerDao.getTransformer(transformerId);
-		String transformerType = (String)transformerMap.get("type");
-		if(transformerType.equalsIgnoreCase(Constant.TRANSFORMER_TYPE_GROOVY)) {			
-			requestMap.put("transformerId", transformerMap.get("id"));
-			requestMap.put("transformerName", transformerMap.get("name"));
-			requestMap.put("transformerType", transformerMap.get("type"));
-			requestMap.put("parameterCode", transformerMap.get("parameterCode"));
-			requestMap.put("parameterExtraPackage", transformerMap.get("parameterExtraPackage"));
-		}}
+		requestMap.put("transformerName", transformerMap.get("name"));
+		requestMap.put("transformerType", transformerMap.get("type"));
+		if(transformerId!=null) {
+			transformerList = generateTransformerList(transformerMap);		 
+		}		
+		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(readerMap,writerMap,transformerList));
+		requestMap.put("dataxJson", dataxJson);
 		
 		map.putAll(requestMap);
-		String dataxJson = objectMapper.writeValueAsString(generateDataxMap(map));
-		map.put("dataxJson", dataxJson); 
 		jobDao.updateJob(map);
 		
 		//TODO 这部分使用异步处理
@@ -1111,7 +1128,7 @@ public class JobController {
 							}
 							end = true;
 						}
-						jobDao.updateJob(jobMap);
+						jobDao.updateJob(jobMap);//TODO 增加字段，最后一次任务的执行结果lastBuildResult
 						
 						if (building == false && result != null) {
 							break;// 已经构建完毕

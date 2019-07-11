@@ -59,7 +59,7 @@ public class DataxJobTest {
 				"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false");
 		requestMap.put("parameterConnectionTable", "test");
 
-		Map<String, Object> dataxMap = JobController.generateDataxMap(requestMap);
+		Map<String, Object> dataxMap = null;//JobController.generateDataxMap(requestMap);
 
 		String readerResult = objectMapper.writeValueAsString(dataxMap);
 		log.info(readerResult);

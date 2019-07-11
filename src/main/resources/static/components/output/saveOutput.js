@@ -7,8 +7,7 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 			data:function() {
 				return {
 					query:{ 
-						name:"output"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
-						writerId:"mysqlwriter",
+						name:"output"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),					
 						type:"mysqlwriter",
 						parameterUsername:"root",
 						parameterPassword:"123456",
@@ -16,7 +15,12 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 						parameterColumn:"id,name",
 						parameterPreSql:"delete from test",
 						parameterConnectionJdbcUrl:"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
-						parameterConnectionTable:"test",	
+						parameterConnectionTable:"test",
+						
+						parameterPath:"D:/tmp",
+						parameterFileName:"test",
+			
+						
 					},
 					code:null,
 					msg:null,
@@ -64,7 +68,13 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 				saveOutput:function(){					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&writerId="+this.query.writerId+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterWriteMode="+this.query.parameterWriteMode+"&parameterColumn="+this.query.parameterColumn+"&parameterPreSql="+this.query.parameterPreSql+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;
+					let url=null;
+					if(this.query.type=="mysqlwriter"){
+						url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterWriteMode="+this.query.parameterWriteMode+"&parameterColumn="+this.query.parameterColumn+"&parameterPreSql="+this.query.parameterPreSql+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;
+					}else if(this.query.type=="txtfilewriter"){
+						url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+this.query.parameterPath+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
+					}
+					
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

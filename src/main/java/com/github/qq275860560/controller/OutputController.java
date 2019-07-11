@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.MysqlWriterDao;
 import com.github.qq275860560.dao.OutputDao;
+import com.github.qq275860560.dao.TxtFileWriterDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,6 +43,8 @@ public class OutputController {
 	private OutputDao outputDao;
 	@Autowired
 	private MysqlWriterDao mysqlWriterDao;
+	@Autowired
+	private TxtFileWriterDao txtFileWriterDao;
  
  
 	/**
@@ -261,6 +264,8 @@ public class OutputController {
 		Map<String,Object> data = new HashMap<>();
 		if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
 			data.putAll(mysqlWriterDao.getMysqlWriter(id));
+		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
+			data.putAll(txtFileWriterDao.getTxtFileWriter(id));
 		}
 		
 		return new HashMap<String, Object>() {
@@ -358,7 +363,9 @@ public class OutputController {
 		
 		if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
 			mysqlWriterDao.saveMysqlWriter(requestMap);
-		}					
+		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
+			txtFileWriterDao.saveTxtFileWriter(requestMap);
+		}	
 		outputDao.saveOutput(requestMap);
 		
 		return new HashMap<String, Object>() {
@@ -436,6 +443,10 @@ public class OutputController {
 			writerMap=mysqlWriterDao.getMysqlWriter(id);
 			writerMap.putAll(requestMap);		
 			mysqlWriterDao.updateMysqlWriter(writerMap);
+		}else if(type.equals(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
+			writerMap=txtFileWriterDao.getTxtFileWriter(id);
+			writerMap.putAll(requestMap);		
+			txtFileWriterDao.updateTxtFileWriter(writerMap);
 		}
 		 
 		return new HashMap<String, Object>() {
@@ -506,6 +517,8 @@ public class OutputController {
 		String type = (String)outputMap.get("type");
 		if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_MYSQLWRITER)) {
 			mysqlWriterDao.deleteMysqlWriter(id);
+		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
+			txtFileWriterDao.deleteTxtFileWriter(id);
 		}
 		 
 		outputDao.deleteOutput(id);

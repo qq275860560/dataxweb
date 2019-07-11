@@ -18,7 +18,7 @@ define(['vue','text!./deleteOutput.html'], function (Vue,componentTemplate) {
 	         		this.$router.push({path:path,query:query});	     
 				},	 
 		       	back: function () {	
-		       		this.hide();		       	
+		       		this.hide();		//TODO 重构其他方式隐藏       	
 		       		$('#deleteOutputModal').modal('hide');
 		       	},
 		       	deleteOutput: function () {			       		
