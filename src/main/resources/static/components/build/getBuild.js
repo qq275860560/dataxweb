@@ -19,7 +19,8 @@ define(['vue','components/navigation/navigation','text!./getBuild.html'], functi
 				},		
 				
 				back:function(){					 
-					this.$router.go(-1)	
+					//this.$router.go(-1);
+					this.updateRouterView("/components/build/pageBuild");		
 				},				
 			},	
 			created: function () {	

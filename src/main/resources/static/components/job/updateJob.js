@@ -51,7 +51,8 @@ define(['vue','components/navigation/navigation','components/input/selectInput',
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
 				back:function(){					 
-					this.$router.go(-1)	
+					//this.$router.go(-1);
+					this.updateRouterView("/components/job/pageJob");		
 				},
 				selectInput:function(query){
 					 this.$refs.selectInput.show(query);

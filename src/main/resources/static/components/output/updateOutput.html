@@ -50,74 +50,7 @@
 				<p class="help-block with-errors"> </p>	
 			</div>
 
-			<div class="form-group ">
-				<label for="parameterUsername"  class="col-md-2 control-label">用户名</label>
-				<div class="col-md-9">
-					<input class="form-control" v-model="query.parameterUsername" name="parameterUsername" id="parameterUsername"
-						type="text">
-				</div>
-				<p class="help-block with-errors"> </p>
-			</div>
-
-			<div class="form-group ">
-				<label for="parameterPassword"  class="col-md-2 control-label">密码</label>
-				<div class="col-md-9">
-					<input class="form-control" v-model="query.parameterPassword" name="parameterPassword" id="parameterPassword"
-						type="text">
-				</div>
-				<p class="help-block with-errors"> </p>
-			</div>
-
-			<div class="form-group">
-				<label for="parameterWriteMode" class="col-md-2 control-label">写模式</label>
-				<div class="col-md-9">
-				<select class="form-control" v-model="query.parameterWriteMode" name="parameterWriteMode" id="parameterWriteMode">
-					<option>insert</option>
-					<option>replace</option>
-					<option>update</option>			
-				</select>	
-				</div>
-				<p class="help-block with-errors"> </p>	
-			</div>	
-
-			<div class="form-group ">
-				<label for="parameterColumn"  class="col-md-2 control-label">列</label>
-				<div class="col-md-9">
-					<input class="form-control" v-model="query.parameterColumn" name="parameterColumn" id="parameterColumn"
-						type="text">
-				</div>
-				<p class="help-block with-errors"> </p>
-			</div>
-
-			<div class="form-group ">
-				<label  for="parameterPreSql" class="col-md-2 control-label">前置操作的sql语句</label>
-				<div class="col-md-9">
-					<input class="form-control" v-model="query.parameterPreSql" name="parameterPreSql" id="parameterPreSql"
-						type="text">
-				</div>
-				<p class="help-block with-errors"> </p>
-			</div>
-			
-			<div class="form-group ">
-				<label class="col-md-2 control-label">url</label>
-				<div for="parameterConnectionJdbcUrl" class="col-md-9">
-					<input class="form-control"
-						v-model="query.parameterConnectionJdbcUrl" name="parameterConnectionJdbcUrl" id="parameterConnectionJdbcUrl"  type="text">
-				</div>
-				<p class="help-block with-errors"> </p>
-			</div>
-
-			<div class="form-group ">
-				<label for="parameterConnectionTable" class="col-md-2 control-label">表</label>
-				<div class="col-md-9">
-					<input class="form-control" 
-						v-model="query.parameterConnectionTable" name="parameterConnectionTable" id="parameterConnectionTable" type="text">
-				</div>
-				<p class="help-block with-errors"> </p>
-			</div>
-
-
-
+			<router-view  ref="updateOutputChild"/>
 
 			<div class="form-group ">
 				<button type="button"

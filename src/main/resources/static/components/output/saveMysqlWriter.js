@@ -1,26 +1,38 @@
 /**
  * @author jiangyuanlin@163.com
  */
-define(['vue','components/navigation/navigation','text!./updateInput.html'], function (Vue,navigation,componentTemplate) {	
+define(['vue','text!./saveMysqlWriter.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
-					query:{},
+					query:{ 
+						name:"",					
+						type:"",
+						parameterUsername:"root",
+						parameterPassword:"123456",
+						parameterWriteMode:"insert",
+						parameterColumn:"id,name",
+						parameterPreSql:"delete from test",
+						parameterConnectionJdbcUrl:"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
+						parameterConnectionTable:"test",						
+					},
 					code:null,
 					msg:null,
 					data:null,
 				}
 			},
-			methods:{
+			methods:{				
 				updateRouterView:function(path,query) {
 	         		console.log("path",path);
 	         		this.$router.push({path:path,query:query});	     
 				},
-				updateInput:function(){					
+				saveOutput:function(query){
+					this.query.name=query.name;
+					this.query.type=query.type;
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/input/updateInput?id="+this.query.id+"&name="+this.query.name+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterColumn="+this.query.parameterColumn+"&parameterWhere="+this.query.parameterWhere+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;
+					let url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterWriteMode="+this.query.parameterWriteMode+"&parameterColumn="+this.query.parameterColumn+"&parameterPreSql="+this.query.parameterPreSql+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;				
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -31,9 +43,9 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 						tmpVue.code=result.code;
 						 if(result.code==200){
 							   console.log("receive=",result );			
-							   tmpVue.updateRouterView( "/components/input/pageInput");
+							   tmpVue.updateRouterView( "/components/output/pageOutput");
 						   }else if(result.code==401){						
-							   tmpVue.updateRouterView( "/components/user/login");
+							   tmpVue.updateRouterView("/components/user/login");
 						   }else if(result.code==403){
 							   tmpVue.msg="授权失败";					
 						   }else{							   
@@ -49,42 +61,13 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 					$("#form").data("bootstrapValidator").resetForm();
 					$("#form").data("bootstrapValidator").validate();
 					return $("#form").data("bootstrapValidator").isValid();		
-				},
-				back:function(){					 
-					//this.$router.go(-1);
-					this.updateRouterView("/components/input/pageInput");	
-				},				
+				},						
 			},	
-			created: function () {	
-				let tmpVue=this;
-				this.query=this.$route.query;					
-				
-				let url=this.$store.state.BASE_PATH+"/api/input/getInput?id="+this.query.id;
-				let token_type=localStorage.getItem('token_type'); 
-				let access_token=localStorage.getItem('access_token');
-				if(token_type==null || access_token==null){
-					this.updateRouterView("/components/user/login");					
-				}
-				fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
-				}).then(function(response) {return response.json();}).then(function(result){
-					tmpVue.code=result.code;
-					 if(result.code==200){
-						   console.log("receive=",result );			
-						   tmpVue.query=result.data;
-					   }else if(result.code==401){						
-						   tmpVue.updateRouterView("/components/user/login");
-					   }else if(result.code==403){
-						   tmpVue.msg="授权失败";					
-					   }else{							   
-						   tmpVue.msg=result.msg;
-					   }					
-				}).catch(function(e) {  				
-					tmpVue.msg=e;  					 
-				});			
-		         		    
+			created: function () {			
+				this.query.name=this.$route.query.name;
+				this.query.type=this.$route.query.type;
 		    },
-			mounted:function(){
-				//TODO 远程校验名称唯一性debugger
+			mounted:function(){				
 				$('#form').bootstrapValidator({
 		            message: 'This value is not valid',
 		            feedbackIcons: {
@@ -92,32 +75,7 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 		                invalid: 'glyphicon glyphicon-remove',
 		                validating: 'glyphicon glyphicon-refresh'
 		            },
-		            fields: {
-		                name: {
-		                    message: '插件名称验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '插件名称不能为空'
-		                        }
-		                    }
-		                },	
-		                type: {
-		                    message: '输入流类型验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '输入流类型不能为空'
-		                        },
-		                        stringLength: {
-		                            min: 6,
-		                            max: 18,
-		                            message: '输入流类型长度必须在6到18位之间'
-		                        },
-		                        regexp: {
-		                            regexp: /^[a-zA-Z0-9_]+$/,
-		                            message: '输入流类型只能包含大写、小写、数字和下划线'
-		                        }
-		                    }
-		                },
+		            fields: {		               
 		                parameterUsername: {
 		                    message: '用户名验证失败',
 		                    validators: {
@@ -134,6 +92,14 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 		                        }
 		                    }
 		                },
+		                parameterWriteMode: {
+		                    message: '写模式验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '写模式不能为空'
+		                        }
+		                    }
+		                },		           	                
 		                parameterColumn: {
 		                    message: '列验证失败',
 		                    validators: {
@@ -142,6 +108,7 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 		                        }
 		                    }
 		                },
+		                
 		                parameterConnectionJdbcUrl: {
 		                    message: 'url验证失败',
 		                    validators: {
@@ -164,9 +131,9 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 			}			
 	 	};
 	 	
-	 	return Vue.component('updateInput',  componentProperties);
+	 	return Vue.component('saveMysqlWriter',  componentProperties);
 	 	
-		 
+	
 }); 
 
 

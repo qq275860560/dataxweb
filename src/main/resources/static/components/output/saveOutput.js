@@ -8,26 +8,25 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 				return {
 					query:{ 
 						name:"output"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),					
-						type:"mysqlwriter",
-						parameterUsername:"root",
-						parameterPassword:"123456",
-						parameterWriteMode:"insert",
-						parameterColumn:"id,name",
-						parameterPreSql:"delete from test",
-						parameterConnectionJdbcUrl:"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
-						parameterConnectionTable:"test",
-						
-						parameterPath:"D:/tmp",
-						parameterFileName:"test",
-			
-						
+						type:"",						
 					},
 					code:null,
 					msg:null,
 					data:null,
 				}
 			},
-			methods:{
+			watch:{
+				"query.type":function(newValue){
+					if(this.check()==false) return false;
+					let query={name:this.query.name,type:this.query.type};
+					if(newValue=="mysqlwriter"){
+						this.updateRouterView( "/components/output/saveMysqlWriter",query);	
+					}else if(newValue=="txtfilewriter"){
+						this.updateRouterView( "/components/output/saveTxtFileWriter",query);	
+					}
+				}
+			},
+			methods:{				 
 				formateDate:function(date,fmt){
 					var o = {         
 						    "M+" : date.getMonth()+1, //月份         
@@ -67,36 +66,8 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 				},
 				saveOutput:function(){					
 					if(this.check()==false) return false;
-					let tmpVue=this;
-					let url=null;
-					if(this.query.type=="mysqlwriter"){
-						url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterWriteMode="+this.query.parameterWriteMode+"&parameterColumn="+this.query.parameterColumn+"&parameterPreSql="+this.query.parameterPreSql+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;
-					}else if(this.query.type=="txtfilewriter"){
-						url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+this.query.parameterPath+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
-					}
-					
-					let token_type=localStorage.getItem('token_type'); 
-					let access_token=localStorage.getItem('access_token');
-					if(token_type==null || access_token==null){
-						this.updateRouterView("/components/user/login");					
-					}
-					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
-					}).then(function(response) {return response.json();}).then(function(result){
-						tmpVue.code=result.code;
-						 if(result.code==200){
-							   console.log("receive=",result );			
-							   tmpVue.updateRouterView( "/components/output/pageOutput");
-						   }else if(result.code==401){						
-							   tmpVue.updateRouterView("/components/user/login");
-						   }else if(result.code==403){
-							   tmpVue.msg="授权失败";					
-						   }else{							   
-							   tmpVue.msg=result.msg;
-						   }					
-					}).catch(function(e) {  				
-						tmpVue.msg=e;  					 
-					});			
-					
+					let query={name:this.query.name,type:this.query.type};
+					this.$refs.saveOutputChild.saveOutput(query);					
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");
@@ -105,11 +76,12 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 					return $("#form").data("bootstrapValidator").isValid();		
 				},
 				back:function(){					 
-					this.$router.go(-1)	
+					//this.$router.go(-1);
+					this.updateRouterView("/components/output/pageOutput");				
 				},			
 			},	
-			created: function () {			
-		         		    
+			created: function () {		
+				this.query.type="mysqlwriter";//默认输出的mysql				     
 		    },
 			mounted:function(){				
 				//TODO 远程校验名称唯一性debugger
@@ -145,56 +117,7 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 		                            message: '输出流类型只能包含大写、小写、数字和下划线'
 		                        }
 		                    }
-		                },
-		                parameterUsername: {
-		                    message: '用户名验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '用户名不能为空'
-		                        }
-		                    }
-		                },
-		                parameterPassword: {
-		                    message: '密码验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '密码不能为空'
-		                        }
-		                    }
-		                },
-		                parameterWriteMode: {
-		                    message: '写模式验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '写模式不能为空'
-		                        }
-		                    }
-		                },		           	                
-		                parameterColumn: {
-		                    message: '列验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '列不能为空'
-		                        }
-		                    }
-		                },
-		                
-		                parameterConnectionJdbcUrl: {
-		                    message: 'url验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: 'url不能为空'
-		                        }
-		                    }
-		                },
-		                parameterConnectionTable: {
-		                    message: '表验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '表不能为空'
-		                        }
-		                    }
-		                },
+		                },		              
 		                
 		            }
 		        });			

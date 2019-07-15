@@ -67,11 +67,31 @@ define("router",function (require) {
 		},
 		{ 
 			path: '/components/output/saveOutput', 
-			component: resolve => require(['./components/output/saveOutput'],resolve) 
-		},
+			component: resolve => require(['./components/output/saveOutput'],resolve),
+			children: [
+		          {
+		            path: '/components/output/saveMysqlWriter',		   
+		            component: resolve => require(['./components/output/saveMysqlWriter'],resolve),
+		          },
+		          {
+			            path: '/components/output/saveTxtFileWriter',		   
+			            component: resolve => require(['./components/output/saveTxtFileWriter'],resolve),
+			      },
+		    ],
+		},		
 		{ 
 			path: '/components/output/updateOutput', 
-			component: resolve => require(['./components/output/updateOutput'],resolve) 
+			component: resolve => require(['./components/output/updateOutput'],resolve), 
+			children: [
+		          {
+		            path: '/components/output/updateMysqlWriter',		   
+		            component: resolve => require(['./components/output/updateMysqlWriter'],resolve),
+		          },
+		          {
+			            path: '/components/output/updateTxtFileWriter',		   
+			            component: resolve => require(['./components/output/updateTxtFileWriter'],resolve),
+			      },
+		    ],
 		},
 		
 		{ 
@@ -148,7 +168,7 @@ define(['vue','router','store'],function (Vue,router,store) {
    new Vue({
 			el: '#app', 
 			store:store,
-			template: '<router-view></router-view>',	
+			template: '<router-view/>',	
 			methods: {
 				 updateRouterView:function(path) {
 	         		console.log("path",path);            
