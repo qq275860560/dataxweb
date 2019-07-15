@@ -54,13 +54,32 @@ define("router",function (require) {
 		},
 		{ 
 			path: '/components/input/saveInput', 
-			component: resolve => require(['./components/input/saveInput'],resolve) 
+			component: resolve => require(['./components/input/saveInput'],resolve),
+			children: [
+		          {
+		            path: '/components/input/saveMysqlReader',		   
+		            component: resolve => require(['./components/input/saveMysqlReader'],resolve),
+		          },
+		          {
+			            path: '/components/input/saveTxtFileReader',		   
+			            component: resolve => require(['./components/input/saveTxtFileReader'],resolve),
+			      },
+		    ],
 		},
 		{ 
 			path: '/components/input/updateInput', 
-			component: resolve => require(['./components/input/updateInput'],resolve) 
-		},
-		
+			component: resolve => require(['./components/input/updateInput'],resolve),
+			children: [
+		          {
+		            path: '/components/input/updateMysqlReader',		   
+		            component: resolve => require(['./components/input/updateMysqlReader'],resolve),
+		          },
+		          {
+			            path: '/components/input/updateTxtFileReader',		   
+			            component: resolve => require(['./components/input/updateTxtFileReader'],resolve),
+			      },
+		    ],
+		},		
 		{ 
 			path: '/components/output/pageOutput', 
 			component: resolve => require(['./components/output/pageOutput'],resolve) 

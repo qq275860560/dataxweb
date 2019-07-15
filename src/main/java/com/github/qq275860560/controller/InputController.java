@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.MysqlReaderDao;
+import com.github.qq275860560.dao.TxtFileReaderDao;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +41,8 @@ public class InputController {
 	private InputDao inputDao;
 	@Autowired
 	private MysqlReaderDao mysqlReaderDao;
- 
+	@Autowired
+	private TxtFileReaderDao txtFileReaderDao;
 	
 	/**
 	 * @api {POST} /api/input/checkInput  校验唯一性
@@ -256,6 +258,8 @@ public class InputController {
 		Map<String,Object> data = new HashMap<>();
 		if(type.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
 			data.putAll(mysqlReaderDao.getMysqlReader(id));
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
+			data.putAll(txtFileReaderDao.getTxtFileReader(id));
 		}	
 		
 		return new HashMap<String, Object>() {
@@ -353,6 +357,8 @@ public class InputController {
 	 
 		if(type.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
 			mysqlReaderDao.saveMysqlReader(requestMap);
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
+			txtFileReaderDao.saveTxtFileReader(requestMap);
 		}	 	 
 		inputDao.saveInput(requestMap);
 		
@@ -428,6 +434,10 @@ public class InputController {
 			readerMap=mysqlReaderDao.getMysqlReader(id);
 			readerMap.putAll(requestMap);		
 			mysqlReaderDao.updateMysqlReader(readerMap);
+		}else if(type.equals(Constant.INPUT_TYPE_TXTFILEREADER)) {
+			readerMap=txtFileReaderDao.getTxtFileReader(id);
+			readerMap.putAll(requestMap);		
+			txtFileReaderDao.updateTxtFileReader(readerMap);
 		}
 		
 		return new HashMap<String, Object>() {
@@ -493,11 +503,15 @@ public class InputController {
 		log.info("当前登录用户=" + currentLoginUsername);
 
 		String id = (String) requestMap.get("id");
-		Map<String, Object> inputMap = inputDao.getInput(id);		
+		Map<String, Object> inputMap = inputDao.getInput(id);	
+		
 	 	String type = (String)inputMap.get("type");
 		if(type.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
 			mysqlReaderDao.deleteMysqlReader(id);
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
+			txtFileReaderDao.deleteTxtFileReader(id);
 		}
+		
 		inputDao.deleteInput(id);
 		return new HashMap<String, Object>() {
 			{

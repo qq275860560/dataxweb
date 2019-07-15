@@ -81,7 +81,7 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 				},			
 			},	
 			created: function () {		
-				this.query.type="mysqlwriter";//默认输出的mysql				     
+				this.query.type="mysqlwriter";//默认输出流为mysql				     
 		    },
 			mounted:function(){				
 				//TODO 远程校验名称唯一性debugger

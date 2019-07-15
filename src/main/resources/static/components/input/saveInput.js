@@ -8,17 +8,22 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 				return {
 					query:{ 
 						name:"input"+ this.formateDate(new Date(),"yyyyMMddHHmmss"),
-						type:"mysqlreader",
-						parameterUsername:"root",
-						parameterPassword:"123456",
-						parameterColumn:"id,name",
-						parameterWhere:"name is not null",
-						parameterConnectionJdbcUrl:"jdbc:mysql://127.0.0.1:3306/dataxweb?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
-						parameterConnectionTable:"job",	
+						type:"",					
 					},
 					code:null,
 					msg:null,
 					data:null,
+				}
+			},
+			watch:{
+				"query.type":function(newValue){
+					if(this.check()==false) return false;
+					let query={name:this.query.name,type:this.query.type};
+					if(newValue=="mysqlreader"){
+						this.updateRouterView( "/components/input/saveMysqlReader",query);	
+					}else if(newValue=="txtfilereader"){
+						this.updateRouterView( "/components/input/saveTxtFileReader",query);	
+					}
 				}
 			},
 			methods:{
@@ -61,30 +66,8 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 				},
 				saveInput:function(){					
 					if(this.check()==false) return false;
-					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/input/saveInput?name="+this.query.name+"&type="+this.query.type+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterColumn="+this.query.parameterColumn+"&parameterWhere="+this.query.parameterWhere+"&parameterConnectionJdbcUrl="+this.query.parameterConnectionJdbcUrl+"&parameterConnectionTable="+this.query.parameterConnectionTable;
-					let token_type=localStorage.getItem('token_type'); 
-					let access_token=localStorage.getItem('access_token');
-					if(token_type==null || access_token==null){
-						this.updateRouterView("/components/user/login");					
-					}
-					fetch(url,{method:"GET", mode:"cors",headers:{"Authorization": token_type+" "+access_token }					
-					}).then(function(response) {return response.json();}).then(function(result){
-						tmpVue.code=result.code;
-						 if(result.code==200){
-							   console.log("receive=",result );			
-							   tmpVue.updateRouterView( "/components/input/pageInput");
-						   }else if(result.code==401){						
-							   tmpVue.updateRouterView("/components/user/login");
-						   }else if(result.code==403){
-							   tmpVue.msg="授权失败";					
-						   }else{							   
-							   tmpVue.msg=result.msg;
-						   }					
-					}).catch(function(e) {  				
-						tmpVue.msg=e;  					 
-					});			
-					
+					let query={name:this.query.name,type:this.query.type};
+					this.$refs.saveInputChild.saveInput(query);						
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");
@@ -98,7 +81,7 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 				},				
 			},	
 			created: function () {			
-		         		    
+				this.query.type="mysqlreader";//默认输入流为mysql	 		    
 		    },
 			mounted:function(){
 				//TODO 远程校验名称唯一性debugger
@@ -134,47 +117,7 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 		                            message: '输入流类型只能包含大写、小写、数字和下划线'
 		                        }
 		                    }
-		                },
-		                parameterUsername: {
-		                    message: '用户名验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '用户名不能为空'
-		                        }
-		                    }
-		                },
-		                parameterPassword: {
-		                    message: '密码验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '密码不能为空'
-		                        }
-		                    }
-		                },
-		                parameterColumn: {
-		                    message: '列验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '列不能为空'
-		                        }
-		                    }
-		                },
-		                parameterConnectionJdbcUrl: {
-		                    message: 'url验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: 'url不能为空'
-		                        }
-		                    }
-		                },
-		                parameterConnectionTable: {
-		                    message: '表验证失败',
-		                    validators: {
-		                        notEmpty: {
-		                            message: '表不能为空'
-		                        }
-		                    }
-		                },
+		                },       
 		                
 		            }
 		        });			

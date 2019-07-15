@@ -19,15 +19,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @RestController
 @Slf4j
-public class TxtFileWriterDao {
+public class TxtFileReaderDao {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	public int countTxtFileWriter(String name) throws Exception {
+	public int countTxtFileReader(String name) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" SELECT count(1) count from txtFileWriter where 1=1 ");
+		sb.append(" SELECT count(1) count from txtFileReader where 1=1 ");
 		sb.append(" and name = ? ");
 		condition.add(name);
 		log.info("sql=" + sb.toString());
@@ -35,10 +35,10 @@ public class TxtFileWriterDao {
 		return jdbcTemplate.queryForObject(sb.toString(), condition.toArray(), Integer.class);
 	}
 
-	public boolean checkTxtFileWriter(String id, String name) throws Exception {
+	public boolean checkTxtFileReader(String id, String name) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" SELECT count(1) count  from txtFileWriter where 1=1 ");
+		sb.append(" SELECT count(1) count  from txtFileReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id != ? ");
 			condition.add(id);
@@ -54,10 +54,10 @@ public class TxtFileWriterDao {
 			return true;
 	}
 
-	public int deleteTxtFileWriter(String id) throws Exception {
+	public int deleteTxtFileReader(String id) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
-		sb.append(" delete  from txtFileWriter where 1=1 ");
+		sb.append(" delete  from txtFileReader where 1=1 ");
 		sb.append(" and id = ? ");
 		condition.add(id);
 		log.info("sql=" + sb.toString());
@@ -65,11 +65,11 @@ public class TxtFileWriterDao {
 		return jdbcTemplate.update(sb.toString(), condition.toArray());
 	}
 
-	public Map<String, Object> getTxtFileWriter(Object id) throws Exception {
+	public Map<String, Object> getTxtFileReader(Object id) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,parameterPath,parameterFileName,parameterWriteMode,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileWriter where 1=1 ");
+				" SELECT id,name,type,parameterPath,parameterFieldDelimiter,parameterColumn,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id = ? ");
 			condition.add(id);
@@ -87,11 +87,11 @@ public class TxtFileWriterDao {
 		return map;
 	}
 
-	public Map<String, Object> getTxtFileWriterByKeyValue(String key, Object value) throws Exception {
+	public Map<String, Object> getTxtFileReaderByKeyValue(String key, Object value) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,parameterPath,parameterFileName,parameterWriteMode,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileWriter where 1=1 ");
+				" SELECT id,name,type,parameterPath,parameterFieldDelimiter,parameterColumn,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileReader where 1=1 ");
 		sb.append(" and " + key + " = ? ");
 		condition.add(value);
 		sb.append(" limit ? ,?  ");
@@ -107,7 +107,7 @@ public class TxtFileWriterDao {
 		return map;
 	}
 
-	public int saveTxtFileWriter(Map<String, Object> map) throws Exception {
+	public int saveTxtFileReader(Map<String, Object> map) throws Exception {
 		StringBuilder sb1 = new StringBuilder();
 		StringBuilder sb2 = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
@@ -127,13 +127,13 @@ public class TxtFileWriterDao {
 		sb2.append("?,");
 		condition.add(map.get("parameterPath"));
 
-		sb1.append("parameterFileName").append(",");
+		sb1.append("parameterFieldDelimiter").append(",");
 		sb2.append("?,");
-		condition.add(map.get("parameterFileName"));
+		condition.add(map.get("parameterFieldDelimiter"));
 
-		sb1.append("parameterWriteMode").append(",");
+		sb1.append("parameterColumn").append(",");
 		sb2.append("?,");
-		condition.add(map.get("parameterWriteMode"));
+		condition.add(map.get("parameterColumn"));
 
 		sb1.append("createUserId").append(",");
 		sb2.append("?,");
@@ -151,14 +151,14 @@ public class TxtFileWriterDao {
 			sb1.deleteCharAt(sb1.length() - 1);
 		if (sb2.length() > 0)
 			sb2.deleteCharAt(sb2.length() - 1);
-		String sql = "insert into txtFileWriter(" + sb1.toString() + ") values(" + sb2.toString() + ")";
+		String sql = "insert into txtFileReader(" + sb1.toString() + ") values(" + sb2.toString() + ")";
 		log.info("sql=" + sql);
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 
 	}
 
-	public int updateTxtFileWriter(Map<String, Object> map) throws Exception {
+	public int updateTxtFileReader(Map<String, Object> map) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(" name = ? ,");
@@ -170,11 +170,11 @@ public class TxtFileWriterDao {
 		sb.append(" parameterPath = ? ,");
 		condition.add(map.get("parameterPath"));
 
-		sb.append(" parameterFileName = ? ,");
-		condition.add(map.get("parameterFileName"));
+		sb.append(" parameterFieldDelimiter = ? ,");
+		condition.add(map.get("parameterFieldDelimiter"));
 
-		sb.append(" parameterWriteMode = ? ,");
-		condition.add(map.get("parameterWriteMode"));
+		sb.append(" parameterColumn = ? ,");
+		condition.add(map.get("parameterColumn"));
 
 		sb.append(" createUserId = ? ,");
 		condition.add(map.get("createUserId"));
@@ -187,20 +187,20 @@ public class TxtFileWriterDao {
 
 		if (sb.length() > 0)
 			sb.deleteCharAt(sb.length() - 1);
-		String sql = "update txtFileWriter set " + sb.toString() + " where    id=?";
+		String sql = "update txtFileReader set " + sb.toString() + " where    id=?";
 		condition.add(map.get("id"));
 		log.info("sql=" + sql);
 		log.info("condition=" + Arrays.deepToString(condition.toArray()));// 如果存在blog等字节数组类型的，请注释此行打印
 		return jdbcTemplate.update(sql, condition.toArray());
 	}
 
-	public List<Map<String, Object>> listTxtFileWriter(String id, String name, String type, String parameterPath,
-			String parameterFileName, String parameterWriteMode, String createUserId, String createUserName,
+	public List<Map<String, Object>> listTxtFileReader(String id, String name, String type, String parameterPath,
+			String parameterFieldDelimiter, String parameterColumn, String createUserId, String createUserName,
 			String startCreateTime, String endCreateTime) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,parameterPath,parameterFileName,parameterWriteMode,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileWriter where 1=1 ");
+				" SELECT id,name,type,parameterPath,parameterFieldDelimiter,parameterColumn,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -217,13 +217,13 @@ public class TxtFileWriterDao {
 			sb.append(" and parameterPath like ? ");
 			condition.add("%" + parameterPath + "%");
 		}
-		if (!StringUtils.isEmpty(parameterFileName)) {
-			sb.append(" and parameterFileName like ? ");
-			condition.add("%" + parameterFileName + "%");
+		if (!StringUtils.isEmpty(parameterFieldDelimiter)) {
+			sb.append(" and parameterFieldDelimiter like ? ");
+			condition.add("%" + parameterFieldDelimiter + "%");
 		}
-		if (!StringUtils.isEmpty(parameterWriteMode)) {
-			sb.append(" and parameterWriteMode like ? ");
-			condition.add("%" + parameterWriteMode + "%");
+		if (!StringUtils.isEmpty(parameterColumn)) {
+			sb.append(" and parameterColumn like ? ");
+			condition.add("%" + parameterColumn + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");
@@ -247,8 +247,8 @@ public class TxtFileWriterDao {
 
 	}
 
-	public Map<String, Object> pageTxtFileWriter(String id, String name, String type, String parameterPath,
-			String parameterFileName, String parameterWriteMode, String createUserId, String createUserName,
+	public Map<String, Object> pageTxtFileReader(String id, String name, String type, String parameterPath,
+			String parameterFieldDelimiter, String parameterColumn, String createUserId, String createUserName,
 			String startCreateTime, String endCreateTime, Integer pageNum, Integer pageSize) throws Exception {
 		if (pageNum == null)
 			pageNum = 1;// 取名pageNum为了兼容mybatis-pageHelper中的page对象的pageNum,注意spring的PageRequest使用page表示页号,综合比较，感觉pageNum更加直观,不需要看上下文能猜出字段是页号
@@ -259,7 +259,7 @@ public class TxtFileWriterDao {
 		StringBuilder sb = new StringBuilder();
 		List<Object> condition = new ArrayList<Object>();
 		sb.append(
-				" SELECT id,name,type,parameterPath,parameterFileName,parameterWriteMode,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileWriter where 1=1 ");
+				" SELECT id,name,type,parameterPath,parameterFieldDelimiter,parameterColumn,createUserId,createUserName,date_format(createTime,	'%Y-%m-%d %H:%i:%s') createTime from txtFileReader where 1=1 ");
 		if (!StringUtils.isEmpty(id)) {
 			sb.append(" and id like ? ");
 			condition.add("%" + id + "%");
@@ -276,13 +276,13 @@ public class TxtFileWriterDao {
 			sb.append(" and parameterPath like ? ");
 			condition.add("%" + parameterPath + "%");
 		}
-		if (!StringUtils.isEmpty(parameterFileName)) {
-			sb.append(" and parameterFileName like ? ");
-			condition.add("%" + parameterFileName + "%");
+		if (!StringUtils.isEmpty(parameterFieldDelimiter)) {
+			sb.append(" and parameterFieldDelimiter like ? ");
+			condition.add("%" + parameterFieldDelimiter + "%");
 		}
-		if (!StringUtils.isEmpty(parameterWriteMode)) {
-			sb.append(" and parameterWriteMode like ? ");
-			condition.add("%" + parameterWriteMode + "%");
+		if (!StringUtils.isEmpty(parameterColumn)) {
+			sb.append(" and parameterColumn like ? ");
+			condition.add("%" + parameterColumn + "%");
 		}
 		if (!StringUtils.isEmpty(createUserId)) {
 			sb.append(" and createUserId like ? ");

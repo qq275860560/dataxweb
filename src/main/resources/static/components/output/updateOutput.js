@@ -32,9 +32,9 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 					if(this.check()==false) return false;
 					let query={name:this.query.name,type:this.query.type};
 					if(this.query.type=="mysqlwriter"){
-						this.$refs.updateOutputChild.updateMysqlWriter(query);	
+						this.$refs.updateOutputChild.updateOutput(query);	
 					}else if(this.query.type=="txtfilewriter"){
-						this.$refs.updateOutputChild.updateTxtFileWriter(query);
+						this.$refs.updateOutputChild.updateOutput(query);
 					}
 				},
 				check:function(){					
