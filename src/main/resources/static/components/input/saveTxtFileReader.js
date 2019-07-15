@@ -11,7 +11,7 @@ define(['vue','text!./saveTxtFileReader.html'], function (Vue,componentTemplate)
 						type:"",
 						parameterPath:"D:/tmp",
 						parameterFieldDelimiter:",",
-						parameterColumn:'[{"index":0,type:"string"},{"index":1,type:"string"}]',
+						parameterColumn:'[{"index":0,"type":"string"},{"index":1,"type":"string"}]',
 					},
 					code:null,
 					msg:null,

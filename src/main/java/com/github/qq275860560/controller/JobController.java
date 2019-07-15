@@ -39,6 +39,7 @@ import com.github.qq275860560.dao.MysqlReaderDao;
 import com.github.qq275860560.dao.MysqlWriterDao;
 import com.github.qq275860560.dao.OutputDao;
 import com.github.qq275860560.dao.TransformerDao;
+import com.github.qq275860560.dao.TxtFileReaderDao;
 import com.github.qq275860560.dao.TxtFileWriterDao;
 
 import lombok.extern.slf4j.Slf4j;
@@ -71,6 +72,8 @@ public class JobController {
 	private InputDao inputDao;
 	@Autowired
 	private MysqlReaderDao mysqlReaderDao;
+	@Autowired
+	private TxtFileReaderDao txtFileReaderDao;
 	@Autowired
 	private OutputDao outputDao;
 	@Autowired
@@ -407,6 +410,8 @@ public class JobController {
 		String inputType = (String)inputMap.get("type");
 		if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
 			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
+		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {			
+			readerMap = generateReaderMap(txtFileReaderDao.getTxtFileReader(inputId));		
 		}
 
 		//生成datax格式的writer
@@ -568,6 +573,28 @@ public class JobController {
 
 				}
 			};
+		}else if (Constant.INPUT_TYPE_TXTFILEREADER.equals(type)) {			
+			try {			
+				return new HashMap<String, Object>() {
+					{
+						put("name", type);
+						put("parameter", new HashMap<String, Object>() {
+							{
+								String path = (String) requestMap.get("parameterPath");
+								put("path", path);
+								put("encoding", "UTF-8");
+								String fieldDelimiter = (String) requestMap.get("parameterFieldDelimiter");
+								put("fieldDelimiter", fieldDelimiter);
+								String column = (String) requestMap.get("parameterColumn");
+								put("column", new ObjectMapper().readValue(column,List.class));
+							}
+						});
+
+					}
+				};
+			} catch (IOException e) {
+				log.error("",e);
+			}
 		}
 		return null;
 	}
@@ -752,6 +779,8 @@ public class JobController {
 		String inputType = (String)inputMap.get("type");
 		if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_MYSQLREADER)) {
 			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
+		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
+			readerMap = generateReaderMap(txtFileReaderDao.getTxtFileReader(inputId));		
 		}
 
 		//生成datax格式的writer
