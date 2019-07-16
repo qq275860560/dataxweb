@@ -20,6 +20,8 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 						this.updateRouterView( "/components/input/updateMysqlReader",query);	
 					}else if(newValue=="txtfilereader"){
 						this.updateRouterView( "/components/input/updateTxtFileReader",query);	
+					}else if(newValue=="ftpreader"){
+						this.updateRouterView( "/components/input/updateFtpReader",query);	
 					}
 				}
 			},
@@ -31,11 +33,7 @@ define(['vue','components/navigation/navigation','text!./updateInput.html'], fun
 				updateInput:function(){					
 					if(this.check()==false) return false;
 					let query={name:this.query.name,type:this.query.type};
-					if(this.query.type=="mysqlreader"){
-						this.$refs.updateInputChild.updateInput(query);	
-					}else if(this.query.type=="txtfilereader"){
-						this.$refs.updateInputChild.updateInput(query);
-					}					
+				    this.$refs.updateInputChild.updateInput(query);						 					
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");

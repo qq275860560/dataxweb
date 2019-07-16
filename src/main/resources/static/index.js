@@ -61,8 +61,12 @@ define("router",function (require) {
 		            component: resolve => require(['./components/input/saveMysqlReader'],resolve),
 		          },
 		          {
-			            path: '/components/input/saveTxtFileReader',		   
-			            component: resolve => require(['./components/input/saveTxtFileReader'],resolve),
+		        	  path: '/components/input/saveTxtFileReader',		   
+			          component: resolve => require(['./components/input/saveTxtFileReader'],resolve),
+			      },
+			      {
+		        	  path: '/components/input/saveFtpReader',		   
+			          component: resolve => require(['./components/input/saveFtpReader'],resolve),
 			      },
 		    ],
 		},
@@ -77,6 +81,10 @@ define("router",function (require) {
 		          {
 			            path: '/components/input/updateTxtFileReader',		   
 			            component: resolve => require(['./components/input/updateTxtFileReader'],resolve),
+			      },
+			      {
+			            path: '/components/input/updateFtpReader',		   
+			            component: resolve => require(['./components/input/updateFtpReader'],resolve),
 			      },
 		    ],
 		},		
@@ -96,6 +104,10 @@ define("router",function (require) {
 			            path: '/components/output/saveTxtFileWriter',		   
 			            component: resolve => require(['./components/output/saveTxtFileWriter'],resolve),
 			      },
+			      {
+			            path: '/components/output/saveFtpWriter',		   
+			            component: resolve => require(['./components/output/saveFtpWriter'],resolve),
+			      },
 		    ],
 		},		
 		{ 
@@ -109,6 +121,10 @@ define("router",function (require) {
 		          {
 			            path: '/components/output/updateTxtFileWriter',		   
 			            component: resolve => require(['./components/output/updateTxtFileWriter'],resolve),
+			      },
+			      {
+			            path: '/components/output/updateFtpWriter',		   
+			            component: resolve => require(['./components/output/updateFtpWriter'],resolve),
 			      },
 		    ],
 		},

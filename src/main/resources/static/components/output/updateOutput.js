@@ -20,6 +20,8 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 						this.updateRouterView( "/components/output/updateMysqlWriter",query);	
 					}else if(newValue=="txtfilewriter"){
 						this.updateRouterView( "/components/output/updateTxtFileWriter",query);	
+					}else if(newValue=="ftpwriter"){
+						this.updateRouterView( "/components/output/updateFtpWriter",query);	
 					}
 				}
 			},
@@ -30,12 +32,8 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 				},
 				updateOutput:function(){					
 					if(this.check()==false) return false;
-					let query={name:this.query.name,type:this.query.type};
-					if(this.query.type=="mysqlwriter"){
-						this.$refs.updateOutputChild.updateOutput(query);	
-					}else if(this.query.type=="txtfilewriter"){
-						this.$refs.updateOutputChild.updateOutput(query);
-					}
+					let query={name:this.query.name,type:this.query.type};				 
+					this.$refs.updateOutputChild.updateOutput(query);					 
 				},
 				check:function(){					
 					//$("#form").bootstrapValidator("validate");

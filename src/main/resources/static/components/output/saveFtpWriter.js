@@ -1,16 +1,21 @@
 /**
  * @author jiangyuanlin@163.com
  */
-define(['vue','text!./saveTxtFileWriter.html'], function (Vue,componentTemplate) {	
+define(['vue','text!./saveFtpWriter.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
 				return {
 					query:{ 
 						name:"",					
-						type:"",									
-						parameterPath:"D:/tmp3",
-						parameterFileName:"test.txt",											
+						type:"",
+						parameterProtocol:"ftp",
+						parameterHost:"127.0.0.1",
+						parameterPort:"21",
+						parameterUsername:"admin",
+						parameterPassword:"123456",	
+						parameterPath:"/tmp3",
+						parameterFileName:"test",									
 					},
 					code:null,
 					msg:null,
@@ -27,7 +32,7 @@ define(['vue','text!./saveTxtFileWriter.html'], function (Vue,componentTemplate)
 					this.query.type=query.type;
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+this.query.parameterPath+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
+					let url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterProtocol="+this.query.parameterProtocol+"&parameterHost="+this.query.parameterHost+"&parameterPort="+this.query.parameterPort+"&parameterUsername="+this.query.parameterUsername+"&parameterPassword="+this.query.parameterPassword+"&parameterPath="+this.query.parameterPath+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -70,7 +75,47 @@ define(['vue','text!./saveTxtFileWriter.html'], function (Vue,componentTemplate)
 		                invalid: 'glyphicon glyphicon-remove',
 		                validating: 'glyphicon glyphicon-refresh'
 		            },
-		            fields: {		               
+		            fields: {	
+		            	parameterProtocol: {
+		                    message: '协议验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '协议不能为空'
+		                        }
+		                    }
+		                },
+		                parameterHost: {
+		                    message: '所IP验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: 'IP不能为空'
+		                        }
+		                    }
+		                },
+		                parameterPort: {
+		                    message: '端口验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '端口不能为空'
+		                        }
+		                    }
+		                },
+		                parameterUsername: {
+		                    message: '用户名验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '用户名不能为空'
+		                        }
+		                    }
+		                },
+		                parameterPassword: {
+		                    message: '密码验证失败',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '密码不能为空'
+		                        }
+		                    }
+		                },
 		            	parameterPath: {
 		                    message: '所在文件夹路径验证失败',
 		                    validators: {
@@ -92,7 +137,7 @@ define(['vue','text!./saveTxtFileWriter.html'], function (Vue,componentTemplate)
 			}			
 	 	};
 	 	
-	 	return Vue.component('saveTxtFileWriter',  componentProperties);
+	 	return Vue.component('saveFtpWriter',  componentProperties);
 	 	
 	
 }); 

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qq275860560.constant.Constant;
+import com.github.qq275860560.dao.FtpReaderDao;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.MysqlReaderDao;
 import com.github.qq275860560.dao.TxtFileReaderDao;
@@ -43,6 +44,8 @@ public class InputController {
 	private MysqlReaderDao mysqlReaderDao;
 	@Autowired
 	private TxtFileReaderDao txtFileReaderDao;
+	@Autowired
+	private FtpReaderDao ftpReaderDao;
 	
 	/**
 	 * @api {POST} /api/input/checkInput  校验唯一性
@@ -260,6 +263,8 @@ public class InputController {
 			data.putAll(mysqlReaderDao.getMysqlReader(id));
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			data.putAll(txtFileReaderDao.getTxtFileReader(id));
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
+			data.putAll(ftpReaderDao.getFtpReader(id));
 		}	
 		
 		return new HashMap<String, Object>() {
@@ -359,7 +364,9 @@ public class InputController {
 			mysqlReaderDao.saveMysqlReader(requestMap);
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			txtFileReaderDao.saveTxtFileReader(requestMap);
-		}	 	 
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
+			ftpReaderDao.saveFtpReader(requestMap);
+		} 	 
 		inputDao.saveInput(requestMap);
 		
 		return new HashMap<String, Object>() {
@@ -438,6 +445,10 @@ public class InputController {
 			readerMap=txtFileReaderDao.getTxtFileReader(id);
 			readerMap.putAll(requestMap);		
 			txtFileReaderDao.updateTxtFileReader(readerMap);
+		}else if(type.equals(Constant.INPUT_TYPE_FTPREADER)) {
+			readerMap=ftpReaderDao.getFtpReader(id);
+			readerMap.putAll(requestMap);		
+			ftpReaderDao.updateFtpReader(readerMap);
 		}
 		
 		return new HashMap<String, Object>() {
@@ -510,6 +521,8 @@ public class InputController {
 			mysqlReaderDao.deleteMysqlReader(id);
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			txtFileReaderDao.deleteTxtFileReader(id);
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
+			ftpReaderDao.deleteFtpReader(id);
 		}
 		
 		inputDao.deleteInput(id);

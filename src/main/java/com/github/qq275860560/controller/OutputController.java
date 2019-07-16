@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qq275860560.constant.Constant;
+import com.github.qq275860560.dao.FtpWriterDao;
 import com.github.qq275860560.dao.MysqlWriterDao;
 import com.github.qq275860560.dao.OutputDao;
 import com.github.qq275860560.dao.TxtFileWriterDao;
@@ -45,6 +46,8 @@ public class OutputController {
 	private MysqlWriterDao mysqlWriterDao;
 	@Autowired
 	private TxtFileWriterDao txtFileWriterDao;
+	@Autowired
+	private FtpWriterDao ftpWriterDao;
  
  
 	/**
@@ -266,6 +269,8 @@ public class OutputController {
 			data.putAll(mysqlWriterDao.getMysqlWriter(id));
 		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			data.putAll(txtFileWriterDao.getTxtFileWriter(id));
+		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
+			data.putAll(ftpWriterDao.getFtpWriter(id));
 		}
 		
 		return new HashMap<String, Object>() {
@@ -365,6 +370,8 @@ public class OutputController {
 			mysqlWriterDao.saveMysqlWriter(requestMap);
 		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			txtFileWriterDao.saveTxtFileWriter(requestMap);
+		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
+			ftpWriterDao.saveFtpWriter(requestMap);
 		}	
 		outputDao.saveOutput(requestMap);
 		
@@ -447,6 +454,10 @@ public class OutputController {
 			writerMap=txtFileWriterDao.getTxtFileWriter(id);
 			writerMap.putAll(requestMap);		
 			txtFileWriterDao.updateTxtFileWriter(writerMap);
+		}else if(type.equals(Constant.OUTPUT_TYPE_FTPWRITER)) {
+			writerMap=ftpWriterDao.getFtpWriter(id);
+			writerMap.putAll(requestMap);		
+			ftpWriterDao.updateFtpWriter(writerMap);
 		}
 		 
 		return new HashMap<String, Object>() {
@@ -519,6 +530,8 @@ public class OutputController {
 			mysqlWriterDao.deleteMysqlWriter(id);
 		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			txtFileWriterDao.deleteTxtFileWriter(id);
+		}else if(type.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
+			ftpWriterDao.deleteFtpWriter(id);
 		}
 		 
 		outputDao.deleteOutput(id);

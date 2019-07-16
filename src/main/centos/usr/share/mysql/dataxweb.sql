@@ -108,6 +108,25 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8;  
 
+DROP TABLE  IF EXISTS ftpReader;
+CREATE TABLE ftpReader (
+id VARCHAR ( 32 ) NOT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
+type VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型',
+parameterProtocol  VARCHAR ( 64 ) DEFAULT NULL comment '协议',
+parameterHost  VARCHAR ( 64 ) DEFAULT NULL comment 'IP',
+parameterPort  VARCHAR ( 64 ) DEFAULT NULL comment '端口',
+parameterUsername  VARCHAR ( 64 ) DEFAULT NULL comment '用户名',
+parameterPassword  VARCHAR ( 64 ) DEFAULT NULL comment '密码',
+parameterPath VARCHAR ( 1024 ) DEFAULT NULL comment '所在文件夹路径',
+parameterFieldDelimiter VARCHAR ( 32 ) DEFAULT NULL comment '字段分隔符',
+parameterColumn VARCHAR ( 1024 ) DEFAULT NULL comment '列信息数组',
+createUserId VARCHAR ( 32 ) DEFAULT NULL,
+createUserName VARCHAR ( 64 ) DEFAULT NULL,
+createTime datetime DEFAULT NULL,
+PRIMARY KEY ( id ) 
+)  DEFAULT CHARSET=utf8; 
+
 DROP TABLE  IF EXISTS output;
 CREATE TABLE output (
 id VARCHAR ( 32 ) NOT NULL,
@@ -150,6 +169,26 @@ createUserName VARCHAR ( 64 ) DEFAULT NULL,
 createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 )  DEFAULT CHARSET=utf8; 
+
+DROP TABLE  IF EXISTS ftpWriter;
+CREATE TABLE ftpWriter (
+id VARCHAR ( 32 ) NOT NULL,
+name VARCHAR ( 64 ) DEFAULT NULL comment '输出流名称',
+type VARCHAR ( 64 ) DEFAULT NULL comment '输出流类型',
+parameterProtocol  VARCHAR ( 64 ) DEFAULT NULL comment '协议',
+parameterHost  VARCHAR ( 64 ) DEFAULT NULL comment 'IP',
+parameterPort  VARCHAR ( 64 ) DEFAULT NULL comment '端口',
+parameterUsername  VARCHAR ( 64 ) DEFAULT NULL comment '用户名',
+parameterPassword  VARCHAR ( 64 ) DEFAULT NULL comment '密码',
+parameterPath VARCHAR ( 1024 ) DEFAULT NULL  comment '所在文件夹路径',
+parameterFileName VARCHAR ( 32 ) DEFAULT NULL,
+parameterWriteMode VARCHAR ( 32 ) DEFAULT NULL,
+createUserId VARCHAR ( 32 ) DEFAULT NULL,
+createUserName VARCHAR ( 64 ) DEFAULT NULL,
+createTime datetime DEFAULT NULL,
+PRIMARY KEY ( id ) 
+)  DEFAULT CHARSET=utf8; 
+
 
 
 DROP TABLE  IF EXISTS transformer;

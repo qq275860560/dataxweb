@@ -23,6 +23,8 @@ define(['vue','components/navigation/navigation','text!./saveOutput.html'], func
 						this.updateRouterView( "/components/output/saveMysqlWriter",query);	
 					}else if(newValue=="txtfilewriter"){
 						this.updateRouterView( "/components/output/saveTxtFileWriter",query);	
+					}else if(newValue=="ftpwriter"){
+						this.updateRouterView( "/components/output/saveFtpWriter",query);	
 					}
 				}
 			},

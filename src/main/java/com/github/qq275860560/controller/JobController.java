@@ -33,6 +33,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.qq275860560.common.util.JenkinsUtil;
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.BuildDao;
+import com.github.qq275860560.dao.FtpReaderDao;
+import com.github.qq275860560.dao.FtpWriterDao;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.JobDao;
 import com.github.qq275860560.dao.MysqlReaderDao;
@@ -75,11 +77,15 @@ public class JobController {
 	@Autowired
 	private TxtFileReaderDao txtFileReaderDao;
 	@Autowired
+	private FtpReaderDao ftpReaderDao;
+	@Autowired
 	private OutputDao outputDao;
 	@Autowired
 	private MysqlWriterDao mysqlWriterDao;
 	@Autowired
 	private TxtFileWriterDao txtFileWriterDao;
+	@Autowired
+	private FtpWriterDao ftpWriterDao;
 	@Autowired
 	private TransformerDao transformerDao;
 	
@@ -412,6 +418,8 @@ public class JobController {
 			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
 		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {			
 			readerMap = generateReaderMap(txtFileReaderDao.getTxtFileReader(inputId));		
+		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {			
+			readerMap = generateReaderMap(ftpReaderDao.getFtpReader(inputId));		
 		}
 
 		//生成datax格式的writer
@@ -434,6 +442,8 @@ public class JobController {
 			writerMap = generateWriterMap(mysqlWriterDao.getMysqlWriter(outputId));	
 		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			writerMap = generateWriterMap(txtFileWriterDao.getTxtFileWriter(outputId));		
+		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
+			writerMap = generateWriterMap(ftpWriterDao.getFtpWriter(outputId));		
 		}
 		
 		//生成datax格式的transformer
@@ -533,7 +543,7 @@ public class JobController {
 		return dataxMap;
 	}
 
-	public static Map<String, Object> generateReaderMap(Map<String, Object> requestMap) {
+	public static Map<String, Object> generateReaderMap(Map<String, Object> requestMap) throws Exception{
 		String type = (String) requestMap.get("type");
 		if (Constant.INPUT_TYPE_MYSQLREADER.equals(type)) {
 			return new HashMap<String, Object>() {
@@ -573,8 +583,7 @@ public class JobController {
 
 				}
 			};
-		}else if (Constant.INPUT_TYPE_TXTFILEREADER.equals(type)) {			
-			try {			
+		}else if (Constant.INPUT_TYPE_TXTFILEREADER.equals(type)) {				 			
 				return new HashMap<String, Object>() {
 					{
 						put("name", type);
@@ -591,16 +600,43 @@ public class JobController {
 						});
 
 					}
-				};
-			} catch (IOException e) {
-				log.error("",e);
-			}
-		}
+				};		 
+		}else if (Constant.INPUT_TYPE_FTPREADER.equals(type)) {				 			
+			return new HashMap<String, Object>() {
+				{
+					put("name", type);
+					put("parameter", new HashMap<String, Object>() {
+						{
+							
+							String protocol = (String) requestMap.get("parameterProtocol");
+							put("protocol", protocol);
+							String host = (String) requestMap.get("parameterHost");
+							put("host", host);
+							String port = (String) requestMap.get("parameterPort");
+							put("port", port);
+							String username = (String) requestMap.get("parameterUsername");
+							put("username", username);
+							String password = (String) requestMap.get("parameterPassword");
+							put("password", password);						 
+							
+							String path = (String) requestMap.get("parameterPath");
+							put("path", path);
+							put("encoding", "UTF-8");
+							String fieldDelimiter = (String) requestMap.get("parameterFieldDelimiter");
+							put("fieldDelimiter", fieldDelimiter);
+							String column = (String) requestMap.get("parameterColumn");
+							put("column", new ObjectMapper().readValue(column,List.class));
+						}
+					});
+
+				}
+			};		 
+		}	
 		return null;
 	}
 
 	public static Map<String, Object> generateWriterMap(Map<String, Object> requestMap)
-			throws IOException, JsonParseException, JsonMappingException {
+			throws Exception {
 		String type = (String) requestMap.get("type");
 
 		if (Constant.OUTPUT_TYPE_MYSQLWRITER.equals(type)) {
@@ -651,6 +687,35 @@ public class JobController {
 					put("name", type);
 					put("parameter", new HashMap<String, Object>() {
 						{
+							String path = (String) requestMap.get("parameterPath");
+							put("path", path);
+							String fileName = (String) requestMap.get("parameterFileName");
+							put("fileName", fileName);
+							String writeMode = (String) requestMap.get("parameterWriteMode");
+							put("writeMode", writeMode);
+						}
+					});
+
+				}
+			};
+		}else if (Constant.OUTPUT_TYPE_FTPWRITER.equals(type)) {
+			return new HashMap<String, Object>() {
+				{
+					put("name", type);
+					put("parameter", new HashMap<String, Object>() {
+						{
+							
+							String protocol = (String) requestMap.get("parameterProtocol");
+							put("protocol", protocol);
+							String host = (String) requestMap.get("parameterHost");
+							put("host", host);
+							String port = (String) requestMap.get("parameterPort");
+							put("port", port);
+							String username = (String) requestMap.get("parameterUsername");
+							put("username", username);
+							String password = (String) requestMap.get("parameterPassword");
+							put("password", password);		
+							
 							String path = (String) requestMap.get("parameterPath");
 							put("path", path);
 							String fileName = (String) requestMap.get("parameterFileName");
@@ -781,6 +846,8 @@ public class JobController {
 			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
 		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			readerMap = generateReaderMap(txtFileReaderDao.getTxtFileReader(inputId));		
+		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
+			readerMap = generateReaderMap(ftpReaderDao.getFtpReader(inputId));		
 		}
 
 		//生成datax格式的writer
@@ -803,6 +870,8 @@ public class JobController {
 			writerMap = generateWriterMap(mysqlWriterDao.getMysqlWriter(outputId));	
 		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			writerMap = generateWriterMap(txtFileWriterDao.getTxtFileWriter(outputId));		
+		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
+			writerMap = generateWriterMap(ftpWriterDao.getFtpWriter(outputId));		
 		}
 		
 		//生成datax格式的transformer

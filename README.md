@@ -36,19 +36,3 @@ http://XXX:8045
 * 此项目将会长期维护，增加或改进实用的功能
 * 右上角点击star，给我继续前进的动力,谢谢
 
-# index.html
-```
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>require test</title>  
-	<script src="https://cdn.bootcss.com/require.js/2.3.6/require.js" data-main="index"></script> 
-   </head>
-   <body>
-		<div id="app"></div>   	  
-   </body>
-</html>
-
-```
-

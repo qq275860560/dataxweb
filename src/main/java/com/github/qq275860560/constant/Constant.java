@@ -20,9 +20,11 @@ public class Constant {
     
     public static final String INPUT_TYPE_MYSQLREADER = "mysqlreader";//mysql类型的输入流
     public static final String INPUT_TYPE_TXTFILEREADER = "txtfilereader";//文本类型输出流
+    public static final String INPUT_TYPE_FTPREADER = "ftpreader";//FTP类型输出流
 
     public static final String OUTPUT_TYPE_MYSQLWRITER = "mysqlwriter";//mysql类型的输出流
     public static final String OUTPUT_TYPE_TXTFILEWRITER = "txtfilewriter";//文本类型输出流
+    public static final String OUTPUT_TYPE_FTPWRITER = "ftpwriter";//FTP输出流
 
     public static final String TRANSFORMER_TYPE_GROOVY = "dx_groovy";//交换清洗规则
 
