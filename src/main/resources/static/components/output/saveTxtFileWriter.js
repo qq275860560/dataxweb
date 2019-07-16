@@ -27,7 +27,7 @@ define(['vue','text!./saveTxtFileWriter.html'], function (Vue,componentTemplate)
 					this.query.type=query.type;
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+this.query.parameterPath+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
+					let url = this.$store.state.BASE_PATH+"/api/output/saveOutput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+encodeURIComponent(this.query.parameterPath)+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){

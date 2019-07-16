@@ -1,7 +1,7 @@
 /**
  * @author jiangyuanlin@163.com
  */
-define(['vue','text!./updateTxtFileWriter.html'], function (Vue,componentTemplate) {	
+define(['vue','text!./updateFtpWriter.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
@@ -132,7 +132,7 @@ define(['vue','text!./updateTxtFileWriter.html'], function (Vue,componentTemplat
 			}			
 	 	};
 	 	
-	 	return Vue.component('updateTxtFileWriter',  componentProperties);
+	 	return Vue.component('updateFtpWriter',  componentProperties);
 	 	
 		 
 }); 

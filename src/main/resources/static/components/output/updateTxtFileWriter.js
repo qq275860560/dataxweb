@@ -1,7 +1,7 @@
 /**
  * @author jiangyuanlin@163.com
  */
-define(['vue','text!./updateFtpWriter.html'], function (Vue,componentTemplate) {	
+define(['vue','text!./updateTxtFileWriter.html'], function (Vue,componentTemplate) {	
 	let componentProperties = {
 			template: componentTemplate,
 			data:function() {
@@ -22,7 +22,7 @@ define(['vue','text!./updateFtpWriter.html'], function (Vue,componentTemplate) {
 					this.query.type=query.type;					
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&type="+this.query.type+"&parameterPath="+this.query.parameterPath+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
+					let url=this.$store.state.BASE_PATH+"/api/output/updateOutput?id="+this.query.id+"&name="+this.query.name+"&type="+this.query.type+"&parameterPath="+encodeURIComponent(this.query.parameterPath)+"&parameterFileName="+this.query.parameterFileName+"&parameterWriteMode=truncate";
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
@@ -92,7 +92,7 @@ define(['vue','text!./updateFtpWriter.html'], function (Vue,componentTemplate) {
 			}			
 	 	};
 	 	
-	 	return Vue.component('updateFtpWriter',  componentProperties);
+	 	return Vue.component('updateTxtFileWriter',  componentProperties);
 	 	
 		 
 }); 

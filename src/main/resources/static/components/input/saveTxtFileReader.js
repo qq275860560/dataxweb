@@ -9,7 +9,7 @@ define(['vue','text!./saveTxtFileReader.html'], function (Vue,componentTemplate)
 					query:{ 
 						name:"",
 						type:"",
-						parameterPath:"D:/tmp",
+						parameterPath:"D:/tmp/tmp2",
 						parameterFieldDelimiter:",",
 						parameterColumn:'[{"index":0,"type":"string"},{"index":1,"type":"string"}]',
 					},
@@ -28,7 +28,7 @@ define(['vue','text!./saveTxtFileReader.html'], function (Vue,componentTemplate)
 					this.query.type=query.type;
 					if(this.check()==false) return false;
 					let tmpVue=this;
-					let url=this.$store.state.BASE_PATH+"/api/input/saveInput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+this.query.parameterPath+"&parameterFieldDelimiter="+this.query.parameterFieldDelimiter+"&parameterColumn="+encodeURIComponent(this.query.parameterColumn);
+					let url=this.$store.state.BASE_PATH+"/api/input/saveInput?name="+this.query.name+"&type="+this.query.type+"&parameterPath="+encodeURIComponent(this.query.parameterPath)+"&parameterFieldDelimiter="+this.query.parameterFieldDelimiter+"&parameterColumn="+encodeURIComponent(this.query.parameterColumn);
 					let token_type=localStorage.getItem('token_type'); 
 					let access_token=localStorage.getItem('access_token');
 					if(token_type==null || access_token==null){
