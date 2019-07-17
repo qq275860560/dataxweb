@@ -23,6 +23,7 @@ docker run -d -p 8045:8045 -v /tmp:/tmp --name dataxweb qq275860560/dataxweb  /b
     cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
     mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null     &&\
     /etc/rc.d/init.d/jenkins start &&\
+    cd /usr/local/apache-ftpserver-1.0.6 && (bin/ftpd.sh  res/conf/ftpd-typical.xml  &) &&\
     cd /tmp/dataxweb && mvn spring-boot:run && tail -f /var/log/lastlog'
     
 ```
