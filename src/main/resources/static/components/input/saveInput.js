@@ -23,6 +23,8 @@ define(['vue','components/navigation/navigation','text!./saveInput.html'], funct
 						this.updateRouterView( "/components/input/saveMysqlReader",query);	
 					}else if(newValue=="txtfilereader"){
 						this.updateRouterView( "/components/input/saveTxtFileReader",query);	
+					}else if(newValue=="httpreader"){
+						this.updateRouterView( "/components/input/saveHttpReader",query);	
 					}else if(newValue=="ftpreader"){
 						this.updateRouterView( "/components/input/saveFtpReader",query);	
 					}

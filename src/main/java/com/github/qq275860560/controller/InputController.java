@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.FtpReaderDao;
+import com.github.qq275860560.dao.HttpReaderDao;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.MysqlReaderDao;
 import com.github.qq275860560.dao.TxtFileReaderDao;
@@ -44,6 +45,8 @@ public class InputController {
 	private MysqlReaderDao mysqlReaderDao;
 	@Autowired
 	private TxtFileReaderDao txtFileReaderDao;
+	@Autowired
+	private HttpReaderDao httpReaderDao;
 	@Autowired
 	private FtpReaderDao ftpReaderDao;
 	
@@ -263,6 +266,8 @@ public class InputController {
 			data.putAll(mysqlReaderDao.getMysqlReader(id));
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			data.putAll(txtFileReaderDao.getTxtFileReader(id));
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_HTTPREADER)) {
+			data.putAll(httpReaderDao.getHttpReader(id));
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
 			data.putAll(ftpReaderDao.getFtpReader(id));
 		}	
@@ -364,6 +369,8 @@ public class InputController {
 			mysqlReaderDao.saveMysqlReader(requestMap);
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			txtFileReaderDao.saveTxtFileReader(requestMap);
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_HTTPREADER)) {
+			httpReaderDao.saveHttpReader(requestMap);
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
 			ftpReaderDao.saveFtpReader(requestMap);
 		} 	 
@@ -445,6 +452,10 @@ public class InputController {
 			readerMap=txtFileReaderDao.getTxtFileReader(id);
 			readerMap.putAll(requestMap);		
 			txtFileReaderDao.updateTxtFileReader(readerMap);
+		}else if(type.equals(Constant.INPUT_TYPE_HTTPREADER)) {
+			readerMap=httpReaderDao.getHttpReader(id);
+			readerMap.putAll(requestMap);		
+			httpReaderDao.updateHttpReader(readerMap);
 		}else if(type.equals(Constant.INPUT_TYPE_FTPREADER)) {
 			readerMap=ftpReaderDao.getFtpReader(id);
 			readerMap.putAll(requestMap);		
@@ -521,6 +532,8 @@ public class InputController {
 			mysqlReaderDao.deleteMysqlReader(id);
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			txtFileReaderDao.deleteTxtFileReader(id);
+		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_HTTPREADER)) {
+			httpReaderDao.deleteHttpReader(id);
 		}else if(type.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
 			ftpReaderDao.deleteFtpReader(id);
 		}

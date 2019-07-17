@@ -35,6 +35,8 @@ import com.github.qq275860560.constant.Constant;
 import com.github.qq275860560.dao.BuildDao;
 import com.github.qq275860560.dao.FtpReaderDao;
 import com.github.qq275860560.dao.FtpWriterDao;
+import com.github.qq275860560.dao.HttpReaderDao;
+import com.github.qq275860560.dao.HttpWriterDao;
 import com.github.qq275860560.dao.InputDao;
 import com.github.qq275860560.dao.JobDao;
 import com.github.qq275860560.dao.MysqlReaderDao;
@@ -77,6 +79,8 @@ public class JobController {
 	@Autowired
 	private TxtFileReaderDao txtFileReaderDao;
 	@Autowired
+	private HttpReaderDao httpReaderDao;
+	@Autowired
 	private FtpReaderDao ftpReaderDao;
 	@Autowired
 	private OutputDao outputDao;
@@ -84,6 +88,8 @@ public class JobController {
 	private MysqlWriterDao mysqlWriterDao;
 	@Autowired
 	private TxtFileWriterDao txtFileWriterDao;
+	@Autowired
+	private HttpWriterDao httpWriterDao;
 	@Autowired
 	private FtpWriterDao ftpWriterDao;
 	@Autowired
@@ -418,6 +424,8 @@ public class JobController {
 			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
 		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {			
 			readerMap = generateReaderMap(txtFileReaderDao.getTxtFileReader(inputId));		
+		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_HTTPREADER)) {			
+			readerMap = generateReaderMap(httpReaderDao.getHttpReader(inputId));		
 		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {			
 			readerMap = generateReaderMap(ftpReaderDao.getFtpReader(inputId));		
 		}
@@ -442,6 +450,8 @@ public class JobController {
 			writerMap = generateWriterMap(mysqlWriterDao.getMysqlWriter(outputId));	
 		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			writerMap = generateWriterMap(txtFileWriterDao.getTxtFileWriter(outputId));		
+		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_HTTPWRITER)) {
+			writerMap = generateWriterMap(httpWriterDao.getHttpWriter(outputId));		
 		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
 			writerMap = generateWriterMap(ftpWriterDao.getFtpWriter(outputId));		
 		}
@@ -601,7 +611,25 @@ public class JobController {
 
 					}
 				};		 
-		}else if (Constant.INPUT_TYPE_FTPREADER.equals(type)) {				 			
+		}else if (Constant.INPUT_TYPE_HTTPREADER.equals(type)) {				 			
+			return new HashMap<String, Object>() {
+				{
+					put("name", type);
+					put("parameter", new HashMap<String, Object>() {
+						{
+							String path = (String) requestMap.get("parameterPath");
+							put("path", path);
+							put("encoding", "UTF-8");
+							String fieldDelimiter = (String) requestMap.get("parameterFieldDelimiter");
+							put("fieldDelimiter", fieldDelimiter);
+							String column = (String) requestMap.get("parameterColumn");
+							put("column", new ObjectMapper().readValue(column,List.class));
+						}
+					});
+
+				}
+			};		 
+	   }else if (Constant.INPUT_TYPE_FTPREADER.equals(type)) {				 			
 			return new HashMap<String, Object>() {
 				{
 					put("name", type);
@@ -682,6 +710,23 @@ public class JobController {
 				}
 			};
 		}else if (Constant.OUTPUT_TYPE_TXTFILEWRITER.equals(type)) {
+			return new HashMap<String, Object>() {
+				{
+					put("name", type);
+					put("parameter", new HashMap<String, Object>() {
+						{
+							String path = (String) requestMap.get("parameterPath");
+							put("path", path);
+							String fileName = (String) requestMap.get("parameterFileName");
+							put("fileName", fileName);
+							String writeMode = (String) requestMap.get("parameterWriteMode");
+							put("writeMode", writeMode);
+						}
+					});
+
+				}
+			};
+		}else if (Constant.OUTPUT_TYPE_HTTPWRITER.equals(type)) {
 			return new HashMap<String, Object>() {
 				{
 					put("name", type);
@@ -846,6 +891,8 @@ public class JobController {
 			readerMap = generateReaderMap(mysqlReaderDao.getMysqlReader(inputId));		
 		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_TXTFILEREADER)) {
 			readerMap = generateReaderMap(txtFileReaderDao.getTxtFileReader(inputId));		
+		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_HTTPREADER)) {
+			readerMap = generateReaderMap(httpReaderDao.getHttpReader(inputId));		
 		}else if(inputType.equalsIgnoreCase(Constant.INPUT_TYPE_FTPREADER)) {
 			readerMap = generateReaderMap(ftpReaderDao.getFtpReader(inputId));		
 		}
@@ -870,6 +917,8 @@ public class JobController {
 			writerMap = generateWriterMap(mysqlWriterDao.getMysqlWriter(outputId));	
 		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_TXTFILEWRITER)) {
 			writerMap = generateWriterMap(txtFileWriterDao.getTxtFileWriter(outputId));		
+		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_HTTPWRITER)) {
+			writerMap = generateWriterMap(httpWriterDao.getHttpWriter(outputId));		
 		}else if(outputType.equalsIgnoreCase(Constant.OUTPUT_TYPE_FTPWRITER)) {
 			writerMap = generateWriterMap(ftpWriterDao.getFtpWriter(outputId));		
 		}

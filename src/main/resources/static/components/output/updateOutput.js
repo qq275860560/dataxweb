@@ -20,6 +20,8 @@ define(['vue','components/navigation/navigation','text!./updateOutput.html'], fu
 						this.updateRouterView( "/components/output/updateMysqlWriter",query);	
 					}else if(newValue=="txtfilewriter"){
 						this.updateRouterView( "/components/output/updateTxtFileWriter",query);	
+					}else if(newValue=="httpwriter"){
+						this.updateRouterView( "/components/output/updateHttpWriter",query);	
 					}else if(newValue=="ftpwriter"){
 						this.updateRouterView( "/components/output/updateFtpWriter",query);	
 					}
