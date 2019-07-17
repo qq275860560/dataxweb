@@ -1,0 +1,9 @@
+{
+    "name": "httpreader",
+    "parameter": {
+        "path": [],
+        "encoding": "",
+        "column": [],
+        "fieldDelimiter": ""
+    }
+}
