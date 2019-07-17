@@ -9,7 +9,7 @@ define(['vue','text!./saveTxtFileWriter.html'], function (Vue,componentTemplate)
 					query:{ 
 						name:"",					
 						type:"",									
-						parameterPath:"D:/tmp3",
+						parameterPath:"D:/tmp/tmp3",
 						parameterFileName:"test.txt",											
 					},
 					code:null,
