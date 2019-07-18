@@ -2,7 +2,7 @@ FROM qq275860560/dataxweb-base
 
 MAINTAINER jiangyuanlin@163.com
 
-
+RUN echo "20190718"
 RUN mkdir -pv /usr/local/datax/plugin/reader/httpreader &&\
    cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/httpreader-0.0.1-SNAPSHOT.jar" &&\
    cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/plugin.json" &&\
