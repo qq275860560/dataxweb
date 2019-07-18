@@ -5,13 +5,15 @@ MAINTAINER jiangyuanlin@163.com
 RUN mkdir -pv /usr/local/datax/plugin/reader/httpreader &&\
    cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/httpreader-0.0.1-SNAPSHOT.jar" &&\
    cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/plugin.json" &&\
-   cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/plugin_job_template.json"
-
+   cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/plugin_job_template.json" &&\
+   /bin/cp -rf /usr/local/datax/plugin/reader/ftpreader/libs /usr/local/datax/plugin/reader/httpreader/
+   	
 RUN mkdir -pv /usr/local/datax/plugin/writer/httpwriter &&\
    cd /usr/local/datax/plugin/writer/httpwriter && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/writer/httpwriter/httpwriter-0.0.1-SNAPSHOT.jar" &&\
    cd /usr/local/datax/plugin/writer/httpwriter && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/writer/httpwriter/plugin.json" &&\
-   cd /usr/local/datax/plugin/writer/httpwriter && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/writer/httpwriter/plugin_job_template.json"
-
+   cd /usr/local/datax/plugin/writer/httpwriter && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/writer/httpwriter/plugin_job_template.json" &&\
+   /bin/cp -rf  /usr/local/datax/plugin/writer/ftpwriter/libs /usr/local/datax/plugin/writer/httpwriter/
+   
 RUN cd /tmp && curl -fsSL http://www.sai.msu.su/apache/mina/ftpserver/1.0.6/ftpserver-1.0.6.tar.gz  | tar xzf - -C /usr/local &&\
  cd /usr/local/apache-ftpserver-1.0.6/res/conf && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/apache-ftpserver-1.0.6/res/conf/users.properties" &&\
  cd /usr/local/apache-ftpserver-1.0.6/res/conf && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/apache-ftpserver-1.0.6/res/conf/ftpd-typical.xml"
