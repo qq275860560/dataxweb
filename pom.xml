@@ -142,10 +142,10 @@
     <build>
 	    <finalName>${project.artifactId}</finalName>
 		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>								
-			</plugin>
+		    <plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>			
+			</plugin>				
 			 <!-- 源码打包插件 -->   
              <plugin>
 				<groupId>org.apache.maven.plugins</groupId>

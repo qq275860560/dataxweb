@@ -10,11 +10,11 @@ dataxweb镜像
 # 使用方式
 ## 启动方式
 ```
-cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git 
+cd /tmp && rm -rf dataxweb &&  git clone https://github.com/qq275860560/dataxweb.git 
 cd /tmp/dataxweb && git pull 
 docker pull qq275860560/dataxweb
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
-docker run -d -p 8045:8045 -v /tmp:/tmp --name dataxweb qq275860560/dataxweb  /bin/bash -c 'source /etc/profile &&\
+docker run -d -p 8045:8045 -v /tmp:/tmp -v /root/.m2:/root/.m2 --name dataxweb qq275860560/dataxweb  /bin/bash -c 'source /etc/profile &&\
     /usr/sbin/sshd &&\
     chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\

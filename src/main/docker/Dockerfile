@@ -2,7 +2,16 @@ FROM qq275860560/dataxweb-base
 
 MAINTAINER jiangyuanlin@163.com
 
+# 配置mysql
+RUN  chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\   
+    cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/my.cnf"    
+    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
+    echo "导入数据结构" &&\
+    cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
+    mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null     &&\
 
+# 配置datax    
 RUN mkdir -pv /usr/local/datax/plugin/reader/httpreader &&\
    cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/httpreader-0.0.1-SNAPSHOT.jar" &&\
    cd /usr/local/datax/plugin/reader/httpreader && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/datax/plugin/reader/httpreader/plugin.json" &&\
@@ -19,20 +28,23 @@ RUN mkdir -pv /usr/local/datax/plugin/writer/httpwriter &&\
 RUN cd /tmp && curl -fsSL http://www.sai.msu.su/apache/mina/ftpserver/1.0.6/ftpserver-1.0.6.tar.gz  | tar xzf - -C /usr/local &&\
  cd /usr/local/apache-ftpserver-1.0.6/res/conf && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/apache-ftpserver-1.0.6/res/conf/users.properties" &&\
  cd /usr/local/apache-ftpserver-1.0.6/res/conf && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/local/apache-ftpserver-1.0.6/res/conf/ftpd-typical.xml"
-    
 
+
+
+# 配置jenkins
+
+# 配置ftp
+
+# 配置应用    
 RUN   rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git
+     
      
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
     echo "启动mysql" &&\
     chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
-    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\    
- 	cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/my.cnf" &&\
-    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
-    echo "导入数据结构" &&\
-    cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
-    mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null     &&\
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize      &&\
     echo "启动jenkins" &&\
     /etc/rc.d/init.d/jenkins start &&\
     echo "启动ftp" &&\
