@@ -4,8 +4,8 @@ MAINTAINER jiangyuanlin@163.com
 
 # 配置mysql
 RUN  chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
-    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\   
-    cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/my.cnf"    
+    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
+    cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/my.cnf" &&\   
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
     echo "导入数据结构" &&\
     cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
@@ -34,6 +34,7 @@ RUN cd /tmp && curl -fsSL http://www.sai.msu.su/apache/mina/ftpserver/1.0.6/ftps
 # 配置jenkins
 
 # 配置ftp
+
 
 # 配置应用    
 RUN   rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git
