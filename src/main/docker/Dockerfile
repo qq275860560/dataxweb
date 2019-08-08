@@ -9,7 +9,7 @@ RUN  chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
     echo "导入数据结构" &&\
     cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
-    mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null     &&\
+    mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null 
 
 # 配置datax    
 RUN mkdir -pv /usr/local/datax/plugin/reader/httpreader &&\
@@ -54,7 +54,7 @@ CMD source /etc/profile &&\
     cd /tmp/dataxweb/target && java -jar github-qq275860560-dataxweb.jar && tail -f /var/log/lastlog
     
    	
-			
+			 
 			
 			
  
