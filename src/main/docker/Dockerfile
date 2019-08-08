@@ -37,7 +37,7 @@ RUN cd /tmp && curl -fsSL http://www.sai.msu.su/apache/mina/ftpserver/1.0.6/ftps
 
 
 # 配置应用    
-RUN   rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git && mvn clean package -DskipTests   -Dmaven.javadoc.skip=true
+RUN   rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git && cd /tmp/dataxweb && mvn clean package -DskipTests   -Dmaven.javadoc.skip=true
      
      
 CMD source /etc/profile &&\
