@@ -1,4 +1,4 @@
-FROM qq275860560/dataxweb-base
+FROM qq275860560/base
 
 MAINTAINER jiangyuanlin@163.com
 
