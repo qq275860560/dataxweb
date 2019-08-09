@@ -248,8 +248,6 @@ createTime datetime DEFAULT NULL,
 PRIMARY KEY ( id ) 
 ) DEFAULT CHARSET=utf8;
 
---insert into plugin values(1,'mysqlreader',0,LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-README.md'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-source.zip'),LOAD_FILE('D:/workspace_git/github-qq275860560-dataxweb/src/test/resources/static/mysqlreader-distribute.zip'),null,'createUserName1','1970-01-01 00:00:00');
-
 
 
 
