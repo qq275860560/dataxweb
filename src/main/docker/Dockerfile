@@ -27,9 +27,10 @@ RUN  chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
     cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/my.cnf" &&\   
     /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
-    echo "导入数据结构" &&\
-    cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
-    mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null
+    echo "导入数据结构" 
+RUN cd /usr/share/mysql/ && curl  -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
+    cat /usr/share/mysql/dataxweb.sql &&\
+    mysql -uroot  -p123456  mysql< /usr/share/mysql/dataxweb.sql  2>/dev/null
 
 # install datax
 RUN curl -fSL http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz | tar xzf - -C /usr/local &&\
