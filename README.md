@@ -10,21 +10,16 @@ dataxweb镜像
 # 使用方式
 ## 启动方式
 ```
-cd /tmp && rm -rf dataxweb &&  git clone https://github.com/qq275860560/dataxweb.git 
-cd /tmp/dataxweb && git pull 
 docker pull qq275860560/dataxweb
+
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
-docker run -d -p 8045:8045 -v /tmp:/tmp -v /root/.m2:/root/.m2 --name dataxweb qq275860560/dataxweb  /bin/bash -c 'source /etc/profile &&\
-    /usr/sbin/sshd &&\
-    chmod -R 777 /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
-    chown -R root:root /var/lib/mysql /usr/share/mysql /var/run/mysqld &&\
-    cd /etc/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/etc/my.cnf" &&\
-    /usr/sbin/mysqld  --defaults-file=/etc/my.cnf --user=root --daemonize &&\
-    cd /usr/share/mysql/ && curl -fsSL -O "https://raw.githubusercontent.com/qq275860560/dataxweb/master/src/main/centos/usr/share/mysql/dataxweb.sql" &&\
-    mysql -uroot  -p123456  mysql< ./dataxweb.sql  2>/dev/null     &&\
-    /etc/rc.d/init.d/jenkins start &&\
-    cd /usr/local/apache-ftpserver-1.0.6 && (bin/ftpd.sh  res/conf/ftpd-typical.xml  &) &&\
-    cd /tmp/dataxweb && mvn spring-boot:run && tail -f /var/log/lastlog'
+
+docker run -d -p 8045:8045   --name dataxweb qq275860560/dataxweb  /bin/bash -c ' cd /tmp/dataxweb/target && java -jar github-qq275860560-dataxweb.jar &&\
+--spring.datasource.url=jdbc:log4jdbc:mysql://192.168.137.45:3306/dataxweb?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8 &&\
+--spring.datasource.username=root &&\
+--spring.datasource.password=123456 &&\
+--jenkinsUrl=http://192.168.137.45:8081
+'
     
 ```
 
