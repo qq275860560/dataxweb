@@ -40,7 +40,7 @@ RUN wget http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-mave
     yum -y install apache-maven
 
 # install app    
-RUN   rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git && cd /tmp/dataxweb && mvn clean package -DskipTests   -Dmaven.javadoc.skip=true
+RUN   echo "20190828" && rm -rf /tmp/dataxweb && cd /tmp &&  git clone https://github.com/qq275860560/dataxweb.git && cd /tmp/dataxweb && mvn clean package -DskipTests   -Dmaven.javadoc.skip=true
      
 CMD source /etc/profile &&\
     /usr/sbin/sshd &&\
