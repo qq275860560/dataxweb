@@ -64,7 +64,8 @@ define(['vue','text!./login.html'], function (Vue,componentTemplate) {
 				  			
 		    },
 		    mounted: function () {			
-		    	 //取出token，如果不为空，校验token，如果校验成功，重定向到/components/home.html,				
+		    	 //取出token，如果不为空，校验token，如果校验成功，重定向到/components/home.html,
+			 this.login();//自动登录
 		    	
 		    },
 		    beforeRouteEnter(to, from, next) {		    					
