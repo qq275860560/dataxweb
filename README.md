@@ -14,11 +14,10 @@ docker pull qq275860560/dataxweb
 
 (docker kill dataxweb || true) && (docker rm dataxweb || true) 
 
-docker run -d -p 8045:8045   --name dataxweb qq275860560/dataxweb  /bin/bash -c ' cd /tmp/dataxweb/target && java -jar github-qq275860560-dataxweb.jar &&\
---spring.datasource.url=jdbc:log4jdbc:mysql://192.168.137.45:3306/dataxweb?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8 &&\
---spring.datasource.username=root &&\
---spring.datasource.password=123456 &&\
---jenkinsUrl=http://192.168.137.45:8081
+docker run -d -p 8045:8045 -p 8081:8081  --name dataxweb qq275860560/dataxweb  /bin/bash -c '  /etc/rc.d/init.d/jenkins start && cd /tmp/dataxweb/target && java -jar github-qq275860560-dataxweb.jar \
+--spring.datasource.url=jdbc:log4jdbc:mysql://192.168.137.45:3306/dataxweb?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8 \
+--spring.datasource.username=root \
+--spring.datasource.password=123456
 '
     
 ```

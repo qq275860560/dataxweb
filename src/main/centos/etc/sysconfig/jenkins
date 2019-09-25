@@ -2,7 +2,7 @@ JENKINS_HOME="/var/lib/jenkins"
 
 JENKINS_JAVA_CMD=""
 
-JENKINS_USER="jenkins"
+JENKINS_USER="root"
 
 
 JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true"

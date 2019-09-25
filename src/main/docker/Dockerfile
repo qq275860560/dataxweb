@@ -27,7 +27,10 @@ RUN mkdir -pv /usr/local/datax/plugin/writer/httpwriter &&\
 RUN wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat/jenkins.repo && \
     rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key && \
     yum -y  install  jenkins && yum -y update jenkins &&\
-    yum -y clean all && rm -rf /var/cache/yum/*  /tmp/* /var/tmp/*
+    yum -y clean all && rm -rf /var/cache/yum/*  /tmp/* /var/tmp/* &&\
+    chown -R root:root /var/lib/jenkins &&\
+    chown -R root:root /var/cache/jenkins &&\
+    chown -R root:root /var/log/jenkins
 
 # init jenkins
 RUN mkdir -pv /var/lib/jenkins/ && cd /var/lib/jenkins/ && curl  -O https://raw.githubusercontent.com/qq275860560/jenkins-master/master/src/main/centos/var/lib/jenkins/config.xml &&\
